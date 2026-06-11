@@ -1,5 +1,5 @@
 let completedMissions = 0;
-const totalMissions = 3;
+const totalMissions = 5;
 
 function completeMission(missionNumber) {
   completedMissions++;
