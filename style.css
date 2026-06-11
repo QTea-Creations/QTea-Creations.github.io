@@ -12,11 +12,11 @@ body {
 }
 
 .badge-img {
-  width: 70px;
-  height: 70px;
+  width: 140px;
+  height: 140px;
   object-fit: contain;
   display: block;
-  margin: 0 auto 15px auto;
+  margin: 10 auto 20px auto;
 }
 
 .navbar {
@@ -161,7 +161,7 @@ button:hover {
   border: 3px solid #32d9d0;
 }
 
-.safi {
+.meme {
   font-size: 110px;
 }
 
@@ -188,10 +188,12 @@ button:hover {
   background: #f7f4ff;
   border: 3px solid #32d9d0;
   border-radius: 28px;
-  padding: 28px;
-  min-height: 330px;
+  padding: 24px;
+  min-height: 380px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   justify-content: space-between;
 }
 
@@ -209,14 +211,15 @@ button:hover {
 
 .mission-card h3 {
   font-family: "Lobster", cursive;
-  font-size: 30px;
+  font-size: 28px;
   color: #6b22d8;
-  margin-top: 0;
+  margin: 0;
 }
 
 .mission-card p {
+  font-size: 16px;
   color: #24305f;
-  font-size: 17px;
+  margin: 10px 0;
 }
 
 .dashboard {
