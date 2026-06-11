@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identity Protector | Safetii Net</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">Safetii Net</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#missions">Missions</a>
+    <a href="index.html#curriculum">Curriculum</a>
+    <a href="index.html#about">About</a>
+  </div>
+</nav>
+
+<section class="mission-page">
+  <h1>Identity Protector</h1>
+  <p class="mission-intro">
+    Your mission is to learn how to protect your personal information online.
+  </p>
+
+  <div class="lesson-box">
+    <h2>Step 1: Learn</h2>
+    <p>
+      Personal information is anything that can identify you, contact you,
+      or show where you are. This can include your full name, address,
+      school, phone number, passwords, and location.
+    </p>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 2: Practice</h2>
+    <p>Decide if this is safe or not safe:</p>
+    <h3>You tell an online friend your full name, age, and school.</h3>
+    <button onclick="checkAnswer(false)">Safe</button>
+    <button onclick="checkAnswer(true)">Not Safe</button>
+    <p id="practiceResult"></p>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 3: Quiz</h2>
+    <p>What should you do if someone online asks for private information?</p>
+    <button onclick="quizAnswer(false)">Give it to them</button>
+    <button onclick="quizAnswer(true)">Tell a trusted adult</button>
+    <p id="quizResult"></p>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 4: Badge</h2>
+    <p>Complete the practice and quiz to unlock your Identity Protector badge.</p>
+    <a class="button" href="index.html#missions">Back to Missions</a>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
