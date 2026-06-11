@@ -32,7 +32,7 @@ function showResult(resultId, isCorrect) {
   const result = document.getElementById(resultId);
 
   if (isCorrect) {
-    result.textContent = "Correct! Great job, Cyber Guardian.";
+    result.textContent = "Correct! Great job, Cyber Super Hero.";
   } else {
     result.textContent = "Try again. Think about the safest choice.";
   }
@@ -47,3 +47,5 @@ function quizAnswer(isCorrect) {
     result.textContent = "Try again. You should not share private information online.";
   }
 }
+
+
