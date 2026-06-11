@@ -35,16 +35,65 @@ body {
 
 .hero {
   background: white;
-  min-height: 70vh;
-  display: flex;
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 280px;
   align-items: center;
-  justify-content: space-between;
-  padding: 70px 8%;
-  gap: 45px;
+  gap: 35px;
+  padding: 55px 8%;
+  border-bottom: 1px solid #e8e8f8;
 }
 
 .hero-text {
-  max-width: 650px;
+  max-width: 560px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.hero-image {
+  min-height: 300px;
+  background: #f4f0ff;
+  border-radius: 30px;
+  border: 3px solid #32d9d0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 110px;
+  text-align: center;
+}
+
+.hero-image p {
+  font-size: 18px;
+  font-weight: 800;
+  color: #6b22d8;
+}
+
+.progress-card {
+  background: white;
+  border-radius: 22px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(106, 34, 216, 0.15);
+  border: 2px solid #eee8ff;
+  text-align: center;
+}
+
+.circle-progress {
+  width: 130px;
+  height: 130px;
+  border: 14px solid #32d9d0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  font-size: 30px;
+  font-weight: 800;
+  color: #6b22d8;
 }
 
 .tag {
@@ -71,14 +120,23 @@ button {
   background: #32d9d0;
   color: #17204a;
   border: none;
-  padding: 15px 26px;
-  border-radius: 999px;
+  padding: 14px 24px;
+  border-radius: 14px;
   font-weight: 800;
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
-  margin-top: 15px;
-  box-shadow: 0 6px 0 #19aaa3;
+  box-shadow: 0 5px 0 #19aaa3;
+}
+
+.outline-button {
+  color: #17204a;
+  border: 2px solid #32d9d0;
+  padding: 12px 22px;
+  border-radius: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  background: white;
 }
 
 .button:hover,
