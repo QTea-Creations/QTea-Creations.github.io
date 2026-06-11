@@ -243,9 +243,13 @@ button:hover {
     text-align: center;
   }
 
-  h1 {
-    font-size: 48px;
-  }
+h1 {
+  font-family: "Lobster", cursive;
+  font-size: 56px;
+  line-height: 1.05;
+  color: #6b22d8;
+  margin: 10px 0;
+}
 
   .nav-links {
     display: none;
