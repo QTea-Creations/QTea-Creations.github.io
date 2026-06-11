@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phish Finder | Safetii Net</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">Safetii Net</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="../index.html#missions">Missions</a>
+    <a href="../index.html#curriculum">Curriculum</a>
+    <a href="../index.html#about">About</a>
+  </div>
+</nav>
+
+<section class="mission-page">
+  <div class="mission-header">
+    <img src="../assets/phish.png" class="mission-badge" alt="Phish Finder Badge">
+    <div>
+      <p class="tag">Mission 3</p>
+      <h1>Phish Finder</h1>
+      <p class="mission-intro">Can you outsmart a scammer?</p>
+    </div>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 1: Learn</h2>
+    <p>Phishing is a type of cyberattack where malicious actors attempt to trick individuals into revealing sensitive information.</p>
+    <p>Phishers may use fake emails, text messages, websites, or QR codes to trick you.</p>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 2: Fishy Signs of a Scam</h2>
+    <ul>
+      <li>Weird spelling or grammar.</li>
+      <li>Strange links.</li>
+      <li>Messages that sound too good to be true.</li>
+      <li>Urgent messages like “CLICK NOW!”</li>
+    </ul>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 3: Practice</h2>
+    <p>“Free Robux! Click NOW to claim!”</p>
+    <button onclick="showResult('phishResult', true)">Phishing</button>
+    <button onclick="showResult('phishResult', false)">Safe</button>
+    <p id="phishResult" class="result-text"></p>
+  </div>
+
+  <div class="lesson-box center">
+    <h2>Mission Complete</h2>
+    <a class="button" href="../index.html#missions">Back to Missions</a>
+  </div>
+</section>
+
+<script src="../script.js"></script>
+</body>
+</html>
