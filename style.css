@@ -12,10 +12,11 @@ body {
 }
 
 .badge-img {
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  margin-bottom: 15px;
+  display: block;
+  margin: 0 auto 15px auto;
 }
 
 .navbar {
