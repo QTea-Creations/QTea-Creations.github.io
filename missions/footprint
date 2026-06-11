@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Footprint Defender | Safetii Net</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">Safetii Net</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="../index.html#missions">Missions</a>
+    <a href="../index.html#curriculum">Curriculum</a>
+    <a href="../index.html#about">About</a>
+  </div>
+</nav>
+
+<section class="mission-page">
+  <div class="mission-header">
+    <img src="../assets/footprint.png" class="mission-badge" alt="Digital Footprint Defender Badge">
+    <div>
+      <p class="tag">Mission 4</p>
+      <h1>Digital Footprint Defender</h1>
+      <p class="mission-intro">Make the right imprint online.</p>
+    </div>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 1: Learn</h2>
+    <p>A digital footprint is the trail of data you leave behind every time you use the internet.</p>
+    <p>Your digital footprint is like a permanent record. It shows who you are, what you value, and how you treat others.</p>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 2: Think Before You Post</h2>
+    <ul>
+      <li>Would I be okay if my parents saw this?</li>
+      <li>Would a future college be okay with this?</li>
+      <li>Would an employer be okay with this?</li>
+      <li>Would I be okay if this was shared or screenshotted?</li>
+    </ul>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 3: Post or Delete?</h2>
+    <p>A picture in front of your school with the caption: “Another long day at Bates Academy.”</p>
+    <button onclick="showResult('footprintResult', false)">Post</button>
+    <button onclick="showResult('footprintResult', true)">Delete</button>
+    <p id="footprintResult" class="result-text"></p>
+  </div>
+
+  <div class="lesson-box center">
+    <h2>Mission Complete</h2>
+    <a class="button" href="../index.html#missions">Back to Missions</a>
+  </div>
+</section>
+
+<script src="../script.js"></script>
+</body>
+</html>
