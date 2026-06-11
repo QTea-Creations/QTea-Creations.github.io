@@ -11,6 +11,13 @@ body {
   font-family: "Poppins", Arial, sans-serif;
 }
 
+.badge-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
 .navbar {
   background: white;
   padding: 24px 8%;
