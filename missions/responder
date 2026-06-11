@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Responder | Safetii Net</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">Safetii Net</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="../index.html#missions">Missions</a>
+    <a href="../index.html#curriculum">Curriculum</a>
+    <a href="../index.html#about">About</a>
+  </div>
+</nav>
+
+<section class="mission-page">
+  <div class="mission-header">
+    <img src="../assets/responder.png" class="mission-badge" alt="Cyber Responder Badge">
+    <div>
+      <p class="tag">Mission 5</p>
+      <h1>Cyber Responder</h1>
+      <p class="mission-intro">Learn what to do when something feels wrong online.</p>
+    </div>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 1: Learn</h2>
+    <p>If you find a scam or something unsafe online, do not click, reply, or keep engaging.</p>
+    <p>You should stop, save proof if needed, block, report, and tell a trusted adult.</p>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 2: Response Plan</h2>
+    <ul>
+      <li><strong>STOP:</strong> Do not click sketchy links.</li>
+      <li><strong>SCREENSHOT:</strong> Save proof if needed.</li>
+      <li><strong>BLOCK:</strong> Do not allow them to message you again.</li>
+      <li><strong>TELL:</strong> Tell an adult or report the account.</li>
+    </ul>
+  </div>
+
+  <div class="lesson-box">
+    <h2>Step 3: Practice</h2>
+    <p>Someone sends you a suspicious link and asks for your password. What should you do?</p>
+    <button onclick="showResult('responderResult', false)">Click it to check</button>
+    <button onclick="showResult('responderResult', true)">Stop, block, and tell an adult</button>
+    <p id="responderResult" class="result-text"></p>
+  </div>
+
+  <div class="lesson-box center">
+    <h2>You Finished the Training!</h2>
+    <p>Now you are ready for the final certificate test.</p>
+    <a class="button" href="../final-test.html">Take Final Test</a>
+  </div>
+</section>
+
+<script src="../script.js"></script>
+</body>
+</html>
