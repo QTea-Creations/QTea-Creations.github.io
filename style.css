@@ -170,22 +170,33 @@ button:hover {
 }
 
 .mission-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 25px;
+  align-items: stretch;
 }
 
 .mission-card {
-  width: 290px;
-  min-height: 330px;
   background: #f7f4ff;
   border: 3px solid #32d9d0;
   border-radius: 28px;
   padding: 28px;
+  min-height: 330px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+@media (max-width: 1200px) {
+  .mission-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .mission-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .mission-card h3 {
