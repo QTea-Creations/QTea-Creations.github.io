@@ -1,19 +1,21 @@
 let completedMissions = 0;
 const totalMissions = 5;
+let completedList = [];
 
 function completeMission(missionNumber) {
-  completedMissions++;
-
-  if (completedMissions > totalMissions) {
-    completedMissions = totalMissions;
+  if (!completedList.includes(missionNumber)) {
+    completedList.push(missionNumber);
+    completedMissions++;
   }
 
-  const percent = (completedMissions / totalMissions) * 100;
+  const percent = Math.round((completedMissions / totalMissions) * 100);
 
   document.getElementById("progressText").textContent =
-    completedMissions + " missions completed";
+    completedMissions + " of " + totalMissions + " missions complete";
 
   document.getElementById("progressFill").style.width = percent + "%";
 
-  alert("Mission " + missionNumber + " complete! Badge unlocked!");
+  document.getElementById("circleProgress").textContent = percent + "%";
+
+  alert("Mission complete! Badge unlocked!");
 }
