@@ -28,6 +28,16 @@ function checkAnswer(isCorrect) {
   }
 }
 
+function showResult(resultId, isCorrect) {
+  const result = document.getElementById(resultId);
+
+  if (isCorrect) {
+    result.textContent = "Correct! Great job, Cyber Guardian.";
+  } else {
+    result.textContent = "Try again. Think about the safest choice.";
+  }
+}
+
 function quizAnswer(isCorrect) {
   const result = document.getElementById("quizResult");
 
