@@ -12,8 +12,8 @@ body {
 }
 
 .badge-img {
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   object-fit: contain;
   display: block;
   margin: 10 auto 20px auto;
@@ -91,8 +91,8 @@ body {
 }
 
 .circle-progress {
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   border: 14px solid #32d9d0;
   border-radius: 50%;
   display: flex;
