@@ -17,3 +17,23 @@ function completeMission(missionNumber) {
 
   alert("Mission complete! Badge unlocked!");
 }
+
+function checkAnswer(isCorrect) {
+  const result = document.getElementById("practiceResult");
+
+  if (isCorrect) {
+    result.textContent = "Correct! Sharing your full name, age, and school is not safe.";
+  } else {
+    result.textContent = "Try again. That information can help strangers identify you.";
+  }
+}
+
+function quizAnswer(isCorrect) {
+  const result = document.getElementById("quizResult");
+
+  if (isCorrect) {
+    result.textContent = "Correct! Always tell a trusted adult.";
+  } else {
+    result.textContent = "Try again. You should not share private information online.";
+  }
+}
