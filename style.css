@@ -216,6 +216,35 @@ button:hover {
   margin: 0;
 }
 
+.mission-page {
+  padding: 60px 8%;
+  background: white;
+}
+
+.mission-page h1 {
+  text-align: center;
+}
+
+.mission-intro {
+  text-align: center;
+  font-size: 22px;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+}
+
+.lesson-box {
+  background: #f7f4ff;
+  border: 3px solid #32d9d0;
+  border-radius: 28px;
+  padding: 30px;
+  margin: 25px auto;
+  max-width: 850px;
+}
+
+.lesson-box h2 {
+  color: #6b22d8;
+}
+
 .mission-card p {
   font-size: 16px;
   color: #24305f;
