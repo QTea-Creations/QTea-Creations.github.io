@@ -106,11 +106,47 @@ function updateProgressDisplay() {
 }
 
 function renderBadgeProgress() {
-  const badgeGrid = document.getElementById("badgeProgressGrid");
+  const badgeList = document.getElementById("badgeCascadeList");
 
-  if (!badgeGrid) {
+  if (!badgeList) {
     return;
   }
+
+  const completedMissions = getCompletedMissions();
+  badgeList.innerHTML = "";
+
+  const earnedMissions = missions.filter(function(mission) {
+    return completedMissions.includes(mission.id);
+  });
+
+  if (earnedMissions.length === 0) {
+    badgeList.innerHTML =
+      '<a href="missions/identity.html" class="sidebar-badge-empty">' +
+      '<img src="assets/Identity Protector Badge.png" alt="Start earning badges" class="sidebar-badge-icon">' +
+      '<div>' +
+      '<p class="sidebar-badge-title">No badges earned yet</p>' +
+      '<p class="sidebar-badge-subtext">Click to start your first mission</p>' +
+      '</div>' +
+      '</a>';
+    return;
+  }
+
+  earnedMissions.forEach(function(mission, index) {
+    const badgeCard = document.createElement("a");
+    badgeCard.href = "certificate.html";
+    badgeCard.className = "sidebar-badge-item";
+    badgeCard.style.setProperty("--cascade-offset", (index * 18) + "px");
+
+    badgeCard.innerHTML =
+      '<img src="' + mission.badgePath + '" alt="' + mission.title + ' badge" class="sidebar-badge-icon">' +
+      '<div>' +
+      '<p class="sidebar-badge-title">' + mission.title + '</p>' +
+      '<p class="sidebar-badge-subtext">Earned!</p>' +
+      '</div>';
+
+    badgeList.appendChild(badgeCard);
+  });
+}
 
   const completedMissions = getCompletedMissions();
 
