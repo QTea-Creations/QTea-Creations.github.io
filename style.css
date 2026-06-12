@@ -1614,3 +1614,199 @@ h1 {
   font-weight: 700;
   font-size: 0.95rem;
 }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+  background: #ffffff;
+  color: #222;
+}
+
+.home-layout {
+  width: min(1180px, calc(100% - 32px));
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 28px;
+  align-items: start;
+}
+
+.home-main {
+  min-width: 0;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #e9fbff, #f5edff);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  margin-bottom: 28px;
+}
+
+.hero-section h1 {
+  margin: 0 0 10px;
+  font-family: "Lobster", "Pacifico", cursive;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  color: #16bfd0;
+}
+
+.hero-section p {
+  max-width: 680px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.missions-section h2 {
+  margin: 0 0 18px;
+  font-family: "Lobster", "Pacifico", cursive;
+  font-size: 2.2rem;
+  color: #8b4fd6;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.mission-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: #ffffff;
+  border: 2px solid #dff8fb;
+  border-radius: 24px;
+  padding: 22px;
+  min-height: 260px;
+  box-shadow: 0 8px 20px rgba(20, 191, 208, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mission-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(20, 191, 208, 0.18);
+}
+
+.mission-card img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.mission-card h3 {
+  margin: 0 0 8px;
+  color: #16bfd0;
+  font-size: 1.25rem;
+}
+
+.mission-card p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.home-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: sticky;
+  top: 20px;
+}
+
+.sidebar-card {
+  background: #ffffff;
+  border: 2px solid #dff8fb;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+}
+
+.sidebar-card h2 {
+  margin: 0 0 12px;
+  font-family: "Lobster", "Pacifico", cursive;
+  font-size: 1.8rem;
+  color: #8b4fd6;
+}
+
+.progress-card p {
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 14px;
+  background: #e8f9fb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+#progressFill {
+  width: 0%;
+  height: 100%;
+  background: #16bfd0;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.certificate-button {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background: #16bfd0;
+  color: white;
+  font-weight: 700;
+  padding: 16px 18px;
+  border-radius: 18px;
+  box-shadow: 0 6px 0 #0e91a0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.certificate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #0e91a0;
+}
+
+.home-sidebar-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+.home-sidebar-badges img {
+  width: 115px;
+  height: 115px;
+  object-fit: contain;
+}
+
+.empty-badge-message {
+  text-align: center;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.educator-card p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .home-sidebar {
+    position: static;
+  }
+
+  .mission-grid {
+    grid-template-columns: 1fr;
+  }
+}
