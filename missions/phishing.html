@@ -31,7 +31,9 @@
       </div>
       
 <div class="hero-button-wrap">
-  <a href="#questionOfDay" class="mission-btn">Start the Mission</a>
+ <button type="button" class="start-mission-btn" onclick="scrollToQuestionOfDay()">
+  Start the Mission
+</button>
 </div>
       
      <img 
@@ -174,7 +176,8 @@
 
     <div class="catch-examples-grid">
 
-      <div class="fake-phone">
+      <!-- Example 1 -->
+      <div class="fake-phone scam-example-card">
         <div class="phone-header">Unknown Number</div>
 
         <div class="text-bubble light">
@@ -182,17 +185,27 @@
         </div>
 
         <div class="text-bubble">
-          Since the package does not have a house number, the package transportation is interrupted. Please update: http://fake-delivery.example
+          Since the package does not have a house number, the package transportation is interrupted. Please update:
+          http://fake-delivery.example
         </div>
 
-        <button class="phish-choice" onclick="showPhishFlagOne()">
-          Find the Scam
+        <button type="button" class="reveal-scam-btn" onclick="revealScamOne()">
+          Reveal the Scam
         </button>
 
-        <p id="phishFlagFeedbackOne" class="phish-feedback"></p>
+        <div id="scamRevealOne" class="scam-reveal hidden">
+          <h3>Scam Revealed!</h3>
+          <p>
+            This is suspicious because the message comes from an unknown number, creates pressure, and uses a strange link that does not look like a real delivery company website.
+          </p>
+          <p>
+            A safer choice is to avoid clicking the link and ask a trusted adult for help.
+          </p>
+        </div>
       </div>
 
-      <div class="fake-phone">
+      <!-- Example 2 -->
+      <div class="fake-phone scam-example-card">
         <div class="phone-header">Game Reward</div>
 
         <div class="text-bubble light">
@@ -203,11 +216,19 @@
           A new Roblox reward is waiting! Enter your username and password to claim 5550 Robux.
         </div>
 
-        <button class="phish-choice" onclick="showPhishFlagTwo()">
-          Find the Scam
+        <button type="button" class="reveal-scam-btn" onclick="revealScamTwo()">
+          Reveal the Scam
         </button>
 
-        <p id="phishFlagFeedbackTwo" class="phish-feedback"></p>
+        <div id="scamRevealTwo" class="scam-reveal hidden">
+          <h3>Scam Revealed!</h3>
+          <p>
+            This is suspicious because it promises a free reward and asks for a password. Real games should not ask for your password to give you a prize.
+          </p>
+          <p>
+            A safer choice is to close the message, avoid entering your password, and tell a trusted adult.
+          </p>
+        </div>
       </div>
 
     </div>
