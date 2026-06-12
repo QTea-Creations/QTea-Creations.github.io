@@ -1,6 +1,195 @@
 const missions = [
   {
     id: "identity",
+    name: "Identity Protector",
+    icon: "assets/Identity Protector.png",
+    badge: "assets/Identity Protector Badge.png",
+    page: "missions/identity.html"
+  },
+  {
+    id: "password",
+    name: "Password Safe Keeper",
+    icon: "assets/Password Safe Keeper.png",
+    badge: "assets/Password Safe Keeper Badge.png",
+    page: "missions/password.html"
+  },
+  {
+    id: "phishing",
+    name: "Phish Finder",
+    icon: "assets/Phish Finder.png",
+    badge: "assets/Phish Finder Badge.png",
+    page: "missions/phishing.html"
+  },
+  {
+    id: "footprint",
+    name: "Digital Footprint Defender",
+    icon: "assets/Digital Footprint Defender.png",
+    badge: "assets/Digital Footprint Defender Badge.png",
+    page: "missions/footprint.html"
+  },
+  {
+    id: "responder",
+    name: "Cyber Responder",
+    icon: "assets/Cyber Responder.png",
+    badge: "assets/Cyber Responder Badge.png",
+    page: "missions/responder.html"
+  }
+];
+
+function getCompletedMissions() {
+  const saved = localStorage.getItem("completedMissions");
+  return saved ? JSON.parse(saved) : [];
+}
+
+function saveCompletedMissions(completedMissions) {
+  localStorage.setItem("completedMissions", JSON.stringify(completedMissions));
+}
+
+function getMissionById(id) {
+  return missions.find(function (mission) {
+    return mission.id === id || mission.name === id;
+  });
+}
+
+function completeMission(missionName) {
+  const completedMissions = getCompletedMissions();
+
+  if (!completedMissions.includes(missionName)) {
+    completedMissions.push(missionName);
+    saveCompletedMissions(completedMissions);
+  }
+
+  window.location.href = "../badge.html?mission=" + encodeURIComponent(missionName);
+}
+
+function updateProgressDisplay() {
+  const completedMissions = getCompletedMissions();
+  const progressText = document.getElementById("progressText");
+  const progressFill = document.getElementById("progressFill");
+
+  if (!progressText || !progressFill) {
+    return;
+  }
+
+  const completedCount = completedMissions.length;
+  const totalCount = missions.length;
+  const percentage = Math.round((completedCount / totalCount) * 100);
+
+  progressText.textContent = completedCount + " of " + totalCount + " missions complete";
+  progressFill.style.width = percentage + "%";
+}
+
+function renderHomeSidebarBadges() {
+  const badgeContainer = document.getElementById("homeSidebarBadges");
+
+  if (!badgeContainer) {
+    return;
+  }
+
+  const completedMissions = getCompletedMissions();
+  badgeContainer.innerHTML = "";
+
+  if (completedMissions.length === 0) {
+    badgeContainer.innerHTML = '<p class="empty-badge-message">Complete a mission to earn your first badge!</p>';
+    return;
+  }
+
+  completedMissions.forEach(function (completedMission) {
+    const mission = getMissionById(completedMission);
+
+    if (!mission) {
+      return;
+    }
+
+    const badgeImage = document.createElement("img");
+    badgeImage.src = mission.badge;
+    badgeImage.alt = mission.name + " Badge";
+    badgeContainer.appendChild(badgeImage);
+  });
+}
+
+function loadBadgeReveal() {
+  const badgeImage = document.getElementById("earnedBadgeImage");
+  const badgeTitle = document.getElementById("earnedBadgeTitle");
+
+  if (!badgeImage || !badgeTitle) {
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const missionName = params.get("mission");
+  const mission = getMissionById(missionName);
+
+  if (!mission) {
+    badgeTitle.textContent = "Badge Earned!";
+    return;
+  }
+
+  badgeImage.src = mission.badge;
+  badgeImage.alt = mission.name + " Badge";
+  badgeTitle.textContent = mission.name + " Badge Earned!";
+}
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+function renderCertificatePage() {
+  const certificateStatus = document.getElementById("certificateStatus");
+  const certificateBadges = document.getElementById("certificateBadges");
+
+  if (!certificateStatus || !certificateBadges) {
+    return;
+  }
+
+  const completedMissions = getCompletedMissions();
+  certificateBadges.innerHTML = "";
+
+  if (completedMissions.length === missions.length) {
+    certificateStatus.textContent = "Congratulations! You completed every mission and unlocked your Safetii Net certificate.";
+  } else {
+    certificateStatus.textContent = "Complete all 5 missions to unlock your Safetii Net certificate.";
+  }
+
+  missions.forEach(function (mission) {
+    const isComplete = completedMissions.includes(mission.name);
+
+    const badgeCard = document.createElement("div");
+    badgeCard.className = isComplete ? "certificate-badge-card earned" : "certificate-badge-card locked";
+
+    const badgeImage = document.createElement("img");
+    badgeImage.src = mission.badge;
+    badgeImage.alt = mission.name + " Badge";
+
+    const badgeName = document.createElement("h3");
+    badgeName.textContent = mission.name;
+
+    const badgeStatus = document.createElement("p");
+    badgeStatus.textContent = isComplete ? "Earned" : "Locked";
+
+    badgeCard.appendChild(badgeImage);
+    badgeCard.appendChild(badgeName);
+    badgeCard.appendChild(badgeStatus);
+
+    if (!isComplete) {
+      badgeCard.addEventListener("click", function () {
+        window.location.href = mission.page;
+      });
+    }
+
+    certificateBadges.appendChild(badgeCard);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  updateProgressDisplay();
+  renderHomeSidebarBadges();
+  loadBadgeReveal();
+  renderCertificatePage();
+});
+const missions = [
+  {
+    id: "identity",
     title: "Identity Protector",
     lessonPath: "missions/identity.html",
     badgePath: "assets/Identity Protector Badge.png"
