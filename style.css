@@ -1541,3 +1541,76 @@ h1 {
   font-weight: 700;
   margin: 20px 0 28px;
 }
+
+.badges-sidebar-card {
+  background: #ffffff;
+  border: 2px solid #e7dcff;
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.sidebar-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sidebar-card-header h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #1d2259;
+}
+
+.sidebar-link {
+  color: #6b35e2;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.badge-cascade-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sidebar-badge-item,
+.sidebar-badge-empty {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  background: #f9f7ff;
+  border: 2px solid #e6dcff;
+  border-radius: 18px;
+  padding: 14px;
+  margin-left: var(--cascade-offset, 0px);
+  box-shadow: 0 4px 0 rgba(107, 53, 226, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.sidebar-badge-item:hover,
+.sidebar-badge-empty:hover {
+  transform: translateY(-2px);
+}
+
+.sidebar-badge-icon {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.sidebar-badge-title {
+  margin: 0 0 4px;
+  color: #1d2259;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.sidebar-badge-subtext {
+  margin: 0;
+  color: #6b35e2;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
