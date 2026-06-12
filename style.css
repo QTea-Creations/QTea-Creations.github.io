@@ -893,7 +893,7 @@ h1 {
   width: min(620px, 95%);
   max-height: 360px;
   object-fit: contain;
-  margin: -25px auto 0;
+  margin: -100px auto 0;
   display: block;
 }
 
