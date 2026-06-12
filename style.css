@@ -324,6 +324,106 @@ h1 {
   color: #24305f;
   line-height: 1.6;
 }
+.lesson-page {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 40px 5%;
+  background: #ffffff;
+}
+
+.lesson-page h1 {
+  font-family: 'Lobster', cursive;
+  color: #7b2cff;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.lesson-subtitle {
+  text-align: center;
+  color: #333;
+  font-size: 1.15rem;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.lesson-card {
+  background: #f7fdff;
+  border: 3px solid #1fd7e8;
+  border-radius: 24px;
+  padding: 24px;
+  margin: 24px 0;
+  box-shadow: 0 6px 0 rgba(31, 215, 232, 0.2);
+}
+
+.lesson-card h2 {
+  color: #7b2cff;
+  margin-bottom: 12px;
+  font-size: 1.6rem;
+}
+
+.lesson-card h3 {
+  color: #13aebb;
+  margin-top: 18px;
+}
+
+.lesson-card p,
+.lesson-card li {
+  color: #333;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.lesson-card ul,
+.lesson-card ol {
+  padding-left: 24px;
+}
+
+.vocab-box {
+  background: #ffffff;
+  border-left: 8px solid #7b2cff;
+  padding: 16px;
+  border-radius: 14px;
+  margin: 14px 0;
+}
+
+.scenario-box {
+  background: #fff5ff;
+  border: 2px dashed #7b2cff;
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 14px;
+}
+
+.activity-box {
+  background: #ffffff;
+  border: 2px solid #1fd7e8;
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 14px;
+}
+
+.quick-check {
+  background: #fefcff;
+  border: 2px solid #7b2cff;
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 14px;
+}
+
+.back-link {
+  display: inline-block;
+  color: #7b2cff;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.mission-complete-area {
+  text-align: center;
+  margin: 40px 0;
+}
 
 .center {
   text-align: center;
