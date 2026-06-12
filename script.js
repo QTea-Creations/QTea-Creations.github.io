@@ -108,3 +108,30 @@ function gradePhishingQuiz() {
     missionCompleteBox.classList.add("hidden");
   }
 }
+
+function revealScamOne() {
+  const scamBox = document.getElementById("scamRevealOne");
+
+  if (scamBox) {
+    scamBox.classList.toggle("hidden");
+  }
+}
+
+function revealScamTwo() {
+  const scamBox = document.getElementById("scamRevealTwo");
+
+  if (scamBox) {
+    scamBox.classList.toggle("hidden");
+  }
+}
+
+function scrollToQuestionOfDay() {
+  const questionSection = document.getElementById("questionOfDay");
+
+  if (questionSection) {
+    questionSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+}
