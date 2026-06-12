@@ -2,62 +2,177 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digital Footprint Defender | Safetii Net</title>
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="logo">Safetii Net</div>
-  <div class="nav-links">
-    <a href="../index.html">Home</a>
-    <a href="../index.html#missions">Missions</a>
-    <a href="../index.html#curriculum">Curriculum</a>
-    <a href="../index.html#about">About</a>
-  </div>
-</nav>
+  <main class="lesson-page">
+    <a href="../index.html" class="back-link">← Back to Missions</a>
 
-<section class="mission-page">
-  <div class="mission-header">
-    <img src="../assets/footprint.png" class="mission-badge" alt="Digital Footprint Defender Badge">
-    <div>
-      <p class="tag">Mission 4</p>
-      <h1>Digital Footprint Defender</h1>
-      <p class="mission-intro">Make the right imprint online.</p>
+    <h1>Digital Footprint Defender</h1>
+    <p class="lesson-subtitle">
+      In this mission, you will learn how your online choices can leave a trail and how to post in a way that protects your safety and reputation.
+    </p>
+
+    <section class="lesson-card">
+      <h2>Mission Goal</h2>
+      <p>
+        A digital footprint is the trail of information you leave behind when you use the internet. This can include posts, comments, photos, likes, searches, messages, and accounts.
+      </p>
+      <p>
+        Some parts of your digital footprint are created by you. Other parts may be created when people tag you, screenshot something, or share your information.
+      </p>
+    </section>
+
+    <section class="lesson-card">
+      <h2>Key Vocabulary</h2>
+
+      <div class="vocab-box">
+        <strong>Digital Footprint:</strong>
+        The trail of information you leave online.
+      </div>
+
+      <div class="vocab-box">
+        <strong>Post:</strong>
+        Something you share online, such as a picture, video, comment, or message.
+      </div>
+
+      <div class="vocab-box">
+        <strong>Reputation:</strong>
+        What others may think about you based on your actions and choices.
+      </div>
+    </section>
+
+    <section class="lesson-card">
+      <h2>What Creates a Digital Footprint?</h2>
+
+      <p>
+        Your digital footprint can grow every time you use technology. Even small actions can leave information behind.
+      </p>
+
+      <h3>Examples include:</h3>
+      <ul>
+        <li>Posting a photo</li>
+        <li>Commenting on a video</li>
+        <li>Liking a post</li>
+        <li>Joining an online group</li>
+        <li>Sharing your location</li>
+        <li>Using a school account</li>
+        <li>Sending messages</li>
+        <li>Being tagged in someone else’s post</li>
+      </ul>
+    </section>
+
+    <section class="lesson-card">
+      <h2>Why Your Digital Footprint Matters</h2>
+
+      <p>
+        Your online choices can affect how people see you. Friends, family, teachers, coaches, clubs, scholarship groups, and future employers may see parts of your digital footprint.
+      </p>
+
+      <p>
+        Even if you delete something, someone may have already saved it, screenshotted it, or shared it.
+      </p>
+
+      <h3>Before posting, ask:</h3>
+      <ul>
+        <li>Would I be okay with a parent, teacher, or coach seeing this?</li>
+        <li>Could this hurt someone’s feelings?</li>
+        <li>Does this reveal private information?</li>
+        <li>Could this be misunderstood?</li>
+        <li>Am I posting because I am angry or upset?</li>
+        <li>Would future me be proud of this?</li>
+      </ul>
+    </section>
+
+    <section class="lesson-card">
+      <h2>Acceptable vs. Risky Posting</h2>
+
+      <h3>Usually acceptable:</h3>
+      <ul>
+        <li>Sharing a school project without private details</li>
+        <li>Posting a hobby or achievement</li>
+        <li>Encouraging a friend</li>
+        <li>Sharing creative work</li>
+        <li>Posting after checking the background of the photo</li>
+      </ul>
+
+      <h3>Risky posting:</h3>
+      <ul>
+        <li>Posting someone else without permission</li>
+        <li>Sharing your location in real time</li>
+        <li>Posting when angry</li>
+        <li>Sharing rumors or embarrassing photos</li>
+        <li>Posting personal information</li>
+        <li>Using hurtful or threatening language</li>
+      </ul>
+    </section>
+
+    <section class="lesson-card">
+      <h2>Real-Life Example</h2>
+
+      <div class="scenario-box">
+        <p>
+          A student records a classmate falling in the hallway and posts it because they think it is funny. Other students start sharing it.
+        </p>
+      </div>
+
+      <p>
+        This may seem like a joke, but it can embarrass the classmate and become part of everyone’s digital footprint. The person who posted it may also get in trouble for sharing something hurtful.
+      </p>
+
+      <h3>Better choice:</h3>
+      <p>
+        Help the person, check if they are okay, and do not post the video.
+      </p>
+    </section>
+
+    <section class="lesson-card">
+      <h2>Mini Activity: Post or Pause?</h2>
+      <p>
+        Decide whether each situation is okay to post or whether you should pause.
+      </p>
+
+      <div class="activity-box">
+        <ol>
+          <li>A picture of your art project with no personal information showing.</li>
+          <li>A video of someone crying after an argument.</li>
+          <li>A selfie that shows your house number in the background.</li>
+          <li>A congratulation post for your friend after they gave permission.</li>
+          <li>An angry comment written right after someone upset you.</li>
+        </ol>
+      </div>
+
+      <p>
+        A Digital Footprint Defender pauses before posting.
+      </p>
+    </section>
+
+    <section class="lesson-card">
+      <h2>Quick Check</h2>
+
+      <div class="quick-check">
+        <p><strong>Question 1:</strong> What is a digital footprint?</p>
+        <p><strong>Question 2:</strong> Why can deleting a post not always erase the problem?</p>
+        <p><strong>Question 3:</strong> Name one question you should ask before posting.</p>
+      </div>
+    </section>
+
+    <section class="lesson-card">
+      <h2>Mission Reminder from Meme</h2>
+      <p>
+        Meme says: “Your posts leave footprints. Make sure they lead somewhere safe and kind.”
+      </p>
+    </section>
+
+    <div class="mission-complete-area">
+      <button class="mission-btn" onclick="completeMission('footprint')">
+        Complete Digital Footprint Defender
+      </button>
     </div>
-  </div>
+  </main>
 
-  <div class="lesson-box">
-    <h2>Step 1: Learn</h2>
-    <p>A digital footprint is the trail of data you leave behind every time you use the internet.</p>
-    <p>Your digital footprint is like a permanent record. It shows who you are, what you value, and how you treat others.</p>
-  </div>
-
-  <div class="lesson-box">
-    <h2>Step 2: Think Before You Post</h2>
-    <ul>
-      <li>Would I be okay if my parents saw this?</li>
-      <li>Would a future college be okay with this?</li>
-      <li>Would an employer be okay with this?</li>
-      <li>Would I be okay if this was shared or screenshotted?</li>
-    </ul>
-  </div>
-
-  <div class="lesson-box">
-    <h2>Step 3: Post or Delete?</h2>
-    <p>A picture in front of your school with the caption: “Another long day at Bates Academy.”</p>
-    <button onclick="showResult('footprintResult', false)">Post</button>
-    <button onclick="showResult('footprintResult', true)">Delete</button>
-    <p id="footprintResult" class="result-text"></p>
-  </div>
-
-  <div class="lesson-box center">
-    <h2>Mission Complete</h2>
-    <a class="button" href="../index.html#missions">Back to Missions</a>
-  </div>
-</section>
-
-<script src="../script.js"></script>
+  <script src="../script.js"></script>
 </body>
 </html>
