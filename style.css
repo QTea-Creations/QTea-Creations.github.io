@@ -887,6 +887,26 @@ h1 {
   }
 }
 
+.phisher-boat-img {
+  position: relative;
+  z-index: 2;
+  width: min(620px, 95%);
+  max-height: 360px;
+  object-fit: contain;
+  margin: 25px auto 0;
+  display: block;
+}
+
+/* Hide old CSS-built boat pieces */
+.boat-scene,
+.boat,
+.phisher,
+.fishing-line,
+.small-boat,
+.person {
+  display: none;
+}
+
 .reflection-box {
   width: 100%;
   max-width: 650px;
