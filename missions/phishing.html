@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css">
-  
 <head>
   <meta charset="UTF-8">
   <title>Phish Finder | Safetii Net</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
 </head>
+
 <body class="phish-deck">
 
   <main class="lesson-page">
 
     <a href="../index.html" class="back-link">← Back to Missions</a>
 
-    <!-- SLIDE 1: HERO -->
-    <section class="phish-slide ocean">
+    <section class="phish-slide ocean hero-slide">
       <div class="cloud one"></div>
       <div class="cloud two"></div>
       <div class="cloud three"></div>
-      
-      <div class="phish-content">
+
+      <div class="phish-content hero-content">
         <p class="lesson-tag">Lesson #3</p>
-        <h1>
+
+        <h1 class="hero-title">
           <span class="phish-title-script">Spot the</span>
           <span class="phish-title-bold">Phisher!</span>
         </h1>
-        <p class="phish-subtitle centered-subtitle">Can YOU Outsmart a Scammer?</p>
+
+        <p class="phish-subtitle centered-subtitle">
+          Can YOU Outsmart a Scammer?
+        </p>
+
+        <div class="hero-button-wrap">
+          <button type="button" class="start-mission-btn" onclick="scrollToQuestionOfDay()">
+            Start the Mission
+          </button>
+        </div>
       </div>
-      
-<div class="hero-button-wrap">
- <button type="button" class="start-mission-btn" onclick="scrollToQuestionOfDay()">
-  Start the Mission
-</button>
-</div>
-      
-     <img 
-  src="../assets/images/phishing/1.png" 
-  alt="A phisher fishing from a boat"
-  class="phisher-boat-img"
->
+
+      <img
+        src="../assets/images/phishing/1.png"
+        alt="A phisher fishing from a boat"
+        class="phisher-boat-img"
+      >
     </section>
 
-    <!-- SLIDE 2: QUESTION OF THE DAY -->
     <section class="phish-slide" id="questionOfDay">
       <div class="cloud one"></div>
       <div class="cloud two"></div>
@@ -59,11 +59,11 @@
         </p>
 
         <div class="phish-choice-stack">
-          <button class="phish-choice" onclick="checkQuestionOfDay('wrong')">
+          <button type="button" class="phish-choice" onclick="checkQuestionOfDay('wrong')">
             A. Click it fast! That’s FREE ROBUX!
           </button>
 
-          <button class="phish-choice" onclick="checkQuestionOfDay('correct')">
+          <button type="button" class="phish-choice" onclick="checkQuestionOfDay('correct')">
             B. Ignore it and tell your parents
           </button>
         </div>
@@ -72,7 +72,6 @@
       </div>
     </section>
 
-    <!-- SLIDE 3: WHAT IS PHISHING -->
     <section class="phish-slide blue">
       <div class="phish-content">
         <h2>
@@ -84,6 +83,7 @@
           <p>
             Phishing is a type of cyberattack where malicious actors try to trick people into revealing sensitive information.
           </p>
+
           <p>
             In other words, phishing is when someone sends a fake message to trick you into sharing private information, clicking a bad link, or giving away your password.
           </p>
@@ -101,7 +101,6 @@
       </div>
     </section>
 
-    <!-- SLIDE 4/5: WHY DANGEROUS -->
     <section class="phish-slide ocean">
       <div class="cloud one"></div>
       <div class="cloud two"></div>
@@ -116,126 +115,139 @@
           <p>
             Phishers use fake emails, text messages, QR codes, or websites that look real.
           </p>
+
           <p>
             They may pretend to be your favorite game, app, store, school, or friend to trick you into giving them passwords, addresses, information, or money.
           </p>
         </div>
       </div>
+    </section>
 
-      <div class="boat-scene">
-        <div class="boat"></div>
-        <div class="phisher"></div>
-        <div class="fishing-line"></div>
+    <section class="phish-slide blue">
+      <div class="phish-content">
+        <h2>
+          <span class="phish-title-script">Facing the</span>
+          <span class="phish-title-bold">Phishers</span>
+        </h2>
+
+        <p class="phish-subtitle">Fishy signs of a scam</p>
+
+        <div class="fishy-grid">
+          <div class="fishy-sign">
+            <img
+              src="../assets/images/phishing/2.png"
+              alt="Form icon"
+              class="fishy-icon"
+            >
+
+            <h3>1. Asking for Private Info</h3>
+            <p>
+              Scammers may ask for passwords, addresses, usernames, or account codes.
+            </p>
+          </div>
+
+          <div class="fishy-sign">
+            <img
+              src="../assets/images/phishing/3.png"
+              alt="Link icon"
+              class="fishy-icon"
+            >
+
+            <h3>2. Strange Links</h3>
+            <p>
+              Example: “www.robux-free-prize.biz”
+            </p>
+          </div>
+
+          <div class="fishy-sign">
+            <img
+              src="../assets/images/phishing/4.png"
+              alt="Gift icon"
+              class="fishy-icon"
+            >
+
+            <h3>3. Too Good to Be True</h3>
+            <p>
+              Example: “Free iPhone if you click NOW!”
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- SLIDE 6: FACING THE PHISHERS -->
-   <section class="phish-slide blue">
-  <div class="phish-content">
-    <h2>
-      <span class="phish-title-script">Facing the</span>
-      <span class="phish-title-bold">Phishers</span>
-    </h2>
+    <section class="phish-slide">
+      <div class="cloud one"></div>
+      <div class="cloud two"></div>
 
-    <p class="phish-subtitle">Fishy signs of a scam</p>
+      <div class="phish-content">
+        <h2>
+          <span class="phish-title-script">The Joy of</span>
+          <span class="phish-title-bold">A Good Catch</span>
+        </h2>
 
-    <div class="fishy-grid">
-      <div class="fishy-sign">
-        <img src="../assets/images/phishing/2.png" alt="Form icon" class="fishy-icon">
-        <h3>1. Asking for Private Info</h3>
-        <p>Scammers may ask for passwords, addresses, usernames, or account codes.</p>
-      </div>
+        <p class="phish-subtitle">Find the phishing attack</p>
 
-      <div class="fishy-sign">
-        <img src="../assets/images/phishing/3.png" alt="Link icon" class="fishy-icon">
-        <h3>2. Strange Links</h3>
-        <p>Example: “www.robux-free-prize.biz”</p>
-      </div>
+        <div class="catch-examples-grid">
+          <div class="fake-phone scam-example-card">
+            <div class="phone-header">Unknown Number</div>
 
-      <div class="fishy-sign">
-        <img src="../assets/images/phishing/4.png" alt="Gift icon" class="fishy-icon">
-        <h3>3. Too Good to Be True</h3>
-        <p>Example: “Free iPhone if you click NOW!”</p>
-      </div>
-    </div>
-  </div>
-</section>
+            <div class="text-bubble light">
+              This message is from an unsaved number. Beware of smishing and phishing.
+            </div>
 
-    <!-- SLIDE 7/8: FIND THE PHISHING ATTACK -->
-<section class="phish-slide">
-  <div class="cloud one"></div>
-  <div class="cloud two"></div>
+            <div class="text-bubble">
+              Since the package does not have a house number, the package transportation is interrupted. Please update:
+              http://fake-delivery.example
+            </div>
 
-  <div class="phish-content">
-    <h2>
-      <span class="phish-title-script">The Joy of</span>
-      <span class="phish-title-bold">A Good Catch</span>
-    </h2>
+            <button type="button" class="reveal-scam-btn" onclick="revealScamOne()">
+              Reveal the Scam
+            </button>
 
-    <p class="phish-subtitle">Find the phishing attack</p>
+            <div id="scamRevealOne" class="scam-reveal hidden">
+              <h3>Scam Revealed!</h3>
 
-    <div class="catch-examples-grid">
+              <p>
+                This is suspicious because the message comes from an unknown number, creates pressure, and uses a strange link that does not look like a real delivery company website.
+              </p>
 
-      <!-- Example 1 -->
-      <div class="fake-phone scam-example-card">
-        <div class="phone-header">Unknown Number</div>
+              <p>
+                A safer choice is to avoid clicking the link and ask a trusted adult for help.
+              </p>
+            </div>
+          </div>
 
-        <div class="text-bubble light">
-          This message is from an unsaved number. Beware of smishing and phishing.
-        </div>
+          <div class="fake-phone scam-example-card">
+            <div class="phone-header">Game Reward</div>
 
-        <div class="text-bubble">
-          Since the package does not have a house number, the package transportation is interrupted. Please update:
-          http://fake-delivery.example
-        </div>
+            <div class="text-bubble light">
+              Reward Receipt
+            </div>
 
-        <button type="button" class="reveal-scam-btn" onclick="revealScamOne()">
-          Reveal the Scam
-        </button>
+            <div class="text-bubble">
+              A new Roblox reward is waiting! Enter your username and password to claim 5550 Robux.
+            </div>
 
-        <div id="scamRevealOne" class="scam-reveal hidden">
-          <h3>Scam Revealed!</h3>
-          <p>
-            This is suspicious because the message comes from an unknown number, creates pressure, and uses a strange link that does not look like a real delivery company website.
-          </p>
-          <p>
-            A safer choice is to avoid clicking the link and ask a trusted adult for help.
-          </p>
+            <button type="button" class="reveal-scam-btn" onclick="revealScamTwo()">
+              Reveal the Scam
+            </button>
+
+            <div id="scamRevealTwo" class="scam-reveal hidden">
+              <h3>Scam Revealed!</h3>
+
+              <p>
+                This is suspicious because it promises a free reward and asks for a password. Real games should not ask for your password to give you a prize.
+              </p>
+
+              <p>
+                A safer choice is to close the message, avoid entering your password, and tell a trusted adult.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- Example 2 -->
-      <div class="fake-phone scam-example-card">
-        <div class="phone-header">Game Reward</div>
-
-        <div class="text-bubble light">
-          Reward Receipt
-        </div>
-
-        <div class="text-bubble">
-          A new Roblox reward is waiting! Enter your username and password to claim 5550 Robux.
-        </div>
-
-        <button type="button" class="reveal-scam-btn" onclick="revealScamTwo()">
-          Reveal the Scam
-        </button>
-
-        <div id="scamRevealTwo" class="scam-reveal hidden">
-          <h3>Scam Revealed!</h3>
-          <p>
-            This is suspicious because it promises a free reward and asks for a password. Real games should not ask for your password to give you a prize.
-          </p>
-          <p>
-            A safer choice is to close the message, avoid entering your password, and tell a trusted adult.
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-    <!-- SLIDE 9/10: EMAIL ANATOMY -->
     <section class="phish-slide">
       <div class="phish-content">
         <h2>Anatomy of a Phishing Email</h2>
@@ -248,9 +260,11 @@
 
           <div class="email-body">
             <p>Dear customer,</p>
+
             <p>
               We noticed your account has been limited. You must log in right away or your account will be removed.
             </p>
+
             <p>
               Click here to fix your account: www.paypal-security-check.example
             </p>
@@ -268,7 +282,6 @@
       </div>
     </section>
 
-    <!-- SLIDE 11: QUISHING -->
     <section class="phish-slide">
       <div class="cloud one"></div>
       <div class="cloud two"></div>
@@ -289,17 +302,17 @@
         </div>
 
         <div>
-         <img 
-            src="../assets/images/phishing/5.png" 
+          <img
+            src="../assets/images/phishing/5.png"
             alt="QR code icon"
             class="qr-img"
->
+          >
+
           <p class="phish-subtitle">Scan me? Wait first!</p>
         </div>
       </div>
     </section>
 
-    <!-- SLIDE 13: THINKING MOMENT -->
     <section class="phish-slide ocean">
       <div class="cloud one"></div>
       <div class="cloud two"></div>
@@ -318,165 +331,165 @@
       </div>
     </section>
 
-    <!-- SLIDE 14: STOP BLOCK TELL -->
- <section class="phish-slide blue">
-  <div class="phish-content">
-    <h2>
-      <span class="phish-title-script">What to do if</span>
-      <span class="phish-title-bold">You Find a Scam</span>
-    </h2>
+    <section class="phish-slide blue">
+      <div class="phish-content">
+        <h2>
+          <span class="phish-title-script">What to do if</span>
+          <span class="phish-title-bold">You Find a Scam</span>
+        </h2>
 
-    <div class="stop-grid">
-      <div class="stop-card">
-        <h3 class="stop-word">STOP</h3>
-        <p>Do not click on sketchy links.</p>
+        <div class="stop-grid">
+          <div class="stop-card">
+            <h3 class="stop-word">STOP</h3>
+            <p>Do not click on sketchy links.</p>
+          </div>
+
+          <div class="stop-card">
+            <h3 class="stop-word">BLOCK</h3>
+            <p>Do not allow them to message you again.</p>
+          </div>
+
+          <div class="stop-card">
+            <h3 class="stop-word">TELL</h3>
+            <p>Tell an adult or report the account.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="stop-card">
-        <h3 class="stop-word">BLOCK</h3>
-        <p>Do not allow them to message you again.</p>
+    <section class="lesson-card quiz-card">
+      <h2 class="quiz-title">Phish Finder Mini Quiz</h2>
+
+      <p class="quiz-intro">
+        Score 80% or higher to complete this mission.
+      </p>
+
+      <form id="phishingQuiz" class="mini-quiz pretty-quiz">
+        <div class="quiz-question">
+          <p class="quiz-question-title">1. What is phishing?</p>
+
+          <label class="quiz-option">
+            <input type="radio" name="q1" value="wrong">
+            <span>A</span>
+            <p>A safe message from a friend</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q1" value="correct">
+            <span>B</span>
+            <p>A trick used to steal information or make someone click something unsafe</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q1" value="wrong">
+            <span>C</span>
+            <p>A way to decorate your profile</p>
+          </label>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question-title">2. Which one is a fishy sign?</p>
+
+          <label class="quiz-option">
+            <input type="radio" name="q2" value="correct">
+            <span>A</span>
+            <p>Weird spelling, strange links, or “free prize” promises</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q2" value="wrong">
+            <span>B</span>
+            <p>A normal reminder from your teacher</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q2" value="wrong">
+            <span>C</span>
+            <p>A message from your parent about dinner</p>
+          </label>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question-title">3. What should you do if you find a scam?</p>
+
+          <label class="quiz-option">
+            <input type="radio" name="q3" value="wrong">
+            <span>A</span>
+            <p>Click it fast</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q3" value="correct">
+            <span>B</span>
+            <p>Stop, block, and tell an adult</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q3" value="wrong">
+            <span>C</span>
+            <p>Share your password</p>
+          </label>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question-title">4. What is quishing?</p>
+
+          <label class="quiz-option">
+            <input type="radio" name="q4" value="wrong">
+            <span>A</span>
+            <p>A safe way to play games</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q4" value="correct">
+            <span>B</span>
+            <p>A scam that uses malicious QR codes</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q4" value="wrong">
+            <span>C</span>
+            <p>A type of strong password</p>
+          </label>
+        </div>
+
+        <div class="quiz-question">
+          <p class="quiz-question-title">5. Why do scammers use “FREE” prizes?</p>
+
+          <label class="quiz-option">
+            <input type="radio" name="q5" value="correct">
+            <span>A</span>
+            <p>To make people excited and click before thinking</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q5" value="wrong">
+            <span>B</span>
+            <p>Because all free prize messages are real</p>
+          </label>
+
+          <label class="quiz-option">
+            <input type="radio" name="q5" value="wrong">
+            <span>C</span>
+            <p>To help you stay safe</p>
+          </label>
+        </div>
+
+        <div class="quiz-submit-area">
+          <button type="button" onclick="gradePhishingQuiz()" class="mission-btn">
+            Check My Answers
+          </button>
+        </div>
+      </form>
+
+      <div id="quizResult" class="quiz-result"></div>
+
+      <div id="missionCompleteBox" class="mission-complete-area hidden">
+        <button class="mission-btn" onclick="completeMission('phishing')">
+          Complete Phish Finder
+        </button>
       </div>
-
-      <div class="stop-card">
-        <h3 class="stop-word">TELL</h3>
-        <p>Tell an adult or report the account.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-    <!-- MINI QUIZ -->
-  <section class="lesson-card quiz-card">
-  <h2 class="quiz-title">Phish Finder Mini Quiz</h2>
-  <p class="quiz-intro">Score 80% or higher to complete this mission.</p>
-
-  <form id="phishingQuiz" class="mini-quiz pretty-quiz">
-
-    <div class="quiz-question">
-      <p class="quiz-question-title">1. What is phishing?</p>
-
-      <label class="quiz-option">
-        <input type="radio" name="q1" value="wrong">
-        <span>A</span>
-        <p>A safe message from a friend</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q1" value="correct">
-        <span>B</span>
-        <p>A trick used to steal information or make someone click something unsafe</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q1" value="wrong">
-        <span>C</span>
-        <p>A way to decorate your profile</p>
-      </label>
-    </div>
-
-    <div class="quiz-question">
-      <p class="quiz-question-title">2. Which one is a fishy sign?</p>
-
-      <label class="quiz-option">
-        <input type="radio" name="q2" value="correct">
-        <span>A</span>
-        <p>Weird spelling, strange links, or “free prize” promises</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q2" value="wrong">
-        <span>B</span>
-        <p>A normal reminder from your teacher</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q2" value="wrong">
-        <span>C</span>
-        <p>A message from your parent about dinner</p>
-      </label>
-    </div>
-
-    <div class="quiz-question">
-      <p class="quiz-question-title">3. What should you do if you find a scam?</p>
-
-      <label class="quiz-option">
-        <input type="radio" name="q3" value="wrong">
-        <span>A</span>
-        <p>Click it fast</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q3" value="correct">
-        <span>B</span>
-        <p>Stop, block, and tell an adult</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q3" value="wrong">
-        <span>C</span>
-        <p>Share your password</p>
-      </label>
-    </div>
-
-    <div class="quiz-question">
-      <p class="quiz-question-title">4. What is quishing?</p>
-
-      <label class="quiz-option">
-        <input type="radio" name="q4" value="wrong">
-        <span>A</span>
-        <p>A safe way to play games</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q4" value="correct">
-        <span>B</span>
-        <p>A scam that uses malicious QR codes</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q4" value="wrong">
-        <span>C</span>
-        <p>A type of strong password</p>
-      </label>
-    </div>
-
-    <div class="quiz-question">
-      <p class="quiz-question-title">5. Why do scammers use “FREE” prizes?</p>
-
-      <label class="quiz-option">
-        <input type="radio" name="q5" value="correct">
-        <span>A</span>
-        <p>To make people excited and click before thinking</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q5" value="wrong">
-        <span>B</span>
-        <p>Because all free prize messages are real</p>
-      </label>
-
-      <label class="quiz-option">
-        <input type="radio" name="q5" value="wrong">
-        <span>C</span>
-        <p>To help you stay safe</p>
-      </label>
-    </div>
-
-    <div class="quiz-submit-area">
-      <button type="button" onclick="gradePhishingQuiz()" class="mission-btn">
-        Check My Answers
-      </button>
-    </div>
-  </form>
-
-  <div id="quizResult" class="quiz-result"></div>
-
-  <div id="missionCompleteBox" class="mission-complete-area hidden">
-    <button class="mission-btn" onclick="completeMission('phishing')">
-      Complete Phish Finder
-    </button>
-  </div>
-</section>
+    </section>
 
   </main>
 
