@@ -1150,3 +1150,95 @@ h1 {
   text-align: center;
   margin-top: 10px;
 }
+
+.catch-examples-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: 28px;
+  align-items: start;
+  margin-top: 24px;
+}
+
+.scam-example-card {
+  position: relative;
+}
+
+.reveal-scam-btn {
+  display: inline-block;
+  background: #1fd7e8;
+  color: #ffffff;
+  border: none;
+  text-decoration: none;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: 999px;
+  box-shadow: 0 5px 0 #13aebb;
+  cursor: pointer;
+  margin: 14px auto 0;
+  font-family: inherit;
+}
+
+.reveal-scam-btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #13aebb;
+}
+
+.scam-reveal {
+  background: #ffffff;
+  border: 3px solid #7b2cff;
+  border-radius: 18px;
+  padding: 16px;
+  margin-top: 18px;
+  box-shadow: 0 5px 0 rgba(123, 44, 255, 0.2);
+}
+
+.scam-reveal h3 {
+  color: #0f8f9d;
+  font-family: 'Pacifico', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.scam-reveal p {
+  color: #2d241c;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .catch-examples-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.start-mission-btn {
+  display: inline-block !important;
+  background: #1fd7e8 !important;
+  color: #ffffff !important;
+  border: none !important;
+  text-decoration: none !important;
+  font-weight: 800 !important;
+  font-size: 1rem;
+  padding: 14px 32px;
+  border-radius: 999px;
+  box-shadow: 0 6px 0 #13aebb;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.start-mission-btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #13aebb;
+}
+
+.hero-button-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
