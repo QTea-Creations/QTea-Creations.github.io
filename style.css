@@ -1242,3 +1242,253 @@ h1 {
   justify-content: center;
   margin-top: 18px;
 }
+
+.badge-page {
+  min-height: 100vh;
+  background: #f4f1e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 5%;
+}
+
+.badge-reveal-card {
+  background: #ffffff;
+  border: 4px solid #70c8d2;
+  border-radius: 34px;
+  padding: 40px;
+  text-align: center;
+  max-width: 650px;
+  width: 100%;
+  box-shadow: 0 10px 0 rgba(112, 200, 210, 0.35);
+}
+
+.badge-small-text {
+  color: #0f8f9d;
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+
+.badge-reveal-card h1 {
+  font-family: 'Pacifico', cursive;
+  color: #7b2cff;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.earned-badge-img {
+  width: min(320px, 90%);
+  height: auto;
+  object-fit: contain;
+  margin: 20px auto;
+  display: block;
+}
+
+.badge-message {
+  color: #2d241c;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 20px 0 28px;
+}
+
+.badge-progress-section {
+  background: #ffffff;
+  text-align: center;
+  padding: 45px 5%;
+}
+
+.badge-progress-section h2 {
+  font-family: 'Pacifico', cursive;
+  color: #7b2cff;
+  font-size: 2.7rem;
+  margin-bottom: 8px;
+}
+
+.badge-progress-section p {
+  color: #2d241c;
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+
+.badge-progress-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 22px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.badge-progress-card {
+  background: #f4f1e8;
+  border: 3px solid #70c8d2;
+  border-radius: 24px;
+  padding: 18px;
+  text-decoration: none;
+  color: #2d241c;
+  box-shadow: 0 6px 0 rgba(112, 200, 210, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.badge-progress-card:hover {
+  transform: translateY(-3px);
+}
+
+.badge-progress-card img {
+  width: 135px;
+  height: 135px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 12px;
+}
+
+.badge-progress-card h3 {
+  color: #0f8f9d;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.badge-status {
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.badge-progress-card.locked img {
+  filter: grayscale(100%);
+  opacity: 0.35;
+}
+
+.badge-progress-card.locked {
+  border-style: dashed;
+}
+
+.badge-progress-card.locked .badge-status {
+  color: #7b2cff;
+}
+
+.badge-progress-card.earned .badge-status {
+  color: #0f8f9d;
+}
+
+.certificate-button-wrap {
+  margin-top: 30px;
+}
+
+@media (max-width: 1000px) {
+  .badge-progress-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .badge-progress-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.certificate-page {
+  min-height: 100vh;
+  background: #f4f1e8;
+  padding: 40px 5%;
+}
+
+.certificate-card {
+  background: #ffffff;
+  border: 5px solid #70c8d2;
+  border-radius: 34px;
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 10px 0 rgba(112, 200, 210, 0.35);
+}
+
+.certificate-label {
+  color: #0f8f9d;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.certificate-card h1 {
+  font-family: 'Pacifico', cursive;
+  color: #7b2cff;
+  font-size: 3.6rem;
+  margin: 10px 0;
+}
+
+.certificate-card h2 {
+  color: #0f8f9d;
+  font-size: 2rem;
+  margin-top: 30px;
+}
+
+.certificate-text {
+  color: #2d241c;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.certificate-locked-box,
+.certificate-unlocked-box {
+  border-radius: 24px;
+  padding: 24px;
+  margin: 28px auto;
+  max-width: 700px;
+}
+
+.certificate-locked-box {
+  background: #fff5ff;
+  border: 3px dashed #7b2cff;
+}
+
+.certificate-unlocked-box {
+  background: #f7fdff;
+  border: 3px solid #70c8d2;
+}
+
+.certificate-badge-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.certificate-badge-card {
+  background: #f4f1e8;
+  border: 3px solid #70c8d2;
+  border-radius: 22px;
+  padding: 16px;
+}
+
+.certificate-badge-card img {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+}
+
+.certificate-badge-card.locked img {
+  filter: grayscale(100%);
+  opacity: 0.3;
+}
+
+.certificate-badge-card h3 {
+  font-size: 0.95rem;
+  color: #2d241c;
+}
+
+@media (max-width: 900px) {
+  .certificate-badge-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .certificate-badge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .certificate-card h1 {
+    font-size: 2.7rem;
+  }
+}
