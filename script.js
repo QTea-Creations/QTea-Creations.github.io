@@ -1,14 +1,60 @@
-let completedMissions = 0;
-const totalMissions = 5;
-let completedList = [];
+const missions = [
+  {
+    id: "identity",
+    title: "Identity Protector",
+    lessonPath: "missions/identity.html",
+    badgePath: "assets/Identity Protector Badge.png"
+  },
+  {
+    id: "password",
+    title: "Password Safe Keeper",
+    lessonPath: "missions/password.html",
+    badgePath: "assets/Password Safe Keeper Badge.png"
+  },
+  {
+    id: "phishing",
+    title: "Phish Finder",
+    lessonPath: "missions/phishing.html",
+    badgePath: "assets/Phish Finder Badge.png"
+  },
+  {
+    id: "footprint",
+    title: "Digital Footprint Defender",
+    lessonPath: "missions/footprint.html",
+    badgePath: "assets/Digital Footprint Defender Badge.png"
+  },
+  {
+    id: "responder",
+    title: "Cyber Responder",
+    lessonPath: "missions/responder.html",
+    badgePath: "assets/Cyber Responder Badge.png"
+  }
+];
 
-function completeMission(missionNumber) {
-  if (!completedList.includes(missionNumber)) {
-    completedList.push(missionNumber);
-    completedMissions++;
+function getCompletedMissions() {
+  const savedData = localStorage.getItem("safetiiCompletedMissions");
+
+  if (savedData) {
+    return JSON.parse(savedData);
   }
 
-  function completeMission(missionName) {
+  return [];
+}
+
+function saveCompletedMissions(completedMissions) {
+  localStorage.setItem(
+    "safetiiCompletedMissions",
+    JSON.stringify(completedMissions)
+  );
+}
+
+function getMissionById(missionId) {
+  return missions.find(function(mission) {
+    return mission.id === missionId;
+  });
+}
+
+function completeMission(missionName) {
   let completedMissions = getCompletedMissions();
 
   if (!completedMissions.includes(missionName)) {
@@ -16,100 +62,15 @@ function completeMission(missionNumber) {
   }
 
   saveCompletedMissions(completedMissions);
-
   localStorage.setItem("lastCompletedMission", missionName);
 
   window.location.href = "../badge.html";
-}
-const missions = [
-  {
-    id: "identity",
-    title: "Identity Protector",
-    lessonPath: "missions/identity.html",
-    badgePath: "assets/badges/identity-badge.png"
-  },
-  {
-    id: "password",
-    title: "Password Safe Keeper",
-    lessonPath: "missions/password.html",
-    badgePath: "assets/badges/password-badge.png"
-  },
-  {
-    id: "phishing",
-    title: "Phish Finder",
-    lessonPath: "missions/phishing.html",
-    badgePath: "assets/badges/phishing-badge.png"
-  },
-  {
-    id: "footprint",
-    title: "Digital Footprint Defender",
-    lessonPath: "missions/footprint.html",
-    badgePath: "assets/badges/footprint-badge.png"
-  },
-  {
-    id: "responder",
-    title: "Cyber Responder",
-    lessonPath: "missions/responder.html",
-    badgePath: "assets/badges/responder-badge.png"
-  }
-];
-  const percent = Math.round((completedMissions / totalMissions) * 100);
-
-  document.getElementById("progressText").textContent =
-    completedMissions + " of " + totalMissions + " missions complete";
-
-  document.getElementById("circleProgress").textContent = percent + "%";
-
-  alert("Mission complete! Badge unlocked!");
-}
-function getMissionById(missionId) {
-  return missions.find(function(mission) {
-    return mission.id === missionId;
-  });
-}
-
-function loadBadgeReveal() {
-  const badgeTitle = document.getElementById("badgeTitle");
-  const earnedBadgeImg = document.getElementById("earnedBadgeImg");
-  const badgeMessage = document.getElementById("badgeMessage");
-
-  if (!badgeTitle || !earnedBadgeImg || !badgeMessage) {
-    return;
-  }
-
-  const lastCompletedMission = localStorage.getItem("lastCompletedMission");
-  const mission = getMissionById(lastCompletedMission);
-
-  if (!mission) {
-    badgeTitle.textContent = "Badge Earned!";
-    badgeMessage.textContent = "Great job completing your mission!";
-    return;
-  }
-
-  badgeTitle.textContent = mission.title + " Badge Earned!";
-  earnedBadgeImg.src = mission.badgePath;
-  earnedBadgeImg.alt = mission.title + " badge";
-  badgeMessage.textContent = "Great job! You completed " + mission.title + ".";
-}
-
-function goHome() {
-  window.location.href = "index.html";
-}
-function checkAnswer(isCorrect) {
-  const result = document.getElementById("practiceResult");
-
-  if (isCorrect) {
-    result.textContent = "Correct! Sharing your full name, age, and school is not safe.";
-  } else {
-    result.textContent = "Try again. That information can help strangers identify you.";
-  }
 }
 
 function updateProgressDisplay() {
   const completedMissions = getCompletedMissions();
   const completedCount = completedMissions.length;
   const totalMissions = missions.length;
-
   const percentage = Math.round((completedCount / totalMissions) * 100);
 
   const progressPercent = document.getElementById("progressPercent");
@@ -127,7 +88,8 @@ function updateProgressDisplay() {
   }
 
   if (progressCount) {
-    progressCount.textContent = completedCount + " of " + totalMissions + " missions complete";
+    progressCount.textContent =
+      completedCount + " of " + totalMissions + " missions complete";
   }
 
   if (certificateSection) {
@@ -141,40 +103,6 @@ function updateProgressDisplay() {
   }
 
   renderBadgeProgress();
-}
-
-function showResult(resultId, isCorrect) {
-  const result = document.getElementById(resultId);
-
-  if (isCorrect) {
-    result.textContent = "Correct! Great job, Cyber Super Hero.";
-  } else {
-    result.textContent = "Try again. Think about the safest choice.";
-  }
-}
-
-function quizAnswer(isCorrect) {
-  const result = document.getElementById("quizResult");
-
-  if (isCorrect) {
-    result.textContent = "Correct! Always tell a trusted adult.";
-  } else {
-    result.textContent = "Try again. You should not share private information online.";
-  }
-}
-
-function checkQuestionOfDay(answer) {
-  const feedback = document.getElementById("questionFeedback");
-
-  if (!feedback) {
-    return;
-  }
-
-  if (answer === "correct") {
-    feedback.textContent = "Correct! Free Robux scams are often phishing tricks. Ignore it and tell a trusted adult.";
-  } else {
-    feedback.textContent = "Careful! Scammers use exciting words like FREE to make you click before you think.";
-  }
 }
 
 function renderBadgeProgress() {
@@ -211,14 +139,76 @@ function renderBadgeProgress() {
   });
 }
 
-function showPhishFlag() {
-  const feedback = document.getElementById("phishFlagFeedback");
+function loadBadgeReveal() {
+  const badgeTitle = document.getElementById("badgeTitle");
+  const earnedBadgeImg = document.getElementById("earnedBadgeImg");
+  const badgeMessage = document.getElementById("badgeMessage");
+
+  if (!badgeTitle || !earnedBadgeImg || !badgeMessage) {
+    return;
+  }
+
+  const lastCompletedMission = localStorage.getItem("lastCompletedMission");
+  const mission = getMissionById(lastCompletedMission);
+
+  if (!mission) {
+    badgeTitle.textContent = "Badge Earned!";
+    badgeMessage.textContent = "Great job completing your mission!";
+    earnedBadgeImg.style.display = "none";
+    return;
+  }
+
+  badgeTitle.textContent = mission.title + " Badge Earned!";
+  earnedBadgeImg.src = mission.badgePath;
+  earnedBadgeImg.alt = mission.title + " badge";
+  badgeMessage.textContent = "Great job! You completed " + mission.title + ".";
+}
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+function scrollToQuestionOfDay() {
+  const questionSection = document.getElementById("questionOfDay");
+
+  if (questionSection) {
+    questionSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+}
+
+function checkQuestionOfDay(answer) {
+  const feedback = document.getElementById("questionFeedback");
 
   if (!feedback) {
     return;
   }
 
-  feedback.textContent = "Good catch! The link is suspicious because it does not look like a real delivery company website.";
+  if (answer === "correct") {
+    feedback.textContent =
+      "Correct! Free Robux scams are often phishing tricks. Ignore it and tell a trusted adult.";
+  } else {
+    feedback.textContent =
+      "Careful! Scammers use exciting words like FREE to make you click before you think.";
+  }
+}
+
+function revealScamOne() {
+  const scamBox = document.getElementById("scamRevealOne");
+
+  if (scamBox) {
+    scamBox.classList.toggle("hidden");
+  }
+}
+
+function revealScamTwo() {
+  const scamBox = document.getElementById("scamRevealTwo");
+
+  if (scamBox) {
+    scamBox.classList.toggle("hidden");
+  }
 }
 
 function gradePhishingQuiz() {
@@ -250,27 +240,13 @@ function gradePhishingQuiz() {
   const percentage = Math.round((score / totalQuestions) * 100);
 
   if (percentage >= 80) {
-    quizResult.textContent = "Great job! You scored " + percentage + "%. You caught the phisher!";
+    quizResult.textContent =
+      "Great job! You scored " + percentage + "%. You caught the phisher!";
     missionCompleteBox.classList.remove("hidden");
   } else {
-    quizResult.textContent = "You scored " + percentage + "%. Try again. You need 80% or higher.";
+    quizResult.textContent =
+      "You scored " + percentage + "%. Try again. You need 80% or higher.";
     missionCompleteBox.classList.add("hidden");
-  }
-}
-
-function revealScamOne() {
-  const scamBox = document.getElementById("scamRevealOne");
-
-  if (scamBox) {
-    scamBox.classList.toggle("hidden");
-  }
-}
-
-function revealScamTwo() {
-  const scamBox = document.getElementById("scamRevealTwo");
-
-  if (scamBox) {
-    scamBox.classList.toggle("hidden");
   }
 }
 
@@ -318,12 +294,6 @@ function renderCertificatePage() {
       card.href = mission.lessonPath;
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-  updateProgressDisplay();
-  loadBadgeReveal();
-  renderCertificatePage();
-});
-
     card.innerHTML =
       '<img src="' + mission.badgePath + '" alt="' + mission.title + ' badge">' +
       '<h3>' + mission.title + '</h3>' +
@@ -333,17 +303,8 @@ function renderCertificatePage() {
   });
 }
 
-function scrollToQuestionOfDay() {
-  const questionSection = document.getElementById("questionOfDay");
-
-  if (questionSection) {
-    questionSection.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
-}
 document.addEventListener("DOMContentLoaded", function() {
   updateProgressDisplay();
   loadBadgeReveal();
+  renderCertificatePage();
 });
