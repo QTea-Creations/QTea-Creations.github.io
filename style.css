@@ -2517,3 +2517,37 @@ a {
     page-break-inside: avoid;
   }
 }
+
+
+.home-sidebar-badges {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 13px;
+}
+
+.home-badge-item {
+  width: 100%;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  align-items: center;
+  justify-items: start;
+  gap: 12px;
+  text-align: left;
+  border-radius: 17px;
+  background: #f5fbff;
+}
+
+.home-badge-item img {
+  width: 74px;
+  height: 74px;
+  margin: 0;
+  object-fit: contain;
+}
+
+.home-badge-item span {
+  text-align: left;
+  justify-self: start;
+}
