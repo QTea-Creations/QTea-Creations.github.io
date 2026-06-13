@@ -1,105 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Safetii Net</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-<body>
 
-  <nav class="navbar">
-    <div class="logo">Safetii Net</div>
-    <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#missions">Missions</a>
-      <a href="#curriculum">Curriculum</a>
-      <a href="#about">About</a>
-    </div>
-  </nav>
+<body class="home-page">
 
-    <section class="hero">
-  <div class="hero-text">
-    <p class="tag">Cyber Superhero Training</p>
-    <h1>Be Smart.<br>Be Safe.<br>Be Secure.</h1>
-    <p>
-      Fun missions and games that help you learn digital safety,
-      earn badges, and protect yourself online.
-    </p>
-
-    <div class="hero-buttons">
-      <a class="button" href="#missions">Start Learning</a>
-      <a class="outline-button" href="#how">How It Works</a>
-    </div>
-  </div>
-
-  <div class="hero-image">
-    🤖
-    <p>Meme the Cyber Mentor</p>
-  </div>
-
-  <div class="progress-card">
-    <h3>Your Progress</h3>
-    <div id="circleProgress" class="circle-progress">0%</div>
-    <p id="progressText">0 of 5 missions complete</p>
-    <button>View Certificate</button>
-  </div>
-</section>
-
-  <section class="badge-progress-section">
-  <h2>Your Mission Badges</h2>
-  <p>Earn all 5 badges to unlock your final certificate.</p>
-
-  <div id="badgeProgressGrid" class="badge-progress-grid"></div>
-
-  <div class="certificate-button-wrap">
-    <a href="certificate.html" class="mission-btn">
-      View Certificate
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/Safetii NetLogo.png" alt="Safetii Net logo">
     </a>
-  </div>
-</section>
-  
-   <section id="missions" class="section">
-    <h2>Choose Your Cyber Mission</h2>
 
-    <div class="mission-grid">
-      <div class="mission-card">
-        <img src="assets/Identity Protector.png" class="badge-img" alt="Identity Protector Badge">
-        <a class="button" href="identity.html">Start Mission</a>
+    <nav class="site-navigation">
+      <a href="#missions">Missions</a>
+      <a href="certificate.html">Certificate</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="home-hero">
+      <div class="home-hero-text">
+        <p class="hero-label">Learn. Practice. Protect.</p>
+
+        <h1>Become a Cyber Safety Hero!</h1>
+
+        <p class="hero-description">
+          Join Meme on five exciting cybersecurity missions. Learn how to protect your identity,
+          build strong passwords, recognize scams, manage your digital footprint, and respond safely online.
+        </p>
+
+        <a class="primary-button" href="#missions">Start Your Adventure</a>
       </div>
 
-      <div class="mission-card">
-        <img src="assets/Password Safe Keeper.png" class="badge-img" alt="Password Safe Keeper Badge">
-        <a class="button" href="missions/password.html">Start Mission</a>
+      <div class="hero-logo-panel">
+        <img src="assets/Safetii NetLogo.png" alt="Safetii Net">
       </div>
+    </section>
 
-      <div class="mission-card">
-        <img src="assets/Phish Finder.png" class="badge-img" alt="Phish Finder Badge">
-        <a class="button" href="missions/phishing.html">Start Mission</a>
-      </div>
+    <div class="home-content-layout">
+      <section class="missions-column" id="missions">
+        <div class="section-heading">
+          <p class="section-kicker">Your Training Path</p>
+          <h2>Choose Your Cyber Mission</h2>
+          <p>Complete each mission to earn its badge. Finish all five to unlock your certificate.</p>
+        </div>
 
-      <div class="mission-card">
-        <img src="assets/Digital Footprint Defender.png" class="badge-img" alt="Digital Footprint Defender Badge">
-        <a class="button" href="missions/footprint.html">Start Mission</a>
-      </div>
+        <div class="mission-grid">
+          <article class="mission-card">
+            <div class="mission-card-icon">
+              <img src="assets/Identity Protector.png" alt="Identity Protector mission">
+            </div>
 
-      <div class="mission-card">
-        <img src="assets/Cyber Responder.png" class="badge-img" alt="Cyber Responder Badge">
-        <a class="button" href="missions/responder.html">Start Mission</a>
-      </div>
-      
+            <div class="mission-card-content">
+              <p class="mission-number">Mission 1</p>
+              <h3>Identity Protector</h3>
+              <p>Discover what personal information is and learn how to keep it private online.</p>
+              <a class="mission-button" href="missions/identity.html">Start Mission</a>
+            </div>
+          </article>
+
+          <article class="mission-card">
+            <div class="mission-card-icon">
+              <img src="assets/Password Safe Keeper.png" alt="Password Safe Keeper mission">
+            </div>
+
+            <div class="mission-card-content">
+              <p class="mission-number">Mission 2</p>
+              <h3>Password Safe Keeper</h3>
+              <p>Learn how to create strong passwords and protect your accounts from intruders.</p>
+              <a class="mission-button" href="missions/password.html">Start Mission</a>
+            </div>
+          </article>
+
+          <article class="mission-card">
+            <div class="mission-card-icon">
+              <img src="assets/Phish Finder.png" alt="Phish Finder mission">
+            </div>
+
+            <div class="mission-card-content">
+              <p class="mission-number">Mission 3</p>
+              <h3>Phish Finder</h3>
+              <p>Investigate suspicious messages, links, prizes, forms, and QR-code scams.</p>
+              <a class="mission-button" href="missions/phishing.html">Start Mission</a>
+            </div>
+          </article>
+
+          <article class="mission-card">
+            <div class="mission-card-icon">
+              <img src="assets/Digital Footprint Defender.png" alt="Digital Footprint Defender mission">
+            </div>
+
+            <div class="mission-card-content">
+              <p class="mission-number">Mission 4</p>
+              <h3>Digital Footprint Defender</h3>
+              <p>Understand what you leave behind online and how your choices affect your reputation.</p>
+              <a class="mission-button" href="missions/footprint.html">Start Mission</a>
+            </div>
+          </article>
+
+          <article class="mission-card">
+            <div class="mission-card-icon">
+              <img src="assets/Cyber Responder.png" alt="Cyber Responder mission">
+            </div>
+
+            <div class="mission-card-content">
+              <p class="mission-number">Mission 5</p>
+              <h3>Cyber Responder</h3>
+              <p>Practice what to do when you see bullying, scams, unsafe behavior, or hacked accounts.</p>
+              <a class="mission-button" href="missions/responder.html">Start Mission</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <aside class="home-sidebar">
+        <section class="home-sidebar-card progress-sidebar-card">
+          <p class="sidebar-label">Mission Tracker</p>
+          <h2>Your Progress</h2>
+
+          <div class="progress-count">
+            <strong id="completedMissionCount">0</strong>
+            <span>of 5 complete</span>
+          </div>
+
+          <div class="home-progress-track" aria-label="Mission progress">
+            <div id="homeProgressFill" class="home-progress-fill"></div>
+          </div>
+
+          <p id="homeProgressMessage" class="progress-message">
+            Complete your first mission to begin earning badges.
+          </p>
+        </section>
+
+        <a class="view-certificate-button" href="certificate.html">
+          View My Certificate
+        </a>
+
+        <section class="home-sidebar-card">
+          <p class="sidebar-label">Your Collection</p>
+          <h2>Badges Earned</h2>
+
+          <div id="homeSidebarBadges" class="home-sidebar-badges"></div>
+        </section>
+
+        <section class="home-sidebar-card educator-sidebar-card">
+          <p class="sidebar-label">Teachers and Leaders</p>
+          <h2>For Educators</h2>
+
+          <p>
+            Safetii Net helps educators, families, and Girl Scout leaders teach important online-safety skills.
+          </p>
+        </section>
+      </aside>
     </div>
-  </section>
+  </main>
 
-  <section class="sidebar-card badges-sidebar-card">
-  <div class="sidebar-card-header">
-    <h3>Badges Earned</h3>
-    <a href="certificate.html" class="sidebar-link">View All</a>
-  </div>
+  <footer class="site-footer">
+    <p>Safetii Net — Learn smart. Stay safe. Protect your digital world.</p>
+  </footer>
 
-  <div id="badgeCascadeList" class="badge-cascade-list"></div>
-</section>
-
-   <script src="script.js"></script>
 </body>
 </html>
