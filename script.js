@@ -1,3 +1,12 @@
+const storageVersion = "2";
+
+if (localStorage.getItem("safetiiStorageVersion") !== storageVersion) {
+  localStorage.removeItem("completedMissions");
+  localStorage.removeItem("safetiiCompletedMissions");
+  localStorage.removeItem("lastCompletedMission");
+
+  localStorage.setItem("safetiiStorageVersion", storageVersion);
+}
 const missions = [
   {
     id: "identity",
