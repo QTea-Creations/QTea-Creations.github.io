@@ -36,25 +36,38 @@ const missions = [
   }
 ];
 
-function normalizeCompletedMission(value) {
-  const mission = missions.find(function (item) {
-    return item.id === value || item.name === value;
+function getMissionById(value) {
+  return missions.find(function (mission) {
+    return mission.id === value || mission.name === value;
   });
+}
 
+function normalizeCompletedMission(value) {
+  const mission = getMissionById(value);
   return mission ? mission.id : null;
 }
 
 function getCompletedMissions() {
   try {
-    const savedMissions = JSON.parse(
+    const currentSaved = JSON.parse(
       localStorage.getItem("completedMissions") || "[]"
     );
 
-    if (!Array.isArray(savedMissions)) {
-      return [];
+    const olderSaved = JSON.parse(
+      localStorage.getItem("safetiiCompletedMissions") || "[]"
+    );
+
+    const combined = [];
+
+    if (Array.isArray(currentSaved)) {
+      combined.push(...currentSaved);
     }
 
-    return savedMissions
+    if (Array.isArray(olderSaved)) {
+      combined.push(...olderSaved);
+    }
+
+    return combined
       .map(normalizeCompletedMission)
       .filter(function (missionId, index, list) {
         return missionId && list.indexOf(missionId) === index;
@@ -75,12 +88,11 @@ function saveCompletedMissions(completedMissions) {
     "completedMissions",
     JSON.stringify(cleanedMissions)
   );
-}
 
-function getMissionById(value) {
-  return missions.find(function (mission) {
-    return mission.id === value || mission.name === value;
-  });
+  localStorage.setItem(
+    "safetiiCompletedMissions",
+    JSON.stringify(cleanedMissions)
+  );
 }
 
 function completeMission(missionValue) {
@@ -94,8 +106,10 @@ function completeMission(missionValue) {
 
   if (!completedMissions.includes(mission.id)) {
     completedMissions.push(mission.id);
-    saveCompletedMissions(completedMissions);
   }
+
+  saveCompletedMissions(completedMissions);
+  localStorage.setItem("lastCompletedMission", mission.id);
 
   window.location.href =
     "/badge.html?mission=" + encodeURIComponent(mission.id);
@@ -105,41 +119,68 @@ function updateProgressDisplay() {
   const completedMissions = getCompletedMissions();
   const completedCount = completedMissions.length;
   const totalMissions = missions.length;
-  const progressPercentage = Math.round(
+  const percentage = Math.round(
     (completedCount / totalMissions) * 100
   );
 
-  const countElement = document.getElementById("completedMissionCount");
-  const fillElement = document.getElementById("homeProgressFill");
-  const messageElement = document.getElementById("homeProgressMessage");
+  const completedMissionCount = document.getElementById(
+    "completedMissionCount"
+  );
 
-  if (countElement) {
-    countElement.textContent = completedCount;
+  const homeProgressFill = document.getElementById(
+    "homeProgressFill"
+  );
+
+  const homeProgressMessage = document.getElementById(
+    "homeProgressMessage"
+  );
+
+  if (completedMissionCount) {
+    completedMissionCount.textContent = completedCount;
   }
 
-  if (fillElement) {
-    fillElement.style.width = progressPercentage + "%";
+  if (homeProgressFill) {
+    homeProgressFill.style.width = percentage + "%";
   }
 
-  if (messageElement) {
+  if (homeProgressMessage) {
     if (completedCount === 0) {
-      messageElement.textContent =
+      homeProgressMessage.textContent =
         "Complete your first mission to begin earning badges.";
     } else if (completedCount < totalMissions) {
       const remaining = totalMissions - completedCount;
 
-      messageElement.textContent =
+      homeProgressMessage.textContent =
         remaining +
-        (remaining === 1 ? " mission remains." : " missions remain.");
+        (remaining === 1
+          ? " mission remains."
+          : " missions remain.");
     } else {
-      messageElement.textContent =
+      homeProgressMessage.textContent =
         "All missions complete! Your certificate is unlocked.";
     }
+  }
+
+  const olderProgressText = document.getElementById("progressText");
+  const olderProgressFill = document.getElementById("progressFill");
+
+  if (olderProgressText) {
+    olderProgressText.textContent =
+      completedCount +
+      " of " +
+      totalMissions +
+      " missions complete";
+  }
+
+  if (olderProgressFill) {
+    olderProgressFill.style.width = percentage + "%";
   }
 }
 
 function renderHomeSidebarBadges() {
-  const badgeContainer = document.getElementById("homeSidebarBadges");
+  const badgeContainer = document.getElementById(
+    "homeSidebarBadges"
+  );
 
   if (!badgeContainer) {
     return;
@@ -185,43 +226,71 @@ function renderHomeSidebarBadges() {
 }
 
 function loadBadgeReveal() {
-  const badgeImage = document.getElementById("earnedBadgeImage");
-  const badgeTitle = document.getElementById("earnedBadgeTitle");
-  const badgeMessage = document.getElementById("earnedBadgeMessage");
-
-  if (!badgeImage && !badgeTitle && !badgeMessage) {
-    return;
-  }
-
   const parameters = new URLSearchParams(window.location.search);
-  const requestedMission = parameters.get("mission");
+
+  const requestedMission =
+    parameters.get("mission") ||
+    localStorage.getItem("lastCompletedMission");
+
   const mission = getMissionById(requestedMission);
 
+  const newBadgeTitle = document.getElementById(
+    "earnedBadgeTitle"
+  );
+
+  const newBadgeImage = document.getElementById(
+    "earnedBadgeImage"
+  );
+
+  const newBadgeMessage = document.getElementById(
+    "earnedBadgeMessage"
+  );
+
+  const olderBadgeTitle = document.getElementById("badgeTitle");
+  const olderBadgeImage = document.getElementById("earnedBadgeImg");
+  const olderBadgeMessage = document.getElementById("badgeMessage");
+
   if (!mission) {
-    if (badgeTitle) {
-      badgeTitle.textContent = "Mission Complete!";
+    if (newBadgeTitle) {
+      newBadgeTitle.textContent = "Badge Earned!";
     }
 
-    if (badgeMessage) {
-      badgeMessage.textContent =
-        "You completed a Safetii Net cybersecurity mission.";
+    if (olderBadgeTitle) {
+      olderBadgeTitle.textContent = "Badge Earned!";
     }
 
     return;
   }
 
-  if (badgeImage) {
-    badgeImage.src = mission.badge;
-    badgeImage.alt = mission.name + " badge";
+  if (newBadgeTitle) {
+    newBadgeTitle.textContent =
+      mission.name + " Badge Earned!";
   }
 
-  if (badgeTitle) {
-    badgeTitle.textContent = mission.name + " Badge Earned!";
+  if (newBadgeImage) {
+    newBadgeImage.src = mission.badge;
+    newBadgeImage.alt = mission.name + " badge";
   }
 
-  if (badgeMessage) {
-    badgeMessage.textContent =
-      "Great work! Your new badge has been added to your collection.";
+  if (newBadgeMessage) {
+    newBadgeMessage.textContent =
+      "Great work! Your badge has been added to your collection.";
+  }
+
+  if (olderBadgeTitle) {
+    olderBadgeTitle.textContent =
+      mission.name + " Badge Earned!";
+  }
+
+  if (olderBadgeImage) {
+    olderBadgeImage.src = mission.badge;
+    olderBadgeImage.alt = mission.name + " badge";
+    olderBadgeImage.style.display = "block";
+  }
+
+  if (olderBadgeMessage) {
+    olderBadgeMessage.textContent =
+      "Great job! You completed " + mission.name + ".";
   }
 }
 
@@ -230,58 +299,80 @@ function goHome() {
 }
 
 function renderCertificatePage() {
-  const badgeContainer = document.getElementById("certificateBadges");
+  const badgeContainer = document.getElementById(
+    "certificateBadges"
+  );
 
-  if (!badgeContainer) {
+  const olderBadgeContainer = document.getElementById(
+    "certificateBadgeGrid"
+  );
+
+  const activeContainer =
+    badgeContainer || olderBadgeContainer;
+
+  if (!activeContainer) {
     return;
   }
 
   const completedMissions = getCompletedMissions();
   const completedCount = completedMissions.length;
   const totalMissions = missions.length;
+
   const progressPercentage = Math.round(
     (completedCount / totalMissions) * 100
   );
-  const certificateUnlocked = completedCount === totalMissions;
 
-  const statusElement = document.getElementById("certificateStatus");
-  const countElement = document.getElementById(
+  const certificateUnlocked =
+    completedCount === totalMissions;
+
+  const certificateStatus = document.getElementById(
+    "certificateStatus"
+  );
+
+  const certificateProgressCount = document.getElementById(
     "certificateProgressCount"
   );
-  const fillElement = document.getElementById(
+
+  const certificateProgressFill = document.getElementById(
     "certificateProgressFill"
   );
-  const certificateElement = document.getElementById(
+
+  const unlockedCertificate = document.getElementById(
     "unlockedCertificate"
   );
-  const printButton = document.getElementById(
+
+  const printCertificateButton = document.getElementById(
     "printCertificateButton"
   );
 
-  if (statusElement) {
-    statusElement.textContent = certificateUnlocked
+  if (certificateStatus) {
+    certificateStatus.textContent = certificateUnlocked
       ? "Congratulations! You completed every mission and unlocked your certificate."
       : "Complete all five missions to unlock your certificate.";
   }
 
-  if (countElement) {
-    countElement.textContent =
-      completedCount + " of " + totalMissions + " missions complete";
+  if (certificateProgressCount) {
+    certificateProgressCount.textContent =
+      completedCount +
+      " of " +
+      totalMissions +
+      " missions complete";
   }
 
-  if (fillElement) {
-    fillElement.style.width = progressPercentage + "%";
+  if (certificateProgressFill) {
+    certificateProgressFill.style.width =
+      progressPercentage + "%";
   }
 
-  if (certificateElement) {
-    certificateElement.hidden = !certificateUnlocked;
+  if (unlockedCertificate) {
+    unlockedCertificate.hidden = !certificateUnlocked;
   }
 
-  if (printButton) {
-    printButton.hidden = !certificateUnlocked;
+  if (printCertificateButton) {
+    printCertificateButton.hidden = !certificateUnlocked;
   }
 
-  badgeContainer.innerHTML = "";
+  activeContainer.innerHTML = "";
 
   missions.forEach(function (mission) {
     const isCompleted = completedMissions.includes(mission.id);
@@ -322,14 +413,14 @@ function renderCertificatePage() {
     badgeCard.appendChild(badgeName);
     badgeCard.appendChild(badgeStatus);
 
-    badgeContainer.appendChild(badgeCard);
+    activeContainer.appendChild(badgeCard);
   });
 }
 
 function scrollToQuestionOfDay() {
-  const questionSection =
-    document.getElementById("questionOfTheDay") ||
-    document.querySelector(".question-of-the-day");
+  const questionSection = document.getElementById(
+    "questionOfDay"
+  );
 
   if (questionSection) {
     questionSection.scrollIntoView({
@@ -340,150 +431,110 @@ function scrollToQuestionOfDay() {
 }
 
 function checkQuestionOfDay(answer) {
-  const feedback =
-    document.getElementById("questionOfDayFeedback") ||
-    document.getElementById("qotdFeedback");
+  const feedback = document.getElementById(
+    "questionFeedback"
+  );
 
-  const normalizedAnswer = String(answer).toLowerCase();
-  const correctAnswers = [
-    "scam",
-    "phishing",
-    "unsafe",
-    "suspicious",
-    "no"
-  ];
-
-  const isCorrect = correctAnswers.includes(normalizedAnswer);
-
-  if (feedback) {
-    feedback.textContent = isCorrect
-      ? "Correct! Stop and check before clicking or sharing information."
-      : "Look closely for pressure, strange links, prizes, and requests for private information.";
-
-    feedback.classList.toggle("correct", isCorrect);
-    feedback.classList.toggle("incorrect", !isCorrect);
+  if (!feedback) {
+    return;
   }
 
-  return isCorrect;
+  if (answer === "correct") {
+    feedback.textContent =
+      "Correct! Free Robux scams are often phishing tricks. Ignore the message and tell a trusted adult.";
+
+    feedback.classList.add("correct");
+    feedback.classList.remove("incorrect");
+  } else {
+    feedback.textContent =
+      "Careful! Scammers use exciting words like FREE to make you click before you think.";
+
+    feedback.classList.add("incorrect");
+    feedback.classList.remove("correct");
+  }
 }
 
 function revealScamOne() {
-  revealScamSection(
-    "scamOneReveal",
-    "scam-one-reveal",
-    "revealScamOne"
+  const scamBox = document.getElementById(
+    "scamRevealOne"
   );
+
+  if (scamBox) {
+    scamBox.classList.toggle("hidden");
+  }
 }
 
 function revealScamTwo() {
-  revealScamSection(
-    "scamTwoReveal",
-    "scam-two-reveal",
-    "revealScamTwo"
+  const scamBox = document.getElementById(
+    "scamRevealTwo"
   );
-}
 
-function revealScamSection(id, className, buttonId) {
-  const revealBox =
-    document.getElementById(id) ||
-    document.querySelector("." + className);
-
-  if (revealBox) {
-    revealBox.hidden = false;
-    revealBox.classList.add("revealed");
-  }
-
-  const button = document.getElementById(buttonId);
-
-  if (button) {
-    button.disabled = true;
-    button.textContent = "Scam Revealed";
+  if (scamBox) {
+    scamBox.classList.toggle("hidden");
   }
 }
 
 function gradePhishingQuiz() {
-  const quiz =
-    document.getElementById("phishingQuiz") ||
-    document.querySelector(".phishing-quiz");
+  const quiz = document.getElementById("phishingQuiz");
+  const quizResult = document.getElementById("quizResult");
 
-  const results =
-    document.getElementById("phishingQuizResult") ||
-    document.getElementById("quizResult");
+  const missionCompleteBox = document.getElementById(
+    "missionCompleteBox"
+  );
 
-  const completeButton =
-    document.getElementById("completePhishingMission") ||
-    document.getElementById("completePhishFinderButton");
-
-  if (!quiz) {
+  if (!quiz || !quizResult || !missionCompleteBox) {
     return;
   }
 
-  const questions = quiz.querySelectorAll(
-    "[data-correct-answer], [data-answer]"
+  const totalQuestions = 5;
+
+  const selectedAnswers = quiz.querySelectorAll(
+    'input[type="radio"]:checked'
   );
 
-  let correctAnswers = 0;
-  let answeredQuestions = 0;
+  if (selectedAnswers.length < totalQuestions) {
+    quizResult.textContent =
+      "Answer all 5 questions before submitting.";
 
-  questions.forEach(function (question) {
-    const selectedAnswer = question.querySelector(
-      'input[type="radio"]:checked'
-    );
+    quizResult.classList.remove("passed");
+    quizResult.classList.add("failed");
 
-    const correctAnswer =
-      question.dataset.correctAnswer ||
-      question.dataset.answer;
+    missionCompleteBox.classList.add("hidden");
+    return;
+  }
 
-    if (!selectedAnswer) {
-      return;
-    }
+  let score = 0;
 
-    answeredQuestions += 1;
-
-    if (selectedAnswer.value === correctAnswer) {
-      correctAnswers += 1;
+  selectedAnswers.forEach(function (answer) {
+    if (answer.value === "correct") {
+      score += 1;
     }
   });
 
-  if (questions.length === 0) {
-    if (results) {
-      results.textContent =
-        "The quiz questions need data-answer or data-correct-answer values before they can be graded.";
-    }
-
-    return;
-  }
-
-  if (answeredQuestions < questions.length) {
-    if (results) {
-      results.textContent =
-        "Please answer every question before submitting the quiz.";
-      results.classList.remove("passed");
-      results.classList.add("failed");
-    }
-
-    return;
-  }
-
-  const score = Math.round(
-    (correctAnswers / questions.length) * 100
+  const percentage = Math.round(
+    (score / totalQuestions) * 100
   );
 
-  if (results) {
-    results.textContent =
+  if (percentage >= 80) {
+    quizResult.textContent =
+      "Great job! You scored " +
+      percentage +
+      "%. You caught the phisher!";
+
+    quizResult.classList.add("passed");
+    quizResult.classList.remove("failed");
+
+    missionCompleteBox.classList.remove("hidden");
+  } else {
+    quizResult.textContent =
       "You scored " +
-      score +
-      "%. " +
-      (score >= 80
-        ? "You passed!"
-        : "You need at least 80%. Review the lesson and try again.");
+      percentage +
+      "%. Try again. You need 80% or higher.";
 
-    results.classList.toggle("passed", score >= 80);
-    results.classList.toggle("failed", score < 80);
-  }
+    quizResult.classList.add("failed");
+    quizResult.classList.remove("passed");
 
-  if (completeButton) {
-    completeButton.hidden = score < 80;
+    missionCompleteBox.classList.add("hidden");
   }
 }
 
