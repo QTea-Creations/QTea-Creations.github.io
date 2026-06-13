@@ -1,4 +1,3 @@
-
 const missions = [
   {
     id: "identity",
@@ -50,19 +49,36 @@ function normalizeCompletedMission(value) {
 
 function getCompletedMissions() {
   try {
-    const savedMissions = JSON.parse(
+    const newSavedMissions = JSON.parse(
       localStorage.getItem("safetiiCompletedMissions") || "[]"
     );
 
-    if (!Array.isArray(savedMissions)) {
-      return [];
+    const oldSavedMissions = JSON.parse(
+      localStorage.getItem("completedMissions") || "[]"
+    );
+
+    const combinedMissions = [];
+
+    if (Array.isArray(newSavedMissions)) {
+      combinedMissions.push(...newSavedMissions);
     }
 
-    return savedMissions
+    if (Array.isArray(oldSavedMissions)) {
+      combinedMissions.push(...oldSavedMissions);
+    }
+
+    const cleanedMissions = combinedMissions
       .map(normalizeCompletedMission)
       .filter(function (missionId, index, list) {
         return missionId && list.indexOf(missionId) === index;
       });
+
+    localStorage.setItem(
+      "safetiiCompletedMissions",
+      JSON.stringify(cleanedMissions)
+    );
+
+    return cleanedMissions;
   } catch (error) {
     return [];
   }
@@ -80,6 +96,7 @@ function saveCompletedMissions(completedMissions) {
     JSON.stringify(cleanedMissions)
   );
 }
+
 function completeMission(missionValue) {
   const mission = getMissionById(missionValue);
 
@@ -94,16 +111,22 @@ function completeMission(missionValue) {
   }
 
   saveCompletedMissions(completedMissions);
-  localStorage.setItem("lastCompletedMission", mission.id);
+
+  localStorage.setItem(
+    "lastCompletedMission",
+    mission.id
+  );
 
   window.location.href =
-    "/badge.html?mission=" + encodeURIComponent(mission.id);
+    "/badge.html?mission=" +
+    encodeURIComponent(mission.id);
 }
 
 function updateProgressDisplay() {
   const completedMissions = getCompletedMissions();
   const completedCount = completedMissions.length;
   const totalMissions = missions.length;
+
   const percentage = Math.round(
     (completedCount / totalMissions) * 100
   );
@@ -146,8 +169,13 @@ function updateProgressDisplay() {
     }
   }
 
-  const olderProgressText = document.getElementById("progressText");
-  const olderProgressFill = document.getElementById("progressFill");
+  const olderProgressText = document.getElementById(
+    "progressText"
+  );
+
+  const olderProgressFill = document.getElementById(
+    "progressFill"
+  );
 
   if (olderProgressText) {
     olderProgressText.textContent =
@@ -179,6 +207,7 @@ function renderHomeSidebarBadges() {
     const emptyMessage = document.createElement("p");
 
     emptyMessage.className = "empty-badge-message";
+
     emptyMessage.textContent =
       "Your earned badges will appear here after you complete a mission.";
 
@@ -211,7 +240,9 @@ function renderHomeSidebarBadges() {
 }
 
 function loadBadgeReveal() {
-  const parameters = new URLSearchParams(window.location.search);
+  const parameters = new URLSearchParams(
+    window.location.search
+  );
 
   const requestedMission =
     parameters.get("mission") ||
@@ -231,9 +262,17 @@ function loadBadgeReveal() {
     "earnedBadgeMessage"
   );
 
-  const olderBadgeTitle = document.getElementById("badgeTitle");
-  const olderBadgeImage = document.getElementById("earnedBadgeImg");
-  const olderBadgeMessage = document.getElementById("badgeMessage");
+  const olderBadgeTitle = document.getElementById(
+    "badgeTitle"
+  );
+
+  const olderBadgeImage = document.getElementById(
+    "earnedBadgeImg"
+  );
+
+  const olderBadgeMessage = document.getElementById(
+    "badgeMessage"
+  );
 
   if (!mission) {
     if (newBadgeTitle) {
@@ -284,7 +323,7 @@ function goHome() {
 }
 
 function renderCertificatePage() {
-  const badgeContainer = document.getElementById(
+  const newBadgeContainer = document.getElementById(
     "certificateBadges"
   );
 
@@ -292,10 +331,10 @@ function renderCertificatePage() {
     "certificateBadgeGrid"
   );
 
-  const activeContainer =
-    badgeContainer || olderBadgeContainer;
+  const badgeContainer =
+    newBadgeContainer || olderBadgeContainer;
 
-  if (!activeContainer) {
+  if (!badgeContainer) {
     return;
   }
 
@@ -314,21 +353,24 @@ function renderCertificatePage() {
     "certificateStatus"
   );
 
-  const certificateProgressCount = document.getElementById(
-    "certificateProgressCount"
-  );
+  const certificateProgressCount =
+    document.getElementById(
+      "certificateProgressCount"
+    );
 
-  const certificateProgressFill = document.getElementById(
-    "certificateProgressFill"
-  );
+  const certificateProgressFill =
+    document.getElementById(
+      "certificateProgressFill"
+    );
 
   const unlockedCertificate = document.getElementById(
     "unlockedCertificate"
   );
 
-  const printCertificateButton = document.getElementById(
-    "printCertificateButton"
-  );
+  const printCertificateButton =
+    document.getElementById(
+      "printCertificateButton"
+    );
 
   if (certificateStatus) {
     certificateStatus.textContent = certificateUnlocked
@@ -357,10 +399,12 @@ function renderCertificatePage() {
     printCertificateButton.hidden = !certificateUnlocked;
   }
 
-  activeContainer.innerHTML = "";
+  badgeContainer.innerHTML = "";
 
   missions.forEach(function (mission) {
-    const isCompleted = completedMissions.includes(mission.id);
+    const isCompleted = completedMissions.includes(
+      mission.id
+    );
 
     const badgeCard = document.createElement(
       isCompleted ? "div" : "a"
@@ -372,6 +416,7 @@ function renderCertificatePage() {
 
     if (!isCompleted) {
       badgeCard.href = mission.page;
+
       badgeCard.setAttribute(
         "aria-label",
         "Complete the " + mission.name + " mission"
@@ -389,6 +434,7 @@ function renderCertificatePage() {
     badgeName.textContent = mission.name;
 
     const badgeStatus = document.createElement("p");
+
     badgeStatus.textContent = isCompleted
       ? "Badge Earned"
       : "Locked — Complete Mission";
@@ -398,7 +444,7 @@ function renderCertificatePage() {
     badgeCard.appendChild(badgeName);
     badgeCard.appendChild(badgeStatus);
 
-    activeContainer.appendChild(badgeCard);
+    badgeContainer.appendChild(badgeCard);
   });
 }
 
@@ -460,8 +506,13 @@ function revealScamTwo() {
 }
 
 function gradePhishingQuiz() {
-  const quiz = document.getElementById("phishingQuiz");
-  const quizResult = document.getElementById("quizResult");
+  const quiz = document.getElementById(
+    "phishingQuiz"
+  );
+
+  const quizResult = document.getElementById(
+    "quizResult"
+  );
 
   const missionCompleteBox = document.getElementById(
     "missionCompleteBox"
@@ -537,10 +588,13 @@ function initializePrintButton() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  updateProgressDisplay();
-  renderHomeSidebarBadges();
-  loadBadgeReveal();
-  renderCertificatePage();
-  initializePrintButton();
-});
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    updateProgressDisplay();
+    renderHomeSidebarBadges();
+    loadBadgeReveal();
+    renderCertificatePage();
+    initializePrintButton();
+  }
+);
