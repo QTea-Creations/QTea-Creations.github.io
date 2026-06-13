@@ -2,30 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Certificate | Safetii Net</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Certificate | Safetii Net</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-<body>
+
+<body class="certificate-page-body">
+
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="assets/Safetii NetLogo.png" alt="Safetii Net logo">
+    </a>
+
+    <nav class="site-navigation">
+      <a href="index.html">Home</a>
+      <a href="index.html#missions">Missions</a>
+    </nav>
+  </header>
 
   <main class="certificate-page">
-    <a href="index.html" class="back-link">← Back to Home</a>
+    <section class="certificate-introduction">
+      <p class="section-kicker">Your Cyber Safety Journey</p>
+      <h1>Safetii Net Certificate</h1>
 
-    <section class="certificate-card">
-      <p class="certificate-label">Safetii Net Cybersecurity Training</p>
-      <h1>Certificate of Completion</h1>
-
-      <p class="certificate-text">
-        This certificate is unlocked after completing all 5 missions and passing the final quiz.
+      <p id="certificateStatus">
+        Complete all five missions to unlock your certificate.
       </p>
 
-      <div id="certificateStatus"></div>
+      <div class="certificate-progress-summary">
+        <strong id="certificateProgressCount">0 of 5 missions complete</strong>
 
-      <h2>Your Badges</h2>
-      <div id="certificateBadgeGrid" class="certificate-badge-grid"></div>
+        <div class="certificate-progress-track">
+          <div id="certificateProgressFill" class="certificate-progress-fill"></div>
+        </div>
+      </div>
     </section>
+
+    <section id="unlockedCertificate" class="unlocked-certificate" hidden>
+      <div class="certificate-logo">
+        <img src="assets/Safetii NetLogo.png" alt="Safetii Net">
+      </div>
+
+      <p class="certificate-small-heading">Certificate of Completion</p>
+
+      <h2>Cyber Safety Hero</h2>
+
+      <p>This certificate recognizes that</p>
+
+      <div class="student-name-line">____________________________</div>
+
+      <p>
+        successfully completed all five Safetii Net cybersecurity missions
+        and demonstrated important digital-safety skills.
+      </p>
+
+      <div class="certificate-footer-line">
+        <span>Safetii Net</span>
+        <span>Date: __________________</span>
+      </div>
+    </section>
+
+    <section class="certificate-badge-section">
+      <div class="section-heading certificate-section-heading">
+        <p class="section-kicker">Mission Collection</p>
+        <h2>Your Badges</h2>
+        <p>Locked badges can be selected to return to missions you still need to complete.</p>
+      </div>
+
+      <div id="certificateBadges" class="certificate-badges-grid"></div>
+    </section>
+
+    <div class="certificate-actions">
+      <a class="secondary-button" href="index.html">Back to Home</a>
+      <button id="printCertificateButton" class="primary-button" type="button" hidden>
+        Print Certificate
+      </button>
+    </div>
   </main>
 
-  <script src="script.js"></script>
+  <footer class="site-footer">
+    <p>Safetii Net — Learn smart. Stay safe. Protect your digital world.</p>
+  </footer>
+
 </body>
 </html>
