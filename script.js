@@ -1,12 +1,4 @@
-const storageVersion = "2";
 
-if (localStorage.getItem("safetiiStorageVersion") !== storageVersion) {
-  localStorage.removeItem("completedMissions");
-  localStorage.removeItem("safetiiCompletedMissions");
-  localStorage.removeItem("lastCompletedMission");
-
-  localStorage.setItem("safetiiStorageVersion", storageVersion);
-}
 const missions = [
   {
     id: "identity",
@@ -88,18 +80,6 @@ function saveCompletedMissions(completedMissions) {
     JSON.stringify(cleanedMissions)
   );
 }
-
-  localStorage.setItem(
-    "completedMissions",
-    JSON.stringify(cleanedMissions)
-  );
-
-  localStorage.setItem(
-    "safetiiCompletedMissions",
-    JSON.stringify(cleanedMissions)
-  );
-}
-
 function completeMission(missionValue) {
   const mission = getMissionById(missionValue);
 
