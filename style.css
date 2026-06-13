@@ -1773,10 +1773,11 @@ body {
 }
 
 .home-sidebar-badges {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 14px;
-  align-items: center;
 }
 
 .home-sidebar-badges img {
@@ -2166,11 +2167,14 @@ a {
 }
 
 .home-badge-item {
+  width: 100%;
   padding: 10px;
   display: grid;
   grid-template-columns: 74px minmax(0, 1fr);
   align-items: center;
+  justify-items: start;
   gap: 12px;
+  text-align: left;
   border-radius: 17px;
   background: #f5fbff;
 }
