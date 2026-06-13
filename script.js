@@ -58,25 +58,15 @@ function normalizeCompletedMission(value) {
 
 function getCompletedMissions() {
   try {
-    const currentSaved = JSON.parse(
-      localStorage.getItem("completedMissions") || "[]"
-    );
-
-    const olderSaved = JSON.parse(
+    const savedMissions = JSON.parse(
       localStorage.getItem("safetiiCompletedMissions") || "[]"
     );
 
-    const combined = [];
-
-    if (Array.isArray(currentSaved)) {
-      combined.push(...currentSaved);
+    if (!Array.isArray(savedMissions)) {
+      return [];
     }
 
-    if (Array.isArray(olderSaved)) {
-      combined.push(...olderSaved);
-    }
-
-    return combined
+    return savedMissions
       .map(normalizeCompletedMission)
       .filter(function (missionId, index, list) {
         return missionId && list.indexOf(missionId) === index;
@@ -92,6 +82,12 @@ function saveCompletedMissions(completedMissions) {
     .filter(function (missionId, index, list) {
       return missionId && list.indexOf(missionId) === index;
     });
+
+  localStorage.setItem(
+    "safetiiCompletedMissions",
+    JSON.stringify(cleanedMissions)
+  );
+}
 
   localStorage.setItem(
     "completedMissions",
