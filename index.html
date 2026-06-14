@@ -142,6 +142,36 @@
           </p>
         </section>
 
+        <section class="home-sidebar-card profile-sidebar-card">
+  <p class="sidebar-label">Your Cyber Hero</p>
+
+  <div class="student-profile-summary">
+    <div
+      id="studentProfileAvatar"
+      class="student-profile-avatar"
+      aria-hidden="true"
+    >
+      🛡️
+    </div>
+
+    <div class="student-profile-copy">
+      <h2 id="studentProfileNickname">Create Your Profile</h2>
+
+      <p id="studentProfileRole">
+        Choose a nickname and cyber hero.
+      </p>
+    </div>
+  </div>
+
+  <button
+    id="openProfileButton"
+    class="profile-open-button"
+    type="button"
+  >
+    Choose My Hero
+  </button>
+</section>
+        
         <a class="view-certificate-button" href="certificate.html">
           View My Certificate
         </a>
@@ -164,6 +194,104 @@
       </aside>
     </div>
   </main>
+
+  <div id="profileModal" class="profile-modal" hidden>
+  <div
+    class="profile-modal-backdrop"
+    data-close-profile-modal
+  ></div>
+
+  <section
+    class="profile-modal-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="profileModalTitle"
+  >
+    <button
+      id="closeProfileButton"
+      class="profile-close-button"
+      type="button"
+      aria-label="Close profile creator"
+    >
+      ×
+    </button>
+
+    <div class="profile-modal-heading">
+      <p class="section-kicker">Join the Safetii Net Team</p>
+
+      <h2 id="profileModalTitle">
+        Create Your Cyber Hero Profile
+      </h2>
+
+      <p>
+        Enter a safe nickname and choose the cyber hero who
+        will represent you during your missions.
+      </p>
+    </div>
+
+    <form id="studentProfileForm">
+      <label
+        class="profile-form-label"
+        for="studentNickname"
+      >
+        Your cyber nickname
+      </label>
+
+      <input
+        id="studentNickname"
+        name="studentNickname"
+        type="text"
+        minlength="2"
+        maxlength="18"
+        autocomplete="nickname"
+        placeholder="Example: CyberStar"
+        required
+      >
+
+      <fieldset class="avatar-fieldset">
+        <legend>Choose your cyber hero</legend>
+
+        <div
+          id="avatarChoices"
+          class="avatar-choice-grid"
+        ></div>
+      </fieldset>
+
+      <div class="profile-selection-preview">
+        <span
+          id="profilePreviewAvatar"
+          class="profile-preview-avatar"
+          aria-hidden="true"
+        >
+          🛡️
+        </span>
+
+        <div>
+          <span class="profile-preview-label">
+            Selected Hero
+          </span>
+
+          <strong id="profilePreviewName">
+            Choose your cyber hero
+          </strong>
+        </div>
+      </div>
+
+      <button
+        class="profile-save-button"
+        type="submit"
+      >
+        Save My Profile
+      </button>
+
+      <p
+        id="profileStatus"
+        class="profile-status"
+        aria-live="polite"
+      ></p>
+    </form>
+  </section>
+</div>
 
   <footer class="site-footer">
     <p>Safetii Net — Learn smart. Stay safe. Protect your digital world.</p>
