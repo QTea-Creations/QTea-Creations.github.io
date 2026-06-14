@@ -36,6 +36,485 @@ const missions = [
   }
 ];
 
+const PROFILE_STORAGE_KEY = "safetiiStudentProfile";
+
+const studentAvatars = [
+  {
+    id: "braided-cyber-hero",
+    name: "Braided Cyber Hero",
+    emoji: "👩🏾‍💻"
+  },
+  {
+    id: "puff-power-protector",
+    name: "Puff Power Protector",
+    emoji: "👩🏿‍🚀"
+  },
+  {
+    id: "curly-code-captain",
+    name: "Curly Code Captain",
+    emoji: "🧑🏽‍💻"
+  },
+  {
+    id: "locs-lock-defender",
+    name: "Locs Lock Defender",
+    emoji: "🦸🏿‍♀️"
+  },
+  {
+    id: "fade-firewall-hero",
+    name: "Fade Firewall Hero",
+    emoji: "🦸🏾‍♂️"
+  },
+  {
+    id: "twist-tech-explorer",
+    name: "Twist Tech Explorer",
+    emoji: "👩🏽‍🔬"
+  },
+  {
+    id: "hijab-cyber-guardian",
+    name: "Hijab Cyber Guardian",
+    emoji: "🧕🏽"
+  },
+  {
+    id: "ponytail-password-keeper",
+    name: "Ponytail Password Keeper",
+    emoji: "👩🏻‍💻"
+  },
+  {
+    id: "wavy-web-watcher",
+    name: "Wavy Web Watcher",
+    emoji: "🧑🏼‍🚀"
+  },
+  {
+    id: "buzz-cut-byte-hero",
+    name: "Buzz Cut Byte Hero",
+    emoji: "👨🏾‍💻"
+  },
+  {
+    id: "bantu-knot-badge-hunter",
+    name: "Bantu Knot Badge Hunter",
+    emoji: "🦸🏿"
+  },
+  {
+    id: "space-bun-safety-scout",
+    name: "Space Bun Safety Scout",
+    emoji: "👩🏽‍🚀"
+  }
+];
+
+let selectedStudentAvatarId = "";
+
+function getStudentAvatarById(avatarId) {
+  return studentAvatars.find(function (avatar) {
+    return avatar.id === avatarId;
+  });
+}
+
+function getStudentProfile() {
+  try {
+    const savedProfile = JSON.parse(
+      localStorage.getItem(PROFILE_STORAGE_KEY) || "null"
+    );
+
+    if (
+      !savedProfile ||
+      typeof savedProfile !== "object"
+    ) {
+      return null;
+    }
+
+    const nickname =
+      typeof savedProfile.nickname === "string"
+        ? savedProfile.nickname.trim()
+        : "";
+
+    const avatar = getStudentAvatarById(
+      savedProfile.avatarId
+    );
+
+    if (!nickname || !avatar) {
+      return null;
+    }
+
+    return {
+      nickname: nickname,
+      avatarId: avatar.id
+    };
+  } catch (error) {
+    return null;
+  }
+}
+
+function selectAvatar(avatarId) {
+  const avatar = getStudentAvatarById(avatarId);
+
+  if (!avatar) {
+    return;
+  }
+
+  selectedStudentAvatarId = avatar.id;
+
+  const avatarButtons = document.querySelectorAll(
+    "[data-avatar-id]"
+  );
+
+  avatarButtons.forEach(function (button) {
+    const isSelected =
+      button.dataset.avatarId === avatar.id;
+
+    button.classList.toggle(
+      "selected",
+      isSelected
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(isSelected)
+    );
+  });
+
+  const previewAvatar = document.getElementById(
+    "profilePreviewAvatar"
+  );
+
+  const previewName = document.getElementById(
+    "profilePreviewName"
+  );
+
+  if (previewAvatar) {
+    previewAvatar.textContent = avatar.emoji;
+  }
+
+  if (previewName) {
+    previewName.textContent = avatar.name;
+  }
+}
+
+function renderProfileCreator() {
+  const avatarChoices = document.getElementById(
+    "avatarChoices"
+  );
+
+  if (!avatarChoices) {
+    return;
+  }
+
+  avatarChoices.innerHTML = "";
+
+  studentAvatars.forEach(function (avatar) {
+    const avatarButton =
+      document.createElement("button");
+
+    avatarButton.type = "button";
+    avatarButton.className = "avatar-choice";
+    avatarButton.dataset.avatarId = avatar.id;
+
+    avatarButton.setAttribute(
+      "aria-pressed",
+      "false"
+    );
+
+    const avatarEmoji =
+      document.createElement("span");
+
+    avatarEmoji.className =
+      "avatar-choice-emoji";
+
+    avatarEmoji.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    avatarEmoji.textContent = avatar.emoji;
+
+    const avatarName =
+      document.createElement("span");
+
+    avatarName.className =
+      "avatar-choice-name";
+
+    avatarName.textContent = avatar.name;
+
+    avatarButton.appendChild(avatarEmoji);
+    avatarButton.appendChild(avatarName);
+
+    avatarButton.addEventListener(
+      "click",
+      function () {
+        selectAvatar(avatar.id);
+      }
+    );
+
+    avatarChoices.appendChild(avatarButton);
+  });
+
+  const savedProfile = getStudentProfile();
+
+  const nicknameInput = document.getElementById(
+    "studentNickname"
+  );
+
+  if (nicknameInput) {
+    nicknameInput.value = savedProfile
+      ? savedProfile.nickname
+      : "";
+  }
+
+  selectAvatar(
+    savedProfile
+      ? savedProfile.avatarId
+      : studentAvatars[0].id
+  );
+}
+
+function saveStudentProfile() {
+  const nicknameInput = document.getElementById(
+    "studentNickname"
+  );
+
+  const profileStatus = document.getElementById(
+    "profileStatus"
+  );
+
+  if (!nicknameInput) {
+    return;
+  }
+
+  const nickname = nicknameInput.value.trim();
+
+  const selectedAvatar = getStudentAvatarById(
+    selectedStudentAvatarId
+  );
+
+  if (nickname.length < 2) {
+    if (profileStatus) {
+      profileStatus.textContent =
+        "Enter a nickname with at least 2 characters.";
+
+      profileStatus.className =
+        "profile-status error";
+    }
+
+    nicknameInput.focus();
+    return;
+  }
+
+  if (!selectedAvatar) {
+    if (profileStatus) {
+      profileStatus.textContent =
+        "Choose a cyber hero before saving.";
+
+      profileStatus.className =
+        "profile-status error";
+    }
+
+    return;
+  }
+
+  const profile = {
+    nickname: nickname,
+    avatarId: selectedAvatar.id
+  };
+
+  localStorage.setItem(
+    PROFILE_STORAGE_KEY,
+    JSON.stringify(profile)
+  );
+
+  if (profileStatus) {
+    profileStatus.textContent = "Profile saved!";
+
+    profileStatus.className =
+      "profile-status success";
+  }
+
+  renderStudentProfile();
+  closeProfileModal();
+}
+
+function renderStudentProfile() {
+  const profileAvatar = document.getElementById(
+    "studentProfileAvatar"
+  );
+
+  const profileNickname = document.getElementById(
+    "studentProfileNickname"
+  );
+
+  const profileRole = document.getElementById(
+    "studentProfileRole"
+  );
+
+  const openProfileButton = document.getElementById(
+    "openProfileButton"
+  );
+
+  if (
+    !profileAvatar ||
+    !profileNickname ||
+    !profileRole ||
+    !openProfileButton
+  ) {
+    return;
+  }
+
+  const savedProfile = getStudentProfile();
+
+  if (!savedProfile) {
+    profileAvatar.textContent = "🛡️";
+
+    profileNickname.textContent =
+      "Create Your Profile";
+
+    profileRole.textContent =
+      "Choose a nickname and cyber hero.";
+
+    openProfileButton.textContent =
+      "Choose My Hero";
+
+    return;
+  }
+
+  const avatar = getStudentAvatarById(
+    savedProfile.avatarId
+  );
+
+  profileAvatar.textContent = avatar.emoji;
+  profileNickname.textContent =
+    savedProfile.nickname;
+  profileRole.textContent = avatar.name;
+
+  openProfileButton.textContent =
+    "Edit Profile";
+}
+
+function openProfileModal() {
+  const profileModal = document.getElementById(
+    "profileModal"
+  );
+
+  const nicknameInput = document.getElementById(
+    "studentNickname"
+  );
+
+  const profileStatus = document.getElementById(
+    "profileStatus"
+  );
+
+  if (!profileModal) {
+    return;
+  }
+
+  const savedProfile = getStudentProfile();
+
+  if (nicknameInput) {
+    nicknameInput.value = savedProfile
+      ? savedProfile.nickname
+      : "";
+  }
+
+  selectAvatar(
+    savedProfile
+      ? savedProfile.avatarId
+      : studentAvatars[0].id
+  );
+
+  if (profileStatus) {
+    profileStatus.textContent = "";
+    profileStatus.className = "profile-status";
+  }
+
+  profileModal.hidden = false;
+
+  document.body.classList.add(
+    "profile-modal-open"
+  );
+
+  if (nicknameInput) {
+    nicknameInput.focus();
+  }
+}
+
+function closeProfileModal() {
+  const profileModal = document.getElementById(
+    "profileModal"
+  );
+
+  if (!profileModal) {
+    return;
+  }
+
+  profileModal.hidden = true;
+
+  document.body.classList.remove(
+    "profile-modal-open"
+  );
+}
+
+function initializeStudentProfile() {
+  const profileForm = document.getElementById(
+    "studentProfileForm"
+  );
+
+  const openProfileButton = document.getElementById(
+    "openProfileButton"
+  );
+
+  const closeProfileButton = document.getElementById(
+    "closeProfileButton"
+  );
+
+  const profileBackdrop = document.querySelector(
+    "[data-close-profile-modal]"
+  );
+
+  if (!profileForm && !openProfileButton) {
+    return;
+  }
+
+  renderProfileCreator();
+  renderStudentProfile();
+
+  if (profileForm) {
+    profileForm.addEventListener(
+      "submit",
+      function (event) {
+        event.preventDefault();
+        saveStudentProfile();
+      }
+    );
+  }
+
+  if (openProfileButton) {
+    openProfileButton.addEventListener(
+      "click",
+      openProfileModal
+    );
+  }
+
+  if (closeProfileButton) {
+    closeProfileButton.addEventListener(
+      "click",
+      closeProfileModal
+    );
+  }
+
+  if (profileBackdrop) {
+    profileBackdrop.addEventListener(
+      "click",
+      closeProfileModal
+    );
+  }
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+      if (event.key === "Escape") {
+        closeProfileModal();
+      }
+    }
+  );
+}
+
 function getMissionById(value) {
   return missions.find(function (mission) {
     return mission.id === value || mission.name === value;
