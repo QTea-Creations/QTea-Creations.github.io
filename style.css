@@ -1,0 +1,223 @@
+/* ===========================
+   SAFETII NET
+   Main Stylesheet
+=========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f6fbff;
+    color: #23324d;
+    line-height: 1.6;
+}
+
+/* ===========================
+   Header
+=========================== */
+
+.site-header {
+    background: white;
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #7d4cff;
+}
+
+.logo span {
+    color: #15d3dc;
+}
+
+nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: #23324d;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #15d3dc;
+}
+
+/* ===========================
+   Hero
+=========================== */
+
+.hero {
+    padding: 80px 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.hero h1 {
+    font-size: 3.3rem;
+    margin: 20px 0;
+}
+
+.hero-copy {
+    font-size: 1.2rem;
+    margin-bottom: 35px;
+}
+
+.eyebrow {
+    color: #7d4cff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.button {
+    display: inline-block;
+    background: #7d4cff;
+    color: white;
+    text-decoration: none;
+    padding: 16px 30px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.button:hover {
+    background: #15d3dc;
+}
+
+/* ===========================
+   Mascot
+=========================== */
+
+.mascot-card {
+    background: white;
+    border-radius: 30px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,.08);
+}
+
+.mascot {
+    font-size: 6rem;
+}
+
+/* ===========================
+   Sections
+=========================== */
+
+.section {
+    padding: 80px 10%;
+}
+
+.section h2 {
+    margin: 15px 0 40px;
+    font-size: 2.4rem;
+}
+
+/* ===========================
+   Missions
+=========================== */
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 25px;
+}
+
+.mission-card {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    transition: .3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.mission-card:hover {
+    transform: translateY(-8px);
+}
+
+.mission-card span {
+    font-size: 3rem;
+}
+
+.mission-card h3 {
+    margin: 20px 0 10px;
+}
+
+.special {
+    background: linear-gradient(135deg,#7d4cff,#15d3dc);
+    color: white;
+}
+
+/* ===========================
+   Split Sections
+=========================== */
+
+.split {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 50px;
+    align-items: center;
+}
+
+.feature-box {
+    background: white;
+    border-radius: 25px;
+    padding: 60px;
+    text-align: center;
+    font-size: 1.4rem;
+    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+footer {
+    background: #23324d;
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:900px){
+
+.hero{
+grid-template-columns:1fr;
+}
+
+.split{
+grid-template-columns:1fr;
+}
+
+.site-header{
+flex-direction:column;
+gap:20px;
+}
+
+nav{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.hero h1{
+font-size:2.4rem;
+}
+
+}
