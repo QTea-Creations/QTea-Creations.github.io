@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyber Notebook | Safetii Net</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">🦸 Safetii <span>Net</span></a>
+    <nav>
+      <a href="dashboard.html">Hero Headquarters</a>
+      <a href="notebook.html">Cyber Notebook</a>
+      <a href="index.html#missions">Missions</a>
+      <a href="parents.html">Parents</a>
+      <a href="teachers.html">Teachers</a>
+    </nav>
+  </header>
+
+  <main class="notebook-page">
+    <section class="notebook-cover">
+      <div>
+        <p class="eyebrow">Cyber Notebook</p>
+        <h1 id="notebookHeroName">Cyber Mentee’s Notebook</h1>
+        <p>
+          This is where your badges, mission notes, and hidden stickers are saved.
+        </p>
+        <p class="points-box">Points: <span id="notebookPoints">0</span></p>
+      </div>
+
+      <img src="assets/mascot/thinking.png" alt="Meme holding the Cyber Notebook">
+    </section>
+
+    <section class="notebook-grid">
+      <article class="notebook-mission-page unlocked">
+        <h2>🛡️ Mission 1: Identity Protector</h2>
+        <div id="identityNotebookBadge" class="notebook-badge locked-notebook-badge">
+          🛡️
+        </div>
+        <p id="identityBadgeText">Badge not earned yet.</p>
+
+        <h3>What I Learned</h3>
+        <ul>
+          <li>Private information should stay protected.</li>
+          <li>Passwords should never be shared.</li>
+          <li>A hero nickname is safer than using a real full name.</li>
+          <li>If I am unsure, I should ask a trusted adult.</li>
+        </ul>
+
+        <h3>Hidden Stickers</h3>
+        <div class="sticker-book" id="identityStickerBook">
+          <span class="sticker-slot">?</span>
+          <span class="sticker-slot">?</span>
+          <span class="sticker-slot">?</span>
+          <span class="sticker-slot">?</span>
+          <span class="sticker-slot">?</span>
+        </div>
+
+        <a class="small-button" href="missions/identity.html">Replay Mission</a>
+      </article>
+
+      <article class="notebook-mission-page locked-page">
+        <h2>🔐 Mission 2: Password Safe Keeper</h2>
+        <p>Complete Mission 1 to continue your journey.</p>
+      </article>
+
+      <article class="notebook-mission-page locked-page">
+        <h2>🎣 Mission 3: Phish Finder</h2>
+        <p>This notebook page is still hidden.</p>
+      </article>
+
+      <article class="notebook-mission-page locked-page">
+        <h2>👣 Mission 4: Digital Footprint Defender</h2>
+        <p>This notebook page is still hidden.</p>
+      </article>
+
+      <article class="notebook-mission-page locked-page">
+        <h2>🚨 Mission 5: Cyber Responder</h2>
+        <p>This notebook page is still hidden.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
