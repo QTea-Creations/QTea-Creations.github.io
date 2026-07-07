@@ -76,12 +76,12 @@
         <button class="button locked-action" id="goPractice" disabled>Unlock Practice</button>
       </section>
 
-     <section class="practice-zone hidden" id="practiceZone">
+<section class="practice-zone hidden" id="practiceZone">
   <div class="zone-header">
     <div>
       <p class="eyebrow">Step 2: Practice Game</p>
       <h2>🎒 Backpack Rescue</h2>
-      <p>Help Ava sort each item into the correct place.</p>
+      <p>Drag each item into the correct zone.</p>
     </div>
     <div class="progress-pill">
       Sorted: <span id="practiceCorrect">0</span>/10
@@ -89,21 +89,21 @@
   </div>
 
   <article class="backpack-game">
-    <div class="sort-item-card" id="sortItemCard">
-      <p class="eyebrow">Current Item</p>
+    <div class="drag-item-card" id="dragItemCard" draggable="true">
+      <p class="eyebrow">Drag This Item</p>
       <h3 id="sortItemText">Loading...</h3>
     </div>
 
     <div class="sort-zones">
-      <button class="sort-zone share-zone" data-answer="safe">
+      <div class="sort-zone share-zone" data-answer="safe">
         ✅ Share Zone
         <span>Usually okay to share</span>
-      </button>
+      </div>
 
-      <button class="sort-zone protect-zone" data-answer="private">
+      <div class="sort-zone protect-zone" data-answer="private">
         🔒 Protect Zone
         <span>Keep this private</span>
-      </button>
+      </div>
     </div>
 
     <p class="feedback" id="practiceFeedback"></p>
