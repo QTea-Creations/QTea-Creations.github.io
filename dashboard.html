@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student HQ | Safetii Net</title>
+  <title>Hero Headquarters | Safetii Net</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="site-header">
     <a class="logo" href="index.html">🦸 Safetii <span>Net</span></a>
     <nav>
-      <a href="dashboard.html">Student HQ</a>
+      <a href="dashboard.html">Hero Headquarters</a>
       <a href="index.html#missions">Missions</a>
       <a href="index.html#arcade">Cyber Arcade</a>
       <a href="parents.html">Parents</a>
@@ -21,13 +21,14 @@
   <main class="dashboard">
     <section class="hq-hero">
       <div>
-        <p class="eyebrow">Cyber Super Hero HQ</p>
-        <h1>Welcome, Cyber Mentee!</h1>
+        <p class="eyebrow">Hero Headquarters</p>
+        <h1>Welcome, <span id="dashboardHeroName">Cyber Mentee</span>!</h1>
         <p>
           Meme is ready to help you train, complete missions, earn badges,
           and become a Cyber Super Hero.
         </p>
         <a class="button" href="missions/identity.html">Continue Mission</a>
+        <a class="small-button" href="login.html">Create New Hero</a>
       </div>
 
       <div class="mascot-card">
@@ -38,6 +39,15 @@
     </section>
 
     <section class="dashboard-grid">
+      <article class="dashboard-card">
+        <h2>Your Hero ID</h2>
+        <div class="big-icon">🦸</div>
+        <p><strong>Rank:</strong> Cyber Mentee</p>
+        <p><strong>Suit:</strong> <span id="dashboardColor">Not chosen yet</span></p>
+        <p><strong>Sidekick:</strong> <span id="dashboardAnimal">Not chosen yet</span></p>
+        <p><strong>Power:</strong> <span id="dashboardPower">Not chosen yet</span></p>
+      </article>
+
       <article class="dashboard-card">
         <h2>Current Mission</h2>
         <div class="big-icon">🛡️</div>
@@ -62,7 +72,7 @@
           <span class="locked">👣</span>
           <span class="locked">🚨</span>
         </div>
-        <p>Earn all 5 badges to unlock the Final Challenge.</p>
+        <p>Earn all 5 badges to become a Cyber Super Hero.</p>
       </article>
 
       <article class="dashboard-card">
@@ -77,5 +87,7 @@
   <footer>
     <p>© 2026 Safetii Net. Helping kids become Cyber Super Heroes.</p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
