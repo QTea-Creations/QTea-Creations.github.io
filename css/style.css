@@ -235,3 +235,27 @@ font-size:2.4rem;
 }
 
 }
+
+.mascot-card {
+    overflow: hidden;
+}
+
+.mascot-img {
+    width: 220px;
+    max-width: 85%;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+    object-fit: contain;
+    animation: floatMascot 3s ease-in-out infinite;
+}
+
+@keyframes floatMascot {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
