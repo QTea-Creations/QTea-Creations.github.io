@@ -76,29 +76,39 @@
         <button class="button locked-action" id="goPractice" disabled>Unlock Practice</button>
       </section>
 
-      <section class="practice-zone hidden" id="practiceZone">
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">Step 2: Practice</p>
-            <h2>Help Ava make safe choices</h2>
-            <p>Get 8 out of 10 correct to unlock the final test.</p>
-          </div>
-          <div class="progress-pill">
-            Correct: <span id="practiceCorrect">0</span>/10
-          </div>
-        </div>
+     <section class="practice-zone hidden" id="practiceZone">
+  <div class="zone-header">
+    <div>
+      <p class="eyebrow">Step 2: Practice Game</p>
+      <h2>🎒 Backpack Rescue</h2>
+      <p>Help Ava sort each item into the correct place.</p>
+    </div>
+    <div class="progress-pill">
+      Sorted: <span id="practiceCorrect">0</span>/10
+    </div>
+  </div>
 
-        <article class="scenario-card" id="practiceCard">
-          <h3 id="practiceQuestion"></h3>
-          <div class="quiz-buttons">
-            <button class="button practice-choice" data-answer="safe">✅ Safe</button>
-            <button class="button practice-choice private-btn" data-answer="private">🔒 Private</button>
-          </div>
-          <p class="feedback" id="practiceFeedback"></p>
-          <button class="small-button hidden" id="nextPractice">Next Scenario</button>
-        </article>
-      </section>
+  <article class="backpack-game">
+    <div class="sort-item-card" id="sortItemCard">
+      <p class="eyebrow">Current Item</p>
+      <h3 id="sortItemText">Loading...</h3>
+    </div>
 
+    <div class="sort-zones">
+      <button class="sort-zone share-zone" data-answer="safe">
+        ✅ Share Zone
+        <span>Usually okay to share</span>
+      </button>
+
+      <button class="sort-zone protect-zone" data-answer="private">
+        🔒 Protect Zone
+        <span>Keep this private</span>
+      </button>
+    </div>
+
+    <p class="feedback" id="practiceFeedback"></p>
+  </article>
+</section>
       <section class="test-zone hidden" id="testZone">
         <div class="zone-header">
           <div>
