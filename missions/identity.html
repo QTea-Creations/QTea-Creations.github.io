@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Identity Protector | Safetii Net</title>
+  <title>Mission 1 | Identity Protector</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
   <header class="site-header">
     <a class="logo" href="../index.html">🦸 Safetii <span>Net</span></a>
     <nav>
-      <a href="../dashboard.html">Hero Headquarters</a>
+      <a href="../dashboard.html">Hero HQ</a>
       <a href="../index.html#missions">Missions</a>
       <a href="../index.html#arcade">Cyber Arcade</a>
       <a href="../parents.html">Parents</a>
@@ -18,89 +18,105 @@
     </nav>
   </header>
 
-  <main class="mission-page">
-    <section class="mission-hero">
-      <div>
-        <p class="eyebrow">Mission 1</p>
-        <h1>Identity Protector</h1>
-        <p>
-          Meme will show you different types of information. Your job is to decide:
-          is it safe to share, or should a Cyber Mentee keep it private?
-        </p>
-        <a class="button" href="#learn">Start Training</a>
-      </div>
+  <main class="game-mission">
+    <aside class="mission-sidebar">
+      <h2>Mission Map</h2>
+      <div class="map-step active">1<br><span>Identity Protector</span></div>
+      <div class="map-step locked">2<br><span>Password Safe Keeper</span></div>
+      <div class="map-step locked">3<br><span>Phish Finder</span></div>
+      <div class="map-step locked">4<br><span>Digital Footprint</span></div>
+      <div class="map-step locked">5<br><span>Cyber Responder</span></div>
+    </aside>
 
-      <div class="mascot-card">
-        <img class="mascot-img" src="../assets/mascot/thinking.png" alt="Meme thinking about online safety">
-        <h2>Meme says:</h2>
-        <p>Cyber Mentees protect their identity before trouble starts!</p>
-      </div>
-    </section>
-
-    <section id="learn" class="section mission-training-zone">
-      <p class="eyebrow">Learn</p>
-      <h2>What is private information?</h2>
-      <p>
-        Private information is anything that could help someone find you, contact you,
-        pretend to be you, or get into your accounts.
-      </p>
-      <div class="mission-steps">
-  <span>1. Learn</span>
-  <span>2. Train</span>
-  <span>3. Earn Badge</span>
-      </div>
-      <div class="mission-grid">
-        <article class="mission-card">
-          <span>🏠</span>
-          <h3>Keep Private</h3>
-          <p>Your address, school name, phone number, passwords, and full name.</p>
-        </article>
-
-        <article class="mission-card">
-          <span>🍕</span>
-          <h3>Usually Safe</h3>
-          <p>Your favorite pizza, favorite color, hobbies, or favorite animal.</p>
-        </article>
-
-        <article class="mission-card">
-          <span>🦸</span>
-          <h3>Use a Hero Name</h3>
-          <p>A fun nickname is safer than using your real first and last name.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="activity" class="section">
-      <p class="eyebrow">Activity</p>
-      <h2>Safe or Private?</h2>
-      <p>Click each card to choose whether it is safe to share or should stay private.</p>
-
-      <div class="quiz-area">
-        <div class="quiz-card">
-          <h3 id="questionText">Loading...</h3>
-          <div class="quiz-buttons">
-            <button class="button quiz-choice" data-answer="safe">Safe to Share</button>
-            <button class="button quiz-choice" data-answer="private">Keep Private</button>
-          </div>
-          <p id="feedbackText" class="feedback"></p>
-          <button id="nextQuestion" class="small-button">Next</button>
+    <section class="mission-stage">
+      <section class="mission-banner">
+        <div>
+          <p class="eyebrow">Mission 1</p>
+          <h1>Identity Protector</h1>
+          <p>Learn what information is safe to share and what should stay private.</p>
+          <a class="button" href="#learn-zone">Start Mission</a>
         </div>
-      </div>
-    </section>
 
-    <section class="section badge-celebration" id="badgeSection">
-      <p class="eyebrow">Badge Locked</p>
-      <h2>Identity Protector Badge</h2>
-      <div class="big-icon locked-badge">🛡️</div>
-      <p>Complete the activity to earn your first badge.</p>
-      <a class="button" href="../dashboard.html">Back to Hero Headquarters</a>
+        <div class="mission-reward">
+          <img src="../assets/Identity Protector.png" alt="Identity Protector badge art">
+          <h3>Mission Reward</h3>
+          <p>Identity Protector Badge</p>
+          <strong>+50 XP</strong>
+        </div>
+      </section>
+
+      <section class="mission-steps-panel">
+        <div>📘 <strong>1. Learn</strong><br>Discover private info.</div>
+        <div>🎯 <strong>2. Practice</strong><br>Answer scenarios.</div>
+        <div>🏆 <strong>3. Earn Badge</strong><br>Complete the mission.</div>
+      </section>
+
+      <section id="learn-zone" class="lesson-card">
+        <h2>📘 Step 1: Learn</h2>
+        <p>
+          Private information is anything that could help someone find you,
+          contact you, pretend to be you, or get into your accounts.
+        </p>
+
+        <div class="learn-columns">
+          <div class="safe-list">
+            <h3>✅ Usually Safe to Share</h3>
+            <p>Favorite color</p>
+            <p>Favorite food</p>
+            <p>Hobbies</p>
+            <p>A fun hero nickname</p>
+          </div>
+
+          <div class="private-list">
+            <h3>🔒 Keep Private</h3>
+            <p>Full name</p>
+            <p>Home address</p>
+            <p>School name</p>
+            <p>Phone number</p>
+            <p>Password</p>
+          </div>
+
+          <div class="meme-tip">
+            <img src="../assets/mascot/thinking.png" alt="Meme thinking">
+            <h3>Meme’s Tip</h3>
+            <p>If you are not sure, don’t share. Ask a trusted adult!</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="practice-card">
+        <div class="practice-header">
+          <h2>🎯 Step 2: Practice</h2>
+          <p>Is this safe to share or should it stay private?</p>
+          <div class="score-box">Score: <span id="identityScore">0</span></div>
+        </div>
+
+        <div class="scenario-box">
+          <h3 id="identityQuestion">Loading...</h3>
+
+          <div class="quiz-buttons">
+            <button class="button quiz-choice" data-answer="safe">✅ Safe to Share</button>
+            <button class="button quiz-choice private-btn" data-answer="private">🔒 Keep Private</button>
+          </div>
+
+          <p id="feedbackText" class="feedback"></p>
+          <button id="nextQuestion" class="small-button hidden">Next Question ➜</button>
+        </div>
+      </section>
+
+      <section class="mission-complete-card hidden" id="missionComplete">
+        <img src="../assets/mascot/congrats.png" alt="Meme celebrating">
+        <div>
+          <h2>Mission Complete!</h2>
+          <p>You earned the Identity Protector Badge.</p>
+          <p class="earned-badge">🛡️ Identity Protector</p>
+          <a class="button" href="../dashboard.html">Back to Hero HQ</a>
+          <button class="small-button" id="retryMission">Try Again</button>
+        </div>
+      </section>
     </section>
   </main>
 
-  <footer>
-    <p>© 2026 Safetii Net. Helping kids become Cyber Super Heroes.</p>
-  </footer>
-
-   <script src="../js/script.js"></script>
+  <script src="../js/script.js"></script>
 </body>
 </html>
