@@ -272,3 +272,106 @@ img.mascot-img {
 .mascot-card {
     overflow: hidden !important;
 }
+
+/* ===========================
+   Student Dashboard / HQ
+=========================== */
+
+.dashboard {
+    padding: 50px 10%;
+}
+
+.hq-hero {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 40px;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #e9fbff);
+    border-radius: 35px;
+    padding: 50px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.08);
+}
+
+.hq-hero h1 {
+    font-size: 3rem;
+    margin: 15px 0;
+}
+
+.dashboard-grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 28px;
+    padding: 30px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    text-align: center;
+}
+
+.dashboard-card h2 {
+    color: #7d4cff;
+    margin-bottom: 15px;
+}
+
+.big-icon {
+    font-size: 4rem;
+    margin: 15px 0;
+}
+
+.progress-bar {
+    background: #e6eef7;
+    border-radius: 999px;
+    height: 24px;
+    overflow: hidden;
+    margin: 30px 0 15px;
+}
+
+.progress-fill {
+    width: 20%;
+    height: 100%;
+    background: linear-gradient(90deg, #7d4cff, #15d3dc);
+    border-radius: 999px;
+}
+
+.badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 2.5rem;
+    margin: 25px 0;
+}
+
+.locked {
+    filter: grayscale(1);
+    opacity: .35;
+}
+
+.small-button {
+    display: inline-block;
+    margin-top: 20px;
+    background: #15d3dc;
+    color: white;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.small-button:hover {
+    background: #7d4cff;
+}
+
+@media (max-width: 900px) {
+    .hq-hero {
+        grid-template-columns: 1fr;
+        padding: 30px;
+    }
+
+    .hq-hero h1 {
+        font-size: 2.3rem;
+    }
+}
