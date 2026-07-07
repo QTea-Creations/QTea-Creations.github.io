@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hero Login | Safetii Net</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">🦸 Safetii <span>Net</span></a>
+    <nav>
+      <a href="dashboard.html">Hero Headquarters</a>
+      <a href="index.html#missions">Missions</a>
+      <a href="index.html#arcade">Cyber Arcade</a>
+      <a href="parents.html">Parents</a>
+      <a href="teachers.html">Teachers</a>
+    </nav>
+  </header>
+
+  <main class="login-page">
+    <section class="login-card">
+      <div>
+        <p class="eyebrow">Cyber Super Hero Recruitment</p>
+        <h1>Create Your Hero Identity</h1>
+        <p>
+          No real names needed! Pick your hero suit color, sidekick, and cyber power.
+          Meme will create your safe Cyber Super Hero name.
+        </p>
+      </div>
+
+      <div class="mascot-card">
+        <img class="mascot-img" src="assets/mascot/welcome.png" alt="Meme welcoming a Cyber Mentee">
+        <h2>Meme says:</h2>
+        <p>Every hero needs a safe identity. Let’s make yours!</p>
+      </div>
+    </section>
+
+    <section class="identity-builder">
+      <div class="builder-step">
+        <h2>1. Choose your suit color</h2>
+        <div class="choice-grid" id="colorChoices"></div>
+      </div>
+
+      <div class="builder-step">
+        <h2>2. Choose your sidekick</h2>
+        <div class="choice-grid" id="animalChoices"></div>
+      </div>
+
+      <div class="builder-step">
+        <h2>3. Choose your cyber power</h2>
+        <div class="choice-grid" id="powerChoices"></div>
+      </div>
+
+      <article class="hero-id-card">
+        <p class="eyebrow">Cyber Hero ID</p>
+        <h2 id="heroName">Your Hero Name</h2>
+        <p><strong>Rank:</strong> Cyber Mentee</p>
+        <p><strong>Suit:</strong> <span id="chosenColor">Choose a color</span></p>
+        <p><strong>Sidekick:</strong> <span id="chosenAnimal">Choose a sidekick</span></p>
+        <p><strong>Power:</strong> <span id="chosenPower">Choose a power</span></p>
+
+        <button class="button hero-button" id="generateHero">Generate Hero Name</button>
+        <button class="button hero-button" id="saveHero">Enter Hero Headquarters</button>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Safetii Net. Helping kids become Cyber Super Heroes.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
