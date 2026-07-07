@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Identity Protector | Safetii Net</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">🦸 Safetii <span>Net</span></a>
+    <nav>
+      <a href="../dashboard.html">Hero Headquarters</a>
+      <a href="../index.html#missions">Missions</a>
+      <a href="../index.html#arcade">Cyber Arcade</a>
+      <a href="../parents.html">Parents</a>
+      <a href="../teachers.html">Teachers</a>
+    </nav>
+  </header>
+
+  <main class="mission-page">
+    <section class="mission-hero">
+      <div>
+        <p class="eyebrow">Mission 1</p>
+        <h1>Identity Protector</h1>
+        <p>
+          Your first mission is to learn what information is safe to share online
+          and what should stay private.
+        </p>
+        <a class="button" href="#activity">Start Training</a>
+      </div>
+
+      <div class="mascot-card">
+        <img class="mascot-img" src="../assets/mascot/thinking.png" alt="Meme thinking about online safety">
+        <h2>Meme says:</h2>
+        <p>Cyber Mentees protect their identity before trouble starts!</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow">Learn</p>
+      <h2>What is private information?</h2>
+      <p>
+        Private information is anything that could help someone find you, contact you,
+        pretend to be you, or get into your accounts.
+      </p>
+
+      <div class="mission-grid">
+        <article class="mission-card">
+          <span>🏠</span>
+          <h3>Keep Private</h3>
+          <p>Your address, school name, phone number, passwords, and full name.</p>
+        </article>
+
+        <article class="mission-card">
+          <span>🍕</span>
+          <h3>Usually Safe</h3>
+          <p>Your favorite pizza, favorite color, hobbies, or favorite animal.</p>
+        </article>
+
+        <article class="mission-card">
+          <span>🦸</span>
+          <h3>Use a Hero Name</h3>
+          <p>A fun nickname is safer than using your real first and last name.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="activity" class="section">
+      <p class="eyebrow">Activity</p>
+      <h2>Safe or Private?</h2>
+      <p>Click each card to choose whether it is safe to share or should stay private.</p>
+
+      <div class="quiz-area">
+        <div class="quiz-card">
+          <h3 id="questionText">Loading...</h3>
+          <div class="quiz-buttons">
+            <button class="button quiz-choice" data-answer="safe">Safe to Share</button>
+            <button class="button quiz-choice" data-answer="private">Keep Private</button>
+          </div>
+          <p id="feedbackText" class="feedback"></p>
+          <button id="nextQuestion" class="small-button">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section badge-celebration" id="badgeSection">
+      <p class="eyebrow">Badge Locked</p>
+      <h2>Identity Protector Badge</h2>
+      <div class="big-icon locked-badge">🛡️</div>
+      <p>Complete the activity to earn your first badge.</p>
+      <a class="button" href="../dashboard.html">Back to Hero Headquarters</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Safetii Net. Helping kids become Cyber Super Heroes.</p>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
