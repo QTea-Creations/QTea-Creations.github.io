@@ -1372,3 +1372,116 @@ img.mascot-img {
     font-size: 1.2rem;
     min-width: 190px;
 }
+
+/* ===========================
+   Cyber Notebook
+=========================== */
+
+.notebook-page {
+    padding: 50px 10%;
+}
+
+.notebook-cover {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 30px;
+    align-items: center;
+    background: linear-gradient(135deg, #fff7cc, #ecfbff);
+    border: 6px solid white;
+    border-radius: 36px;
+    padding: 42px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.12);
+}
+
+.notebook-cover h1 {
+    font-size: 3rem;
+    color: #7d4cff;
+}
+
+.notebook-cover img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+}
+
+.points-box {
+    display: inline-block;
+    margin-top: 20px;
+    background: #7d4cff;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 999px;
+    font-weight: 900;
+}
+
+.notebook-grid {
+    margin-top: 35px;
+    display: grid;
+    gap: 28px;
+}
+
+.notebook-mission-page {
+    background: white;
+    border-radius: 32px;
+    padding: 32px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.1);
+    border: 4px solid #e8e4ff;
+}
+
+.notebook-mission-page h2 {
+    color: #23324d;
+    margin-bottom: 18px;
+}
+
+.notebook-badge {
+    font-size: 4rem;
+    margin: 15px 0;
+}
+
+.locked-notebook-badge {
+    opacity: .25;
+    filter: grayscale(1);
+}
+
+.sticker-book {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 18px 0 25px;
+}
+
+.sticker-slot {
+    width: 64px;
+    height: 64px;
+    border: 3px dashed #7d4cff;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #7d4cff;
+    background: #f7f2ff;
+}
+
+.sticker-slot.earned {
+    border-style: solid;
+    background: #ffe76b;
+    color: #23324d;
+}
+
+.locked-page {
+    opacity: .55;
+    filter: grayscale(.7);
+    background: #f3f3f8;
+}
+
+@media (max-width: 900px) {
+    .notebook-cover {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .notebook-cover h1 {
+        font-size: 2.3rem;
+    }
+}
