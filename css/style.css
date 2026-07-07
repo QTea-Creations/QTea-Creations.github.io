@@ -1593,3 +1593,27 @@ img.mascot-img {
         grid-template-columns: 1fr;
     }
 }
+
+.drag-item-card {
+    background: linear-gradient(135deg, #ffffff, #ecfbff);
+    border: 5px solid #ffe76b;
+    border-radius: 30px;
+    padding: 34px;
+    text-align: center;
+    cursor: grab;
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+
+.drag-item-card:active {
+    cursor: grabbing;
+}
+
+.drag-item-card h3 {
+    font-size: clamp(1.8rem, 3vw, 3.2rem);
+    color: #23324d;
+}
+
+.drag-over {
+    outline: 6px dashed #ffe76b;
+    transform: scale(1.03);
+}
