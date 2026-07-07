@@ -347,3 +347,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const retry = document.getElementById("retryMission");
   if (retry) retry.addEventListener("click", retryMission);
 });
+
+function loadMissionHeroName() {
+  const heroNameSpot = document.getElementById("missionHeroName");
+  const savedHero = localStorage.getItem("safetiiHero");
+
+  if (!heroNameSpot) return;
+
+  if (!savedHero) {
+    heroNameSpot.textContent = "Cyber Mentee";
+    return;
+  }
+
+  const hero = JSON.parse(savedHero);
+  heroNameSpot.textContent = hero.name || "Cyber Mentee";
+}
+
+document.addEventListener("DOMContentLoaded", loadMissionHeroName);
