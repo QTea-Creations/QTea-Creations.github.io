@@ -1515,3 +1515,81 @@ img.mascot-img {
 .sticker {
     font-size: 1.8rem !important;
 }
+
+/* Backpack Rescue Practice Game */
+
+.backpack-game {
+    display: grid;
+    gap: 26px;
+}
+
+.sort-item-card {
+    background: linear-gradient(135deg, #ffffff, #ecfbff);
+    border: 5px solid #ffe76b;
+    border-radius: 30px;
+    padding: 34px;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+
+.sort-item-card h3 {
+    font-size: clamp(1.8rem, 3vw, 3.2rem);
+    color: #23324d;
+}
+
+.sort-zones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.sort-zone {
+    border: none;
+    border-radius: 30px;
+    padding: 34px;
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(0,0,0,.18);
+}
+
+.sort-zone span {
+    display: block;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+.share-zone {
+    background: linear-gradient(135deg, #28c76f, #15d3dc);
+}
+
+.protect-zone {
+    background: linear-gradient(135deg, #ff4f9a, #7d4cff);
+}
+
+.sort-zone:hover {
+    transform: translateY(-6px) scale(1.03);
+}
+
+.slide-away {
+    animation: slideAway .7s ease forwards;
+}
+
+@keyframes slideAway {
+    0% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(80px) scale(.9);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 800px) {
+    .sort-zones {
+        grid-template-columns: 1fr;
+    }
+}
