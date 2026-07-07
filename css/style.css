@@ -1288,3 +1288,87 @@ img.mascot-img {
     max-width: 180px !important;
     height: auto !important;
 }
+
+/* ===========================
+   Identity Island Bigger Game Feel
+=========================== */
+
+.identity-game {
+    grid-template-columns: 300px minmax(0, 1fr) !important;
+    padding: 36px !important;
+}
+
+.identity-stage {
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.mission-alert,
+.island-zone,
+.practice-zone,
+.test-zone,
+.mission-result {
+    padding: 48px !important;
+}
+
+.mission-alert h1 {
+    font-size: clamp(3rem, 6vw, 6rem) !important;
+}
+
+.alert-message {
+    font-size: clamp(1.3rem, 2vw, 2rem) !important;
+    line-height: 1.5;
+}
+
+.zone-header h2 {
+    font-size: clamp(2.4rem, 4vw, 4rem) !important;
+}
+
+.zone-header p,
+.lesson-popup p,
+.scenario-card h3 {
+    font-size: clamp(1.25rem, 2vw, 2rem) !important;
+}
+
+.island-scene {
+    min-height: 680px !important;
+}
+
+.island-object {
+    font-size: 4.4rem !important;
+    padding: 22px !important;
+}
+
+.sticker {
+    font-size: 2.4rem !important;
+    padding: 14px !important;
+}
+
+.meme-panel {
+    padding: 28px !important;
+    font-size: 1.05rem;
+}
+
+.meme-panel img {
+    width: 110px !important;
+    height: 110px !important;
+}
+
+.meme-panel h2 {
+    font-size: 1.8rem;
+}
+
+#memeTip {
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.scenario-card {
+    padding: 46px !important;
+}
+
+.quiz-buttons .button {
+    font-size: 1.2rem;
+    min-width: 190px;
+}
