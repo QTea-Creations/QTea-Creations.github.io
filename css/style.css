@@ -717,3 +717,47 @@ img.mascot-img {
     height: 70px;
     object-fit: contain;
 }
+
+/* FORCE FIX: homepage mission image cards */
+#missions .mission-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    gap: 28px !important;
+    align-items: stretch !important;
+}
+
+#missions .image-mission-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 14px !important;
+    min-height: 360px !important;
+    padding: 24px !important;
+    overflow: hidden !important;
+    text-align: center !important;
+}
+
+#missions .image-mission-card img {
+    width: 170px !important;
+    height: 170px !important;
+    max-width: 170px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto 10px !important;
+}
+
+#missions .image-mission-card h3 {
+    margin: 0 !important;
+    width: 100% !important;
+    font-size: 1.25rem !important;
+    line-height: 1.2 !important;
+}
+
+#missions .image-mission-card p {
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 210px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.45 !important;
+}
