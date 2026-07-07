@@ -111,12 +111,20 @@ function openLesson(objectKey, button) {
 
   document.getElementById("objectsFound").textContent = foundObjects.size;
 
-  if (foundObjects.size >= 6) {
-    const goPractice = document.getElementById("goPractice");
-    goPractice.disabled = false;
-    goPractice.classList.remove("locked-action");
-    setMemeTip("Great exploring! Practice is unlocked now.", "congrats");
-  }
+if (foundObjects.size >= 6) {
+  const goPractice = document.getElementById("goPractice");
+
+if (goPractice) {
+  goPractice.addEventListener("click", () => {
+    if (goPractice.disabled) return;
+
+    showSection("practiceZone");
+    loadPractice();
+    setMemeTip("Practice time! Drag each item into the correct zone.");
+  });
+}
+
+  setMemeTip("Great exploring! Backpack Rescue is unlocked now.", "congrats");
 }
 
 function collectSticker(button) {
