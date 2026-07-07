@@ -337,24 +337,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const goPractice = document.getElementById("goPractice");
-  if (goPractice) {
-    goPractice.addEventListener("click", () => {
-      showSection("practiceZone");
-      loadPractice();
-      setMemeTip("Practice time! Remember: safe nicknames are good, private information stays protected.");
-    });
-  }
+const dragCard = document.getElementById("dragItemCard");
 
-  document.querySelectorAll(".practice-choice").forEach((button) => {
-    button.addEventListener("click", () => answerPractice(button.dataset.answer, button));
+if (dragCard) {
+  dragCard.addEventListener("dragstart", (event) => {
+    event.dataTransfer.setData("text/plain", "practice-item");
+  });
+}
+
+document.querySelectorAll(".sort-zone").forEach((zone) => {
+  zone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    zone.classList.add("drag-over");
   });
 
-  document.querySelectorAll(".test-choice").forEach((button) => {
-    button.addEventListener("click", () => answerTest(button.dataset.answer, button));
+  zone.addEventListener("dragleave", () => {
+    zone.classList.remove("drag-over");
   });
-document.querySelectorAll(".sort-zone").forEach((button) => {
-  button.addEventListener("click", () => answerPractice(button.dataset.answer, button));
+
+  zone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    zone.classList.remove("drag-over");
+    answerPractice(zone.dataset.answer, zone);
+  });
+
+  zone.addEventListener("click", () => {
+    answerPractice(zone.dataset.answer, zone);
+  });
 });
   const nextTestButton = document.getElementById("nextTest");
   if (nextTestButton) nextTestButton.addEventListener("click", nextTest);
