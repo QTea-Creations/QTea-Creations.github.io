@@ -271,3 +271,147 @@ function updateDashboardBadges() {
 document.addEventListener("DOMContentLoaded", () => {
   updateDashboardBadges();
 });
+
+const identityGameQuestions = [
+  {
+    text: "Your favorite ice cream flavor",
+    answer: "safe",
+    explain: "Yes! Favorite foods do not usually reveal where you live or who you are."
+  },
+  {
+    text: "Your home address",
+    answer: "private",
+    explain: "Correct. Your home address can show where you live, so keep it private."
+  },
+  {
+    text: "Your password",
+    answer: "private",
+    explain: "Correct. Passwords should never be shared with friends or strangers."
+  },
+  {
+    text: "A hero nickname like Cyber Dolphin",
+    answer: "safe",
+    explain: "Great job! A nickname is safer than using your real full name."
+  },
+  {
+    text: "Your school name",
+    answer: "private",
+    explain: "Correct. Your school name can help someone figure out where to find you."
+  },
+  {
+    text: "Your favorite animal",
+    answer: "safe",
+    explain: "Yes! Favorite animals are usually okay to share."
+  },
+  {
+    text: "Your phone number",
+    answer: "private",
+    explain: "Correct. Your phone number should stay private."
+  },
+  {
+    text: "Your gaming username",
+    answer: "safe",
+    explain: "Usually safe if it does not include your real name, birthday, school, or location."
+  },
+  {
+    text: "Your birthday and year",
+    answer: "private",
+    explain: "Correct. Birthdays can be used to guess passwords or identify you."
+  },
+  {
+    text: "Your favorite game",
+    answer: "safe",
+    explain: "Yes! A favorite game is usually safe to share."
+  }
+];
+
+let identityGameIndex = 0;
+let identityGameScore = 0;
+let hasAnsweredIdentity = false;
+
+function loadIdentityGameQuestion() {
+  const question = document.getElementById("identityQuestion");
+  const feedback = document.getElementById("feedbackText");
+  const next = document.getElementById("nextQuestion");
+
+  if (!question || !feedback || !next) return;
+
+  question.textContent = identityGameQuestions[identityGameIndex].text;
+  feedback.textContent = "";
+  feedback.style.background = "transparent";
+  next.classList.add("hidden");
+  hasAnsweredIdentity = false;
+}
+
+function answerIdentityGame(choice) {
+  if (hasAnsweredIdentity) return;
+
+  const feedback = document.getElementById("feedbackText");
+  const score = document.getElementById("identityScore");
+  const next = document.getElementById("nextQuestion");
+  const current = identityGameQuestions[identityGameIndex];
+
+  if (!feedback || !score || !next) return;
+
+  hasAnsweredIdentity = true;
+
+  if (choice === current.answer) {
+    identityGameScore += 10;
+    score.textContent = identityGameScore;
+    feedback.textContent = "🎉 Great job! " + current.explain;
+    feedback.style.background = "#e9fff3";
+    feedback.style.color = "#168a52";
+  } else {
+    feedback.textContent = "Nice try! Meme says: " + current.explain;
+    feedback.style.background = "#f3efff";
+    feedback.style.color = "#7d4cff";
+  }
+
+  next.classList.remove("hidden");
+}
+
+function nextIdentityGameQuestion() {
+  identityGameIndex++;
+
+  if (identityGameIndex >= identityGameQuestions.length) {
+    completeIdentityGameMission();
+    return;
+  }
+
+  loadIdentityGameQuestion();
+}
+
+function completeIdentityGameMission() {
+  localStorage.setItem("identityBadgeEarned", "true");
+
+  const complete = document.getElementById("missionComplete");
+  if (complete) {
+    complete.classList.remove("hidden");
+    complete.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadIdentityGameQuestion();
+
+  document.querySelectorAll(".quiz-choice").forEach((button) => {
+    button.addEventListener("click", () => {
+      answerIdentityGame(button.dataset.answer);
+    });
+  });
+
+  const next = document.getElementById("nextQuestion");
+  if (next) next.addEventListener("click", nextIdentityGameQuestion);
+
+  const retry = document.getElementById("retryMission");
+  if (retry) {
+    retry.addEventListener("click", () => {
+      identityGameIndex = 0;
+      identityGameScore = 0;
+      document.getElementById("identityScore").textContent = "0";
+      document.getElementById("missionComplete").classList.add("hidden");
+      loadIdentityGameQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+});
