@@ -670,14 +670,26 @@ img.mascot-img {
     background: transparent;
 }
 
-.image-mission-card img {
-    width: 100%;
-    height: 100%;
-    display: block;
+.image-mission-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: white;
     border-radius: 25px;
-    object-fit: cover;
 }
 
+.image-mission-card img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.image-mission-card:hover img {
+    transform: scale(1.05);
+}
 .image-mission-card:hover {
     transform: translateY(-8px) scale(1.03);
 }
