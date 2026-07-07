@@ -415,3 +415,48 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+function loadCyberNotebook() {
+  const heroName = document.getElementById("notebookHeroName");
+  const points = document.getElementById("notebookPoints");
+  const badge = document.getElementById("identityNotebookBadge");
+  const badgeText = document.getElementById("identityBadgeText");
+  const stickerBook = document.getElementById("identityStickerBook");
+
+  const savedHero = localStorage.getItem("safetiiHero");
+  const savedPoints = localStorage.getItem("safetiiPoints") || "0";
+  const identityEarned = localStorage.getItem("identityBadgeEarned") === "true";
+  const stickers = JSON.parse(localStorage.getItem("identityStickers") || "[]");
+
+  if (heroName) {
+    if (savedHero) {
+      const hero = JSON.parse(savedHero);
+      heroName.textContent = `${hero.name || "Cyber Mentee"}’s Notebook`;
+    } else {
+      heroName.textContent = "Cyber Mentee’s Notebook";
+    }
+  }
+
+  if (points) {
+    points.textContent = savedPoints;
+  }
+
+  if (badge && badgeText && identityEarned) {
+    badge.classList.remove("locked-notebook-badge");
+    badgeText.textContent = "Badge earned! You are an Identity Protector.";
+  }
+
+  if (stickerBook) {
+    const slots = stickerBook.querySelectorAll(".sticker-slot");
+
+    stickers.forEach((sticker, index) => {
+      if (slots[index]) {
+        slots[index].textContent = "⭐";
+        slots[index].title = sticker;
+        slots[index].classList.add("earned");
+      }
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadCyberNotebook);
