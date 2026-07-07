@@ -477,3 +477,105 @@ img.mascot-img {
         font-size: 2.3rem;
     }
 }
+
+/* ===========================
+   Mission Pages
+=========================== */
+
+.mission-page {
+    background: #f6fbff;
+}
+
+.mission-hero {
+    margin: 50px 10%;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 40px;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #eafcff);
+    border-radius: 35px;
+    padding: 50px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.08);
+}
+
+.mission-hero h1 {
+    font-size: 3.2rem;
+    margin: 15px 0;
+}
+
+.quiz-area {
+    display: flex;
+    justify-content: center;
+}
+
+.quiz-card {
+    width: min(700px, 100%);
+    background: white;
+    border-radius: 30px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.quiz-card h3 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+}
+
+.quiz-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.quiz-choice {
+    border: none;
+    cursor: pointer;
+}
+
+.feedback {
+    margin-top: 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.badge-celebration {
+    text-align: center;
+}
+
+.locked-badge {
+    filter: grayscale(1);
+    opacity: .4;
+}
+
+.badge-earned {
+    filter: none;
+    opacity: 1;
+    animation: badgePop .7s ease;
+}
+
+@keyframes badgePop {
+    0% {
+        transform: scale(.5);
+    }
+
+    70% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 900px) {
+    .mission-hero {
+        grid-template-columns: 1fr;
+        padding: 30px;
+    }
+
+    .mission-hero h1 {
+        font-size: 2.4rem;
+    }
+}
