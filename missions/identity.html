@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mission 1 | Identity Protector</title>
+  <title>Identity Island | Safetii Net</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
   <header class="site-header">
     <a class="logo" href="../index.html">🦸 Safetii <span>Net</span></a>
     <nav>
-      <a href="../dashboard.html">Hero HQ</a>
+      <a href="../dashboard.html">Hero Headquarters</a>
       <a href="../index.html#missions">Missions</a>
       <a href="../index.html#arcade">Cyber Arcade</a>
       <a href="../parents.html">Parents</a>
@@ -18,105 +18,129 @@
     </nav>
   </header>
 
-  <main class="game-mission">
-    <aside class="mission-sidebar">
-      <h2>Mission Map</h2>
-      <div class="map-step active">1<br><span>Identity Protector</span></div>
-      <div class="map-step locked">2<br><span>Password Safe Keeper</span></div>
-      <div class="map-step locked">3<br><span>Phish Finder</span></div>
-      <div class="map-step locked">4<br><span>Digital Footprint</span></div>
-      <div class="map-step locked">5<br><span>Cyber Responder</span></div>
+  <main class="identity-game">
+    <aside class="meme-panel">
+      <img id="memeImage" src="../assets/mascot/thinking.png" alt="Meme helping">
+      <h2>Meme Help</h2>
+      <p id="memeTip">Click a button if you need help during your mission.</p>
+      <button class="small-button meme-help-btn" data-tip="Private information can help someone find you, contact you, or pretend to be you.">What is private?</button>
+      <button class="small-button meme-help-btn" data-tip="If you are unsure, pause and ask a trusted adult before sharing.">I’m not sure</button>
+      <button class="small-button meme-help-btn" data-tip="A hero nickname is safer than using your real first and last name online.">Safe usernames</button>
     </aside>
 
-    <section class="mission-stage">
-      <section class="mission-banner">
-        <div>
-          <p class="eyebrow">Mission 1</p>
-          <h1>Identity Protector</h1>
-          <p>Learn what information is safe to share and what should stay private.</p>
-          <a class="button" href="#learn-zone">Start Mission</a>
-        </div>
-
-        <div class="mission-reward">
-          <img src="../assets/Identity Protector.png" alt="Identity Protector badge art">
-          <h3>Mission Reward</h3>
-          <p>Identity Protector Badge</p>
-          <strong>+50 XP</strong>
-        </div>
-      </section>
-
-      <section class="mission-steps-panel">
-        <div>📘 <strong>1. Learn</strong><br>Discover private info.</div>
-        <div>🎯 <strong>2. Practice</strong><br>Answer scenarios.</div>
-        <div>🏆 <strong>3. Earn Badge</strong><br>Complete the mission.</div>
-      </section>
-
-      <section id="learn-zone" class="lesson-card">
-        <h2>📘 Step 1: Learn</h2>
-        <p>
-          Private information is anything that could help someone find you,
-          contact you, pretend to be you, or get into your accounts.
+    <section class="identity-stage">
+      <section class="mission-alert" id="missionAlert">
+        <p class="eyebrow">📡 Incoming Message from Cyber HQ</p>
+        <h1>Mission: Identity Island</h1>
+        <p class="alert-message">
+          Cyber Mentee! A student named Ava needs help. Someone online keeps asking
+          for her personal information. Can you help Ava learn what to share and what to keep private?
         </p>
-
-        <div class="learn-columns">
-          <div class="safe-list">
-            <h3>✅ Usually Safe to Share</h3>
-            <p>Favorite color</p>
-            <p>Favorite food</p>
-            <p>Hobbies</p>
-            <p>A fun hero nickname</p>
-          </div>
-
-          <div class="private-list">
-            <h3>🔒 Keep Private</h3>
-            <p>Full name</p>
-            <p>Home address</p>
-            <p>School name</p>
-            <p>Phone number</p>
-            <p>Password</p>
-          </div>
-
-          <div class="meme-tip">
-            <img src="../assets/mascot/thinking.png" alt="Meme thinking">
-            <h3>Meme’s Tip</h3>
-            <p>If you are not sure, don’t share. Ask a trusted adult!</p>
-          </div>
+        <div class="alert-actions">
+          <button class="button" id="acceptMission">Accept Mission</button>
+          <a class="small-button" href="../dashboard.html">Return to Hero Headquarters</a>
         </div>
       </section>
 
-      <section class="practice-card">
-        <div class="practice-header">
-          <h2>🎯 Step 2: Practice</h2>
-          <p>Is this safe to share or should it stay private?</p>
-          <div class="score-box">Score: <span id="identityScore">0</span></div>
+      <section class="island-zone hidden" id="exploreZone">
+        <div class="zone-header">
+          <div>
+            <p class="eyebrow">Step 1: Explore</p>
+            <h2>Click around Identity Island</h2>
+            <p>Find all 6 learning objects before practice unlocks.</p>
+          </div>
+          <div class="progress-pill">
+            Objects Found: <span id="objectsFound">0</span>/6
+          </div>
         </div>
 
-        <div class="scenario-box">
-          <h3 id="identityQuestion">Loading...</h3>
+        <div class="island-scene">
+          <button class="island-object house" data-object="house">🏠</button>
+          <button class="island-object school" data-object="school">🏫</button>
+          <button class="island-object phone" data-object="phone">📱</button>
+          <button class="island-object backpack" data-object="backpack">🎒</button>
+          <button class="island-object pizza" data-object="pizza">🍕</button>
+          <button class="island-object controller" data-object="controller">🎮</button>
 
+          <button class="sticker hidden-sticker sticker-one" data-sticker="Shield Sticker">⭐</button>
+          <button class="sticker hidden-sticker sticker-two" data-sticker="Privacy Sticker">⭐</button>
+          <button class="sticker hidden-sticker sticker-three" data-sticker="Hero Name Sticker">⭐</button>
+          <button class="sticker hidden-sticker sticker-four" data-sticker="Trusted Adult Sticker">⭐</button>
+          <button class="sticker hidden-sticker sticker-five" data-sticker="Smart Share Sticker">⭐</button>
+        </div>
+
+        <div class="lesson-popup hidden" id="lessonPopup">
+          <h3 id="lessonTitle"></h3>
+          <p id="lessonText"></p>
+          <button class="small-button" id="closeLesson">Got it!</button>
+        </div>
+
+        <button class="button locked-action" id="goPractice" disabled>Unlock Practice</button>
+      </section>
+
+      <section class="practice-zone hidden" id="practiceZone">
+        <div class="zone-header">
+          <div>
+            <p class="eyebrow">Step 2: Practice</p>
+            <h2>Help Ava make safe choices</h2>
+            <p>Get 8 out of 10 correct to unlock the final test.</p>
+          </div>
+          <div class="progress-pill">
+            Correct: <span id="practiceCorrect">0</span>/10
+          </div>
+        </div>
+
+        <article class="scenario-card" id="practiceCard">
+          <h3 id="practiceQuestion"></h3>
           <div class="quiz-buttons">
-            <button class="button quiz-choice" data-answer="safe">✅ Safe to Share</button>
-            <button class="button quiz-choice private-btn" data-answer="private">🔒 Keep Private</button>
+            <button class="button practice-choice" data-answer="safe">✅ Safe</button>
+            <button class="button practice-choice private-btn" data-answer="private">🔒 Private</button>
           </div>
-
-          <p id="feedbackText" class="feedback"></p>
-          <button id="nextQuestion" class="small-button hidden">Next Question ➜</button>
-        </div>
+          <p class="feedback" id="practiceFeedback"></p>
+          <button class="small-button hidden" id="nextPractice">Next Scenario</button>
+        </article>
       </section>
 
-      <section class="mission-complete-card hidden" id="missionComplete">
+      <section class="test-zone hidden" id="testZone">
+        <div class="zone-header">
+          <div>
+            <p class="eyebrow">Step 3: Final Test</p>
+            <h2>Identity Protector Test</h2>
+            <p>Answer 20 questions. You need 80% or higher to earn your badge.</p>
+          </div>
+          <div class="progress-pill">
+            Question <span id="testNumber">1</span>/20
+          </div>
+        </div>
+
+        <article class="scenario-card">
+          <h3 id="testQuestion"></h3>
+          <div class="quiz-buttons">
+            <button class="button test-choice" data-answer="safe">✅ Safe</button>
+            <button class="button test-choice private-btn" data-answer="private">🔒 Private</button>
+          </div>
+          <p class="feedback" id="testFeedback"></p>
+          <button class="small-button hidden" id="nextTest">Next Question</button>
+        </article>
+      </section>
+
+      <section class="mission-result hidden" id="missionResult">
         <img src="../assets/mascot/congrats.png" alt="Meme celebrating">
         <div>
-          <h2>Mission Complete!</h2>
-          <p>You earned the Identity Protector Badge.</p>
+          <p class="eyebrow">Mission Complete</p>
+          <h2 id="resultTitle">Identity Protector Badge Earned!</h2>
+          <p id="resultMessage"></p>
           <p class="earned-badge">🛡️ Identity Protector</p>
-          <a class="button" href="../dashboard.html">Back to Hero HQ</a>
-          <button class="small-button" id="retryMission">Try Again</button>
+          <p class="points-earned">Points Earned: <span id="pointsEarned">0</span></p>
+          <p>Stickers Found: <span id="stickersFound">0</span>/5</p>
+          <a class="button" href="../dashboard.html">Return to Hero Headquarters</a>
+          <button class="small-button" id="retryMission">Replay Mission</button>
         </div>
       </section>
     </section>
   </main>
 
   <script src="../js/script.js"></script>
+  <script src="../js/identity.js"></script>
 </body>
 </html>
