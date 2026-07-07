@@ -1016,12 +1016,11 @@ img.mascot-img {
     padding: 22px;
     text-align: center;
     box-shadow: 0 15px 40px rgba(0,0,0,.18);
-}
 
-.meme-panel img {
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
+   .meme-panel img {
+    width: 150px !important;
+    height: 150px !important;
+}
 }
 
 .meme-panel h2 {
