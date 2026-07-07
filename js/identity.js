@@ -128,12 +128,17 @@ function collectSticker(button) {
 }
 
 function loadPractice() {
-  const q = practiceQuestions[practiceIndex];
+  const item = practiceQuestions[practiceIndex];
+  const itemText = document.getElementById("sortItemText");
+  const feedback = document.getElementById("practiceFeedback");
+  const card = document.getElementById("sortItemCard");
 
-  document.getElementById("practiceQuestion").textContent = q.text;
-  document.getElementById("practiceFeedback").textContent = "";
-  document.getElementById("practiceFeedback").style.background = "transparent";
-  document.getElementById("nextPractice").classList.add("hidden");
+  if (!itemText || !feedback || !card) return;
+
+  itemText.textContent = item.text;
+  feedback.textContent = "";
+  feedback.style.background = "transparent";
+  card.classList.remove("shake", "correct-glow", "slide-away");
 
   practiceAnswered = false;
 }
@@ -141,52 +146,63 @@ function loadPractice() {
 function answerPractice(choice, button) {
   if (practiceAnswered) return;
 
-  practiceAnswered = true;
-  const q = practiceQuestions[practiceIndex];
+  const current = practiceQuestions[practiceIndex];
   const feedback = document.getElementById("practiceFeedback");
+  const card = document.getElementById("sortItemCard");
 
-  if (choice === q.answer) {
+  if (!feedback || !card) return;
+
+  if (choice === current.answer) {
+    practiceAnswered = true;
     practiceCorrect++;
     document.getElementById("practiceCorrect").textContent = practiceCorrect;
-    feedback.textContent = "🎉 Correct! " + q.explain;
+
+    feedback.textContent = "🎉 Nice rescue! " + current.explain;
     feedback.style.background = "#e9fff3";
-    button.classList.add("correct-glow");
-    setMemeTip("Nice work! You protected Ava’s identity.", "congrats");
-  } else {
-    feedback.textContent = "Good guess! " + q.explain;
-    feedback.style.background = "#f3efff";
-    button.classList.add("shake");
-    setMemeTip("Good guess! Let’s think about the safer choice.", "wrong");
-  }
+    feedback.style.color = "#168a52";
 
-  setTimeout(() => {
-    button.classList.remove("shake", "correct-glow");
-  }, 700);
+    card.classList.add("correct-glow");
 
-  document.getElementById("nextPractice").classList.remove("hidden");
-}
+    setTimeout(() => {
+      card.classList.add("slide-away");
+    }, 500);
 
-function nextPractice() {
-  practiceIndex++;
+    setTimeout(() => {
+      practiceIndex++;
 
-  if (practiceIndex >= practiceQuestions.length) {
-    if (practiceCorrect >= 8) {
-      showSection("testZone");
-      loadTest();
-      setMemeTip("You passed practice! Now it’s time for the final test.", "congrats");
-    } else {
-      practiceIndex = 0;
-      practiceCorrect = 0;
-      document.getElementById("practiceCorrect").textContent = "0";
-      setMemeTip("You’re close! Try practice again. Every Cyber Mentee improves with training.");
+      if (practiceIndex >= practiceQuestions.length) {
+        if (practiceCorrect >= 8) {
+          showSection("testZone");
+          loadTest();
+          setMemeTip("Backpack Rescue complete! You unlocked the final test.", "congrats");
+        } else {
+          practiceIndex = 0;
+          practiceCorrect = 0;
+          document.getElementById("practiceCorrect").textContent = "0";
+          setMemeTip("Almost! Try Backpack Rescue again. You need 8 correct to continue.");
+          loadPractice();
+        }
+        return;
+      }
+
       loadPractice();
-    }
-    return;
+    }, 900);
+  } else {
+    feedback.textContent = "Good guess! " + current.explain;
+    feedback.style.background = "#f3efff";
+    feedback.style.color = "#7d4cff";
+
+    card.classList.add("shake");
+    button.classList.add("shake");
+
+    setMemeTip("Good guess! Try sorting it into the other zone.", "wrong");
+
+    setTimeout(() => {
+      card.classList.remove("shake");
+      button.classList.remove("shake");
+    }, 700);
   }
-
-  loadPractice();
 }
-
 function loadTest() {
   const q = testQuestions[testIndex];
 
@@ -334,13 +350,12 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => answerPractice(button.dataset.answer, button));
   });
 
-  const nextPracticeButton = document.getElementById("nextPractice");
-  if (nextPracticeButton) nextPracticeButton.addEventListener("click", nextPractice);
-
   document.querySelectorAll(".test-choice").forEach((button) => {
     button.addEventListener("click", () => answerTest(button.dataset.answer, button));
   });
-
+document.querySelectorAll(".sort-zone").forEach((button) => {
+  button.addEventListener("click", () => answerPractice(button.dataset.answer, button));
+});
   const nextTestButton = document.getElementById("nextTest");
   if (nextTestButton) nextTestButton.addEventListener("click", nextTest);
 
