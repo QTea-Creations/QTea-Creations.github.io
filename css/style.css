@@ -1277,3 +1277,14 @@ img.mascot-img {
         min-height: 620px;
     }
 }
+/* Meme size fix */
+.meme-panel img {
+    width: 95px !important;
+    height: 95px !important;
+    object-fit: contain !important;
+}
+
+.mascot-img {
+    max-width: 180px !important;
+    height: auto !important;
+}
