@@ -258,3 +258,16 @@ document.addEventListener("DOMContentLoaded", () => {
     nextButton.addEventListener("click", nextIdentityQuestion);
   }
 });
+function updateDashboardBadges() {
+  const identityBadge = document.getElementById("identityBadge");
+  const identityEarned = localStorage.getItem("identityBadgeEarned");
+
+  if (identityBadge && identityEarned === "true") {
+    identityBadge.classList.remove("locked");
+    identityBadge.title = "Identity Protector Badge earned!";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateDashboardBadges();
+});
