@@ -1617,3 +1617,33 @@ img.mascot-img {
     outline: 6px dashed #ffe76b;
     transform: scale(1.03);
 }
+
+/* Make Meme Help Desk stand out */
+.meme-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    background: linear-gradient(180deg, #ffffff, #fff7cc) !important;
+    border: 6px solid #ffe76b !important;
+    box-shadow: 0 0 30px rgba(255, 231, 107, 0.65), 0 15px 40px rgba(0,0,0,.18) !important;
+}
+
+.meme-panel img {
+    width: 190px !important;
+    height: 190px !important;
+    object-fit: contain !important;
+    margin: 0 auto 12px !important;
+    display: block !important;
+}
+
+.meme-panel h2 {
+    font-size: 2rem !important;
+    color: #7d4cff !important;
+}
+
+#memeTip {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    line-height: 1.45 !important;
+}
