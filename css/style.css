@@ -108,8 +108,22 @@ nav a:hover {
     box-shadow: 0 15px 40px rgba(0,0,0,.08);
 }
 
-.mascot {
-    font-size: 6rem;
+.mascot-img {
+    width: 260px;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto 20px;
+    animation: floatMascot 3s ease-in-out infinite;
+}
+
+@keyframes floatMascot {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
 }
 
 /* ===========================
