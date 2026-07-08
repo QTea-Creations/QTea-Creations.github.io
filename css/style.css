@@ -17,61 +17,91 @@ body {
 }
 
 /* ===========================
-   Header
+   SITE HEADER
 =========================== */
 
-.site-header {
-    background: white;
-    padding: 20px 10%;
+.site-header{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,.08);
-    position: sticky;
-    top: 0;
+
+    max-width: 1400px;
+    margin: 0 auto;
+
+    padding: 16px 48px;
+
+    background: #ffffff;
+    box-shadow: 0 4px 18px rgba(0,0,0,.08);
 }
 
-.site-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+/* ===========================
+   LOGO
+=========================== */
 
-    padding:12px 50px;   /* was probably around 20-30px */
-
-    background:#fff;
-    box-shadow:0 4px 18px rgba(0,0,0,.08);
+.logo{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
 }
 
 .logo img{
-    height:72px;
-    width:auto;
-}
-
-.logo {
-    margin-right: 40px;
-}
-
-.logo img {
-    height: 48px;
+    height: 88px;
     width: auto;
     display: block;
 }
 
-.logo span {
-    color: #15d3dc;
+/* ===========================
+   NAVIGATION
+=========================== */
+
+.site-header nav{
+    display: flex;
+    align-items: center;
+    gap: 42px;
 }
 
-nav a {
-    margin-left: 25px;
+.site-header nav a{
+    font-size: 1.05rem;
+    font-weight: 700;
     text-decoration: none;
-    color: #23324d;
-    font-weight: bold;
+    color: #263659;
+
+    transition: color .25s ease,
+                transform .25s ease;
 }
 
-nav a:hover {
-    color: #15d3dc;
+.site-header nav a:hover{
+    color: #7A4DFF;
+    transform: translateY(-2px);
 }
 
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width:900px){
+
+    .site-header{
+        flex-direction: column;
+        gap: 18px;
+        padding: 20px;
+    }
+
+    .logo img{
+        height: 70px;
+    }
+
+    .site-header nav{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+}
 /* ===========================
    Hero
 =========================== */
