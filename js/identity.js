@@ -114,16 +114,6 @@ function openLesson(objectKey, button) {
 if (foundObjects.size >= 6) {
   const goPractice = document.getElementById("goPractice");
 
-if (goPractice) {
-  goPractice.addEventListener("click", () => {
-    if (goPractice.disabled) return;
-
-    showSection("practiceZone");
-    loadPractice();
-    setMemeTip("Practice time! Drag each item into the correct zone.");
-  });
-}
-
   setMemeTip("Great exploring! Backpack Rescue is unlocked now.", "congrats");
 }
 
