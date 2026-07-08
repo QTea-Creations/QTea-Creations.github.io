@@ -270,7 +270,11 @@ img.mascot-img {
 }
 
 
-<a class="logo" href="index.html">🦸 Safetii <span>Net</span></a>
+.logo-image-link img {
+    height: 58px;
+    width: auto;
+    display: block;
+}
 
 .mascot-card {
     overflow: hidden !important;
