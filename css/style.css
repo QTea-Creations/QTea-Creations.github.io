@@ -31,6 +31,22 @@ body {
     top: 0;
 }
 
+.site-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:12px 50px;   /* was probably around 20-30px */
+
+    background:#fff;
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+
+.logo img{
+    height:72px;
+    width:auto;
+}
+
 .logo {
     margin-right: 40px;
 }
