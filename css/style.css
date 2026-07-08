@@ -50,7 +50,7 @@ body {
 }
 
 .logo img{
-    height: 148px;
+    height: 88px;
     width: auto;
     display: block;
 }
@@ -102,6 +102,40 @@ body {
         gap: 20px;
     }
 }
+
+/* ==========================================
+   PAGE THEMES
+========================================== */
+
+.page-home{
+    background: linear-gradient(180deg,#eef9ff,#f7fcff);
+}
+
+.page-login{
+    background: linear-gradient(180deg,#f3f0ff,#ecfbff);
+}
+
+.page-hq{
+    background:
+        radial-gradient(circle at top,#ecfbff,#eef4ff 60%,#f8fbff);
+}
+
+.page-identity{
+    background:
+        linear-gradient(180deg,#8ee7ff 0%,#bdf5ff 35%,#dff9ff 100%);
+}
+
+.page-parents{
+    background:
+        linear-gradient(180deg,#f8fcff,#eef7ff);
+}
+
+.page-teachers{
+    background:
+        linear-gradient(180deg,#ffffff,#f6f8ff);
+}
+
+
 /* ===========================
    Hero
 =========================== */
