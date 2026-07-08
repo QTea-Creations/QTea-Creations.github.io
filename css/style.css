@@ -32,10 +32,15 @@ body {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #7d4cff;
+}
+
+.logo img {
+    height: 52px;
+    width: auto;
+    display: block;
 }
 
 .logo span {
@@ -278,18 +283,6 @@ img.mascot-img {
 
 .mascot-card {
     overflow: hidden !important;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    text-decoration:none;
-}
-
-.logo img{
-    width:220px;
-    height:auto;
-    display:block;
 }
 
 /* ===========================
