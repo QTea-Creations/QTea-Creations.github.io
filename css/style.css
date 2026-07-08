@@ -1654,3 +1654,27 @@ img.mascot-img {
     font-weight: 700 !important;
     line-height: 1.45 !important;
 }
+
+body.home-page {
+    background: linear-gradient(135deg, #eef8ff, #f7f2ff);
+}
+
+body.login-page-bg {
+    background: linear-gradient(135deg, #fff0fa, #ecfbff);
+}
+
+body.dashboard-page-bg {
+    background: linear-gradient(135deg, #ecfbff, #fff7cc);
+}
+
+body.parents-page-bg {
+    background: linear-gradient(135deg, #f7fff0, #ecfbff);
+}
+
+body.teachers-page-bg {
+    background: linear-gradient(135deg, #f4edff, #eef8ff);
+}
+
+body.notebook-page-bg {
+    background: linear-gradient(135deg, #fff7cc, #f4edff);
+}
