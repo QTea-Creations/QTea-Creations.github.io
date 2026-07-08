@@ -24,20 +24,29 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
-
     width: 100%;
     max-width: none;
     margin: 0;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 14px 56px;
+    padding: 12px 56px;
     background: #ffffff;
     box-shadow: 0 4px 18px rgba(0,0,0,.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
+.logo img {
+    height: 88px !important;
+    width: auto !important;
+    display: block;
+}
+
+.site-header nav {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+}
 .site-header nav {
     display: flex;
     align-items: center;
