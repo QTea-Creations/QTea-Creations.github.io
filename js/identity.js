@@ -395,4 +395,15 @@ function loadMissionHeroName() {
   heroNameSpot.textContent = hero.name || "Cyber Mentee";
 }
 
+  function startBackpackRescue() {
+  if (foundObjects.size < 6) {
+    setMemeTip("Click all 6 learning objects first. You found " + foundObjects.size + " out of 6.");
+    return;
+  }
+
+  showSection("practiceZone");
+  loadPractice();
+  setMemeTip("Backpack Rescue time! Drag each item into the correct zone.");
+}
+
 document.addEventListener("DOMContentLoaded", loadMissionHeroName);
