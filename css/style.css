@@ -280,10 +280,52 @@ img.mascot-img {
     overflow: hidden !important;
 }
 
+.logo{
+    display:flex;
+    align-items:center;
+    text-decoration:none;
+}
+
+.logo img{
+    width:220px;
+    height:auto;
+    display:block;
+}
+
 /* ===========================
    Student Dashboard / HQ
 =========================== */
+.site-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
+    padding:18px 60px;
+
+    background:white;
+
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+.site-header nav{
+    display:flex;
+    gap:36px;
+    align-items:center;
+}
+
+.site-header nav a{
+    font-weight:700;
+    color:#263659;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.site-header nav a:hover{
+    color:#7A4DFF;
+}
 .dashboard {
     padding: 50px 10%;
 }
