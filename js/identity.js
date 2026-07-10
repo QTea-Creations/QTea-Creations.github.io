@@ -2,327 +2,42 @@
 
 /* =========================================================
    SAFETII NET — IDENTITY ISLAND
-   Mission 1 complete logic
 ========================================================= */
 
-/* -----------------------------
-   Lesson objects
------------------------------ */
+/* ---------------------------------------------------------
+   LESSON CONTENT
+--------------------------------------------------------- */
 
 const lessons = {
   house: {
     title: "🏠 Home Address",
-    text: "A home address is private because it shows where someone lives."
+    text: "A home address is private because it tells people exactly where someone lives."
   },
   school: {
     title: "🏫 School Name",
-    text: "A school name is private because it can reveal where a student can be found."
+    text: "A school name should stay private because it can reveal where a child can be found."
   },
   phone: {
     title: "📱 Phone Number",
-    text: "Phone numbers are private because strangers should not contact you directly."
+    text: "A phone number is private. Strangers should not be able to contact you directly."
   },
   backpack: {
     title: "🎒 Safe Online Names",
-    text:
-      "A safe online name does not reveal your real full name, school, birthday, address, phone number, or location."
+    text: "Use an online name that does not reveal your real name, birthday, school, address, phone number, or location."
   },
   pizza: {
     title: "🍕 Favorite Food",
-    text:
-      "Favorite foods are usually safe to share because they do not reveal private information."
+    text: "Favorite foods are usually safe to share because they do not reveal where you live or who you are."
   },
   controller: {
     title: "🎮 Gaming Username",
-    text:
-      "A gaming username is safer when it does not include your real name, birthday, school, address, or location."
+    text: "A gaming username is safer when it does not include your real name, birthday, school, address, or location."
   }
 };
 
-/* -----------------------------
-   Practice game
------------------------------ */
-
-const practiceQuestions = [
-  {
-    text: "Favorite color",
-    answer: "safe",
-    explain: "Favorite colors are usually safe to share."
-  },
-  {
-    text: "Home address",
-    answer: "private",
-    explain: "Your home address should stay private."
-  },
-  {
-    text: "Password",
-    answer: "private",
-    explain: "Passwords should never be shared."
-  },
-  {
-    text: "Favorite animal",
-    answer: "safe",
-    explain: "Favorite animals are usually safe to share."
-  },
-  {
-    text: "School name",
-    answer: "private",
-    explain: "A school name can reveal where someone can find you."
-  },
-  {
-    text: "A made-up online nickname",
-    answer: "safe",
-    explain:
-      "A made-up nickname is safe when it does not reveal private details."
-  },
-  {
-    text: "Phone number",
-    answer: "private",
-    explain: "Phone numbers should stay private."
-  },
-  {
-    text: "Favorite game",
-    answer: "safe",
-    explain: "Favorite games are usually safe to share."
-  },
-  {
-    text: "Birthday and birth year",
-    answer: "private",
-    explain:
-      "Birthdays can be used to identify you or help someone guess a password."
-  },
-  {
-    text: "Favorite pizza topping",
-    answer: "safe",
-    explain: "Favorite foods are usually safe to share."
-  }
-];
-
-/* -----------------------------
-   Final test — 20 questions
------------------------------ */
-
-const testQuestions = [
-  {
-    text: "Your home address",
-    answer: "private",
-    explain: "Your home address can reveal where you live."
-  },
-  {
-    text: "Your favorite ice cream flavor",
-    answer: "safe",
-    explain: "Favorite foods are usually safe to share."
-  },
-  {
-    text: "Your full first and last name",
-    answer: "private",
-    explain: "A full name can identify you."
-  },
-  {
-    text: "A made-up online name",
-    answer: "safe",
-    explain:
-      "A made-up name is safer when it does not reveal personal details."
-  },
-  {
-    text: "Your password",
-    answer: "private",
-    explain: "Passwords should always stay private."
-  },
-  {
-    text: "Your favorite game",
-    answer: "safe",
-    explain: "Favorite games are usually safe to share."
-  },
-  {
-    text: "Your parent or guardian's phone number",
-    answer: "private",
-    explain: "Family contact information is private."
-  },
-  {
-    text: "Your school name",
-    answer: "private",
-    explain: "A school name can reveal where you can be found."
-  },
-  {
-    text: "Your favorite superhero",
-    answer: "safe",
-    explain: "That usually does not reveal private information."
-  },
-  {
-    text: "A photo showing your school uniform and school name",
-    answer: "private",
-    explain: "Photos can reveal private clues."
-  },
-  {
-    text: "Your favorite color",
-    answer: "safe",
-    explain: "Favorite colors are usually safe."
-  },
-  {
-    text: "The street where you live",
-    answer: "private",
-    explain: "Your street is part of your location."
-  },
-  {
-    text: "A hobby you enjoy",
-    answer: "safe",
-    explain: "Hobbies are usually safe to share."
-  },
-  {
-    text: "Your birthday and birth year",
-    answer: "private",
-    explain: "Birthdays can be used to identify you."
-  },
-  {
-    text: "Your gaming password",
-    answer: "private",
-    explain: "Gaming passwords should never be shared."
-  },
-  {
-    text: "Your favorite animal",
-    answer: "safe",
-    explain: "Favorite animals are usually safe."
-  },
-  {
-    text: "Your exact current location",
-    answer: "private",
-    explain: "Your current location should stay private."
-  },
-  {
-    text: "A username containing your school and birth year",
-    answer: "private",
-    explain: "That username reveals personal information."
-  },
-  {
-    text: "A username like PurpleRocketFox",
-    answer: "safe",
-    explain: "That username does not reveal personal details."
-  },
-  {
-    text: "Your home Wi-Fi password",
-    answer: "private",
-    explain: "Wi-Fi passwords should stay private."
-  }
-];
-
-/* -----------------------------
-   Mission state
------------------------------ */
-
-let foundObjects = new Set();
-let foundStickers = new Set();
-
-let practiceIndex = 0;
-let practiceCorrect = 0;
-let practiceAnswered = false;
-
-let testIndex = 0;
-let testCorrect = 0;
-let testAnswered = false;
-
-/* -----------------------------
-   Basic helpers
------------------------------ */
-
-function getElement(id) {
-  return document.getElementById(id);
-}
-
-function setMemeTip(message, mood = "thinking") {
-  const tip = getElement("memeTip");
-  const image = getElement("memeImage");
-
-  if (tip) {
-    tip.textContent = message;
-  }
-
-  if (!image) {
-    return;
-  }
-
-  const imagePaths = {
-    thinking: "../assets/mascot/thinking.png",
-    wrong: "../assets/mascot/wrong.png",
-    congrats: "../assets/mascot/congrats.png",
-    welcome: "../assets/mascot/welcome.png"
-  };
-
-  image.src = imagePaths[mood] || imagePaths.thinking;
-}
-
-function showSection(sectionId) {
- const sectionIds = [
-  "missionAlert",
-  "exploreZone",
-  "usernameZone",
-  "practiceZone",
-  "testZone",
-  "missionResult"
-];
-
-  sectionIds.forEach((id) => {
-    const section = getElement(id);
-
-    if (section) {
-      section.classList.add("hidden");
-    }
-  });
-
-  const activeSection = getElement(sectionId);
-
-  if (activeSection) {
-    activeSection.classList.remove("hidden");
-    activeSection.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
-}
-
-/* -----------------------------
-   Hero name
------------------------------ */
-
-function loadMissionHeroName() {
-  const heroNameSpot = getElement("missionHeroName");
-
-  if (!heroNameSpot) {
-    return;
-  }
-
-  try {
-    const savedHero = localStorage.getItem("safetiiHero");
-
-    if (!savedHero) {
-      heroNameSpot.textContent = "Cyber Mentee";
-      return;
-    }
-
-    const hero = JSON.parse(savedHero);
-    heroNameSpot.textContent = hero.name || "Cyber Mentee";
-  } catch (error) {
-    console.error("Could not load hero name:", error);
-    heroNameSpot.textContent = "Cyber Mentee";
-  }
-}
-
-/* -----------------------------
-   Mission alert
------------------------------ */
-
-function acceptMission() {
-  showSection("exploreZone");
-
-  setMemeTip(
-    "Explore Identity Island. Click all 6 learning objects to unlock the next activity.",
-    "welcome"
-  );
-}
-
-/* -----------------------------
-   Safe Username Lab
------------------------------ */
+/* ---------------------------------------------------------
+   USERNAME GENERATOR
+--------------------------------------------------------- */
 
 const usernameWords = {
   colors: [
@@ -337,7 +52,6 @@ const usernameWords = {
     "Cosmic",
     "Neon"
   ],
-
   traits: [
     "Brave",
     "Clever",
@@ -350,7 +64,6 @@ const usernameWords = {
     "Epic",
     "Super"
   ],
-
   animals: [
     "Dolphin",
     "Fox",
@@ -363,7 +76,6 @@ const usernameWords = {
     "Koala",
     "Falcon"
   ],
-
   powers: [
     "Shield",
     "Rocket",
@@ -378,13 +90,377 @@ const usernameWords = {
   ]
 };
 
-let generatedSafeUsername = "";
+/* ---------------------------------------------------------
+   BACKPACK RESCUE PRACTICE
+--------------------------------------------------------- */
+
+const practiceQuestions = [
+  {
+    text: "Favorite color",
+    answer: "safe",
+    explanation: "Favorite colors are usually safe to share."
+  },
+  {
+    text: "Home address",
+    answer: "private",
+    explanation: "Your home address should stay private."
+  },
+  {
+    text: "Password",
+    answer: "private",
+    explanation: "Passwords should never be shared."
+  },
+  {
+    text: "Favorite animal",
+    answer: "safe",
+    explanation: "Favorite animals are usually safe to share."
+  },
+  {
+    text: "School name",
+    answer: "private",
+    explanation: "A school name can reveal where someone can find you."
+  },
+  {
+    text: "A made-up online nickname",
+    answer: "safe",
+    explanation: "A made-up nickname is safe when it does not reveal personal details."
+  },
+  {
+    text: "Phone number",
+    answer: "private",
+    explanation: "Phone numbers should stay private."
+  },
+  {
+    text: "Favorite game",
+    answer: "safe",
+    explanation: "Favorite games are usually safe to share."
+  },
+  {
+    text: "Birthday and birth year",
+    answer: "private",
+    explanation: "Birthdays can help someone identify you or guess a password."
+  },
+  {
+    text: "Favorite pizza topping",
+    answer: "safe",
+    explanation: "Favorite foods are usually safe to share."
+  }
+];
+
+/* ---------------------------------------------------------
+   FINAL TEST — 20 QUESTIONS
+--------------------------------------------------------- */
+
+const testQuestions = [
+  {
+    text: "Your home address",
+    answer: "private",
+    explanation: "Your home address reveals where you live."
+  },
+  {
+    text: "Your favorite ice cream flavor",
+    answer: "safe",
+    explanation: "Favorite foods are usually safe to share."
+  },
+  {
+    text: "Your full first and last name",
+    answer: "private",
+    explanation: "A full name can identify you."
+  },
+  {
+    text: "A made-up online name",
+    answer: "safe",
+    explanation: "A made-up name is safer when it does not reveal personal details."
+  },
+  {
+    text: "Your password",
+    answer: "private",
+    explanation: "Passwords should always stay private."
+  },
+  {
+    text: "Your favorite game",
+    answer: "safe",
+    explanation: "Favorite games are usually safe to share."
+  },
+  {
+    text: "Your parent or guardian's phone number",
+    answer: "private",
+    explanation: "Family contact information is private."
+  },
+  {
+    text: "Your school name",
+    answer: "private",
+    explanation: "A school name can reveal where you can be found."
+  },
+  {
+    text: "Your favorite superhero",
+    answer: "safe",
+    explanation: "That usually does not reveal personal information."
+  },
+  {
+    text: "A photo showing your school uniform and school name",
+    answer: "private",
+    explanation: "Pictures can reveal private clues."
+  },
+  {
+    text: "Your favorite color",
+    answer: "safe",
+    explanation: "Favorite colors are usually safe."
+  },
+  {
+    text: "The street where you live",
+    answer: "private",
+    explanation: "Your street is part of your location."
+  },
+  {
+    text: "A hobby you enjoy",
+    answer: "safe",
+    explanation: "Hobbies are usually safe to share."
+  },
+  {
+    text: "Your birthday and birth year",
+    answer: "private",
+    explanation: "Birthdays can be used to identify you."
+  },
+  {
+    text: "Your gaming password",
+    answer: "private",
+    explanation: "Gaming passwords should never be shared."
+  },
+  {
+    text: "Your favorite animal",
+    answer: "safe",
+    explanation: "Favorite animals are usually safe."
+  },
+  {
+    text: "Your exact current location",
+    answer: "private",
+    explanation: "Your current location should stay private."
+  },
+  {
+    text: "A username containing your school and birth year",
+    answer: "private",
+    explanation: "That username reveals personal information."
+  },
+  {
+    text: "A username like PurpleRocketFox",
+    answer: "safe",
+    explanation: "That username does not reveal personal details."
+  },
+  {
+    text: "Your home Wi-Fi password",
+    answer: "private",
+    explanation: "Wi-Fi passwords should stay private."
+  }
+];
+
+/* ---------------------------------------------------------
+   MISSION STATE
+--------------------------------------------------------- */
+
+let foundObjects = new Set();
+let foundStickers = new Set();
+
+let generatedUsername = "";
 let usernamesChecked = 0;
-let usernameWaitingForApproval = false;
+let usernameAwaitingApproval = false;
+
+let practiceIndex = 0;
+let practiceCorrect = 0;
+let practiceAnswered = false;
+
+let testIndex = 0;
+let testCorrect = 0;
+let testAnswered = false;
+
+/* ---------------------------------------------------------
+   GENERAL HELPERS
+--------------------------------------------------------- */
+
+function byId(id) {
+  return document.getElementById(id);
+}
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
+
+function setMemeTip(message, mood = "thinking") {
+  const tip = byId("memeTip");
+  const image = byId("memeImage");
+
+  if (tip) {
+    tip.textContent = message;
+  }
+
+  if (!image) {
+    return;
+  }
+
+  const images = {
+    thinking: "../assets/mascot/thinking.png",
+    wrong: "../assets/mascot/wrong.png",
+    congrats: "../assets/mascot/congrats.png",
+    welcome: "../assets/mascot/welcome.png"
+  };
+
+  image.src = images[mood] || images.thinking;
+}
+
+function showSection(sectionId) {
+  const sectionIds = [
+    "missionAlert",
+    "exploreZone",
+    "usernameZone",
+    "practiceZone",
+    "testZone",
+    "missionResult"
+  ];
+
+  sectionIds.forEach((id) => {
+    const section = byId(id);
+
+    if (section) {
+      section.classList.add("hidden");
+    }
+  });
+
+  const activeSection = byId(sectionId);
+
+  if (activeSection) {
+    activeSection.classList.remove("hidden");
+
+    activeSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+}
+
+/* ---------------------------------------------------------
+   LOAD HERO NAME
+--------------------------------------------------------- */
+
+function loadMissionHeroName() {
+  const heroNameElement = byId("missionHeroName");
+
+  if (!heroNameElement) {
+    return;
+  }
+
+  try {
+    const savedHero = localStorage.getItem("safetiiHero");
+
+    if (!savedHero) {
+      heroNameElement.textContent = "Cyber Mentee";
+      return;
+    }
+
+    const hero = JSON.parse(savedHero);
+
+    heroNameElement.textContent =
+      hero.name && typeof hero.name === "string"
+        ? hero.name
+        : "Cyber Mentee";
+  } catch (error) {
+    console.error("Could not load the saved hero:", error);
+    heroNameElement.textContent = "Cyber Mentee";
+  }
+}
+
+/* ---------------------------------------------------------
+   ACCEPT MISSION
+--------------------------------------------------------- */
+
+function acceptMission() {
+  showSection("exploreZone");
+
+  setMemeTip(
+    "Explore Identity Island. Click all 6 learning objects to unlock the Safe Username Lab.",
+    "welcome"
+  );
+}
+
+/* ---------------------------------------------------------
+   STEP 1 — EXPLORE IDENTITY ISLAND
+--------------------------------------------------------- */
+
+function openLesson(objectKey, button) {
+  const lesson = lessons[objectKey];
+  const popup = byId("lessonPopup");
+  const title = byId("lessonTitle");
+  const text = byId("lessonText");
+  const objectsFound = byId("objectsFound");
+  const usernameLabButton = byId("goUsernameLab");
+
+  if (!lesson || !popup || !title || !text) {
+    console.error("A lesson element is missing.");
+    return;
+  }
+
+  title.textContent = lesson.title;
+  text.textContent = lesson.text;
+  popup.classList.remove("hidden");
+
+  foundObjects.add(objectKey);
+
+  if (button) {
+    button.classList.add("discovered", "wiggle");
+
+    window.setTimeout(() => {
+      button.classList.remove("wiggle");
+    }, 600);
+  }
+
+  if (objectsFound) {
+    objectsFound.textContent = String(foundObjects.size);
+  }
+
+  if (foundObjects.size >= 6 && usernameLabButton) {
+    usernameLabButton.disabled = false;
+    usernameLabButton.classList.remove("locked-action");
+    usernameLabButton.textContent = "Open Safe Username Lab 🧪";
+
+    setMemeTip(
+      "Excellent exploring! The Safe Username Lab is now unlocked.",
+      "congrats"
+    );
+  }
+}
+
+function closeLessonPopup() {
+  const popup = byId("lessonPopup");
+
+  if (popup) {
+    popup.classList.add("hidden");
+  }
+}
+
+function collectSticker(button) {
+  if (!button) {
+    return;
+  }
+
+  const stickerName = button.dataset.sticker;
+
+  if (!stickerName || foundStickers.has(stickerName)) {
+    return;
+  }
+
+  foundStickers.add(stickerName);
+
+  button.classList.add("collected");
+  button.textContent = "✨";
+
+  setMemeTip(
+    `You found a hidden sticker: ${stickerName}!`,
+    "congrats"
+  );
+}
+
+/* ---------------------------------------------------------
+   STEP 2 — SAFE USERNAME LAB
+--------------------------------------------------------- */
 
 function openUsernameLab() {
   if (foundObjects.size < 6) {
@@ -399,17 +475,18 @@ function openUsernameLab() {
   showSection("usernameZone");
 
   setMemeTip(
-    "Welcome to the Safe Username Lab! Generate names that do not reveal personal information.",
+    "Welcome to the Safe Username Lab! Generate safe online names that do not reveal personal information.",
     "welcome"
   );
 }
 
 function generateSafeUsername() {
-  const usernameDisplay = getElement("generatedUsername");
-  const checklist = getElement("usernameChecklist");
-  const approveButton = getElement("approveUsername");
+  const usernameDisplay = byId("generatedUsername");
+  const checklist = byId("usernameChecklist");
+  const approveButton = byId("approveUsername");
 
   if (!usernameDisplay || !checklist || !approveButton) {
+    console.error("Username Lab elements are missing.");
     return;
   }
 
@@ -427,59 +504,68 @@ function generateSafeUsername() {
       `${randomItem(usernameWords.powers)}${randomItem(usernameWords.animals)}${randomItem(usernameWords.traits)}`
   ];
 
-  const pattern = randomItem(patterns);
+  generatedUsername = randomItem(patterns)();
+  usernameAwaitingApproval = true;
 
-  generatedSafeUsername = pattern();
-  usernameWaitingForApproval = true;
+  usernameDisplay.textContent = generatedUsername;
 
-  usernameDisplay.textContent = generatedSafeUsername;
   usernameDisplay.classList.remove("username-pop");
-
   void usernameDisplay.offsetWidth;
-
   usernameDisplay.classList.add("username-pop");
 
   checklist.innerHTML = `
     <div class="scan-result safe-scan">
       <span>✅</span>
-      <p><strong>No real name</strong><br>This username does not reveal a first or last name.</p>
+      <p>
+        <strong>No real name</strong><br>
+        This username does not reveal a real first or last name.
+      </p>
     </div>
 
     <div class="scan-result safe-scan">
       <span>✅</span>
-      <p><strong>No birthday</strong><br>It does not include an age, birthday, or birth year.</p>
+      <p>
+        <strong>No birthday</strong><br>
+        It does not contain an age, birthday, or birth year.
+      </p>
     </div>
 
     <div class="scan-result safe-scan">
       <span>✅</span>
-      <p><strong>No location clues</strong><br>It does not reveal a school, address, or location.</p>
+      <p>
+        <strong>No location clues</strong><br>
+        It does not reveal a school, address, city, or location.
+      </p>
     </div>
 
     <div class="scan-result safe-scan">
       <span>✅</span>
-      <p><strong>No contact information</strong><br>It does not include a phone number or email address.</p>
+      <p>
+        <strong>No contact information</strong><br>
+        It does not include a phone number or email address.
+      </p>
     </div>
   `;
 
   approveButton.classList.remove("hidden");
 
   setMemeTip(
-    `${generatedSafeUsername} passed the safety scan! Check why it is safe.`,
+    `${generatedUsername} passed the safety scan! Review the checklist, then approve it.`,
     "congrats"
   );
 }
 
 function approveSafeUsername() {
-  const checkedDisplay = getElement("usernamesChecked");
-  const approveButton = getElement("approveUsername");
-  const backpackButton = getElement("goBackpackRescue");
-
-  if (!usernameWaitingForApproval) {
+  if (!usernameAwaitingApproval) {
     return;
   }
 
-  usernameWaitingForApproval = false;
+  usernameAwaitingApproval = false;
   usernamesChecked += 1;
+
+  const checkedDisplay = byId("usernamesChecked");
+  const approveButton = byId("approveUsername");
+  const backpackButton = byId("goBackpackRescue");
 
   if (checkedDisplay) {
     checkedDisplay.textContent = String(usernamesChecked);
@@ -489,96 +575,34 @@ function approveSafeUsername() {
     approveButton.classList.add("hidden");
   }
 
-  setMemeTip(
-    `Great safety scan! You checked ${usernamesChecked} out of 3 usernames.`,
-    "congrats"
-  );
-
   if (usernamesChecked >= 3 && backpackButton) {
     backpackButton.disabled = false;
     backpackButton.classList.remove("locked-action");
     backpackButton.textContent = "Start Backpack Rescue 🎒";
 
     setMemeTip(
-      "Username training complete! Backpack Rescue is now unlocked.",
+      "You completed three username safety scans! Backpack Rescue is unlocked.",
+      "congrats"
+    );
+  } else {
+    setMemeTip(
+      `Great scan! You checked ${usernamesChecked} out of 3 usernames. Generate another one.`,
       "congrats"
     );
   }
 }
 
-/* -----------------------------
-   Explore activity
------------------------------ */
-
-function openLesson(objectKey, button) {
-  const lesson = lessons[objectKey];
-  const popup = getElement("lessonPopup");
-  const lessonTitle = getElement("lessonTitle");
-  const lessonText = getElement("lessonText");
-  const objectsFound = getElement("objectsFound");
-  const goUsernameLab = getElement("goUsernameLab");
-
-  if (!lesson || !popup || !lessonTitle || !lessonText) {
-    return;
-  }
-
-  lessonTitle.textContent = lesson.title;
-  lessonText.textContent = lesson.text;
-  popup.classList.remove("hidden");
-
-  foundObjects.add(objectKey);
-
-  if (button) {
-    button.classList.add("discovered", "wiggle");
-
-    window.setTimeout(() => {
-      button.classList.remove("wiggle");
-    }, 600);
-  }
-
-  if (objectsFound) {
-    objectsFound.textContent = String(foundObjects.size);
-  }
-
-  if (foundObjects.size >= 6 && goUsernameLab) {
-  goUsernameLab.disabled = false;
-  goUsernameLab.classList.remove("locked-action");
-  goUsernameLab.textContent = "Open Safe Username Lab 🧪";
-
-  setMemeTip(
-    "Great exploring! The Safe Username Lab is now unlocked.",
-    "congrats"
-  );
-}
-}
-
-function collectSticker(button) {
-  if (!button) {
-    return;
-  }
-
-  const stickerName = button.dataset.sticker;
-
-  if (!stickerName || foundStickers.has(stickerName)) {
-    return;
-  }
-
-  foundStickers.add(stickerName);
-  button.classList.add("collected");
-  button.textContent = "✨";
-
-  setMemeTip(
-    `You found a hidden sticker: ${stickerName}!`,
-    "congrats"
-  );
-}
+/* ---------------------------------------------------------
+   STEP 3 — BACKPACK RESCUE
+--------------------------------------------------------- */
 
 function startBackpackRescue() {
-  if (foundObjects.size < 6) {
+  if (usernamesChecked < 3) {
     setMemeTip(
-      `Find all 6 learning objects first. You have found ${foundObjects.size} out of 6.`,
+      `Complete 3 username scans first. You completed ${usernamesChecked} out of 3.`,
       "thinking"
     );
+
     return;
   }
 
@@ -591,25 +615,20 @@ function startBackpackRescue() {
   );
 }
 
-/* Make inline onclick work */
-window.startBackpackRescue = startBackpackRescue;
-
-/* -----------------------------
-   Practice game
------------------------------ */
-
 function loadPractice() {
   const item = practiceQuestions[practiceIndex];
-  const itemText = getElement("sortItemText");
-  const feedback = getElement("practiceFeedback");
-  const card = getElement("dragItemCard");
-  const practiceCount = getElement("practiceCorrect");
+  const text = byId("sortItemText");
+  const feedback = byId("practiceFeedback");
+  const card = byId("dragItemCard");
+  const correctDisplay = byId("practiceCorrect");
 
-  if (!item || !itemText || !feedback || !card) {
+  if (!item || !text || !feedback || !card) {
+    console.error("Practice game elements are missing.");
     return;
   }
 
-  itemText.textContent = item.text;
+  text.textContent = item.text;
+
   feedback.textContent = "";
   feedback.style.background = "transparent";
   feedback.style.color = "";
@@ -620,8 +639,8 @@ function loadPractice() {
     "slide-away"
   );
 
-  if (practiceCount) {
-    practiceCount.textContent = String(practiceCorrect);
+  if (correctDisplay) {
+    correctDisplay.textContent = String(practiceCorrect);
   }
 
   practiceAnswered = false;
@@ -633,9 +652,9 @@ function answerPractice(choice, target) {
   }
 
   const current = practiceQuestions[practiceIndex];
-  const feedback = getElement("practiceFeedback");
-  const card = getElement("dragItemCard");
-  const practiceCount = getElement("practiceCorrect");
+  const feedback = byId("practiceFeedback");
+  const card = byId("dragItemCard");
+  const correctDisplay = byId("practiceCorrect");
 
   if (!current || !feedback || !card) {
     return;
@@ -645,18 +664,20 @@ function answerPractice(choice, target) {
     practiceAnswered = true;
     practiceCorrect += 1;
 
-    if (practiceCount) {
-      practiceCount.textContent = String(practiceCorrect);
+    if (correctDisplay) {
+      correctDisplay.textContent = String(practiceCorrect);
     }
 
-    feedback.textContent = `🎉 Correct! ${current.explain}`;
+    feedback.textContent =
+      `🎉 Correct! ${current.explanation}`;
+
     feedback.style.background = "#e9fff3";
     feedback.style.color = "#168a52";
 
     card.classList.add("correct-glow");
 
     setMemeTip(
-      "Great job! You sorted that item correctly.",
+      "Great sorting! You protected Ava's information.",
       "congrats"
     );
 
@@ -681,7 +702,7 @@ function answerPractice(choice, target) {
           practiceCorrect = 0;
 
           setMemeTip(
-            "You are close. Try Backpack Rescue again and get at least 8 correct.",
+            "You are close! Try Backpack Rescue again and get at least 8 correct.",
             "thinking"
           );
 
@@ -694,7 +715,9 @@ function answerPractice(choice, target) {
       loadPractice();
     }, 900);
   } else {
-    feedback.textContent = `Good guess! ${current.explain}`;
+    feedback.textContent =
+      `Good guess! ${current.explanation}`;
+
     feedback.style.background = "#f3efff";
     feedback.style.color = "#7d4cff";
 
@@ -705,7 +728,7 @@ function answerPractice(choice, target) {
     }
 
     setMemeTip(
-      "Good guess! Try the other zone.",
+      "Good guess! Try placing it in the other zone.",
       "wrong"
     );
 
@@ -719,19 +742,19 @@ function answerPractice(choice, target) {
   }
 }
 
-/* -----------------------------
-   Final test
------------------------------ */
+/* ---------------------------------------------------------
+   STEP 4 — FINAL TEST
+--------------------------------------------------------- */
 
 function loadTest() {
   const current = testQuestions[testIndex];
-  const question = getElement("testQuestion");
-  const number = getElement("testNumber");
-  const feedback = getElement("testFeedback");
-  const nextButton = getElement("nextTest");
+  const question = byId("testQuestion");
+  const number = byId("testNumber");
+  const feedback = byId("testFeedback");
+  const nextButton = byId("nextTest");
 
   if (!current || !question || !number || !feedback || !nextButton) {
-    console.error("Final test elements are missing from identity.html.");
+    console.error("Final test elements are missing.");
     return;
   }
 
@@ -758,8 +781,8 @@ function answerTest(choice, button) {
   }
 
   const current = testQuestions[testIndex];
-  const feedback = getElement("testFeedback");
-  const nextButton = getElement("nextTest");
+  const feedback = byId("testFeedback");
+  const nextButton = byId("nextTest");
 
   if (!current || !feedback || !nextButton) {
     return;
@@ -774,7 +797,9 @@ function answerTest(choice, button) {
   if (choice === current.answer) {
     testCorrect += 1;
 
-    feedback.textContent = `🎉 Correct! ${current.explain}`;
+    feedback.textContent =
+      `🎉 Correct! ${current.explanation}`;
+
     feedback.style.background = "#e9fff3";
     feedback.style.color = "#168a52";
 
@@ -787,7 +812,9 @@ function answerTest(choice, button) {
       "congrats"
     );
   } else {
-    feedback.textContent = `Good guess! ${current.explain}`;
+    feedback.textContent =
+      `Good guess! ${current.explanation}`;
+
     feedback.style.background = "#f3efff";
     feedback.style.color = "#7d4cff";
 
@@ -804,7 +831,7 @@ function answerTest(choice, button) {
   nextButton.classList.remove("hidden");
 }
 
-function nextTest() {
+function nextTestQuestion() {
   testIndex += 1;
 
   if (testIndex >= testQuestions.length) {
@@ -815,6 +842,10 @@ function nextTest() {
   loadTest();
 }
 
+/* ---------------------------------------------------------
+   MISSION RESULT
+--------------------------------------------------------- */
+
 function finishMission() {
   const percentage = Math.round(
     (testCorrect / testQuestions.length) * 100
@@ -822,10 +853,10 @@ function finishMission() {
 
   const passed = percentage >= 80;
 
-  const title = getElement("resultTitle");
-  const message = getElement("resultMessage");
-  const points = getElement("pointsEarned");
-  const stickers = getElement("stickersFound");
+  const title = byId("resultTitle");
+  const message = byId("resultMessage");
+  const points = byId("pointsEarned");
+  const stickers = byId("stickersFound");
   const badgeDisplay = document.querySelector(".earned-badge");
 
   showSection("missionResult");
@@ -840,13 +871,14 @@ function finishMission() {
 
   if (passed) {
     const basePoints = 50;
-    const stickerPoints = foundStickers.size * 5;
-    const earnedPoints = basePoints + stickerPoints;
+    const stickerBonus = foundStickers.size * 5;
+    const earnedPoints = basePoints + stickerBonus;
 
     const alreadyEarned =
       localStorage.getItem("identityBadgeEarned") === "true";
 
     localStorage.setItem("identityBadgeEarned", "true");
+
     localStorage.setItem(
       "identityStickers",
       JSON.stringify(Array.from(foundStickers))
@@ -867,10 +899,12 @@ function finishMission() {
       "Identity Protector Badge Earned!";
 
     message.textContent =
-      `You scored ${percentage}%. You helped Ava protect her identity.`;
+      `You scored ${percentage}%. You helped Ava protect her identity!`;
 
     points.textContent =
-      alreadyEarned ? "Already collected" : String(earnedPoints);
+      alreadyEarned
+        ? "Already collected"
+        : String(earnedPoints);
 
     if (badgeDisplay) {
       badgeDisplay.style.display = "inline-block";
@@ -894,19 +928,23 @@ function finishMission() {
     }
 
     setMemeTip(
-      "You are close. Review what you learned and try again.",
+      "You are close! Review what you learned and try again.",
       "thinking"
     );
   }
 }
 
-/* -----------------------------
-   Replay mission
------------------------------ */
+/* ---------------------------------------------------------
+   REPLAY
+--------------------------------------------------------- */
 
 function retryMission() {
   foundObjects = new Set();
   foundStickers = new Set();
+
+  generatedUsername = "";
+  usernamesChecked = 0;
+  usernameAwaitingApproval = false;
 
   practiceIndex = 0;
   practiceCorrect = 0;
@@ -916,16 +954,39 @@ function retryMission() {
   testCorrect = 0;
   testAnswered = false;
 
-  const objectsFound = getElement("objectsFound");
-  const practiceCount = getElement("practiceCorrect");
-  const goPractice = getElement("goPractice");
+  const objectsFound = byId("objectsFound");
+  const usernamesDisplay = byId("usernamesChecked");
+  const practiceDisplay = byId("practiceCorrect");
+
+  const usernameButton = byId("goUsernameLab");
+  const backpackButton = byId("goBackpackRescue");
+
+  const generatedUsernameDisplay =
+    byId("generatedUsername");
+
+  const checklist =
+    byId("usernameChecklist");
 
   if (objectsFound) {
     objectsFound.textContent = "0";
   }
 
-  if (practiceCount) {
-    practiceCount.textContent = "0";
+  if (usernamesDisplay) {
+    usernamesDisplay.textContent = "0";
+  }
+
+  if (practiceDisplay) {
+    practiceDisplay.textContent = "0";
+  }
+
+  if (generatedUsernameDisplay) {
+    generatedUsernameDisplay.textContent =
+      "Press the button to generate a safe username!";
+  }
+
+  if (checklist) {
+    checklist.innerHTML =
+      "<p>Generate a username to begin the safety scan.</p>";
   }
 
   document.querySelectorAll(".island-object").forEach((button) => {
@@ -940,10 +1001,18 @@ function retryMission() {
     button.textContent = "⭐";
   });
 
-  if (goPractice) {
-    goPractice.disabled = true;
-    goPractice.classList.add("locked-action");
-    goPractice.textContent = "Unlock Practice";
+  if (usernameButton) {
+    usernameButton.disabled = true;
+    usernameButton.classList.add("locked-action");
+    usernameButton.textContent =
+      "Unlock Safe Username Lab";
+  }
+
+  if (backpackButton) {
+    backpackButton.disabled = true;
+    backpackButton.classList.add("locked-action");
+    backpackButton.textContent =
+      "Complete 3 Username Scans First";
   }
 
   showSection("missionAlert");
@@ -954,63 +1023,28 @@ function retryMission() {
   );
 }
 
-/* -----------------------------
-   Event listeners
------------------------------ */
+/* ---------------------------------------------------------
+   EVENT LISTENERS
+--------------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
   loadMissionHeroName();
 
-  const acceptButton = getElement("acceptMission");
-  const closeLessonButton = getElement("closeLesson");
-  const nextTestButton = getElement("nextTest");
-  const retryButton = getElement("retryMission");
-  const goUsernameLabButton = getElement("goUsernameLab");
-  const generateUsernameButton = getElement("generateUsername");
-  const approveUsernameButton = getElement("approveUsername");
-  const goBackpackRescueButton = getElement("goBackpackRescue");
+  const acceptButton = byId("acceptMission");
+  const closeLessonButton = byId("closeLesson");
+
+  const usernameLabButton = byId("goUsernameLab");
+  const generateUsernameButton = byId("generateUsername");
+  const approveUsernameButton = byId("approveUsername");
+  const backpackButton = byId("goBackpackRescue");
+
+  const nextTestButton = byId("nextTest");
+  const retryButton = byId("retryMission");
 
   if (acceptButton) {
     acceptButton.addEventListener(
       "click",
       acceptMission
-
-   if (goUsernameLabButton) {
-  goUsernameLabButton.addEventListener(
-    "click",
-    openUsernameLab
-  );
-}
-
-if (generateUsernameButton) {
-  generateUsernameButton.addEventListener(
-    "click",
-    generateSafeUsername
-  );
-}
-
-if (approveUsernameButton) {
-  approveUsernameButton.addEventListener(
-    "click",
-    approveSafeUsername
-  );
-}
-
-if (goBackpackRescueButton) {
-  goBackpackRescueButton.addEventListener("click", () => {
-    if (goBackpackRescueButton.disabled) {
-      return;
-    }
-
-    showSection("practiceZone");
-    loadPractice();
-
-    setMemeTip(
-      "Backpack Rescue time! Drag each item into the correct zone.",
-      "thinking"
-    );
-  });
-}
     );
   }
 
@@ -1039,16 +1073,41 @@ if (goBackpackRescueButton) {
   });
 
   if (closeLessonButton) {
-    closeLessonButton.addEventListener("click", () => {
-      const popup = getElement("lessonPopup");
-
-      if (popup) {
-        popup.classList.add("hidden");
-      }
-    });
+    closeLessonButton.addEventListener(
+      "click",
+      closeLessonPopup
+    );
   }
 
-  const dragCard = getElement("dragItemCard");
+  if (usernameLabButton) {
+    usernameLabButton.addEventListener(
+      "click",
+      openUsernameLab
+    );
+  }
+
+  if (generateUsernameButton) {
+    generateUsernameButton.addEventListener(
+      "click",
+      generateSafeUsername
+    );
+  }
+
+  if (approveUsernameButton) {
+    approveUsernameButton.addEventListener(
+      "click",
+      approveSafeUsername
+    );
+  }
+
+  if (backpackButton) {
+    backpackButton.addEventListener(
+      "click",
+      startBackpackRescue
+    );
+  }
+
+  const dragCard = byId("dragItemCard");
 
   if (dragCard) {
     dragCard.addEventListener("dragstart", (event) => {
@@ -1101,7 +1160,7 @@ if (goBackpackRescueButton) {
   if (nextTestButton) {
     nextTestButton.addEventListener(
       "click",
-      nextTest
+      nextTestQuestion
     );
   }
 
