@@ -252,13 +252,14 @@ function setMemeTip(message, mood = "thinking") {
 }
 
 function showSection(sectionId) {
-  const sectionIds = [
-    "missionAlert",
-    "exploreZone",
-    "practiceZone",
-    "testZone",
-    "missionResult"
-  ];
+ const sectionIds = [
+  "missionAlert",
+  "exploreZone",
+  "usernameZone",
+  "practiceZone",
+  "testZone",
+  "missionResult"
+];
 
   sectionIds.forEach((id) => {
     const section = getElement(id);
@@ -320,6 +321,192 @@ function acceptMission() {
 }
 
 /* -----------------------------
+   Safe Username Lab
+----------------------------- */
+
+const usernameWords = {
+  colors: [
+    "Purple",
+    "Cyan",
+    "Golden",
+    "Silver",
+    "Coral",
+    "Emerald",
+    "Indigo",
+    "Sunny",
+    "Cosmic",
+    "Neon"
+  ],
+
+  traits: [
+    "Brave",
+    "Clever",
+    "Curious",
+    "Swift",
+    "Kind",
+    "Mighty",
+    "Bright",
+    "Calm",
+    "Epic",
+    "Super"
+  ],
+
+  animals: [
+    "Dolphin",
+    "Fox",
+    "Owl",
+    "Panda",
+    "Turtle",
+    "Dragon",
+    "Tiger",
+    "Penguin",
+    "Koala",
+    "Falcon"
+  ],
+
+  powers: [
+    "Shield",
+    "Rocket",
+    "Spark",
+    "Star",
+    "Pixel",
+    "Nova",
+    "Comet",
+    "Tech",
+    "Signal",
+    "Quest"
+  ]
+};
+
+let generatedSafeUsername = "";
+let usernamesChecked = 0;
+let usernameWaitingForApproval = false;
+
+function randomItem(items) {
+  return items[Math.floor(Math.random() * items.length)];
+}
+
+function openUsernameLab() {
+  if (foundObjects.size < 6) {
+    setMemeTip(
+      `Find all 6 learning objects first. You found ${foundObjects.size} out of 6.`,
+      "thinking"
+    );
+
+    return;
+  }
+
+  showSection("usernameZone");
+
+  setMemeTip(
+    "Welcome to the Safe Username Lab! Generate names that do not reveal personal information.",
+    "welcome"
+  );
+}
+
+function generateSafeUsername() {
+  const usernameDisplay = getElement("generatedUsername");
+  const checklist = getElement("usernameChecklist");
+  const approveButton = getElement("approveUsername");
+
+  if (!usernameDisplay || !checklist || !approveButton) {
+    return;
+  }
+
+  const patterns = [
+    () =>
+      `${randomItem(usernameWords.colors)}${randomItem(usernameWords.animals)}${randomItem(usernameWords.powers)}`,
+
+    () =>
+      `${randomItem(usernameWords.traits)}${randomItem(usernameWords.animals)}${randomItem(usernameWords.powers)}`,
+
+    () =>
+      `${randomItem(usernameWords.colors)}${randomItem(usernameWords.traits)}${randomItem(usernameWords.animals)}`,
+
+    () =>
+      `${randomItem(usernameWords.powers)}${randomItem(usernameWords.animals)}${randomItem(usernameWords.traits)}`
+  ];
+
+  const pattern = randomItem(patterns);
+
+  generatedSafeUsername = pattern();
+  usernameWaitingForApproval = true;
+
+  usernameDisplay.textContent = generatedSafeUsername;
+  usernameDisplay.classList.remove("username-pop");
+
+  void usernameDisplay.offsetWidth;
+
+  usernameDisplay.classList.add("username-pop");
+
+  checklist.innerHTML = `
+    <div class="scan-result safe-scan">
+      <span>✅</span>
+      <p><strong>No real name</strong><br>This username does not reveal a first or last name.</p>
+    </div>
+
+    <div class="scan-result safe-scan">
+      <span>✅</span>
+      <p><strong>No birthday</strong><br>It does not include an age, birthday, or birth year.</p>
+    </div>
+
+    <div class="scan-result safe-scan">
+      <span>✅</span>
+      <p><strong>No location clues</strong><br>It does not reveal a school, address, or location.</p>
+    </div>
+
+    <div class="scan-result safe-scan">
+      <span>✅</span>
+      <p><strong>No contact information</strong><br>It does not include a phone number or email address.</p>
+    </div>
+  `;
+
+  approveButton.classList.remove("hidden");
+
+  setMemeTip(
+    `${generatedSafeUsername} passed the safety scan! Check why it is safe.`,
+    "congrats"
+  );
+}
+
+function approveSafeUsername() {
+  const checkedDisplay = getElement("usernamesChecked");
+  const approveButton = getElement("approveUsername");
+  const backpackButton = getElement("goBackpackRescue");
+
+  if (!usernameWaitingForApproval) {
+    return;
+  }
+
+  usernameWaitingForApproval = false;
+  usernamesChecked += 1;
+
+  if (checkedDisplay) {
+    checkedDisplay.textContent = String(usernamesChecked);
+  }
+
+  if (approveButton) {
+    approveButton.classList.add("hidden");
+  }
+
+  setMemeTip(
+    `Great safety scan! You checked ${usernamesChecked} out of 3 usernames.`,
+    "congrats"
+  );
+
+  if (usernamesChecked >= 3 && backpackButton) {
+    backpackButton.disabled = false;
+    backpackButton.classList.remove("locked-action");
+    backpackButton.textContent = "Start Backpack Rescue 🎒";
+
+    setMemeTip(
+      "Username training complete! Backpack Rescue is now unlocked.",
+      "congrats"
+    );
+  }
+}
+
+/* -----------------------------
    Explore activity
 ----------------------------- */
 
@@ -329,7 +516,7 @@ function openLesson(objectKey, button) {
   const lessonTitle = getElement("lessonTitle");
   const lessonText = getElement("lessonText");
   const objectsFound = getElement("objectsFound");
-  const goPractice = getElement("goPractice");
+  const goUsernameLab = getElement("goUsernameLab");
 
   if (!lesson || !popup || !lessonTitle || !lessonText) {
     return;
@@ -353,16 +540,16 @@ function openLesson(objectKey, button) {
     objectsFound.textContent = String(foundObjects.size);
   }
 
-  if (foundObjects.size >= 6 && goPractice) {
-    goPractice.disabled = false;
-    goPractice.classList.remove("locked-action");
-    goPractice.textContent = "Start Backpack Rescue 🎒";
+  if (foundObjects.size >= 6 && goUsernameLab) {
+  goUsernameLab.disabled = false;
+  goUsernameLab.classList.remove("locked-action");
+  goUsernameLab.textContent = "Open Safe Username Lab 🧪";
 
-    setMemeTip(
-      "Great exploring! Backpack Rescue is now unlocked.",
-      "congrats"
-    );
-  }
+  setMemeTip(
+    "Great exploring! The Safe Username Lab is now unlocked.",
+    "congrats"
+  );
+}
 }
 
 function collectSticker(button) {
@@ -778,11 +965,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeLessonButton = getElement("closeLesson");
   const nextTestButton = getElement("nextTest");
   const retryButton = getElement("retryMission");
+  const goUsernameLabButton = getElement("goUsernameLab");
+  const generateUsernameButton = getElement("generateUsername");
+  const approveUsernameButton = getElement("approveUsername");
+  const goBackpackRescueButton = getElement("goBackpackRescue");
 
   if (acceptButton) {
     acceptButton.addEventListener(
       "click",
       acceptMission
+
+   if (goUsernameLabButton) {
+  goUsernameLabButton.addEventListener(
+    "click",
+    openUsernameLab
+  );
+}
+
+if (generateUsernameButton) {
+  generateUsernameButton.addEventListener(
+    "click",
+    generateSafeUsername
+  );
+}
+
+if (approveUsernameButton) {
+  approveUsernameButton.addEventListener(
+    "click",
+    approveSafeUsername
+  );
+}
+
+if (goBackpackRescueButton) {
+  goBackpackRescueButton.addEventListener("click", () => {
+    if (goBackpackRescueButton.disabled) {
+      return;
+    }
+
+    showSection("practiceZone");
+    loadPractice();
+
+    setMemeTip(
+      "Backpack Rescue time! Drag each item into the correct zone.",
+      "thinking"
+    );
+  });
+}
     );
   }
 
