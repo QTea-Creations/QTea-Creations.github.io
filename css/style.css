@@ -2008,3 +2008,35 @@ body.teachers-page-bg {
 body.notebook-page-bg {
     background: linear-gradient(135deg, #fff7cc, #f4edff);
 }
+
+.username-decision-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.username-safety-choice {
+    border: none;
+    cursor: pointer;
+}
+
+.unsafe-choice {
+    background: linear-gradient(
+        135deg,
+        #ff6b79,
+        #ff4f9a
+    );
+}
+
+.try-again-scan {
+    margin-top: 14px;
+    background: #fff7d6;
+    border: 2px solid #ffe76b;
+}
+
+@media (max-width: 600px) {
+    .username-decision-buttons {
+        grid-template-columns: 1fr;
+    }
+}
