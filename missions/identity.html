@@ -75,13 +75,96 @@
           <button class="small-button" id="closeLesson">Got it!</button>
         </div>
 
-        <button class="button" id="goPractice" type="button" onclick="startBackpackRescue()">Start Backpack Rescue 🎒</button>
+        <button
+  class="button locked-action"
+  id="goUsernameLab"
+  type="button"
+  disabled
+>
+  Unlock Safe Username Lab
+</button>
       </section>
+
+      <section class="username-zone hidden" id="usernameZone">
+  <div class="zone-header">
+    <div>
+      <p class="eyebrow">Step 2: Safe Username Lab</p>
+      <h2>🧪 Build a Safe Online Name</h2>
+      <p>
+        Generate usernames that do not reveal a real name, birthday,
+        school, address, phone number, or location.
+      </p>
+    </div>
+
+    <div class="progress-pill">
+      Names Checked:
+      <span id="usernamesChecked">0</span>/3
+    </div>
+  </div>
+
+  <article class="username-lab">
+    <div class="username-machine">
+      <div class="machine-lights" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <p class="eyebrow">Username Generator</p>
+
+      <div class="generated-username" id="generatedUsername">
+        Press the button to generate a safe username!
+      </div>
+
+      <button class="button" id="generateUsername" type="button">
+        🎲 Generate Username
+      </button>
+    </div>
+
+    <div class="username-analysis">
+      <h3>🔍 Meme’s Safety Scan</h3>
+
+      <div id="usernameChecklist" class="username-checklist">
+        <p>Generate a username to begin the safety scan.</p>
+      </div>
+
+      <button
+        class="small-button hidden"
+        id="approveUsername"
+        type="button"
+      >
+        ✅ This Username Is Safe
+      </button>
+    </div>
+  </article>
+
+  <section class="username-rules">
+    <h3>Safe usernames should not include:</h3>
+
+    <div class="username-rule-grid">
+      <div>🚫 Real first or last name</div>
+      <div>🚫 Birthday or birth year</div>
+      <div>🚫 School name</div>
+      <div>🚫 Address or location</div>
+      <div>🚫 Phone number</div>
+      <div>🚫 Password clues</div>
+    </div>
+  </section>
+
+  <button
+    class="button locked-action"
+    id="goBackpackRescue"
+    type="button"
+    disabled
+  >
+    Complete 3 Username Scans First
+  </button>
+</section>
 
 <section class="practice-zone hidden" id="practiceZone">
   <div class="zone-header">
     <div>
-      <p class="eyebrow">Step 2: Practice Game</p>
+      <p class="eyebrow">Step 3: Practice Game</p>
       <h2>🎒 Backpack Rescue</h2>
       <p>Drag each item into the correct zone.</p>
     </div>
@@ -114,7 +197,7 @@
       <section class="test-zone hidden" id="testZone">
         <div class="zone-header">
           <div>
-            <p class="eyebrow">Step 3: Final Test</p>
+            <p class="eyebrow">Step 4: Final Test</p>
             <h2>Identity Protector Test</h2>
             <p>Answer 20 questions. You need 80% or higher to earn your badge.</p>
           </div>
