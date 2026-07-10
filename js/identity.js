@@ -262,6 +262,8 @@ let foundObjects = new Set();
 let foundStickers = new Set();
 
 let generatedUsername = "";
+let generatedUsernameIsSafe = true;
+let generatedUsernameReason = "";
 let usernamesChecked = 0;
 let usernameAwaitingApproval = false;
 
@@ -490,7 +492,7 @@ function generateSafeUsername() {
     return;
   }
 
-  const patterns = [
+  const safePatterns = [
     () =>
       `${randomItem(usernameWords.colors)}${randomItem(usernameWords.animals)}${randomItem(usernameWords.powers)}`,
 
@@ -504,55 +506,172 @@ function generateSafeUsername() {
       `${randomItem(usernameWords.powers)}${randomItem(usernameWords.animals)}${randomItem(usernameWords.traits)}`
   ];
 
-  generatedUsername = randomItem(patterns)();
+  const unsafeExamples = [
+    {
+      username: "SarahLee2014",
+      reason: "It may reveal a real name and birth year."
+    },
+    {
+      username: "SarahAtBates",
+      reason: "It may reveal a real name and school."
+    },
+    {
+      username: "DetroitSarah",
+      reason: "It may reveal a real name and location."
+    },
+    {
+      username: "Sarah3135551234",
+      reason: "It may reveal a real name and phone number."
+    },
+    {
+      username: "SarahLivesOnOak",
+      reason: "It may reveal a real name and street information."
+    }
+  ];
+
+  /*
+    About one out of every three generated usernames
+    will be unsafe.
+  */
+  generatedUsernameIsSafe = Math.random() > 0.33;
+
+  if (generatedUsernameIsSafe) {
+    const pattern = randomItem(safePatterns);
+
+    generatedUsername = pattern();
+    generatedUsernameReason =
+      "This username does not reveal a real name, birthday, school, address, phone number, or location.";
+  } else {
+    const unsafeExample = randomItem(unsafeExamples);
+
+    generatedUsername = unsafeExample.username;
+    generatedUsernameReason = unsafeExample.reason;
+  }
+
   usernameAwaitingApproval = true;
 
   usernameDisplay.textContent = generatedUsername;
-
   usernameDisplay.classList.remove("username-pop");
+
   void usernameDisplay.offsetWidth;
+
   usernameDisplay.classList.add("username-pop");
 
   checklist.innerHTML = `
-    <div class="scan-result safe-scan">
-      <span>✅</span>
-      <p>
-        <strong>No real name</strong><br>
-        This username does not reveal a real first or last name.
-      </p>
-    </div>
+    <p>
+      Look carefully at the username. Does it reveal any personal information?
+    </p>
+  `;
 
-    <div class="scan-result safe-scan">
-      <span>✅</span>
-      <p>
-        <strong>No birthday</strong><br>
-        It does not contain an age, birthday, or birth year.
-      </p>
-    </div>
+  approveButton.classList.add("hidden");
 
-    <div class="scan-result safe-scan">
-      <span>✅</span>
-      <p>
-        <strong>No location clues</strong><br>
-        It does not reveal a school, address, city, or location.
-      </p>
-    </div>
+  setMemeTip(
+    `Scan ${generatedUsername}. Is it safe or unsafe?`,
+    "thinking"
+  );
 
-    <div class="scan-result safe-scan">
-      <span>✅</span>
-      <p>
-        <strong>No contact information</strong><br>
-        It does not include a phone number or email address.
-      </p>
+  showUsernameDecisionButtons();
+}
+
+function showUsernameDecisionButtons() {
+  const checklist = byId("usernameChecklist");
+
+  if (!checklist) {
+    return;
+  }
+
+  checklist.innerHTML += `
+    <div class="username-decision-buttons">
+      <button
+        class="button username-safety-choice"
+        type="button"
+        data-choice="safe"
+      >
+        ✅ Safe Username
+      </button>
+
+      <button
+        class="button username-safety-choice unsafe-choice"
+        type="button"
+        data-choice="unsafe"
+      >
+        ⚠️ Unsafe Username
+      </button>
     </div>
   `;
 
-  approveButton.classList.remove("hidden");
+  checklist
+    .querySelectorAll(".username-safety-choice")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        checkUsernameDecision(
+          button.dataset.choice,
+          button
+        );
+      });
+    });
+}
 
-  setMemeTip(
-    `${generatedUsername} passed the safety scan! Review the checklist, then approve it.`,
-    "congrats"
-  );
+function checkUsernameDecision(choice, button) {
+  if (!usernameAwaitingApproval) {
+    return;
+  }
+
+  const checklist = byId("usernameChecklist");
+  const approveButton = byId("approveUsername");
+
+  if (!checklist || !approveButton) {
+    return;
+  }
+
+  const correctChoice =
+    generatedUsernameIsSafe ? "safe" : "unsafe";
+
+  if (choice === correctChoice) {
+    checklist.innerHTML = `
+      <div class="scan-result safe-scan">
+        <span>✅</span>
+        <p>
+          <strong>Correct!</strong><br>
+          ${generatedUsernameReason}
+        </p>
+      </div>
+    `;
+
+    approveButton.classList.remove("hidden");
+
+    setMemeTip(
+      generatedUsernameIsSafe
+        ? "Correct! This username protects the user’s identity."
+        : "Correct! This username reveals personal clues and should not be used.",
+      "congrats"
+    );
+  } else {
+    button.classList.add("shake");
+
+    window.setTimeout(() => {
+      button.classList.remove("shake");
+    }, 700);
+
+    checklist.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="scan-result try-again-scan">
+          <span>🤔</span>
+          <p>
+            <strong>Good guess!</strong><br>
+            Look for a real name, birthday, school,
+            phone number, address, or location.
+          </p>
+        </div>
+      `
+    );
+
+    setMemeTip(
+      "Good guess! Look again for personal clues.",
+      "wrong"
+    );
+  }
 }
 
 function approveSafeUsername() {
