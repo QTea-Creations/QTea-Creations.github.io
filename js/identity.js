@@ -185,6 +185,101 @@ function answerPractice(choice, target) {
   }
 }
 
+const testQuestions = [
+  ...practiceQuestions,
+  { text: "Your home address", answer: "private", explain: "Your home address can show where you live." },
+  { text: "Your favorite ice cream flavor", answer: "safe", explain: "Favorites are usually safe to share." },
+  { text: "Your full first and last name", answer: "private", explain: "Full names can identify you." },
+  { text: "A made-up online name", answer: "safe", explain: "Online names are safe when they do not reveal personal details." },
+  { text: "Your password", answer: "private", explain: "Passwords should stay secret." },
+  { text: "Your favorite game", answer: "safe", explain: "Favorite games are usually safe." },
+  { text: "Your parent’s phone number", answer: "private", explain: "Family contact information is private." },
+  { text: "Your school name", answer: "private", explain: "School names can reveal where to find you." },
+  { text: "Your favorite superhero", answer: "safe", explain: "That usually does not reveal private information." },
+  { text: "A photo showing your school uniform and school name", answer: "private", explain: "Photos can reveal private clues." }
+];
+
+let testIndex = 0;
+let testCorrect = 0;
+let testAnswered = false;
+
+function loadTest() {
+  const question = document.getElementById("testQuestion");
+  const number = document.getElementById("testNumber");
+  const feedback = document.getElementById("testFeedback");
+  const next = document.getElementById("nextTest");
+
+  if (!question || !number || !feedback || !next) return;
+
+  question.textContent = testQuestions[testIndex].text;
+  number.textContent = testIndex + 1;
+  feedback.textContent = "";
+  feedback.style.background = "transparent";
+  next.classList.add("hidden");
+  testAnswered = false;
+}
+
+function answerTest(choice, button) {
+  if (testAnswered) return;
+
+  const current = testQuestions[testIndex];
+  const feedback = document.getElementById("testFeedback");
+  const next = document.getElementById("nextTest");
+
+  testAnswered = true;
+
+  if (choice === current.answer) {
+    testCorrect++;
+    feedback.textContent = "🎉 Correct! " + current.explain;
+    feedback.style.background = "#e9fff3";
+    button.classList.add("correct-glow");
+  } else {
+    feedback.textContent = "Good guess! " + current.explain;
+    feedback.style.background = "#f3efff";
+    button.classList.add("shake");
+  }
+
+  setTimeout(() => button.classList.remove("shake", "correct-glow"), 700);
+  next.classList.remove("hidden");
+}
+
+function nextTest() {
+  testIndex++;
+
+  if (testIndex >= testQuestions.length) {
+    finishMission();
+    return;
+  }
+
+  loadTest();
+}
+
+function finishMission() {
+  const percentage = Math.round((testCorrect / testQuestions.length) * 100);
+  const passed = percentage >= 80;
+
+  showSection("missionResult");
+
+  document.getElementById("stickersFound").textContent = foundStickers.size;
+
+  if (passed) {
+    const earnedPoints = 50 + foundStickers.size * 5;
+
+    localStorage.setItem("identityBadgeEarned", "true");
+    localStorage.setItem("identityStickers", JSON.stringify([...foundStickers]));
+
+    const currentPoints = Number(localStorage.getItem("safetiiPoints") || "0");
+    localStorage.setItem("safetiiPoints", String(currentPoints + earnedPoints));
+
+    document.getElementById("resultTitle").textContent = "Identity Protector Badge Earned!";
+    document.getElementById("resultMessage").textContent = `You scored ${percentage}%. You helped Ava protect her identity!`;
+    document.getElementById("pointsEarned").textContent = earnedPoints;
+  } else {
+    document.getElementById("resultTitle").textContent = "Almost there, Cyber Mentee!";
+    document.getElementById("resultMessage").textContent = `You scored ${percentage}%. You need 80% to earn the badge. Try again!`;
+    document.getElementById("pointsEarned").textContent = "0";
+  }
+}
 document.addEventListener("DOMContentLoaded", () => {
   loadMissionHeroName();
 
@@ -196,6 +291,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".meme-help-btn").forEach((button) => {
     button.addEventListener("click", () => {
       setMemeTip(button.dataset.tip);
+
+      document.querySelectorAll(".test-choice").forEach((button) => {
+  button.addEventListener("click", () => {
+    answerTest(button.dataset.answer, button);
+  });
+});
+
+const nextTestButton = document.getElementById("nextTest");
+if (nextTestButton) {
+  nextTestButton.addEventListener("click", nextTest);
+}
     });
   });
 
