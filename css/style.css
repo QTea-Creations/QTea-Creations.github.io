@@ -118,6 +118,208 @@ body {
     }
 }
 
+/* ===========================
+   Safe Username Lab
+=========================== */
+
+.username-zone {
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(255, 231, 107, 0.35),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #eefaff
+        );
+
+    border-radius: 34px;
+    padding: 34px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+}
+
+.username-lab {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+    gap: 28px;
+    align-items: stretch;
+}
+
+.username-machine,
+.username-analysis {
+    border-radius: 30px;
+    padding: 32px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.username-machine {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255, 255, 255, 0.3),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #7d4cff,
+            #15d3dc
+        );
+
+    color: #ffffff;
+}
+
+.username-machine .eyebrow {
+    color: #ffe76b;
+}
+
+.machine-lights {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.machine-lights span {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffe76b;
+    box-shadow: 0 0 14px rgba(255, 231, 107, 0.9);
+}
+
+.machine-lights span:nth-child(2) {
+    background: #ff70bd;
+}
+
+.machine-lights span:nth-child(3) {
+    background: #71ffcf;
+}
+
+.generated-username {
+    min-height: 110px;
+    margin: 24px 0;
+    padding: 24px;
+
+    display: grid;
+    place-items: center;
+
+    background: rgba(255, 255, 255, 0.96);
+    color: #23324d;
+
+    border: 5px solid #ffe76b;
+    border-radius: 26px;
+
+    font-size: clamp(1.6rem, 3vw, 3rem);
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.username-pop {
+    animation: usernamePop 0.55s ease;
+}
+
+@keyframes usernamePop {
+    0% {
+        transform: scale(0.75) rotate(-3deg);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.08) rotate(2deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+.username-analysis {
+    background: #ffffff;
+    border: 4px solid #e8e4ff;
+}
+
+.username-analysis h3 {
+    color: #7d4cff;
+    font-size: 1.7rem;
+    margin-bottom: 20px;
+}
+
+.username-checklist {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.scan-result {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 12px;
+    align-items: center;
+
+    padding: 14px;
+    border-radius: 18px;
+}
+
+.scan-result span {
+    font-size: 1.5rem;
+}
+
+.scan-result p {
+    margin: 0;
+}
+
+.safe-scan {
+    background: #e9fff3;
+    border: 2px solid #35c878;
+}
+
+.username-rules {
+    margin: 28px 0;
+    padding: 26px;
+
+    background: #fff8d7;
+    border: 4px solid #ffe76b;
+    border-radius: 28px;
+}
+
+.username-rule-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.username-rule-grid div {
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 18px;
+    font-weight: 800;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+}
+
+@media (max-width: 900px) {
+    .username-lab {
+        grid-template-columns: 1fr;
+    }
+
+    .username-rule-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .username-rule-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ==========================================
    PAGE THEMES
 ========================================== */
