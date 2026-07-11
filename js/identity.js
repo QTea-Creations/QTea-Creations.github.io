@@ -62,6 +62,10 @@ const usernameWords = {
     "Bright",
     "Calm",
     "Epic",
+    "Lucky",
+    "Handsome",
+    "Cute",
+    "Beautiful",
     "Super"
   ],
   animals: [
