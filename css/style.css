@@ -352,6 +352,405 @@ body {
         linear-gradient(180deg,#ffffff,#f6f8ff);
 }
 
+/* ===========================
+   Identity Card Repair Lab
+=========================== */
+
+.identity-card-zone {
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(255, 231, 107, 0.42),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #eefaff
+        );
+
+    border-radius: 34px;
+    padding: 34px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+}
+
+.training-profile-note {
+    margin-bottom: 24px;
+    padding: 16px 20px;
+
+    background: #fff8d7;
+    border: 3px solid #ffe76b;
+    border-radius: 20px;
+
+    color: #4b426b;
+    font-weight: 800;
+}
+
+.identity-repair-game {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.identity-flip-card {
+    width: 100%;
+    min-height: 520px;
+    padding: 0;
+
+    border: none;
+    border-radius: 30px;
+
+    background: transparent;
+    cursor: pointer;
+    perspective: 1200px;
+}
+
+.identity-card-inner {
+    position: relative;
+    display: block;
+
+    width: 100%;
+    min-height: 520px;
+
+    transition: transform 0.75s ease;
+    transform-style: preserve-3d;
+}
+
+.identity-card-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.identity-card-face {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    border-radius: 30px;
+    backface-visibility: hidden;
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+}
+
+.identity-card-front {
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(255, 255, 255, 0.65),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #7d4cff,
+            #15d3dc
+        );
+
+    color: #ffffff;
+}
+
+.identity-card-back {
+    transform: rotateY(180deg);
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(255, 231, 107, 0.5),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fff7d6
+        );
+
+    color: #23324d;
+}
+
+.training-label {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 9px 16px;
+
+    background: #ffe76b;
+    color: #23324d;
+
+    border-radius: 999px;
+
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.profile-avatar {
+    display: grid;
+    place-items: center;
+
+    width: 105px;
+    height: 105px;
+    margin-bottom: 14px;
+
+    background: #ffffff;
+    border: 5px solid #ffe76b;
+    border-radius: 50%;
+
+    font-size: 3.5rem;
+}
+
+.profile-name {
+    margin-bottom: 18px;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    font-weight: 900;
+}
+
+.profile-details {
+    display: grid;
+    gap: 10px;
+
+    width: 100%;
+    max-width: 420px;
+
+    padding: 20px;
+
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 22px;
+
+    text-align: left;
+    font-size: 1rem;
+}
+
+.unsafe-current-name {
+    display: block;
+
+    width: 100%;
+    max-width: 420px;
+    margin-top: 18px;
+    padding: 16px;
+
+    background: #fff1f5;
+    color: #8f245a;
+
+    border: 3px solid #ff70bd;
+    border-radius: 20px;
+
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.flip-instruction {
+    margin-top: 20px;
+    font-weight: 900;
+}
+
+.interest-title {
+    margin-bottom: 24px;
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+.interest-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.interest-chip {
+    padding: 13px 18px;
+
+    background: #ffffff;
+    border: 3px solid #15d3dc;
+    border-radius: 999px;
+
+    font-weight: 900;
+}
+
+.username-repair-area {
+    padding: 28px;
+
+    background: #ffffff;
+    border: 4px solid #e8e4ff;
+    border-radius: 30px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.repair-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.repair-heading h3 {
+    margin-top: 4px;
+    font-size: 1.7rem;
+}
+
+.word-block-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.repair-word-block {
+    padding: 13px 17px;
+
+    background: linear-gradient(
+        135deg,
+        #ffffff,
+        #eefaff
+    );
+
+    border: 3px solid #7d4cff;
+    border-radius: 16px;
+
+    color: #23324d;
+    font-size: 1rem;
+    font-weight: 900;
+
+    cursor: grab;
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.repair-word-block:hover {
+    transform: translateY(-4px) rotate(-1deg);
+}
+
+.repair-word-block:active {
+    cursor: grabbing;
+}
+
+.repair-word-block.is-dragging {
+    opacity: 0.45;
+}
+
+.repair-word-block.used-block {
+    opacity: 0.28;
+    cursor: not-allowed;
+}
+
+.username-build-zone {
+    min-height: 175px;
+    padding: 24px;
+
+    display: grid;
+    place-items: center;
+    gap: 16px;
+
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            #f7f2ff,
+            #f7f2ff 12px,
+            #eefaff 12px,
+            #eefaff 24px
+        );
+
+    border: 5px dashed #7d4cff;
+    border-radius: 28px;
+
+    text-align: center;
+}
+
+.selected-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.selected-repair-block {
+    padding: 12px 15px;
+
+    background: #ffe76b;
+    border: 3px solid #f3bd24;
+    border-radius: 14px;
+
+    color: #23324d;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.username-preview {
+    margin: 22px 0;
+    padding: 18px;
+
+    display: grid;
+    gap: 7px;
+
+    background: #ecfbff;
+    border: 3px solid #15d3dc;
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+.username-preview strong {
+    color: #7d4cff;
+    font-size: clamp(1.3rem, 2.4vw, 2.1rem);
+    overflow-wrap: anywhere;
+}
+
+.repair-success {
+    animation: repairSuccess 0.8s ease;
+}
+
+@keyframes repairSuccess {
+    0% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.04);
+        box-shadow:
+            0 0 0 8px rgba(53, 200, 120, 0.2),
+            0 0 35px rgba(53, 200, 120, 0.55);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+#goFinalTest {
+    margin-top: 28px;
+}
+
+@media (max-width: 1000px) {
+    .identity-repair-game {
+        grid-template-columns: 1fr;
+    }
+
+    .identity-flip-card,
+    .identity-card-inner {
+        min-height: 480px;
+    }
+}
+
+@media (max-width: 600px) {
+    .repair-heading {
+        flex-direction: column;
+    }
+
+    .identity-card-face {
+        padding: 20px;
+    }
+
+    .profile-details {
+        font-size: 0.9rem;
+    }
+}
 
 /* ===========================
    Hero
