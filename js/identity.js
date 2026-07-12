@@ -68,14 +68,21 @@
         "Complete 3 Username Scans First";
     }
 
-    const finalButton = game.byId("goFinalTest");
+    const finalTestButton = game.byId("goFinalTest");
 
-    if (finalButton) {
-      finalButton.disabled = true;
-      finalButton.classList.add("locked-action");
-      finalButton.textContent =
-        "Protect All 5 Profiles to Unlock the Final Test";
+if (finalTestButton) {
+  finalTestButton.addEventListener("click", () => {
+    if (typeof game.startFinalTest !== "function") {
+      console.error(
+        "startFinalTest is missing. Check identity-test.js."
+      );
+
+      return;
     }
+
+    game.startFinalTest();
+  });
+}
 
     const generatedUsername = game.byId("generatedUsername");
 
