@@ -960,14 +960,15 @@ function answerPractice(choice, target) {
 
       if (practiceIndex >= practiceQuestions.length) {
         if (practiceCorrect >= 8) {
-          showSection("identityCardZone");
-          loadTest();
+  showSection("identityCardZone");
+  loadIdentityProfile();
 
-          setMemeTip(
-            "Backpack Rescue complete! The final test is ready.",
-            "congrats"
-          );
-        } else {
+  setMemeTip(
+    "Backpack Rescue complete! Now help five fictional students repair their unsafe usernames.",
+    "congrats"
+  );
+}
+        else {
           practiceIndex = 0;
           practiceCorrect = 0;
 
@@ -1406,7 +1407,7 @@ function startFinalTest() {
   testCorrect = 0;
   testAnswered = false;
 
-  showSection("testZone");
+  final test ready
   loadTest();
 
   setMemeTip(
