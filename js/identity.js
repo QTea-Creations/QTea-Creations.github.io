@@ -259,6 +259,147 @@ const testQuestions = [
 ];
 
 /* ---------------------------------------------------------
+   IDENTITY CARD REPAIR LAB
+--------------------------------------------------------- */
+
+const identityProfiles = [
+  {
+    avatar: "👧",
+    name: "Sarah Lee",
+    birthday: "April 8, 2014",
+    school: "Sunflower Spark Academy",
+    location: "Petal Point",
+    unsafeUsername: "SarahLee2014",
+
+    interests: [
+      { word: "Pink", emoji: "🩷" },
+      { word: "Butterfly", emoji: "🦋" },
+      { word: "Taco", emoji: "🌮" },
+      { word: "Artist", emoji: "🎨" },
+      { word: "Spark", emoji: "✨" }
+    ],
+
+    privateBlocks: [
+      { word: "Sarah", reason: "real first name" },
+      { word: "Lee", reason: "real last name" },
+      { word: "April", reason: "birth month" },
+      { word: "8", reason: "birthday number" },
+      { word: "2014", reason: "birth year" },
+      { word: "Sunflower", reason: "school clue" },
+      { word: "PetalPoint", reason: "location clue" }
+    ]
+  },
+
+  {
+    avatar: "👦",
+    name: "Mateo Cruz",
+    birthday: "June 17, 2013",
+    school: "Bluebell Comet Middle School",
+    location: "Cloudberry Cove",
+    unsafeUsername: "MateoBluebell13",
+
+    interests: [
+      { word: "Blue", emoji: "💙" },
+      { word: "Dolphin", emoji: "🐬" },
+      { word: "Pizza", emoji: "🍕" },
+      { word: "Soccer", emoji: "⚽" },
+      { word: "Rocket", emoji: "🚀" }
+    ],
+
+    privateBlocks: [
+      { word: "Mateo", reason: "real first name" },
+      { word: "Cruz", reason: "real last name" },
+      { word: "June", reason: "birth month" },
+      { word: "17", reason: "birthday number" },
+      { word: "2013", reason: "birth year" },
+      { word: "Bluebell", reason: "school clue" },
+      { word: "Cloudberry", reason: "location clue" }
+    ]
+  },
+
+  {
+    avatar: "👧🏽",
+    name: "Nia Brooks",
+    birthday: "February 22, 2015",
+    school: "Daisy Moon Elementary",
+    location: "Starpetal Bay",
+    unsafeUsername: "NiaBrooks22",
+
+    interests: [
+      { word: "Purple", emoji: "💜" },
+      { word: "Panda", emoji: "🐼" },
+      { word: "Berry", emoji: "🍓" },
+      { word: "Dance", emoji: "💃" },
+      { word: "Nova", emoji: "🌟" }
+    ],
+
+    privateBlocks: [
+      { word: "Nia", reason: "real first name" },
+      { word: "Brooks", reason: "real last name" },
+      { word: "February", reason: "birth month" },
+      { word: "22", reason: "birthday number" },
+      { word: "2015", reason: "birth year" },
+      { word: "DaisyMoon", reason: "school clue" },
+      { word: "Starpetal", reason: "location clue" }
+    ]
+  },
+
+  {
+    avatar: "👦🏻",
+    name: "Oliver Chen",
+    birthday: "September 4, 2012",
+    school: "Marigold Quest Academy",
+    location: "Rainbow Fern",
+    unsafeUsername: "OliverChen2012",
+
+    interests: [
+      { word: "Green", emoji: "💚" },
+      { word: "Turtle", emoji: "🐢" },
+      { word: "Noodle", emoji: "🍜" },
+      { word: "Builder", emoji: "🧱" },
+      { word: "Pixel", emoji: "🟦" }
+    ],
+
+    privateBlocks: [
+      { word: "Oliver", reason: "real first name" },
+      { word: "Chen", reason: "real last name" },
+      { word: "September", reason: "birth month" },
+      { word: "4", reason: "birthday number" },
+      { word: "2012", reason: "birth year" },
+      { word: "Marigold", reason: "school clue" },
+      { word: "RainbowFern", reason: "location clue" }
+    ]
+  },
+
+  {
+    avatar: "👧🏾",
+    name: "Amara Jones",
+    birthday: "December 11, 2014",
+    school: "Lavender Lantern School",
+    location: "Moonpetal Harbor",
+    unsafeUsername: "AmaraLavender11",
+
+    interests: [
+      { word: "Golden", emoji: "💛" },
+      { word: "Owl", emoji: "🦉" },
+      { word: "Popcorn", emoji: "🍿" },
+      { word: "Reader", emoji: "📚" },
+      { word: "Comet", emoji: "☄️" }
+    ],
+
+    privateBlocks: [
+      { word: "Amara", reason: "real first name" },
+      { word: "Jones", reason: "real last name" },
+      { word: "December", reason: "birth month" },
+      { word: "11", reason: "birthday number" },
+      { word: "2014", reason: "birth year" },
+      { word: "Lavender", reason: "school clue" },
+      { word: "Moonpetal", reason: "location clue" }
+    ]
+  }
+];
+
+/* ---------------------------------------------------------
    MISSION STATE
 --------------------------------------------------------- */
 
@@ -278,6 +419,11 @@ let practiceAnswered = false;
 let testIndex = 0;
 let testCorrect = 0;
 let testAnswered = false;
+
+let identityProfileIndex = 0;
+let profilesProtected = 0;
+let selectedRepairBlocks = [];
+let profileRepairComplete = false;
 
 /* ---------------------------------------------------------
    GENERAL HELPERS
@@ -319,6 +465,7 @@ function showSection(sectionId) {
     "exploreZone",
     "usernameZone",
     "practiceZone",
+    "identityCardZone",
     "testZone",
     "missionResult"
   ];
@@ -813,7 +960,7 @@ function answerPractice(choice, target) {
 
       if (practiceIndex >= practiceQuestions.length) {
         if (practiceCorrect >= 8) {
-          showSection("testZone");
+          showSection("identityCardZone");
           loadTest();
 
           setMemeTip(
@@ -866,7 +1013,411 @@ function answerPractice(choice, target) {
 }
 
 /* ---------------------------------------------------------
-   STEP 4 — FINAL TEST
+   STEP 4 — IDENTITY CARD REPAIR LAB
+--------------------------------------------------------- */
+
+function shuffleItems(items) {
+  const copy = [...items];
+
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+
+    [copy[index], copy[randomIndex]] = [
+      copy[randomIndex],
+      copy[index]
+    ];
+  }
+
+  return copy;
+}
+
+function loadIdentityProfile() {
+  const profile = identityProfiles[identityProfileIndex];
+
+  if (!profile) {
+    unlockFinalTest();
+    return;
+  }
+
+  identityProfileIndex = Math.min(
+    identityProfileIndex,
+    identityProfiles.length - 1
+  );
+
+  selectedRepairBlocks = [];
+  profileRepairComplete = false;
+
+  const card = byId("identityFlipCard");
+  const cardInner = byId("identityCardInner");
+
+  if (card) {
+    card.setAttribute("aria-pressed", "false");
+  }
+
+  if (cardInner) {
+    cardInner.classList.remove("is-flipped");
+  }
+
+  byId("profileAvatar").textContent = profile.avatar;
+  byId("profileName").textContent = profile.name;
+  byId("profileBirthday").textContent = profile.birthday;
+  byId("profileSchool").textContent = profile.school;
+  byId("profileLocation").textContent = profile.location;
+  byId("profileUnsafeUsername").textContent =
+    profile.unsafeUsername;
+
+  const interestList = byId("profileInterestList");
+
+  if (interestList) {
+    interestList.innerHTML = profile.interests
+      .map(
+        (interest) => `
+          <span class="interest-chip">
+            ${interest.emoji} ${interest.word}
+          </span>
+        `
+      )
+      .join("");
+  }
+
+  buildRepairBlockBank(profile);
+  updateRepairBuilder();
+  clearRepairFeedback();
+
+  const checkButton = byId("checkRepairedUsername");
+
+  if (checkButton) {
+    checkButton.disabled = true;
+    checkButton.classList.add("locked-action");
+  }
+
+  setMemeTip(
+    `Study ${profile.name}'s fictional training ID. Flip the card to find safe interests.`,
+    "thinking"
+  );
+}
+
+function buildRepairBlockBank(profile) {
+  const bank = byId("wordBlockBank");
+
+  if (!bank) {
+    return;
+  }
+
+  const safeBlocks = profile.interests.map((interest) => ({
+    word: interest.word,
+    label: `${interest.emoji} ${interest.word}`,
+    safe: true,
+    reason: "safe interest"
+  }));
+
+  const unsafeBlocks = profile.privateBlocks.map((block) => ({
+    word: block.word,
+    label: `🔎 ${block.word}`,
+    safe: false,
+    reason: block.reason
+  }));
+
+  const mixedBlocks = shuffleItems([
+    ...safeBlocks,
+    ...unsafeBlocks
+  ]);
+
+  bank.innerHTML = "";
+
+  mixedBlocks.forEach((block, index) => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "repair-word-block";
+    button.draggable = true;
+
+    button.dataset.word = block.word;
+    button.dataset.safe = String(block.safe);
+    button.dataset.reason = block.reason;
+    button.dataset.blockId = `repair-block-${identityProfileIndex}-${index}`;
+
+    button.textContent = block.label;
+
+    button.addEventListener("dragstart", (event) => {
+      event.dataTransfer.setData(
+        "text/plain",
+        button.dataset.blockId
+      );
+
+      event.dataTransfer.effectAllowed = "move";
+      button.classList.add("is-dragging");
+    });
+
+    button.addEventListener("dragend", () => {
+      button.classList.remove("is-dragging");
+    });
+
+    button.addEventListener("click", () => {
+      addRepairBlock(button);
+    });
+
+    bank.appendChild(button);
+  });
+}
+
+function addRepairBlock(button) {
+  if (!button || profileRepairComplete) {
+    return;
+  }
+
+  if (selectedRepairBlocks.length >= 3) {
+    setMemeTip(
+      "Your username already has three blocks. Remove one or clear the builder first.",
+      "thinking"
+    );
+
+    return;
+  }
+
+  const blockId = button.dataset.blockId;
+
+  if (
+    selectedRepairBlocks.some(
+      (block) => block.blockId === blockId
+    )
+  ) {
+    return;
+  }
+
+  selectedRepairBlocks.push({
+    blockId,
+    word: button.dataset.word,
+    safe: button.dataset.safe === "true",
+    reason: button.dataset.reason
+  });
+
+  button.disabled = true;
+  button.classList.add("used-block");
+
+  updateRepairBuilder();
+}
+
+function removeRepairBlock(blockId) {
+  selectedRepairBlocks = selectedRepairBlocks.filter(
+    (block) => block.blockId !== blockId
+  );
+
+  const originalBlock = document.querySelector(
+    `[data-block-id="${blockId}"]`
+  );
+
+  if (originalBlock) {
+    originalBlock.disabled = false;
+    originalBlock.classList.remove("used-block");
+  }
+
+  updateRepairBuilder();
+}
+
+function clearRepairBuilder() {
+  selectedRepairBlocks = [];
+
+  document
+    .querySelectorAll(".repair-word-block")
+    .forEach((block) => {
+      block.disabled = false;
+      block.classList.remove("used-block");
+    });
+
+  updateRepairBuilder();
+  clearRepairFeedback();
+
+  setMemeTip(
+    "Builder cleared. Choose three safe interest blocks.",
+    "thinking"
+  );
+}
+
+function updateRepairBuilder() {
+  const selectedArea = byId("selectedUsernameBlocks");
+  const preview = byId("repairedUsernamePreview");
+  const buildMessage = byId("buildZoneMessage");
+  const checkButton = byId("checkRepairedUsername");
+
+  if (!selectedArea || !preview || !buildMessage || !checkButton) {
+    return;
+  }
+
+  selectedArea.innerHTML = "";
+
+  selectedRepairBlocks.forEach((block) => {
+    const selectedButton = document.createElement("button");
+
+    selectedButton.type = "button";
+    selectedButton.className = "selected-repair-block";
+    selectedButton.textContent = `${block.word} ×`;
+
+    selectedButton.addEventListener("click", () => {
+      removeRepairBlock(block.blockId);
+    });
+
+    selectedArea.appendChild(selectedButton);
+  });
+
+  if (selectedRepairBlocks.length === 0) {
+    buildMessage.textContent =
+      "Drop or click three safe blocks here.";
+
+    preview.textContent =
+      "Waiting for three blocks...";
+  } else {
+    buildMessage.textContent =
+      `${selectedRepairBlocks.length}/3 blocks selected`;
+
+    preview.textContent = selectedRepairBlocks
+      .map((block) => block.word)
+      .join("");
+  }
+
+  const ready = selectedRepairBlocks.length === 3;
+
+  checkButton.disabled = !ready;
+  checkButton.classList.toggle("locked-action", !ready);
+}
+
+function clearRepairFeedback() {
+  const feedback = byId("identityRepairFeedback");
+
+  if (feedback) {
+    feedback.textContent = "";
+    feedback.style.background = "transparent";
+    feedback.style.color = "";
+  }
+}
+
+function checkRepairedUsername() {
+  if (
+    selectedRepairBlocks.length !== 3 ||
+    profileRepairComplete
+  ) {
+    return;
+  }
+
+  const feedback = byId("identityRepairFeedback");
+  const buildZone = byId("usernameBuildZone");
+
+  if (!feedback || !buildZone) {
+    return;
+  }
+
+  const unsafeBlocks = selectedRepairBlocks.filter(
+    (block) => !block.safe
+  );
+
+  if (unsafeBlocks.length > 0) {
+    const reasons = unsafeBlocks
+      .map(
+        (block) =>
+          `"${block.word}" reveals a ${block.reason}`
+      )
+      .join("; ");
+
+    feedback.textContent =
+      `Good try! ${reasons}. Remove those blocks and choose safe interests instead.`;
+
+    feedback.style.background = "#fff3d4";
+    feedback.style.color = "#7d4cff";
+
+    buildZone.classList.add("shake");
+
+    window.setTimeout(() => {
+      buildZone.classList.remove("shake");
+    }, 700);
+
+    setMemeTip(
+      "Good guess! A safe username should not include real names, birthdays, schools, or locations.",
+      "wrong"
+    );
+
+    return;
+  }
+
+  profileRepairComplete = true;
+  profilesProtected += 1;
+
+  const progress = byId("profilesProtected");
+
+  if (progress) {
+    progress.textContent = String(profilesProtected);
+  }
+
+  feedback.textContent =
+    `🎉 Excellent! ${selectedRepairBlocks
+      .map((block) => block.word)
+      .join("")} uses interests without revealing private information.`;
+
+  feedback.style.background = "#e9fff3";
+  feedback.style.color = "#168a52";
+
+  buildZone.classList.add("repair-success");
+
+  setMemeTip(
+    `Profile ${profilesProtected} of 5 protected!`,
+    "congrats"
+  );
+
+  window.setTimeout(() => {
+    buildZone.classList.remove("repair-success");
+
+    identityProfileIndex += 1;
+
+    if (identityProfileIndex >= identityProfiles.length) {
+      unlockFinalTest();
+      return;
+    }
+
+    loadIdentityProfile();
+  }, 1800);
+}
+
+function unlockFinalTest() {
+  const finalButton = byId("goFinalTest");
+
+  if (finalButton) {
+    finalButton.disabled = false;
+    finalButton.classList.remove("locked-action");
+    finalButton.textContent =
+      "Begin Identity Protector Final Test 🛡️";
+  }
+
+  setMemeTip(
+    "You protected all five profiles! The final test is unlocked.",
+    "congrats"
+  );
+}
+
+function startFinalTest() {
+  if (profilesProtected < 5) {
+    setMemeTip(
+      `Protect all five profiles first. You protected ${profilesProtected} out of 5.`,
+      "thinking"
+    );
+
+    return;
+  }
+
+  testIndex = 0;
+  testCorrect = 0;
+  testAnswered = false;
+
+  showSection("testZone");
+  loadTest();
+
+  setMemeTip(
+    "Final test time! You need at least 80 percent to earn your badge.",
+    "thinking"
+  );
+}
+
+
+/* ---------------------------------------------------------
+   STEP 5 — FINAL TEST
 --------------------------------------------------------- */
 
 function loadTest() {
@@ -1164,6 +1715,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextTestButton = byId("nextTest");
   const retryButton = byId("retryMission");
 
+   const identityFlipCard = byId("identityFlipCard");
+const usernameBuildZone = byId("usernameBuildZone");
+const clearUsernameBlocks = byId("clearUsernameBlocks");
+const checkRepairedUsernameButton = byId("checkRepairedUsername");
+const goFinalTestButton = byId("goFinalTest");
+
   if (acceptButton) {
     acceptButton.addEventListener(
       "click",
@@ -1222,6 +1779,68 @@ document.addEventListener("DOMContentLoaded", () => {
       approveSafeUsername
     );
   }
+
+   if (identityFlipCard) {
+  identityFlipCard.addEventListener("click", () => {
+    const inner = byId("identityCardInner");
+
+    if (!inner) {
+      return;
+    }
+
+    const flipped = inner.classList.toggle("is-flipped");
+
+    identityFlipCard.setAttribute(
+      "aria-pressed",
+      String(flipped)
+    );
+  });
+}
+
+if (usernameBuildZone) {
+  usernameBuildZone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    usernameBuildZone.classList.add("drag-over");
+  });
+
+  usernameBuildZone.addEventListener("dragleave", () => {
+    usernameBuildZone.classList.remove("drag-over");
+  });
+
+  usernameBuildZone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    usernameBuildZone.classList.remove("drag-over");
+
+    const blockId = event.dataTransfer.getData("text/plain");
+
+    const block = document.querySelector(
+      `[data-block-id="${blockId}"]`
+    );
+
+    addRepairBlock(block);
+  });
+}
+
+if (clearUsernameBlocks) {
+  clearUsernameBlocks.addEventListener(
+    "click",
+    clearRepairBuilder
+  );
+}
+
+if (checkRepairedUsernameButton) {
+  checkRepairedUsernameButton.addEventListener(
+    "click",
+    checkRepairedUsername
+  );
+}
+
+if (goFinalTestButton) {
+  goFinalTestButton.addEventListener(
+    "click",
+    startFinalTest
+  );
+}
 
   if (backpackButton) {
     backpackButton.addEventListener(
