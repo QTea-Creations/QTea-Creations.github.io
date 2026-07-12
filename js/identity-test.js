@@ -80,7 +80,7 @@
       game.clearRepairFeedback();
 
       game.setMemeTip(
-        `Study ${profile.name}'s fictional ID. Flip the card to find safe interests.`,
+        `Study ${profile.name}'s example ID. Flip the card to find safe interests.`,
         "thinking"
       );
     };
@@ -519,4 +519,29 @@
         "congrats"
       );
     };
+  game.startFinalTest = function startFinalTest() {
+  const requiredProfiles = game.data.identityProfiles.length;
+  const protectedProfiles = game.state.profilesProtected;
+
+  if (protectedProfiles < requiredProfiles) {
+    game.setMemeTip(
+      `Protect all five profiles first. You protected ${protectedProfiles} out of ${requiredProfiles}.`,
+      "thinking"
+    );
+
+    return;
+  }
+
+  game.state.testIndex = 0;
+  game.state.testCorrect = 0;
+  game.state.testAnswered = false;
+
+  game.showSection("testZone");
+  game.loadTest();
+
+  game.setMemeTip(
+    "Final test time! You need at least 80 percent to earn your badge.",
+    "thinking"
+  );
+};
 })();
