@@ -197,7 +197,153 @@
       <section class="test-zone hidden" id="testZone">
         <div class="zone-header">
           <div>
-            <p class="eyebrow">Step 4: Final Test</p>
+
+  <section class="identity-card-zone hidden" id="identityCardZone">
+  <div class="zone-header">
+    <div>
+      <p class="eyebrow">Step 4: Identity Card Repair Lab</p>
+      <h2>🪪 Repair Five Unsafe Usernames</h2>
+      <p>
+        Examine each fictional training profile. Flip the ID card to discover
+        safe interests, then build a username that does not reveal personal
+        information.
+      </p>
+    </div>
+
+    <div class="progress-pill">
+      Profiles Protected:
+      <span id="profilesProtected">0</span>/5
+    </div>
+  </div>
+
+  <div class="training-profile-note">
+    🧪 All names, schools, locations, birthdays, and profiles in this activity
+    are fictional and used only for training.
+  </div>
+
+  <article class="identity-repair-game">
+    <div class="profile-area">
+      <button
+        class="identity-flip-card"
+        id="identityFlipCard"
+        type="button"
+        aria-label="Flip the fictional identity card"
+        aria-pressed="false"
+      >
+        <span class="identity-card-inner" id="identityCardInner">
+          <span class="identity-card-face identity-card-front">
+            <span class="training-label">FICTIONAL TRAINING ID</span>
+
+            <span class="profile-avatar" id="profileAvatar" aria-hidden="true">
+              👧
+            </span>
+
+            <span class="profile-name" id="profileName">Loading profile...</span>
+
+            <span class="profile-details">
+              <span>
+                <strong>Birthday:</strong>
+                <span id="profileBirthday"></span>
+              </span>
+
+              <span>
+                <strong>School:</strong>
+                <span id="profileSchool"></span>
+              </span>
+
+              <span>
+                <strong>Location:</strong>
+                <span id="profileLocation"></span>
+              </span>
+            </span>
+
+            <span class="unsafe-current-name">
+              Current unsafe username:
+              <strong id="profileUnsafeUsername"></strong>
+            </span>
+
+            <span class="flip-instruction">
+              🔄 Click the card to reveal safe interests
+            </span>
+          </span>
+
+          <span class="identity-card-face identity-card-back">
+            <span class="training-label">SAFE INTEREST CLUES</span>
+
+            <span class="interest-title">
+              Build a username from these interests:
+            </span>
+
+            <span class="interest-list" id="profileInterestList"></span>
+
+            <span class="flip-instruction">
+              🔄 Click again to view the private-information side
+            </span>
+          </span>
+        </span>
+      </button>
+    </div>
+
+    <div class="username-repair-area">
+      <div class="repair-heading">
+        <div>
+          <p class="eyebrow">Username Builder</p>
+          <h3>Drag three safe blocks into the builder</h3>
+        </div>
+
+        <button
+          class="small-button"
+          id="clearUsernameBlocks"
+          type="button"
+        >
+          Clear Builder
+        </button>
+      </div>
+
+      <div class="word-block-bank" id="wordBlockBank">
+              </div>
+
+      <div
+        class="username-build-zone"
+        id="usernameBuildZone"
+        tabindex="0"
+        aria-label="Safe username building zone"
+      >
+        <p id="buildZoneMessage">
+          Drop or click three safe blocks here.
+        </p>
+
+        <div id="selectedUsernameBlocks" class="selected-blocks"></div>
+      </div>
+
+      <div class="username-preview">
+        <span>New username:</span>
+        <strong id="repairedUsernamePreview">Waiting for three blocks...</strong>
+      </div>
+
+      <button
+        class="button locked-action"
+        id="checkRepairedUsername"
+        type="button"
+        disabled
+      >
+        Check Username 🔍
+      </button>
+
+      <p class="feedback" id="identityRepairFeedback"></p>
+    </div>
+  </article>
+
+  <button
+    class="button locked-action"
+    id="goFinalTest"
+    type="button"
+    disabled
+  >
+    Protect All 5 Profiles to Unlock the Final Test
+  </button>
+</section>
+            <p class="eyebrow">Step 5: Final Test</p>
             <h2>Identity Protector Test</h2>
             <p>Answer 20 questions. You need 80% or higher to earn your badge.</p>
           </div>
