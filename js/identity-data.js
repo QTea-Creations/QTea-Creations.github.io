@@ -353,6 +353,8 @@
         school: "Sunflower Spark Academy",
         location: "Petal Point",
         unsafeUsername: "SarahLee2014",
+        interestMission:
+  "Sarah loves pink, butterflies, tacos, drawing, and painting.",
 
         interests: [
           { word: "Pink", emoji: "🩷" },
@@ -380,6 +382,8 @@
         school: "Bluebell Comet Middle School",
         location: "Cloudberry Cove",
         unsafeUsername: "MateoBluebell13",
+        interestMission:
+  "Mateo loves blue, dolphins, pizza, soccer, and rockets.",
 
         interests: [
           { word: "Blue", emoji: "💙" },
@@ -407,6 +411,8 @@
         school: "Daisy Moon Elementary",
         location: "Starpetal Bay",
         unsafeUsername: "NiaBrooks22",
+        interestMission:
+  "Nia loves purple, pandas, berries, dancing, and stars.",
 
         interests: [
           { word: "Purple", emoji: "💜" },
@@ -434,6 +440,8 @@
         school: "Marigold Quest Academy",
         location: "Rainbow Fern",
         unsafeUsername: "OliverChen2012",
+        interestMission:
+  "Oliver loves green, turtles, noodles, building, and pixel games.",
 
         interests: [
           { word: "Green", emoji: "💚" },
@@ -461,6 +469,8 @@
         school: "Lavender Lantern School",
         location: "Moonpetal Harbor",
         unsafeUsername: "AmaraLavender11",
+        interestMission:
+  "Amara loves gold, owls, popcorn, reading, and comets.",
 
         interests: [
           { word: "Golden", emoji: "💛" },
