@@ -426,8 +426,30 @@ function loadCyberNotebook() {
   const savedHero = localStorage.getItem("safetiiHero");
   const savedPoints = localStorage.getItem("safetiiPoints") || "0";
   const identityEarned = localStorage.getItem("identityBadgeEarned") === "true";
-  const stickers = JSON.parse(localStorage.getItem("identityStickers") || "[]");
+ let stickers = [];
 
+try {
+  const missionProgress = JSON.parse(
+    localStorage.getItem(
+      "safetiiIdentityProgress"
+    ) || "null"
+  );
+
+  stickers =
+    missionProgress?.foundStickers ||
+    JSON.parse(
+      localStorage.getItem(
+        "identityStickers"
+      ) || "[]"
+    );
+} catch (error) {
+  console.error(
+    "Could not load notebook stickers:",
+    error
+  );
+
+  stickers = [];
+}
   if (heroName) {
     if (savedHero) {
       const hero = JSON.parse(savedHero);
