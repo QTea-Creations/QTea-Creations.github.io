@@ -749,10 +749,14 @@
 
   <!-- Load in this exact order -->
   <script src="../js/identity-data.js"></script>
-  <script src="../js/identity-core.js"></script>
-  <script src="../js/identity-activities.js"></script>
-  <script src="../js/identity-repair.js"></script>
-  <script src="../js/identity-test.js"></script>
-  <script src="../js/identity.js"></script>
+<script src="../js/identity-core.js"></script>
+<script src="../js/identity-activities.js"></script>
+<script src="../js/identity-repair.js"></script>
+<script src="../js/identity-test.js"></script>
+
+<!-- Progress must load before the main controller -->
+<script src="../js/identity-progress.js"></script>
+
+<script src="../js/identity.js"></script>
 </body>
 </html>
