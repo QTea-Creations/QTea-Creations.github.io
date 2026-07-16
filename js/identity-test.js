@@ -298,14 +298,9 @@
         );
 
       if (passed) {
-        const basePoints = 50;
+        const earnedPoints = 50;
 
-        const stickerBonus =
-          game.state.foundStickers.size * 5;
-
-        const earnedPoints =
-          basePoints + stickerBonus;
-
+       
         const alreadyEarned =
           localStorage.getItem(
             "identityBadgeEarned"
