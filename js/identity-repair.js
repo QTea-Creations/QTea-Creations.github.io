@@ -34,6 +34,15 @@
         );
       }
 
+      function profileNameForFeedback() {
+  const profile =
+    data.identityProfiles[
+      state.identityProfileIndex
+    ];
+
+  return profile?.name || "the student";
+}
+      
       if (cardInner) {
         cardInner.classList.remove(
           "is-flipped"
@@ -59,6 +68,14 @@
         "profileUnsafeUsername"
       ).textContent =
         profile.unsafeUsername;
+
+      const interestMission =
+  game.byId("profileInterestMission");
+
+if (interestMission) {
+  interestMission.textContent =
+    profile.interestMission;
+}
 
       const interestList =
         game.byId("profileInterestList");
@@ -465,7 +482,7 @@
           .join("");
 
       feedback.textContent =
-        `🎉 Excellent! ${repairedName} uses interests without revealing private information.`;
+  `🎉 Excellent! ${repairedName} matches ${profileNameForFeedback()}'s interests without revealing private information.`;
 
       feedback.style.background =
         "#e9fff3";
