@@ -2461,3 +2461,57 @@ body.notebook-page-bg {
     font-weight: 800;
     line-height: 1.5;
 }
+
+/* ===========================
+   Identity Mission Tester
+   Visible only in developer mode
+=========================== */
+
+.identity-dev-toolbar {
+    position: fixed;
+    right: 14px;
+    bottom: 14px;
+    z-index: 99999;
+
+    width: 210px;
+    padding: 14px;
+
+    display: grid;
+    gap: 8px;
+
+    background: #23324d;
+    color: #ffffff;
+
+    border: 4px solid #ffe76b;
+    border-radius: 20px;
+
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.35);
+}
+
+.identity-dev-toolbar strong {
+    text-align: center;
+    color: #ffe76b;
+}
+
+.identity-dev-toolbar button {
+    padding: 9px 10px;
+
+    background: #ffffff;
+    color: #23324d;
+
+    border: 0;
+    border-radius: 10px;
+
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.identity-dev-toolbar button:hover {
+    background: #15d3dc;
+}
+
+#clearIdentityProgress {
+    background: #ff6b79;
+    color: #ffffff;
+}
