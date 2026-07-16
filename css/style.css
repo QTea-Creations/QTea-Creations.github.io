@@ -2439,3 +2439,25 @@ body.notebook-page-bg {
         grid-template-columns: 1fr;
     }
 }
+
+.repair-instruction {
+    margin-top: 8px;
+    color: #596780;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.profile-interest-mission {
+    display: block;
+    max-width: 420px;
+    margin: 0 auto 22px;
+    padding: 16px 20px;
+
+    background: #ecfbff;
+    border: 3px solid #15d3dc;
+    border-radius: 20px;
+
+    color: #23324d;
+    font-weight: 800;
+    line-height: 1.5;
+}
