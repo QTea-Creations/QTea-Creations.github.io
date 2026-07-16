@@ -460,3 +460,48 @@ function loadCyberNotebook() {
 }
 
 document.addEventListener("DOMContentLoaded", loadCyberNotebook);
+
+function updateIdentityMissionButton() {
+  const button = document.getElementById(
+    "identityMissionButton"
+  );
+
+  if (!button) {
+    return;
+  }
+
+  let progress = null;
+
+  try {
+    progress = JSON.parse(
+      localStorage.getItem(
+        "safetiiIdentityProgress"
+      ) || "null"
+    );
+  } catch (error) {
+    console.error(
+      "Could not read Identity Island progress:",
+      error
+    );
+  }
+
+  if (!progress || !progress.started) {
+    button.textContent = "Start Lesson";
+    button.href = "missions/identity.html";
+    return;
+  }
+
+  if (progress.completed) {
+    button.textContent = "Replay Lesson";
+    button.href = "missions/identity.html";
+    return;
+  }
+
+  button.textContent = "Continue Lesson";
+  button.href = "missions/identity.html";
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  updateIdentityMissionButton
+);
