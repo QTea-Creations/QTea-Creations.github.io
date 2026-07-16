@@ -153,6 +153,7 @@
 function updateMissionPointsDisplay() {
   const pointsDisplay =
     game.byId("missionPoints");
+  
 
   if (!pointsDisplay) {
     return;
@@ -162,7 +163,14 @@ function updateMissionPointsDisplay() {
     localStorage.getItem(
       "safetiiPoints"
     ) || "0";
+  
+  document.addEventListener(
+  "DOMContentLoaded",
+  updateMissionPointsDisplay
+);
 }
+
+
 
   game.openUsernameLab =
     function openUsernameLab() {
