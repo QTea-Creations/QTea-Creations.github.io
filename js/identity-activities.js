@@ -94,27 +94,55 @@
       }
     };
 
-  game.collectSticker = function collectSticker(
-    button
+ game.collectSticker = function collectSticker(button) {
+  if (!button) {
+    return;
+  }
+
+  const stickerName = button.dataset.sticker;
+
+  if (
+    !stickerName ||
+    state.foundStickers.has(stickerName)
   ) {
-    if (!button) {
-      return;
-    }
+    return;
+  }
 
-    const stickerName =
-      button.dataset.sticker;
+  state.foundStickers.add(stickerName);
 
-    if (
-      !stickerName ||
-      state.foundStickers.has(stickerName)
-    ) {
-      return;
-    }
+  button.classList.add("collected");
+  button.textContent = "✨";
 
-    state.foundStickers.add(stickerName);
+  const stickerPointValue = 5;
 
-    button.classList.add("collected");
-    button.textContent = "✨";
+  const currentPoints = Number(
+    localStorage.getItem("safetiiPoints") || "0"
+  );
+
+  localStorage.setItem(
+    "safetiiPoints",
+    String(currentPoints + stickerPointValue)
+  );
+
+  localStorage.setItem(
+    "identityStickers",
+    JSON.stringify(
+      Array.from(state.foundStickers)
+    )
+  );
+
+  if (
+    typeof game.saveIdentityProgress ===
+    "function"
+  ) {
+    game.saveIdentityProgress();
+  }
+
+  game.setMemeTip(
+    `You found the ${stickerName} and earned ${stickerPointValue} points!`,
+    "congrats"
+  );
+};
 
     game.setMemeTip(
       `You found the ${stickerName}!`,
