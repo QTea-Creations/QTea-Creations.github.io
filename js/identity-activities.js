@@ -150,6 +150,20 @@
     );
   };
 
+function updateMissionPointsDisplay() {
+  const pointsDisplay =
+    game.byId("missionPoints");
+
+  if (!pointsDisplay) {
+    return;
+  }
+
+  pointsDisplay.textContent =
+    localStorage.getItem(
+      "safetiiPoints"
+    ) || "0";
+}
+
   game.openUsernameLab =
     function openUsernameLab() {
       if (state.foundObjects.size < 6) {
