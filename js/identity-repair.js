@@ -1,8 +1,25 @@
-
 "use strict";
 
+/* =========================================================
+   SAFETII NET — IDENTITY ISLAND
+   Identity Card Repair Lab
+========================================================= */
+
 (() => {
-  const game = window.IdentityGame;
+  const game =
+    window.IdentityGame;
+
+  if (
+    !game ||
+    !game.data ||
+    !game.state
+  ) {
+    console.error(
+      "identity-repair.js could not start."
+    );
+    return;
+  }
+
   const data = game.data;
   const state = game.state;
 
@@ -18,107 +35,139 @@
         return;
       }
 
-      state.selectedRepairBlocks = [];
-      state.profileRepairComplete = false;
+      state.selectedRepairBlocks =
+        [];
+
+      state.profileRepairComplete =
+        false;
 
       const card =
-        game.byId("identityFlipCard");
+        game.byId(
+          "identityFlipCard"
+        );
 
       const cardInner =
-        game.byId("identityCardInner");
+        game.byId(
+          "identityCardInner"
+        );
 
       if (card) {
         card.setAttribute(
           "aria-pressed",
           "false"
         );
+
+        card.style.setProperty(
+          "--profile-color",
+          profile.cardColor ||
+            "#7d4cff"
+        );
       }
 
-      function profileNameForFeedback() {
-  const profile =
-    data.identityProfiles[
-      state.identityProfileIndex
-    ];
-
-  return profile?.name || "the student";
-}
-      
       if (cardInner) {
         cardInner.classList.remove(
           "is-flipped"
         );
       }
 
-      game.byId("profileAvatar").textContent =
-        profile.avatar;
+      const values = {
+        profileAvatar:
+          profile.avatar,
 
-      game.byId("profileName").textContent =
-        profile.name;
+        profileName:
+          profile.name,
 
-      game.byId("profileBirthday").textContent =
-        profile.birthday;
+        profileBirthday:
+          profile.birthday,
 
-      game.byId("profileSchool").textContent =
-        profile.school;
+        profileSchool:
+          profile.school,
 
-      game.byId("profileLocation").textContent =
-        profile.location;
+        profileLocation:
+          profile.location,
 
-      game.byId(
-        "profileUnsafeUsername"
-      ).textContent =
-        profile.unsafeUsername;
+        profileUnsafeUsername:
+          profile.unsafeUsername
+      };
+
+      Object.entries(values).forEach(
+        ([id, value]) => {
+          const element =
+            game.byId(id);
+
+          if (element) {
+            element.textContent =
+              value;
+          }
+        }
+      );
 
       const interestMission =
-  game.byId("profileInterestMission");
+        game.byId(
+          "profileInterestMission"
+        );
 
-if (interestMission) {
-  interestMission.textContent =
-    profile.interestMission;
-}
+      if (interestMission) {
+        interestMission.textContent =
+          `Build a username using ${profile.name}'s interests without revealing private information.`;
+      }
 
       const interestList =
-        game.byId("profileInterestList");
+        game.byId(
+          "profileInterestList"
+        );
 
-      interestList.innerHTML =
-        profile.interests
-          .map(
-            (interest) => `
-              <span class="interest-chip">
-                ${interest.emoji}
-                ${interest.word}
-              </span>
-            `
-          )
-          .join("");
+      if (interestList) {
+        interestList.innerHTML =
+          profile.interests
+            .map(
+              (interest) => `
+                <span class="interest-chip">
+                  ${interest.word}
+                </span>
+              `
+            )
+            .join("");
+      }
 
-      game.buildRepairBlockBank(profile);
+      game.buildRepairBlockBank(
+        profile
+      );
+
       game.updateRepairBuilder();
       game.clearRepairFeedback();
 
       game.setMemeTip(
-        `Study ${profile.name}'s fictional ID. Flip the card to find safe interests.`,
+        `Study ${profile.name}'s fictional ID. Flip the card to discover safe interests.`,
         "thinking"
       );
     };
 
   game.buildRepairBlockBank =
-    function buildRepairBlockBank(profile) {
+    function buildRepairBlockBank(
+      profile
+    ) {
       const bank =
-        game.byId("wordBlockBank");
+        game.byId(
+          "wordBlockBank"
+        );
 
       if (!bank) {
         return;
       }
 
+      /*
+        Emojis are intentionally removed
+        so they do not give away the answer.
+      */
       const safeBlocks =
         profile.interests.map(
           (interest) => ({
             word: interest.word,
-            label:
-              `${interest.emoji} ${interest.word}`,
+            label: interest.word,
             safe: true,
-            reason: "safe interest"
+            reason:
+              "one of the student's safe interests"
           })
         );
 
@@ -126,7 +175,7 @@ if (interestMission) {
         profile.privateBlocks.map(
           (block) => ({
             word: block.word,
-            label: `🔎 ${block.word}`,
+            label: block.word,
             safe: false,
             reason: block.reason
           })
@@ -143,7 +192,9 @@ if (interestMission) {
       mixedBlocks.forEach(
         (block, index) => {
           const button =
-            document.createElement("button");
+            document.createElement(
+              "button"
+            );
 
           button.type = "button";
           button.draggable = true;
@@ -169,6 +220,12 @@ if (interestMission) {
           button.addEventListener(
             "dragstart",
             (event) => {
+              if (
+                !event.dataTransfer
+              ) {
+                return;
+              }
+
               event.dataTransfer.setData(
                 "text/plain",
                 button.dataset.blockId
@@ -201,28 +258,33 @@ if (interestMission) {
             }
           );
 
-          bank.appendChild(button);
+          bank.appendChild(
+            button
+          );
         }
       );
     };
 
   game.addRepairBlock =
-    function addRepairBlock(button) {
+    function addRepairBlock(
+      button
+    ) {
       if (
         !button ||
+        button.disabled ||
         state.profileRepairComplete
       ) {
         return;
       }
 
       if (
-        state.selectedRepairBlocks.length >= 3
+        state.selectedRepairBlocks
+          .length >= 3
       ) {
         game.setMemeTip(
-          "The builder already has three blocks. Remove one first.",
+          "The builder already has three blocks. Remove one before adding another.",
           "thinking"
         );
-
         return;
       }
 
@@ -230,22 +292,31 @@ if (interestMission) {
         button.dataset.blockId;
 
       const alreadySelected =
-        state.selectedRepairBlocks.some(
-          (block) =>
-            block.blockId === blockId
-        );
+        state.selectedRepairBlocks
+          .some(
+            (block) =>
+              block.blockId ===
+              blockId
+          );
 
       if (alreadySelected) {
         return;
       }
 
-      state.selectedRepairBlocks.push({
-        blockId,
-        word: button.dataset.word,
-        safe:
-          button.dataset.safe === "true",
-        reason: button.dataset.reason
-      });
+      state.selectedRepairBlocks.push(
+        {
+          blockId,
+          word:
+            button.dataset.word,
+
+          safe:
+            button.dataset.safe ===
+            "true",
+
+          reason:
+            button.dataset.reason
+        }
+      );
 
       button.disabled = true;
 
@@ -257,12 +328,16 @@ if (interestMission) {
     };
 
   game.removeRepairBlock =
-    function removeRepairBlock(blockId) {
+    function removeRepairBlock(
+      blockId
+    ) {
       state.selectedRepairBlocks =
-        state.selectedRepairBlocks.filter(
-          (block) =>
-            block.blockId !== blockId
-        );
+        state.selectedRepairBlocks
+          .filter(
+            (block) =>
+              block.blockId !==
+              blockId
+          );
 
       const original =
         document.querySelector(
@@ -282,7 +357,8 @@ if (interestMission) {
 
   game.clearRepairBuilder =
     function clearRepairBuilder() {
-      state.selectedRepairBlocks = [];
+      state.selectedRepairBlocks =
+        [];
 
       document
         .querySelectorAll(
@@ -300,7 +376,7 @@ if (interestMission) {
       game.clearRepairFeedback();
 
       game.setMemeTip(
-        "Builder cleared. Choose three safe interest blocks.",
+        "Builder cleared. Choose three words based on the student's interests.",
         "thinking"
       );
     };
@@ -318,7 +394,9 @@ if (interestMission) {
         );
 
       const message =
-        game.byId("buildZoneMessage");
+        game.byId(
+          "buildZoneMessage"
+        );
 
       const checkButton =
         game.byId(
@@ -331,6 +409,9 @@ if (interestMission) {
         !message ||
         !checkButton
       ) {
+        console.error(
+          "Username builder elements are missing."
+        );
         return;
       }
 
@@ -367,11 +448,11 @@ if (interestMission) {
       );
 
       if (
-        state.selectedRepairBlocks.length ===
-        0
+        state.selectedRepairBlocks
+          .length === 0
       ) {
         message.textContent =
-          "Drop or click three safe blocks here.";
+          "Choose three interest-based words.";
 
         preview.textContent =
           "Waiting for three blocks...";
@@ -381,19 +462,28 @@ if (interestMission) {
 
         preview.textContent =
           state.selectedRepairBlocks
-            .map((block) => block.word)
+            .map(
+              (block) =>
+                block.word
+            )
             .join("");
       }
 
       const ready =
-        state.selectedRepairBlocks.length ===
-        3;
+        state.selectedRepairBlocks
+          .length === 3;
 
-      checkButton.disabled = !ready;
+      checkButton.disabled =
+        !ready;
 
       checkButton.classList.toggle(
         "locked-action",
         !ready
+      );
+
+      checkButton.setAttribute(
+        "aria-disabled",
+        String(!ready)
       );
     };
 
@@ -404,20 +494,19 @@ if (interestMission) {
           "identityRepairFeedback"
         );
 
-      if (!feedback) {
-        return;
+      if (feedback) {
+        feedback.textContent = "";
+        feedback.style.background =
+          "transparent";
+        feedback.style.color = "";
       }
-
-      feedback.textContent = "";
-      feedback.style.background =
-        "transparent";
     };
 
   game.checkRepairedUsername =
     function checkRepairedUsername() {
       if (
-        state.selectedRepairBlocks.length !==
-          3 ||
+        state.selectedRepairBlocks
+          .length !== 3 ||
         state.profileRepairComplete
       ) {
         return;
@@ -429,14 +518,32 @@ if (interestMission) {
         );
 
       const buildZone =
-        game.byId("usernameBuildZone");
-
-      const unsafeBlocks =
-        state.selectedRepairBlocks.filter(
-          (block) => !block.safe
+        game.byId(
+          "usernameBuildZone"
         );
 
-      if (unsafeBlocks.length > 0) {
+      if (
+        !feedback ||
+        !buildZone
+      ) {
+        return;
+      }
+
+      const currentProfile =
+        data.identityProfiles[
+          state.identityProfileIndex
+        ];
+
+      const unsafeBlocks =
+        state.selectedRepairBlocks
+          .filter(
+            (block) =>
+              !block.safe
+          );
+
+      if (
+        unsafeBlocks.length > 0
+      ) {
         const reasons =
           unsafeBlocks
             .map(
@@ -446,12 +553,17 @@ if (interestMission) {
             .join("; ");
 
         feedback.textContent =
-          `Good try! ${reasons}. Choose safe interests instead.`;
+          `Good try! ${reasons}. Replace those blocks with words based on ${currentProfile.name}'s interests.`;
 
         feedback.style.background =
           "#fff3d4";
 
-        buildZone.classList.add("shake");
+        feedback.style.color =
+          "#7d4cff";
+
+        buildZone.classList.add(
+          "shake"
+        );
 
         window.setTimeout(() => {
           buildZone.classList.remove(
@@ -460,41 +572,62 @@ if (interestMission) {
         }, 700);
 
         game.setMemeTip(
-          "Good guess! Avoid names, birthdays, schools, and locations.",
+          "Good guess. Build the username from interests instead of private information.",
           "wrong"
         );
 
         return;
       }
 
-      state.profileRepairComplete = true;
+      state.profileRepairComplete =
+        true;
+
       state.profilesProtected += 1;
 
       const progress =
-        game.byId("profilesProtected");
+        game.byId(
+          "profilesProtected"
+        );
 
-      progress.textContent =
-        String(state.profilesProtected);
+      if (progress) {
+        progress.textContent =
+          String(
+            state.profilesProtected
+          );
+      }
 
       const repairedName =
         state.selectedRepairBlocks
-          .map((block) => block.word)
+          .map(
+            (block) =>
+              block.word
+          )
           .join("");
 
       feedback.textContent =
-  `🎉 Excellent! ${repairedName} matches ${profileNameForFeedback()}'s interests without revealing private information.`;
+        `Excellent! ${repairedName} matches ${currentProfile.name}'s interests without revealing private information.`;
 
       feedback.style.background =
         "#e9fff3";
+
+      feedback.style.color =
+        "#168a52";
 
       buildZone.classList.add(
         "repair-success"
       );
 
       game.setMemeTip(
-        `Profile ${state.profilesProtected} of 5 protected!`,
+        `Profile ${state.profilesProtected} of ${data.identityProfiles.length} protected!`,
         "congrats"
       );
+
+      if (
+        typeof game.saveIdentityProgress ===
+        "function"
+      ) {
+        game.saveIdentityProgress();
+      }
 
       window.setTimeout(() => {
         buildZone.classList.remove(
@@ -518,7 +651,9 @@ if (interestMission) {
   game.unlockFinalTest =
     function unlockFinalTest() {
       const button =
-        game.byId("goFinalTest");
+        game.byId(
+          "goFinalTest"
+        );
 
       if (button) {
         button.disabled = false;
@@ -528,12 +663,23 @@ if (interestMission) {
         );
 
         button.textContent =
-          "Begin Identity Protector Final Test 🛡️";
+          "Begin Identity Protector Final Test";
       }
 
       game.setMemeTip(
         "You protected all five profiles! The final test is unlocked.",
         "congrats"
       );
+
+      if (
+        typeof game.saveIdentityProgress ===
+        "function"
+      ) {
+        game.saveIdentityProgress();
+      }
     };
+
+  console.log(
+    "Identity Card Repair Lab loaded successfully."
+  );
 })();
