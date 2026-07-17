@@ -3220,3 +3220,2931 @@ svg {
     width: 100% !important;
     max-width: none !important;
 }
+
+/* =========================================================
+   SAFETII NET — CHILD ADVENTURE HOMEPAGE
+   Scoped only to body.page-home
+
+   This does NOT change:
+   - Parents page
+   - Teachers page
+   - Educator content
+   - Identity Island
+   - Login
+   - Dashboard
+========================================================= */
+
+/* =========================================================
+   1. HOME DESIGN TOKENS
+========================================================= */
+
+body.page-home {
+    --home-purple: #7447ff;
+    --home-purple-dark: #4d2bb8;
+    --home-purple-light: #a78aff;
+
+    --home-cyan: #19c9d7;
+    --home-cyan-dark: #078eaa;
+
+    --home-blue: #4a91ff;
+    --home-deep-blue: #20365f;
+
+    --home-yellow: #ffe45f;
+    --home-yellow-dark: #dfad13;
+
+    --home-pink: #ff70bd;
+    --home-green: #45d58a;
+
+    --home-paper: #fffef8;
+    --home-white: #ffffff;
+    --home-ink: #23324d;
+    --home-muted: #5a6982;
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 10% 8%,
+            rgba(255, 228, 95, 0.38),
+            transparent 18%
+        ),
+        radial-gradient(
+            circle at 92% 14%,
+            rgba(255, 112, 189, 0.22),
+            transparent 21%
+        ),
+        radial-gradient(
+            circle at 20% 70%,
+            rgba(116, 71, 255, 0.15),
+            transparent 28%
+        ),
+        linear-gradient(
+            180deg,
+            #dff7ff 0%,
+            #eefbff 45%,
+            #f8f5ff 100%
+        ) !important;
+
+    color: var(--home-ink);
+    overflow-x: hidden;
+}
+
+/*
+   Subtle game-world dots and stars.
+*/
+
+body.page-home::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(116, 71, 255, 0.15) 0 2px,
+            transparent 2.5px
+        ),
+        radial-gradient(
+            circle,
+            rgba(25, 201, 215, 0.15) 0 2px,
+            transparent 2.5px
+        );
+
+    background-position:
+        0 0,
+        35px 35px;
+
+    background-size:
+        70px 70px,
+        70px 70px;
+
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   2. CHILD-FACING NAVIGATION
+========================================================= */
+
+body.page-home .site-header {
+    position: relative !important;
+
+    width: 100%;
+    padding: 12px 4% !important;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.94
+        ) !important;
+
+    border-bottom:
+        5px solid
+        rgba(
+            116,
+            71,
+            255,
+            0.12
+        );
+
+    box-shadow:
+        0 8px 24px
+        rgba(
+            35,
+            50,
+            77,
+            0.08
+        ) !important;
+
+    backdrop-filter:
+        blur(12px);
+}
+
+body.page-home .logo {
+    flex-shrink: 0;
+}
+
+body.page-home .logo img {
+    width: auto !important;
+    height: 96px !important;
+    max-width: 220px !important;
+
+    object-fit: contain;
+}
+
+body.page-home .site-header nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    gap: 12px !important;
+}
+
+body.page-home .site-header nav a {
+    min-height: 46px;
+    padding: 10px 17px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--home-deep-blue);
+
+    border: 3px solid transparent;
+    border-radius: 999px;
+
+    font-size: 0.98rem;
+    font-weight: 900;
+
+    transition:
+        transform 170ms ease,
+        color 170ms ease,
+        background 170ms ease,
+        border-color 170ms ease,
+        box-shadow 170ms ease;
+}
+
+body.page-home .site-header nav a:hover {
+    color: var(--home-purple);
+
+    background: #f4f0ff;
+    border-color: #ded4ff;
+
+    box-shadow:
+        0 6px 0
+        rgba(
+            116,
+            71,
+            255,
+            0.12
+        );
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* =========================================================
+   3. NEW OVERALL CHILD HOMEPAGE LAYOUT
+
+   The HTML we add next will use:
+
+   .kid-home
+   .home-progress-rail
+   .home-adventure-content
+========================================================= */
+
+body.page-home .kid-home {
+    width:
+        min(
+            1540px,
+            calc(100% - 34px)
+        );
+
+    margin: 24px auto 70px;
+
+    display: grid;
+
+    grid-template-columns:
+        280px
+        minmax(0, 1fr);
+
+    align-items: start;
+    gap: 26px;
+}
+
+body.page-home .home-progress-rail {
+    position: sticky;
+    top: 18px;
+
+    min-width: 0;
+
+    display: grid;
+    gap: 18px;
+}
+
+body.page-home .home-adventure-content {
+    min-width: 0;
+
+    display: grid;
+    gap: 30px;
+}
+
+
+/* =========================================================
+   4. PLAYER HUD CARD
+========================================================= */
+
+body.page-home .home-player-card {
+    position: relative;
+    overflow: hidden;
+
+    padding: 22px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(
+                255,
+                228,
+                95,
+                0.55
+            ),
+            transparent 38%
+        ),
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #effcff
+        );
+
+    border:
+        5px solid
+        var(--home-white);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 12px 0
+        rgba(
+            42,
+            97,
+            162,
+            0.10
+        ),
+        0 20px 40px
+        rgba(
+            35,
+            50,
+            77,
+            0.13
+        );
+
+    text-align: center;
+}
+
+body.page-home .home-player-card::after {
+    content: "";
+
+    position: absolute;
+    top: -32px;
+    right: -30px;
+
+    width: 95px;
+    height: 95px;
+
+    background:
+        var(--home-yellow);
+
+    border-radius: 50%;
+
+    opacity: 0.32;
+}
+
+body.page-home .home-player-label {
+    position: relative;
+    z-index: 1;
+
+    margin: 0 0 8px;
+
+    color: var(--home-purple);
+
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+body.page-home .home-player-avatar {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 10px;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #e9fbff
+        );
+
+    border:
+        5px solid
+        var(--home-yellow);
+
+    border-radius: 50%;
+
+    font-size: 2.8rem;
+
+    box-shadow:
+        0 8px 0
+        rgba(
+            223,
+            173,
+            19,
+            0.22
+        );
+}
+
+body.page-home .home-player-name {
+    margin: 0;
+
+    color: var(--home-ink);
+
+    font-size: 1.45rem;
+    line-height: 1.15;
+}
+
+body.page-home .home-player-rank {
+    margin: 5px 0 15px;
+
+    color: var(--home-muted);
+
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+body.page-home .home-player-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+}
+
+body.page-home .home-player-stat {
+    padding: 11px 7px;
+
+    background: #f5f1ff;
+
+    border:
+        2px solid
+        #e3d9ff;
+
+    border-radius: 16px;
+}
+
+body.page-home .home-player-stat strong {
+    display: block;
+
+    color: var(--home-purple);
+
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+body.page-home .home-player-stat span {
+    display: block;
+    margin-top: 5px;
+
+    color: var(--home-muted);
+
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   5. BADGE STATUS CARD
+========================================================= */
+
+body.page-home .home-badge-panel {
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            155deg,
+            #fffef8,
+            #fff7cf
+        );
+
+    border:
+        5px solid
+        var(--home-yellow);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 12px 0
+        rgba(
+            223,
+            173,
+            19,
+            0.20
+        ),
+        0 18px 34px
+        rgba(
+            35,
+            50,
+            77,
+            0.12
+        );
+}
+
+body.page-home .home-badge-panel-title {
+    margin: 0 0 15px;
+
+    color: var(--home-ink);
+
+    font-size: 1.12rem;
+    line-height: 1.2;
+    text-align: center;
+}
+
+body.page-home .home-badge-status-list {
+    display: grid;
+    gap: 10px;
+}
+
+body.page-home .home-badge-status {
+    min-width: 0;
+    padding: 10px;
+
+    display: grid;
+
+    grid-template-columns:
+        52px
+        minmax(0, 1fr);
+
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(
+        255,
+        255,
+        255,
+        0.86
+    );
+
+    border:
+        3px solid
+        #eee5ba;
+
+    border-radius: 18px;
+}
+
+body.page-home .home-badge-status-image {
+    width: 52px;
+    height: 52px;
+
+    display: grid;
+    place-items: center;
+
+    object-fit: contain;
+}
+
+body.page-home
+.home-badge-status.is-earned {
+    background:
+        linear-gradient(
+            135deg,
+            #eafff3,
+            #ffffff
+        );
+
+    border-color:
+        var(--home-green);
+}
+
+body.page-home
+.home-badge-status.is-earned
+.home-badge-status-image {
+    animation:
+        homeBadgeFloat
+        3s ease-in-out
+        infinite;
+}
+
+body.page-home
+.home-badge-status.is-locked {
+    opacity: 0.68;
+    filter: grayscale(0.92);
+}
+
+body.page-home .home-badge-status-copy {
+    min-width: 0;
+}
+
+body.page-home .home-badge-status-copy strong {
+    display: block;
+
+    color: var(--home-ink);
+
+    font-size: 0.86rem;
+    line-height: 1.15;
+}
+
+body.page-home .home-badge-status-copy span {
+    display: block;
+    margin-top: 3px;
+
+    color: var(--home-muted);
+
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+body.page-home .home-badge-complete-tag {
+    display: inline-flex;
+    width: fit-content;
+
+    margin-top: 5px;
+    padding: 4px 8px;
+
+    background: var(--home-green);
+    color: #073e29;
+
+    border-radius: 999px;
+
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   6. MINI CYBER NOTEBOOK CARD
+========================================================= */
+
+body.page-home .home-notebook-card {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 180px;
+    padding: 22px 18px 20px 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 27px,
+            rgba(
+                74,
+                145,
+                255,
+                0.17
+            ) 28px,
+            rgba(
+                74,
+                145,
+                255,
+                0.17
+            ) 29px
+        ),
+        #fffef8;
+
+    border:
+        5px solid
+        var(--home-purple);
+
+    border-radius: 12px 28px 28px 12px;
+
+    color: var(--home-ink);
+    text-decoration: none;
+
+    box-shadow:
+        0 12px 0
+        var(--home-purple-dark),
+        0 20px 35px
+        rgba(
+            35,
+            50,
+            77,
+            0.18
+        );
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+body.page-home .home-notebook-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 17px;
+
+    width: 4px;
+
+    background:
+        var(--home-pink);
+
+    box-shadow:
+        -10px 0 0
+        rgba(
+            255,
+            112,
+            189,
+            0.16
+        );
+}
+
+body.page-home .home-notebook-card::after {
+    content:
+        "○\A○\A○\A○\A○";
+
+    white-space: pre;
+
+    position: absolute;
+    top: 15px;
+    left: 3px;
+
+    color: var(--home-deep-blue);
+
+    font-size: 1.3rem;
+    line-height: 1.55;
+}
+
+body.page-home .home-notebook-card:hover {
+    transform:
+        translateY(-5px)
+        rotate(-1deg);
+
+    box-shadow:
+        0 8px 0
+        var(--home-purple-dark),
+        0 18px 30px
+        rgba(
+            35,
+            50,
+            77,
+            0.20
+        );
+}
+
+body.page-home .home-notebook-label {
+    margin: 0 0 5px;
+
+    color: var(--home-purple);
+
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+body.page-home .home-notebook-card h3 {
+    margin: 0;
+
+    color: var(--home-ink);
+
+    font-size: 1.35rem;
+    line-height: 1.15;
+}
+
+body.page-home .home-notebook-card p {
+    margin: 8px 0 0;
+
+    color: var(--home-muted);
+
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+body.page-home .home-notebook-open {
+    width: fit-content;
+    margin-top: 13px;
+    padding: 7px 12px;
+
+    background: var(--home-purple);
+    color: #ffffff;
+
+    border-radius: 999px;
+
+    font-size: 0.75rem;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   7. NEW GAME-WORLD HERO SECTION
+========================================================= */
+
+body.page-home .home-adventure-hero {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 570px;
+    padding: clamp(
+        28px,
+        4vw,
+        58px
+    );
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(330px, 0.95fr);
+
+    align-items: center;
+    gap: 36px;
+
+    background:
+        radial-gradient(
+            circle at 83% 18%,
+            rgba(
+                255,
+                228,
+                95,
+                0.72
+            ),
+            transparent 16%
+        ),
+        radial-gradient(
+            circle at 13% 91%,
+            rgba(
+                255,
+                112,
+                189,
+                0.23
+            ),
+            transparent 21%
+        ),
+        linear-gradient(
+            135deg,
+            #6a40f4 0%,
+            #4f83ff 48%,
+            #19c9d7 100%
+        );
+
+    border:
+        7px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.92
+        );
+
+    border-radius: 42px;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 16px 0
+        rgba(
+            42,
+            59,
+            137,
+            0.18
+        ),
+        0 28px 55px
+        rgba(
+            35,
+            50,
+            77,
+            0.22
+        );
+}
+
+/* Decorative cloud */
+
+body.page-home
+.home-adventure-hero::before {
+    content: "";
+
+    position: absolute;
+    right: 31%;
+    bottom: -58px;
+
+    width: 210px;
+    height: 110px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.24
+        );
+
+    border-radius:
+        50% 50% 0 0;
+
+    box-shadow:
+        75px -30px 0
+        rgba(
+            255,
+            255,
+            255,
+            0.18
+        ),
+        -70px -12px 0
+        rgba(
+            255,
+            255,
+            255,
+            0.17
+        );
+}
+
+/* Decorative sparkle */
+
+body.page-home
+.home-adventure-hero::after {
+    content: "✦";
+
+    position: absolute;
+    top: 25px;
+    right: 35px;
+
+    color: var(--home-yellow);
+
+    font-size: 3.2rem;
+
+    text-shadow:
+        -65px 45px 0
+        rgba(
+            255,
+            255,
+            255,
+            0.65
+        ),
+        -145px -2px 0
+        rgba(
+            255,
+            228,
+            95,
+            0.76
+        );
+
+    animation:
+        homeSparkle
+        2.5s ease-in-out
+        infinite;
+}
+
+body.page-home .home-hero-copy {
+    position: relative;
+    z-index: 2;
+}
+
+body.page-home .home-hero-kicker {
+    width: fit-content;
+    margin: 0 0 16px;
+    padding: 9px 15px;
+
+    background:
+        var(--home-yellow);
+
+    color:
+        #392f0d;
+
+    border:
+        3px solid
+        #ffffff;
+
+    border-radius: 999px;
+
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+
+    box-shadow:
+        0 6px 0
+        var(--home-yellow-dark);
+}
+
+body.page-home .home-hero-title {
+    max-width: 760px;
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: clamp(
+        3rem,
+        6vw,
+        6rem
+    );
+
+    line-height: 0.93;
+    letter-spacing: -0.045em;
+
+    text-shadow:
+        0 6px 0
+        rgba(
+            45,
+            28,
+            123,
+            0.42
+        );
+}
+
+body.page-home .home-hero-title span {
+    display: block;
+
+    color: var(--home-yellow);
+}
+
+body.page-home .home-hero-message {
+    max-width: 650px;
+    margin: 24px 0 0;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.95
+        );
+
+    font-size: clamp(
+        1.05rem,
+        1.6vw,
+        1.32rem
+    );
+
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+body.page-home .home-hero-actions {
+    margin-top: 27px;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+body.page-home .home-play-button {
+    min-height: 60px;
+    padding: 16px 29px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffe970,
+            #ffd83f
+        );
+
+    color:
+        #382e0b;
+
+    border:
+        4px solid
+        #ffffff;
+
+    border-radius: 999px;
+
+    font-size: 1.05rem;
+    font-weight: 900;
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 0
+        #d99f10,
+        0 14px 25px
+        rgba(
+            31,
+            39,
+            89,
+            0.24
+        );
+
+    transition:
+        transform 150ms ease,
+        box-shadow 150ms ease;
+}
+
+body.page-home .home-play-button:hover {
+    transform:
+        translateY(-4px)
+        scale(1.02);
+
+    box-shadow:
+        0 5px 0
+        #d99f10,
+        0 12px 20px
+        rgba(
+            31,
+            39,
+            89,
+            0.25
+        );
+}
+
+body.page-home .home-secondary-button {
+    min-height: 54px;
+    padding: 13px 22px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.17
+        );
+
+    color: #ffffff;
+
+    border:
+        3px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.88
+        );
+
+    border-radius: 999px;
+
+    font-weight: 900;
+    text-decoration: none;
+
+    backdrop-filter:
+        blur(8px);
+
+    transition:
+        background 160ms ease,
+        transform 160ms ease;
+}
+
+body.page-home .home-secondary-button:hover {
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.28
+        );
+
+    transform:
+        translateY(-3px);
+}
+
+body.page-home .home-hero-quick-stats {
+    margin-top: 25px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+body.page-home .home-quick-stat {
+    padding: 9px 13px;
+
+    background:
+        rgba(
+            24,
+            41,
+            102,
+            0.25
+        );
+
+    border:
+        2px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.28
+        );
+
+    border-radius: 14px;
+
+    color: #ffffff;
+
+    font-size: 0.82rem;
+    font-weight: 900;
+
+    backdrop-filter:
+        blur(7px);
+}
+
+
+/* =========================================================
+   8. MEME GAME STAGE
+========================================================= */
+
+body.page-home .home-meme-stage {
+    position: relative;
+    z-index: 2;
+
+    min-height: 430px;
+
+    display: grid;
+    place-items: center;
+}
+
+body.page-home .home-meme-platform {
+    position: relative;
+
+    width: min(
+        100%,
+        430px
+    );
+
+    min-height: 390px;
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    background:
+        radial-gradient(
+            circle at 50% 32%,
+            rgba(
+                255,
+                255,
+                255,
+                0.94
+            ),
+            rgba(
+                255,
+                255,
+                255,
+                0.64
+            ) 52%,
+            rgba(
+                255,
+                255,
+                255,
+                0.30
+            ) 75%
+        );
+
+    border:
+        5px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.82
+        );
+
+    border-radius:
+        50% 50% 34px 34px;
+
+    box-shadow:
+        inset 0 0 45px
+        rgba(
+            255,
+            255,
+            255,
+            0.34
+        ),
+        0 18px 40px
+        rgba(
+            34,
+            37,
+            100,
+            0.22
+        );
+}
+
+body.page-home .home-meme-image {
+    width: min(
+        75%,
+        275px
+    );
+
+    height: 270px;
+
+    display: block;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 18px 12px
+            rgba(
+                31,
+                38,
+                78,
+                0.24
+            )
+        );
+
+    animation:
+        homeMemeFloat
+        3.2s ease-in-out
+        infinite;
+}
+
+body.page-home .home-meme-bubble {
+    position: absolute;
+    top: 12px;
+    left: -18px;
+
+    width: min(
+        275px,
+        72%
+    );
+
+    padding: 15px 17px;
+
+    background: #ffffff;
+
+    border:
+        4px solid
+        var(--home-yellow);
+
+    border-radius:
+        22px 22px 22px 7px;
+
+    color: var(--home-ink);
+
+    box-shadow:
+        0 9px 0
+        rgba(
+            223,
+            173,
+            19,
+            0.23
+        );
+
+    transform:
+        rotate(-2deg);
+}
+
+body.page-home .home-meme-bubble::after {
+    content: "";
+
+    position: absolute;
+    right: 34px;
+    bottom: -18px;
+
+    width: 25px;
+    height: 25px;
+
+    background: #ffffff;
+
+    border-right:
+        4px solid
+        var(--home-yellow);
+
+    border-bottom:
+        4px solid
+        var(--home-yellow);
+
+    transform:
+        rotate(45deg);
+}
+
+body.page-home .home-meme-bubble strong {
+    display: block;
+
+    color: var(--home-purple);
+
+    font-size: 1rem;
+}
+
+body.page-home .home-meme-bubble p {
+    margin: 5px 0 0;
+
+    color: var(--home-ink);
+
+    font-size: 0.88rem;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+body.page-home .home-meme-platform-label {
+    margin-top: 6px;
+    padding: 9px 15px;
+
+    background:
+        var(--home-deep-blue);
+
+    color: #ffffff;
+
+    border-radius: 999px;
+
+    font-size: 0.78rem;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   9. GAME SECTION HEADINGS
+========================================================= */
+
+body.page-home .home-game-section {
+    position: relative;
+
+    padding: clamp(
+        26px,
+        3vw,
+        40px
+    );
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.88
+        );
+
+    border:
+        6px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.96
+        );
+
+    border-radius: 38px;
+
+    box-shadow:
+        0 15px 0
+        rgba(
+            75,
+            100,
+            154,
+            0.09
+        ),
+        0 25px 45px
+        rgba(
+            35,
+            50,
+            77,
+            0.12
+        );
+
+    backdrop-filter:
+        blur(10px);
+}
+
+body.page-home .home-section-heading {
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+body.page-home .home-section-kicker {
+    margin: 0 0 5px;
+
+    color: var(--home-purple);
+
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+body.page-home .home-section-title {
+    margin: 0;
+
+    color: var(--home-ink);
+
+    font-size: clamp(
+        2rem,
+        3.5vw,
+        3.35rem
+    );
+
+    line-height: 1.05;
+}
+
+body.page-home .home-section-description {
+    max-width: 650px;
+    margin: 10px 0 0;
+
+    color: var(--home-muted);
+
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.55;
+}
+
+body.page-home .home-section-link {
+    min-height: 46px;
+    padding: 10px 17px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        var(--home-purple);
+
+    color: #ffffff;
+
+    border-radius: 999px;
+
+    font-size: 0.86rem;
+    font-weight: 900;
+    text-decoration: none;
+
+    box-shadow:
+        0 6px 0
+        var(--home-purple-dark);
+
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease;
+}
+
+body.page-home .home-section-link:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 4px 0
+        var(--home-purple-dark);
+}
+
+
+/* =========================================================
+   10. MISSION WORLD PATH
+========================================================= */
+
+body.page-home .home-mission-path {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(
+                150px,
+                1fr
+            )
+        );
+
+    align-items: stretch;
+    gap: 18px;
+}
+
+/* Dotted connecting road */
+
+body.page-home .home-mission-path::before {
+    content: "";
+
+    position: absolute;
+    top: 78px;
+    right: 8%;
+    left: 8%;
+
+    height: 8px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            var(--home-purple) 0 14px,
+            transparent 14px 25px
+        );
+
+    opacity: 0.24;
+}
+
+body.page-home .home-mission-node {
+    position: relative;
+    z-index: 1;
+
+    min-width: 0;
+    min-height: 255px;
+    padding: 18px 14px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            155deg,
+            #ffffff,
+            #f2f9ff
+        );
+
+    border:
+        4px solid
+        #dfe7f4;
+
+    border-radius: 27px;
+
+    color: var(--home-ink);
+    text-align: center;
+    text-decoration: none;
+
+    box-shadow:
+        0 10px 0
+        #cdd9e9,
+        0 18px 28px
+        rgba(
+            35,
+            50,
+            77,
+            0.10
+        );
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+body.page-home .home-mission-node:hover {
+    transform:
+        translateY(-8px)
+        rotate(-1deg);
+
+    box-shadow:
+        0 6px 0
+        #cdd9e9,
+        0 15px 25px
+        rgba(
+            35,
+            50,
+            77,
+            0.13
+        );
+}
+
+body.page-home
+.home-mission-node.is-complete {
+    background:
+        linear-gradient(
+            150deg,
+            #eafff2,
+            #ffffff
+        );
+
+    border-color:
+        var(--home-green);
+
+    box-shadow:
+        0 10px 0
+        #23a767,
+        0 18px 28px
+        rgba(
+            35,
+            50,
+            77,
+            0.12
+        );
+}
+
+body.page-home
+.home-mission-node.is-next {
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(
+                255,
+                228,
+                95,
+                0.65
+            ),
+            transparent 35%
+        ),
+        linear-gradient(
+            150deg,
+            #ffffff,
+            #f5f0ff
+        );
+
+    border-color:
+        var(--home-purple);
+
+    box-shadow:
+        0 10px 0
+        var(--home-purple-dark),
+        0 18px 30px
+        rgba(
+            116,
+            71,
+            255,
+            0.22
+        );
+
+    animation:
+        homeNextMission
+        2.5s ease-in-out
+        infinite;
+}
+
+body.page-home
+.home-mission-node.is-locked {
+    opacity: 0.72;
+    filter: grayscale(0.75);
+}
+
+body.page-home .home-mission-number {
+    position: absolute;
+    top: -14px;
+    left: 15px;
+
+    width: 39px;
+    height: 39px;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        var(--home-deep-blue);
+
+    color: #ffffff;
+
+    border:
+        4px solid
+        #ffffff;
+
+    border-radius: 50%;
+
+    font-size: 0.85rem;
+    font-weight: 900;
+}
+
+body.page-home .home-mission-badge {
+    width: 105px;
+    height: 105px;
+    margin: 7px auto 12px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 10px 7px
+            rgba(
+                35,
+                50,
+                77,
+                0.17
+            )
+        );
+}
+
+body.page-home
+.home-mission-node.is-locked
+.home-mission-badge {
+    opacity: 0.45;
+}
+
+body.page-home .home-mission-node h3 {
+    margin: 0;
+
+    color: var(--home-ink);
+
+    font-size: 1rem;
+    line-height: 1.17;
+}
+
+body.page-home .home-mission-node p {
+    margin: 8px 0 0;
+
+    color: var(--home-muted);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.page-home .home-mission-status-tag {
+    width: fit-content;
+    margin-top: auto;
+    padding: 6px 10px;
+
+    background:
+        #edf1f7;
+
+    color:
+        #53617a;
+
+    border-radius: 999px;
+
+    font-size: 0.68rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+body.page-home
+.is-complete
+.home-mission-status-tag {
+    background:
+        var(--home-green);
+
+    color:
+        #073d28;
+}
+
+body.page-home
+.is-next
+.home-mission-status-tag {
+    background:
+        var(--home-yellow);
+
+    color:
+        #48390a;
+}
+
+
+/* =========================================================
+   11. BADGE SHELF
+========================================================= */
+
+body.page-home .home-badge-shelf {
+    padding: 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, 0.75fr)
+        minmax(0, 1.75fr);
+
+    align-items: center;
+    gap: 28px;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(
+                255,
+                228,
+                95,
+                0.55
+            ),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #fffdf1,
+            #e9faff
+        );
+
+    border:
+        5px solid
+        var(--home-yellow);
+
+    border-radius: 30px;
+
+    box-shadow:
+        inset 0 -14px 0
+        rgba(
+            223,
+            173,
+            19,
+            0.12
+        );
+}
+
+body.page-home .home-earned-feature {
+    text-align: center;
+}
+
+body.page-home .home-earned-feature img {
+    width: 155px;
+    height: 155px;
+    margin: 0 auto 10px;
+
+    object-fit: contain;
+
+    animation:
+        homeBadgeFloat
+        3s ease-in-out
+        infinite;
+
+    filter:
+        drop-shadow(
+            0 13px 8px
+            rgba(
+                35,
+                50,
+                77,
+                0.18
+            )
+        );
+}
+
+body.page-home .home-earned-feature h3 {
+    margin: 0;
+
+    color: var(--home-ink);
+
+    font-size: 1.3rem;
+}
+
+body.page-home .home-earned-feature p {
+    margin: 6px 0 0;
+
+    color: var(--home-muted);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+body.page-home .home-locked-badges {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(
+                90px,
+                1fr
+            )
+        );
+
+    gap: 14px;
+}
+
+body.page-home .home-locked-badge {
+    min-width: 0;
+    padding: 13px 8px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.78
+        );
+
+    border:
+        3px dashed
+        #c9c4d5;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    filter:
+        grayscale(1);
+
+    opacity: 0.64;
+}
+
+body.page-home .home-locked-badge img {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 7px;
+
+    object-fit: contain;
+}
+
+body.page-home .home-locked-badge strong {
+    display: block;
+
+    color: var(--home-ink);
+
+    font-size: 0.73rem;
+    line-height: 1.18;
+}
+
+
+/* =========================================================
+   12. CYBER ARCADE GAME CARDS
+========================================================= */
+
+body.page-home .home-arcade-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap: 18px;
+}
+
+body.page-home .home-arcade-card {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 220px;
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    border:
+        5px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.95
+        );
+
+    border-radius: 28px;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    box-shadow:
+        0 11px 0
+        rgba(
+            38,
+            39,
+            94,
+            0.25
+        );
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+body.page-home
+.home-arcade-card:nth-child(1) {
+    background:
+        linear-gradient(
+            145deg,
+            #ff70bd,
+            #7447ff
+        );
+}
+
+body.page-home
+.home-arcade-card:nth-child(2) {
+    background:
+        linear-gradient(
+            145deg,
+            #19c9d7,
+            #4a91ff
+        );
+}
+
+body.page-home
+.home-arcade-card:nth-child(3) {
+    background:
+        linear-gradient(
+            145deg,
+            #45d58a,
+            #078eaa
+        );
+}
+
+body.page-home .home-arcade-card:hover {
+    transform:
+        translateY(-7px)
+        rotate(1deg);
+
+    box-shadow:
+        0 7px 0
+        rgba(
+            38,
+            39,
+            94,
+            0.25
+        );
+}
+
+body.page-home .home-arcade-icon {
+    position: absolute;
+    top: 17px;
+    right: 18px;
+
+    font-size: 4.7rem;
+
+    opacity: 0.85;
+
+    transform:
+        rotate(7deg);
+}
+
+body.page-home .home-arcade-card h3 {
+    position: relative;
+    z-index: 1;
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 1.45rem;
+}
+
+body.page-home .home-arcade-card p {
+    position: relative;
+    z-index: 1;
+
+    margin: 8px 0 0;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.92
+        );
+
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+body.page-home .home-arcade-play {
+    width: fit-content;
+    margin-top: 14px;
+    padding: 7px 12px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.92
+        );
+
+    color:
+        var(--home-deep-blue);
+
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   13. ADULT LINKS AT THE BOTTOM
+
+   This keeps the polished adult-facing look while separating
+   it from the child adventure area.
+========================================================= */
+
+body.page-home .home-grownup-section {
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f6f9fd
+        );
+
+    border:
+        4px solid
+        #dfe6ef;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 15px 32px
+        rgba(
+            35,
+            50,
+            77,
+            0.09
+        );
+}
+
+body.page-home .home-grownup-heading {
+    text-align: center;
+}
+
+body.page-home .home-grownup-heading h2 {
+    margin: 0;
+
+    color: var(--home-ink);
+
+    font-size: 1.8rem;
+}
+
+body.page-home .home-grownup-heading p {
+    max-width: 680px;
+    margin: 8px auto 0;
+
+    color: var(--home-muted);
+
+    line-height: 1.55;
+}
+
+body.page-home .home-grownup-grid {
+    margin-top: 22px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap: 18px;
+}
+
+body.page-home .home-grownup-card {
+    padding: 23px;
+
+    background: #ffffff;
+
+    border:
+        3px solid
+        #e2e8f1;
+
+    border-radius: 22px;
+
+    color: var(--home-ink);
+    text-decoration: none;
+
+    transition:
+        transform 170ms ease,
+        border-color 170ms ease,
+        box-shadow 170ms ease;
+}
+
+body.page-home .home-grownup-card:hover {
+    border-color:
+        var(--home-purple);
+
+    box-shadow:
+        0 12px 24px
+        rgba(
+            35,
+            50,
+            77,
+            0.10
+        );
+
+    transform:
+        translateY(-4px);
+}
+
+body.page-home .home-grownup-card h3 {
+    margin: 0;
+
+    color: var(--home-ink);
+}
+
+body.page-home .home-grownup-card p {
+    margin: 8px 0 0;
+
+    color: var(--home-muted);
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   14. BRIDGE STYLES FOR THE CURRENT HOMEPAGE
+
+   These improve the existing index.html before we replace its
+   markup with the new game-world HTML.
+========================================================= */
+
+body.page-home > main,
+body.page-home main {
+    min-width: 0;
+}
+
+/*
+   Improve the existing hero right now.
+*/
+
+body.page-home .hero {
+    width:
+        min(
+            1370px,
+            calc(100% - 34px)
+        );
+
+    min-height: 560px;
+    margin: 26px auto 40px;
+    padding: clamp(
+        30px,
+        5vw,
+        62px
+    ) !important;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(320px, 0.78fr) !important;
+
+    gap: 38px !important;
+
+    background:
+        radial-gradient(
+            circle at 84% 17%,
+            rgba(
+                255,
+                228,
+                95,
+                0.75
+            ),
+            transparent 15%
+        ),
+        linear-gradient(
+            135deg,
+            #6a40f4,
+            #4a91ff 53%,
+            #19c9d7
+        ) !important;
+
+    border:
+        7px solid
+        #ffffff;
+
+    border-radius: 42px;
+
+    box-shadow:
+        0 15px 0
+        rgba(
+            42,
+            59,
+            137,
+            0.17
+        ),
+        0 28px 50px
+        rgba(
+            35,
+            50,
+            77,
+            0.20
+        );
+}
+
+body.page-home .hero .eyebrow {
+    width: fit-content;
+    padding: 8px 14px;
+
+    background:
+        var(--home-yellow);
+
+    color:
+        #3c300b;
+
+    border-radius: 999px;
+
+    box-shadow:
+        0 6px 0
+        var(--home-yellow-dark);
+}
+
+body.page-home .hero h1 {
+    max-width: 720px;
+    margin: 20px 0 !important;
+
+    color: #ffffff;
+
+    font-size: clamp(
+        3rem,
+        5.5vw,
+        5.6rem
+    ) !important;
+
+    line-height: 0.98;
+
+    text-shadow:
+        0 6px 0
+        rgba(
+            48,
+            28,
+            124,
+            0.42
+        );
+}
+
+body.page-home .hero-copy {
+    max-width: 660px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.95
+        ) !important;
+
+    font-size: 1.15rem !important;
+    font-weight: 700;
+}
+
+body.page-home .hero .button {
+    min-height: 58px;
+    padding: 15px 28px;
+
+    background:
+        var(--home-yellow) !important;
+
+    color:
+        #3b300b !important;
+
+    border:
+        4px solid
+        #ffffff;
+
+    box-shadow:
+        0 8px 0
+        var(--home-yellow-dark);
+
+    transition:
+        transform 150ms ease,
+        box-shadow 150ms ease;
+}
+
+body.page-home .hero .button:hover {
+    background:
+        #fff083 !important;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 5px 0
+        var(--home-yellow-dark);
+}
+
+body.page-home .hero .mascot-card {
+    position: relative;
+
+    min-height: 395px;
+    padding: 25px !important;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.89
+        ) !important;
+
+    border:
+        6px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.82
+        );
+
+    border-radius: 38px !important;
+
+    box-shadow:
+        0 16px 35px
+        rgba(
+            34,
+            37,
+            100,
+            0.20
+        ) !important;
+}
+
+body.page-home .hero .mascot-img {
+    width: 265px !important;
+    max-width: 80% !important;
+    height: 260px !important;
+
+    margin:
+        0 auto 10px !important;
+
+    object-fit: contain !important;
+}
+
+body.page-home .hero .mascot-card h2 {
+    margin: 0;
+
+    color:
+        var(--home-purple);
+
+    font-size: 1.45rem;
+}
+
+body.page-home .hero .mascot-card p {
+    margin: 7px 0 0;
+
+    color:
+        var(--home-ink);
+
+    font-weight: 800;
+}
+
+/*
+   Improve existing content sections.
+*/
+
+body.page-home .section {
+    width:
+        min(
+            1370px,
+            calc(100% - 34px)
+        );
+
+    margin:
+        0 auto 34px;
+
+    padding:
+        38px !important;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.90
+        );
+
+    border:
+        6px solid
+        #ffffff;
+
+    border-radius: 36px;
+
+    box-shadow:
+        0 15px 0
+        rgba(
+            75,
+            100,
+            154,
+            0.08
+        ),
+        0 24px 42px
+        rgba(
+            35,
+            50,
+            77,
+            0.10
+        );
+}
+
+body.page-home .section > .eyebrow {
+    color:
+        var(--home-purple);
+}
+
+body.page-home .section h2 {
+    color:
+        var(--home-ink);
+
+    font-size: clamp(
+        2rem,
+        3.5vw,
+        3.35rem
+    ) !important;
+
+    line-height: 1.08;
+}
+
+body.page-home #missions .mission-grid {
+    gap: 20px !important;
+}
+
+body.page-home
+#missions
+.image-mission-card {
+    min-height: 365px !important;
+
+    border:
+        4px solid
+        #e5eaf3;
+
+    border-radius:
+        27px !important;
+
+    box-shadow:
+        0 10px 0
+        #d3ddea,
+        0 18px 28px
+        rgba(
+            35,
+            50,
+            77,
+            0.09
+        );
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+body.page-home
+#missions
+.image-mission-card:hover {
+    border-color:
+        var(--home-purple);
+
+    transform:
+        translateY(-8px)
+        rotate(-1deg);
+
+    box-shadow:
+        0 6px 0
+        #c5b8ef,
+        0 16px 25px
+        rgba(
+            35,
+            50,
+            77,
+            0.13
+        );
+}
+
+
+/* =========================================================
+   15. KEYFRAME ANIMATIONS
+========================================================= */
+
+@keyframes homeMemeFloat {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-1deg);
+    }
+
+    50% {
+        transform:
+            translateY(-14px)
+            rotate(1deg);
+    }
+}
+
+@keyframes homeBadgeFloat {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50% {
+        transform:
+            translateY(-7px)
+            rotate(2deg);
+    }
+}
+
+@keyframes homeSparkle {
+    0%,
+    100% {
+        opacity: 0.65;
+        transform:
+            scale(0.9)
+            rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform:
+            scale(1.18)
+            rotate(8deg);
+    }
+}
+
+@keyframes homeNextMission {
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-5px);
+    }
+}
+
+
+/* =========================================================
+   16. TABLET RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 1180px) {
+    body.page-home .kid-home {
+        grid-template-columns:
+            1fr;
+    }
+
+    body.page-home .home-progress-rail {
+        position: static;
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+        align-items: stretch;
+    }
+
+    body.page-home .home-player-card,
+    body.page-home .home-badge-panel,
+    body.page-home .home-notebook-card {
+        height: 100%;
+    }
+
+    body.page-home .home-mission-path {
+        overflow-x: auto;
+
+        grid-template-columns:
+            repeat(
+                5,
+                minmax(
+                    190px,
+                    1fr
+                )
+            );
+
+        padding:
+            12px 4px 18px;
+
+        scroll-snap-type:
+            x mandatory;
+    }
+
+    body.page-home .home-mission-node {
+        scroll-snap-align:
+            center;
+    }
+}
+
+@media (max-width: 920px) {
+    body.page-home .site-header {
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    body.page-home .logo img {
+        height: 82px !important;
+    }
+
+    body.page-home .site-header nav {
+        justify-content: center;
+    }
+
+    body.page-home .home-adventure-hero,
+    body.page-home .hero {
+        grid-template-columns:
+            1fr !important;
+    }
+
+    body.page-home .home-hero-copy,
+    body.page-home .hero > div:first-child {
+        text-align: center;
+    }
+
+    body.page-home .home-hero-kicker,
+    body.page-home .hero .eyebrow {
+        margin-inline:
+            auto;
+    }
+
+    body.page-home .home-hero-message,
+    body.page-home .hero-copy {
+        margin-inline:
+            auto;
+    }
+
+    body.page-home .home-hero-actions,
+    body.page-home .home-hero-quick-stats {
+        justify-content:
+            center;
+    }
+
+    body.page-home .home-meme-stage {
+        min-height: 390px;
+    }
+
+    body.page-home .home-badge-shelf {
+        grid-template-columns:
+            1fr;
+    }
+
+    body.page-home .home-locked-badges {
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(
+                    80px,
+                    1fr
+                )
+            );
+    }
+
+    body.page-home .home-arcade-grid {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    body.page-home
+    .home-arcade-card:last-child {
+        grid-column:
+            1 / -1;
+    }
+}
+
+
+/* =========================================================
+   17. PHONE RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 680px) {
+    body.page-home .site-header nav a {
+        min-height: 40px;
+        padding: 8px 11px;
+
+        font-size: 0.82rem;
+    }
+
+    body.page-home .kid-home {
+        width:
+            min(
+                100% - 18px,
+                650px
+            );
+
+        margin-top: 14px;
+    }
+
+    body.page-home .home-progress-rail {
+        grid-template-columns:
+            1fr;
+    }
+
+    body.page-home .home-adventure-hero,
+    body.page-home .hero {
+        min-height: auto;
+        padding:
+            28px 19px !important;
+
+        border-radius:
+            30px;
+    }
+
+    body.page-home .home-hero-title,
+    body.page-home .hero h1 {
+        font-size:
+            clamp(
+                2.7rem,
+                13vw,
+                4rem
+            ) !important;
+    }
+
+    body.page-home .home-meme-platform {
+        min-height: 350px;
+    }
+
+    body.page-home .home-meme-image {
+        height: 225px;
+    }
+
+    body.page-home .home-meme-bubble {
+        top: 0;
+        left: 0;
+
+        width: 78%;
+    }
+
+    body.page-home .home-game-section,
+    body.page-home .section {
+        width:
+            min(
+                100% - 18px,
+                650px
+            );
+
+        padding:
+            24px 17px !important;
+
+        border-radius:
+            28px;
+    }
+
+    body.page-home .home-section-heading {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+    body.page-home .home-locked-badges {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    body.page-home .home-arcade-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    body.page-home
+    .home-arcade-card:last-child {
+        grid-column:
+            auto;
+    }
+
+    body.page-home .home-grownup-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    body.page-home .home-play-button,
+    body.page-home .home-secondary-button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   18. ACCESSIBILITY — REDUCED MOTION
+========================================================= */
+
+@media (
+    prefers-reduced-motion:
+    reduce
+) {
+    body.page-home *,
+    body.page-home *::before,
+    body.page-home *::after {
+        scroll-behavior:
+            auto !important;
+
+        animation-duration:
+            0.001ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.001ms !important;
+    }
+}
