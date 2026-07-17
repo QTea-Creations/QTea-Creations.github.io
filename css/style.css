@@ -2925,3 +2925,269 @@ svg {
         margin-top: 14px !important;
     }
 }
+
+/* =========================================================
+   IDENTITY ISLAND
+   FINAL TEST BUTTON + INTRO PAGE
+========================================================= */
+
+/* Keep the final-test unlock button inside the builder panel */
+
+#goFinalTest {
+    width: fit-content;
+    max-width: 100%;
+
+    margin: 18px 0 0 !important;
+    padding: 13px 22px;
+
+    align-self: flex-start;
+
+    font-size: 0.95rem;
+    line-height: 1.25;
+    text-align: center;
+}
+
+/* Do not make the locked text button excessively wide */
+
+#goFinalTest:disabled {
+    max-width: 390px;
+}
+
+/* Main Final Test introduction section */
+
+.test-intro-zone {
+    width: 100%;
+    padding: 30px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(255, 231, 107, 0.42),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #eefaff
+        );
+
+    border-radius: 34px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.18);
+}
+
+/* Inner instruction card */
+
+.final-test-intro-card {
+    width: min(100%, 1050px);
+    margin: 0 auto;
+    padding: 30px;
+
+    background: #ffffff;
+
+    border: 4px solid #e8e4ff;
+    border-radius: 30px;
+
+    box-shadow:
+        0 12px 30px
+        rgba(35, 50, 77, 0.1);
+}
+
+/* Shield icon */
+
+.final-test-intro-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 14px;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7d4cff,
+            #15d3dc
+        );
+
+    border: 5px solid #ffe76b;
+    border-radius: 50%;
+
+    font-size: 2.3rem;
+
+    box-shadow:
+        0 10px 22px
+        rgba(125, 76, 255, 0.25);
+}
+
+.final-test-intro-card > .eyebrow {
+    margin: 0 0 8px;
+    text-align: center;
+}
+
+.final-test-intro-card > h2 {
+    margin: 0;
+
+    color: #23324d;
+
+    font-size: clamp(
+        2rem,
+        3.5vw,
+        3rem
+    );
+
+    line-height: 1.1;
+    text-align: center;
+}
+
+.final-test-intro-message {
+    max-width: 780px;
+    margin: 14px auto 22px;
+
+    color: #4d5d78;
+
+    font-size: 1.05rem;
+    line-height: 1.55;
+    text-align: center;
+}
+
+/* Four challenge rules */
+
+.final-test-rules {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+    margin: 22px 0;
+}
+
+.final-test-rule {
+    min-width: 0;
+    padding: 18px;
+
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    align-items: center;
+    gap: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8f5ff,
+            #eefbff
+        );
+
+    border: 3px solid #e8e4ff;
+    border-radius: 22px;
+}
+
+.final-test-rule > span {
+    width: 54px;
+    height: 54px;
+
+    display: grid;
+    place-items: center;
+
+    background: #ffffff;
+    border: 3px solid #ffe76b;
+    border-radius: 17px;
+
+    font-size: 1.65rem;
+}
+
+.final-test-rule h3 {
+    margin: 0 0 5px;
+
+    color: #23324d;
+
+    font-size: 1.08rem;
+    line-height: 1.2;
+}
+
+.final-test-rule p {
+    margin: 0;
+
+    color: #586983;
+
+    font-size: 0.92rem;
+    line-height: 1.42;
+}
+
+/* Ready message */
+
+.final-test-ready-message {
+    margin-top: 20px;
+    padding: 16px 20px;
+
+    background: #fff8d7;
+
+    border: 3px solid #ffe76b;
+    border-radius: 20px;
+
+    color: #23324d;
+
+    font-size: 1.08rem;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.final-test-ready-message strong {
+    color: #7d4cff;
+}
+
+/* Start Test button */
+
+#beginFinalTest {
+    display: flex;
+    width: fit-content;
+
+    margin: 20px auto 0;
+
+    padding: 15px 30px;
+
+    font-size: 1.05rem;
+
+    box-shadow:
+        0 7px 0
+        #4f2aaa;
+}
+
+#beginFinalTest:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 0
+        #4f2aaa;
+}
+
+/* Tablet and phone layout */
+
+@media (max-width: 800px) {
+    .test-intro-zone {
+        padding: 20px;
+    }
+
+    .final-test-intro-card {
+        padding: 22px 18px;
+    }
+
+    .final-test-rules {
+        grid-template-columns: 1fr;
+    }
+
+    .final-test-rule {
+        grid-template-columns: 48px 1fr;
+    }
+
+    .final-test-rule > span {
+        width: 48px;
+        height: 48px;
+    }
+
+    #goFinalTest {
+        width: 100%;
+    }
+}
