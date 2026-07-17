@@ -473,11 +473,412 @@
   });
 }
 
-  function handleButtonClick(event) {
-    const clickedElement =
-      event.target.closest(
-        "button, .sort-zone"
+function handleButtonClick(event) {
+  const clickedElement =
+    event.target.closest(
+      "button, a"
+    );
+
+  if (!clickedElement) {
+    return;
+  }
+
+  const id =
+    clickedElement.id || "";
+
+  const game =
+    window.IdentityGame;
+
+  if (!game) {
+    console.error(
+      "IdentityGame is not available."
+    );
+
+    return;
+  }
+
+  /* =====================================================
+     MISSION INTRODUCTION
+  ===================================================== */
+
+  if (id === "acceptMission") {
+    if (
+      typeof game.acceptMission ===
+      "function"
+    ) {
+      game.acceptMission();
+    }
+
+    return;
+  }
+
+  /* =====================================================
+     LESSON POPUP
+  ===================================================== */
+
+  if (
+    clickedElement.matches(
+      ".island-object"
+    )
+  ) {
+    const objectKey =
+      clickedElement.dataset.object;
+
+    if (
+      objectKey &&
+      typeof game.openLesson ===
+        "function"
+    ) {
+      game.openLesson(
+        objectKey,
+        clickedElement
       );
+    }
+
+    return;
+  }
+
+  if (
+    id === "closeLessonPopup"
+  ) {
+    if (
+      typeof game.closeLessonPopup ===
+      "function"
+    ) {
+      game.closeLessonPopup();
+    }
+
+    return;
+  }
+
+  /* =====================================================
+     STICKERS
+  ===================================================== */
+
+  if (
+    clickedElement.matches(
+      ".sticker"
+    )
+  ) {
+    if (
+      typeof game.collectSticker ===
+      "function"
+    ) {
+      game.collectSticker(
+        clickedElement
+      );
+    }
+
+    return;
+  }
+
+  /* =====================================================
+     MEME HELP
+  ===================================================== */
+
+  if (
+    clickedElement.matches(
+      ".meme-help-btn"
+    )
+  ) {
+    const tip =
+      clickedElement.dataset.tip;
+
+    if (
+      tip &&
+      typeof game.setMemeTip ===
+        "function"
+    ) {
+      game.setMemeTip(
+        tip,
+        "thinking"
+      );
+    }
+
+    return;
+  }
+
+  /* =====================================================
+     USERNAME LAB
+  ===================================================== */
+
+  if (
+    id === "goUsernameLab"
+  ) {
+    if (
+      clickedElement.disabled
+    ) {
+      return;
+    }
+
+    if (
+      typeof game.openUsernameLab ===
+      "function"
+    ) {
+      game.openUsernameLab();
+    }
+
+    return;
+  }
+
+  if (
+    id === "generateUsername"
+  ) {
+    if (
+      clickedElement.disabled
+    ) {
+      return;
+    }
+
+    if (
+      typeof game.generateUsername ===
+      "function"
+    ) {
+      game.generateUsername();
+    }
+
+    return;
+  }
+
+  if (
+    id === "approveUsername"
+  ) {
+    if (
+      clickedElement.disabled
+    ) {
+      return;
+    }
+
+    if (
+      typeof game.finishUsernameScan ===
+      "function"
+    ) {
+      game.finishUsernameScan();
+    }
+
+    return;
+  }
+
+  /* =====================================================
+     BACKPACK RESCUE
+  ===================================================== */
+
+  if (
+    id === "goBackpackRescue"
+  ) {
+    if (
+      clickedElement.disabled
+    ) {
+      return;
+    }
+
+    if (
+      typeof game.startBackpackRescue ===
+      "function"
+    ) {
+      game.startBackpackRescue();
+    }
+
+    return;
+  }
+
+  if (
+    clickedElement.matches(
+      ".sorting-zone"
+    )
+  ) {
+    const choice =
+      clickedElement.dataset.choice;
+
+    if (
+      choice &&
+      typeof game.answerPractice ===
+        "function"
+    ) {
+      game.answerPractice(
+        choice,
+        clickedElement
+      );
+    }
+
+    return;
+  }
+
+  /* =====================================================
+     IDENTITY CARD
+  ===================================================== */
+
+  if (
+    id === "identityFlipCard"
+  ) {
+    const cardInner =
+      document.getElementById(
+        "identityCardInner"
+      );
+
+    if (!cardInner) {
+      return;
+    }
+
+    const isFlipped =
+      cardInner.classList.toggle(
+        "is-flipped"
+      );
+
+    clickedElement.setAttribute(
+      "aria-pressed",
+      String(isFlipped)
+    );
+
+    return;
+  }
+
+  if (
+    id === "clearRepairedUsername"
+  ) {
+    if (
+      typeof game.clearRepairBuilder ===
+      "function"
+    ) {
+      game.clearRepairBuilder();
+    }
+
+    return;
+  }
+
+  if (
+    id === "checkRepairedUsername"
+  ) {
+    if (
+      clickedElement.disabled
+    ) {
+      return;
+    }
+
+    if (
+      typeof game.checkRepairedUsername ===
+      "function"
+    ) {
+      game.checkRepairedUsername();
+    }
+
+    return;
+  }
+
+  /* =====================================================
+     FINAL TEST
+  ===================================================== */
+
+  if (
+    id === "goFinalTest"
+  ) {
+    if (
+      clickedElement.disabled
+    ) {
+      return;
+    }
+
+    if (
+      typeof game.openFinalTestIntro ===
+      "function"
+    ) {
+      game.openFinalTestIntro();
+    } else if (
+      typeof game.showSection ===
+      "function"
+    ) {
+      game.showSection(
+        "testIntroZone"
+      );
+    }
+
+    return;
+  }
+
+  if (
+    id === "beginFinalTest"
+  ) {
+    if (
+      typeof game.beginFinalTest ===
+      "function"
+    ) {
+      game.beginFinalTest();
+    }
+
+    return;
+  }
+
+  if (
+    clickedElement.matches(
+      ".test-choice"
+    )
+  ) {
+    const answer =
+      clickedElement.dataset.answer;
+
+    if (
+      answer &&
+      typeof game.answerFinalTest ===
+        "function"
+    ) {
+      game.answerFinalTest(
+        answer,
+        clickedElement
+      );
+    } else if (
+      answer &&
+      typeof game.answerTest ===
+        "function"
+    ) {
+      game.answerTest(
+        answer,
+        clickedElement
+      );
+    }
+
+    return;
+  }
+
+  if (
+    id === "nextTest"
+  ) {
+    if (
+      typeof game.nextFinalTestQuestion ===
+      "function"
+    ) {
+      game.nextFinalTestQuestion();
+    } else if (
+      typeof game.nextTestQuestion ===
+        "function"
+    ) {
+      game.nextTestQuestion();
+    }
+
+    return;
+  }
+
+  /* =====================================================
+     REPLAY
+  ===================================================== */
+
+  if (
+    id === "retryMission"
+  ) {
+    if (
+      typeof game.retryMission ===
+      "function"
+    ) {
+      game.retryMission();
+    } else if (
+      typeof retryMission ===
+      "function"
+    ) {
+      retryMission();
+    }
+
+    return;
+  }
+}
 
      if (
   id === "checkRepairedUsername"
