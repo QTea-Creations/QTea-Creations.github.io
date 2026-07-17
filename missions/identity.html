@@ -2,110 +2,222 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Complete the Safetii Net Identity Island mission and learn how to protect personal information online."
+  >
 
   <title>Identity Island | Safetii Net</title>
 
-  <link rel="stylesheet" href="../css/style.css">
+  <link
+    rel="icon"
+    type="image/png"
+    href="../assets/SafetiiNet-logo-navbar.png"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <style>
+    /*
+      Small page-specific safety fixes only.
+      Your main design still comes from css/style.css.
+    */
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .site-header,
+    .navbar {
+      position: relative !important;
+      top: auto !important;
+    }
+
+    .mission-page {
+      width: min(1320px, calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    .mission-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 290px;
+      align-items: start;
+      gap: 24px;
+    }
+
+    .mission-content,
+    .meme-panel {
+      min-width: 0;
+    }
+
+    /*
+      Do not mirror Meme here.
+      The original image direction will be used.
+    */
+    #memeImage {
+      transform: none !important;
+    }
+
+    @media (max-width: 1000px) {
+      .mission-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .meme-panel {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .mission-page {
+        width: min(100% - 18px, 620px);
+      }
+    }
+  </style>
 </head>
 
-<body class="page-identity">
-
+<body>
+  <!-- =====================================================
+       NAVIGATION
+  ====================================================== -->
   <header class="site-header">
-    <a href="../index.html" class="logo">
-      <img
-        src="../assets/SafetiiNet-logo-navbar.png"
-        alt="Safetii Net"
+    <nav
+      class="navbar"
+      aria-label="Main navigation"
+    >
+      <a
+        class="navbar-logo-link"
+        href="../index.html"
+        aria-label="Safetii Net home"
       >
-    </a>
+        <img
+          class="navbar-logo"
+          src="../assets/SafetiiNet-logo-navbar.png"
+          alt="Safetii Net"
+        >
+      </a>
 
-    <nav>
-      <a href="../dashboard.html">Hero Headquarters</a>
-      <a href="../index.html#missions">Missions</a>
-      <a href="../index.html#arcade">Cyber Arcade</a>
-      <a href="../parents.html">Parents</a>
-      <a href="../teachers.html">Teachers</a>
+      <ul class="nav-links">
+        <li>
+          <a href="../index.html">
+            Hero Headquarters
+          </a>
+        </li>
+
+        <li>
+          <a href="../notebook.html">
+            Cyber Notebook
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="../missions.html"
+            aria-current="page"
+          >
+            Missions
+          </a>
+        </li>
+
+        <li>
+          <a href="../parents.html">
+            Parents
+          </a>
+        </li>
+
+        <li>
+          <a href="../teachers.html">
+            Teachers
+          </a>
+        </li>
+      </ul>
     </nav>
   </header>
 
-  <main class="identity-game">
-
-    <!-- Meme Help Desk -->
-  <aside class="meme-panel">
-  <img
-    id="memeImage"
-    src="../assets/mascot/thinking.png"
-    alt="Meme helping"
-  >
-
-  <h2>Meme Help Desk</h2>
-
-  <p id="memeTip">
-    Select a word below whenever you need help.
-  </p>
-
-  <p class="mission-points-display">
-    ⭐ Points:
-    <span id="missionPoints">0</span>
-  </p>
-
-  <button
-    class="small-button meme-help-btn"
-    type="button"
-    data-tip="Sensitive information is information that could help someone identify you, find you, contact you, access your accounts, or pretend to be you."
-  >
-    Sensitive Information
-  </button>
-
-  <button
-    class="small-button meme-help-btn"
-    type="button"
-    data-tip="An alias is a made-up name you use instead of your real name. A safe alias should not reveal private details."
-  >
-    Alias
-  </button>
-
-  <button
-    class="small-button meme-help-btn"
-    type="button"
-    data-tip="A username is the name that represents you on a website, app, or game. A safe username should not include your real name, birthday, school, address, phone number, or location."
-  >
-    Username
-  </button>
-
-  <button
-    class="small-button meme-help-btn"
-    type="button"
-    data-tip="A cyber defense is an action that protects you or your information, such as using a safe username, blocking a stranger, or asking a trusted adult for help."
-  >
-    Defense
-  </button>
-
-  <button
-    class="small-button meme-help-btn"
-    type="button"
-    data-tip="When you are unsure, stop before clicking or sharing. Ask a trusted adult to help you decide what to do."
-  >
-    What if I’m unsure?
-  </button>
-</aside>
-
-    <section class="identity-stage">
-
-      <!-- Mission Introduction -->
-      <section class="mission-alert" id="missionAlert">
+  <main class="mission-page">
+    <!-- ===================================================
+         MISSION HEADER
+    ==================================================== -->
+    <section
+      class="mission-hero"
+      aria-labelledby="missionPageTitle"
+    >
+      <div>
         <p class="eyebrow">
-          📡 Incoming Message from Cyber HQ
+          Mission 1
         </p>
 
-        <h1>Mission: Identity Island</h1>
+        <h1 id="missionPageTitle">
+          Identity Island
+        </h1>
 
-        <p class="alert-message">
-          <span id="missionHeroName">Cyber Mentee</span>!
-          A student named Ava needs help.
+        <p>
+          Learn how to protect sensitive information, create safe
+          usernames, recognize private details, and become an
+          Identity Protector.
         </p>
+      </div>
 
-        <div class="alert-actions">
+      <div class="mission-hero-badge">
+        <span aria-hidden="true">
+          🛡️
+        </span>
+
+        <strong>
+          Identity Protector
+        </strong>
+      </div>
+    </section>
+
+    <div class="mission-layout">
+      <!-- =================================================
+           MAIN MISSION
+      ================================================== -->
+      <section class="mission-content">
+        <!-- ===============================================
+             MISSION INTRODUCTION
+        ================================================ -->
+        <section
+          class="mission-alert"
+          id="missionAlert"
+          aria-labelledby="missionAlertTitle"
+        >
+          <img
+            src="../assets/mascot/thinking.png"
+            alt="Meme introducing the Identity Island mission"
+          >
+
+          <p class="eyebrow">
+            New Mission Alert
+          </p>
+
+          <h2 id="missionAlertTitle">
+            Identity Island Needs You!
+          </h2>
+
+          <p>
+            Personal information is appearing all over the island.
+            Explore each learning object, complete the safety labs,
+            protect five fictional profiles, and pass the final test.
+          </p>
+
           <button
             class="button"
             id="acceptMission"
@@ -113,379 +225,490 @@
           >
             Accept Mission
           </button>
+        </section>
 
-          <a
-            class="small-button"
-            href="../dashboard.html"
-          >
-            Return to Hero Headquarters
-          </a>
-        </div>
-      </section>
-
-      <!-- Step 1 -->
-      <section
-        class="island-zone hidden"
-        id="exploreZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">Step 1: Explore</p>
-
-            <h2>Click around Identity Island</h2>
-
-            <p>
-              Find all 6 learning objects before the Username Lab unlocks.
-            </p>
-          </div>
-
-          <div class="progress-pill">
-            Objects Found:
-            <span id="objectsFound">0</span>/6
-          </div>
-        </div>
-
-        <div class="island-scene">
-          <button
-            class="island-object house"
-            type="button"
-            data-object="house"
-          >
-            🏠
-          </button>
-
-          <button
-            class="island-object school"
-            type="button"
-            data-object="school"
-          >
-            🏫
-          </button>
-
-          <button
-            class="island-object phone"
-            type="button"
-            data-object="phone"
-          >
-            📱
-          </button>
-
-          <button
-            class="island-object backpack"
-            type="button"
-            data-object="backpack"
-          >
-            🎒
-          </button>
-
-          <button
-            class="island-object pizza"
-            type="button"
-            data-object="pizza"
-          >
-            🍕
-          </button>
-
-          <button
-            class="island-object controller"
-            type="button"
-            data-object="controller"
-          >
-            🎮
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-one"
-            type="button"
-            data-sticker="Shield Sticker"
-          >
-            ⭐
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-two"
-            type="button"
-            data-sticker="Privacy Sticker"
-          >
-            ⭐
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-three"
-            type="button"
-            data-sticker="Hero Name Sticker"
-          >
-            ⭐
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-four"
-            type="button"
-            data-sticker="Trusted Adult Sticker"
-          >
-            ⭐
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-five"
-            type="button"
-            data-sticker="Smart Share Sticker"
-          >
-            ⭐
-          </button>
-        </div>
-
-        <div
-          class="lesson-popup hidden"
-          id="lessonPopup"
+        <!-- ===============================================
+             STEP 1: EXPLORE IDENTITY ISLAND
+        ================================================ -->
+        <section
+          class="explore-zone hidden"
+          id="exploreZone"
+          aria-labelledby="exploreTitle"
         >
-          <h3 id="lessonTitle"></h3>
-          <p id="lessonText"></p>
+          <div class="zone-header">
+            <div>
+              <p class="eyebrow">
+                Step 1
+              </p>
 
-          <button
-            class="small-button"
-            id="closeLesson"
-            type="button"
-          >
-            Got it!
-          </button>
-        </div>
+              <h2 id="exploreTitle">
+                Explore Identity Island
+              </h2>
 
-        <button
-          class="button locked-action"
-          id="goUsernameLab"
-          type="button"
-          disabled
-        >
-          Unlock Safe Username Lab
-        </button>
-      </section>
-
-      <!-- Step 2 -->
-      <section
-        class="username-zone hidden"
-        id="usernameZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">
-              Step 2: Safe Username Lab
-            </p>
-
-            <h2>🧪 Scan Safe and Unsafe Online Names</h2>
-
-            <p>
-              Decide whether each username protects personal information.
-            </p>
-          </div>
-
-          <div class="progress-pill">
-            Names Checked:
-            <span id="usernamesChecked">0</span>/3
-          </div>
-        </div>
-
-        <article class="username-lab">
-
-          <div class="username-machine">
-            <div
-              class="machine-lights"
-              aria-hidden="true"
-            >
-              <span></span>
-              <span></span>
-              <span></span>
+              <p>
+                Select every learning object to discover how identity
+                information should be protected.
+              </p>
             </div>
 
-            <p class="eyebrow">
-              Username Generator
+            <div
+              class="progress-pill"
+              aria-live="polite"
+            >
+              Objects:
+              <span id="objectsFound">0</span>/6
+            </div>
+          </div>
+
+          <div class="island-object-grid">
+            <button
+              class="island-object"
+              type="button"
+              data-object="sensitiveInformation"
+            >
+              <span
+                class="object-symbol"
+                aria-hidden="true"
+              >
+                🔐
+              </span>
+
+              <span>
+                Sensitive Information
+              </span>
+            </button>
+
+            <button
+              class="island-object"
+              type="button"
+              data-object="safeSharing"
+            >
+              <span
+                class="object-symbol"
+                aria-hidden="true"
+              >
+                💬
+              </span>
+
+              <span>
+                Safe Sharing
+              </span>
+            </button>
+
+            <button
+              class="island-object"
+              type="button"
+              data-object="usernames"
+            >
+              <span
+                class="object-symbol"
+                aria-hidden="true"
+              >
+                🎮
+              </span>
+
+              <span>
+                Safe Usernames
+              </span>
+            </button>
+
+            <button
+              class="island-object"
+              type="button"
+              data-object="passwords"
+            >
+              <span
+                class="object-symbol"
+                aria-hidden="true"
+              >
+                🔑
+              </span>
+
+              <span>
+                Password Protection
+              </span>
+            </button>
+
+            <button
+              class="island-object"
+              type="button"
+              data-object="trustedAdults"
+            >
+              <span
+                class="object-symbol"
+                aria-hidden="true"
+              >
+                🤝
+              </span>
+
+              <span>
+                Trusted Adults
+              </span>
+            </button>
+
+            <button
+              class="island-object"
+              type="button"
+              data-object="digitalFootprint"
+            >
+              <span
+                class="object-symbol"
+                aria-hidden="true"
+              >
+                👣
+              </span>
+
+              <span>
+                Digital Footprints
+              </span>
+            </button>
+          </div>
+
+          <article
+            class="lesson-popup hidden"
+            id="lessonPopup"
+            aria-live="polite"
+          >
+            <h3 id="lessonTitle">
+              Identity Lesson
+            </h3>
+
+            <p id="lessonText">
+              Choose an object to begin learning.
+            </p>
+
+            <button
+              class="small-button"
+              id="closeLessonPopup"
+              type="button"
+            >
+              Close Lesson
+            </button>
+          </article>
+
+          <div
+            class="sticker-strip"
+            aria-label="Identity Island hidden stickers"
+          >
+            <button
+              class="sticker"
+              type="button"
+              data-sticker="Shield Sticker"
+              aria-label="Collect Shield Sticker"
+            >
+              ⭐
+            </button>
+
+            <button
+              class="sticker"
+              type="button"
+              data-sticker="Privacy Sticker"
+              aria-label="Collect Privacy Sticker"
+            >
+              ⭐
+            </button>
+
+            <button
+              class="sticker"
+              type="button"
+              data-sticker="Hero Name Sticker"
+              aria-label="Collect Hero Name Sticker"
+            >
+              ⭐
+            </button>
+
+            <button
+              class="sticker"
+              type="button"
+              data-sticker="Trusted Adult Sticker"
+              aria-label="Collect Trusted Adult Sticker"
+            >
+              ⭐
+            </button>
+
+            <button
+              class="sticker"
+              type="button"
+              data-sticker="Smart Share Sticker"
+              aria-label="Collect Smart Share Sticker"
+            >
+              ⭐
+            </button>
+          </div>
+
+          <div class="mission-actions">
+            <button
+              class="button"
+              id="goUsernameLab"
+              type="button"
+              disabled
+            >
+              Unlock Safe Username Lab
+            </button>
+          </div>
+        </section>
+
+        <!-- ===============================================
+             STEP 2: SAFE USERNAME LAB
+        ================================================ -->
+        <section
+          class="username-zone hidden"
+          id="usernameZone"
+          aria-labelledby="usernameZoneTitle"
+        >
+          <div class="zone-header">
+            <div>
+              <p class="eyebrow">
+                Step 2
+              </p>
+
+              <h2 id="usernameZoneTitle">
+                Safe Username Lab
+              </h2>
+
+              <p>
+                Generate a username, examine it carefully, and finish
+                each safety scan.
+              </p>
+            </div>
+
+            <div
+              class="progress-pill"
+              aria-live="polite"
+            >
+              Scans:
+              <span id="usernamesChecked">0</span>/3
+            </div>
+          </div>
+
+          <article class="username-generator-card">
+            <h3>
+              Username Safety Scanner
+            </h3>
+
+            <p>
+              Look for real names, birthdays, school names, addresses,
+              locations, phone numbers, or other private information.
             </p>
 
             <div
               class="generated-username"
               id="generatedUsername"
+              aria-live="polite"
             >
-              Press the button to generate a username!
+              Press Generate Username to begin.
             </div>
-
-            <button
-  class="small-button hidden"
-  id="approveUsername"
-  type="button"
->
-  Finish Scan
-</button>
-          </div>
-
-          <div class="username-analysis">
-            <h3>Meme’s Safety Scan</h3>
 
             <div
-              id="usernameChecklist"
               class="username-checklist"
+              id="usernameChecklist"
+              aria-live="polite"
             >
-              <p>
-                Generate a username to begin the safety scan.
-              </p>
+              The scanner results will appear here.
             </div>
 
+            <div class="username-decision-buttons">
+              <button
+                class="small-button username-choice"
+                id="markUsernameSafe"
+                type="button"
+                data-answer="safe"
+                disabled
+              >
+                Safe Username
+              </button>
+
+              <button
+                class="small-button username-choice"
+                id="markUsernameUnsafe"
+                type="button"
+                data-answer="unsafe"
+                disabled
+              >
+                Unsafe Username
+              </button>
+            </div>
+
+            <div class="username-generator-actions">
+              <button
+                class="button"
+                id="generateUsername"
+                type="button"
+              >
+                Generate Username
+              </button>
+
+              <button
+                class="small-button hidden"
+                id="approveUsername"
+                type="button"
+              >
+                Finish Scan
+              </button>
+            </div>
+
+            <p
+              class="feedback"
+              id="usernameFeedback"
+              aria-live="polite"
+            ></p>
+          </article>
+
+          <div class="mission-actions">
             <button
-              class="small-button hidden"
-              id="approveUsername"
+              class="button"
+              id="goBackpackRescue"
               type="button"
+              disabled
             >
-              Finish Scan
+              Complete 3 Username Scans First
             </button>
-          </div>
-        </article>
-
-        <section class="username-rules">
-          <h3>
-            Safe usernames should not include:
-          </h3>
-
-          <div class="username-rule-grid">
-            <div>🚫 Real first or last name</div>
-            <div>🚫 Birthday or birth year</div>
-            <div>🚫 School name</div>
-            <div>🚫 Address or location</div>
-            <div>🚫 Phone number</div>
-            <div>🚫 Password clues</div>
           </div>
         </section>
 
-        <button
-          class="button locked-action"
-          id="goBackpackRescue"
-          type="button"
-          disabled
+        <!-- ===============================================
+             STEP 3: BACKPACK RESCUE
+        ================================================ -->
+        <section
+          class="practice-zone hidden"
+          id="practiceZone"
+          aria-labelledby="practiceTitle"
         >
-          Complete 3 Username Scans First
-        </button>
-      </section>
+          <div class="zone-header">
+            <div>
+              <p class="eyebrow">
+                Step 3
+              </p>
 
-      <!-- Step 3 -->
-      <section
-        class="practice-zone hidden"
-        id="practiceZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">
-              Step 3: Practice Game
-            </p>
+              <h2 id="practiceTitle">
+                Backpack Rescue
+              </h2>
 
-            <h2>Backpack Rescue</h2>
-
-            <p>
-              Drag each item into the correct zone.
-            </p>
-          </div>
-
-          <div class="progress-pill">
-            Sorted:
-            <span id="practiceCorrect">0</span>/10
-          </div>
-        </div>
-
-        <article class="backpack-game">
-
-          <div
-            class="drag-item-card"
-            id="dragItemCard"
-            draggable="true"
-          >
-            <p class="eyebrow">
-              Drag This Item
-            </p>
-
-            <h3 id="sortItemText">
-              Loading...
-            </h3>
-          </div>
-
-          <div class="sort-zones">
-
-            <div
-              class="sort-zone share-zone"
-              data-answer="safe"
-            >
-              ✅ Share Zone
-
-              <span>
-                Usually okay to share
-              </span>
+              <p>
+                Decide whether each item is safe to share or should
+                remain private.
+              </p>
             </div>
 
             <div
-              class="sort-zone protect-zone"
-              data-answer="private"
+              class="progress-pill"
+              aria-live="polite"
             >
-              🔒 Protect Zone
+              Correct:
+              <span id="practiceCorrect">0</span>
+            </div>
+          </div>
 
-              <span>
-                Keep this private
-              </span>
+          <div class="backpack-game">
+            <article
+              class="drag-item-card"
+              id="dragItemCard"
+              draggable="true"
+            >
+              <h3 id="sortItemText">
+                Backpack item
+              </h3>
+            </article>
+
+            <div class="sorting-zones">
+              <button
+                class="sorting-zone share-zone"
+                id="shareZone"
+                type="button"
+                data-choice="safe"
+              >
+                <strong>
+                  Safe to Share
+                </strong>
+
+                <span>
+                  This information is usually okay to share.
+                </span>
+              </button>
+
+              <button
+                class="sorting-zone protect-zone"
+                id="protectZone"
+                type="button"
+                data-choice="private"
+              >
+                <strong>
+                  Keep Private
+                </strong>
+
+                <span>
+                  This information should be protected.
+                </span>
+              </button>
             </div>
           </div>
 
           <p
             class="feedback"
             id="practiceFeedback"
+            aria-live="polite"
           ></p>
-        </article>
-      </section>
 
-      <!-- Step 4 -->
-      <section
-        class="identity-card-zone hidden"
-        id="identityCardZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">
-              Step 4: Identity Card Repair Lab
-            </p>
+          <div class="mission-actions">
+            <button
+              class="button"
+              id="goIdentityRepair"
+              type="button"
+              disabled
+            >
+              Complete Backpack Rescue First
+            </button>
+          </div>
+        </section>
 
-            <h2>
-              Repair Five Unsafe Usernames
-            </h2>
+        <!-- ===============================================
+             STEP 4: FICTIONAL ID CARD REPAIR
+        ================================================ -->
+        <section
+          class="identity-card-zone hidden"
+          id="identityCardZone"
+          aria-labelledby="identityCardTitle"
+        >
+          <div class="zone-header">
+            <div>
+              <p class="eyebrow">
+                Step 4
+              </p>
 
-            <p>
-              Flip each fictional ID card, discover safe interests,
-              and build a new username.
-            </p>
+              <h2 id="identityCardTitle">
+                Fictional ID Card Username Repair
+              </h2>
+
+              <p>
+                Protect five fictional students by replacing unsafe
+                usernames with usernames based on safe interests.
+              </p>
+            </div>
+
+            <div
+              class="progress-pill"
+              aria-live="polite"
+            >
+              Protected:
+              <span id="profilesProtected">0</span>/5
+            </div>
           </div>
 
-          <div class="progress-pill">
-            Profiles Protected:
-            <span id="profilesProtected">0</span>/5
-          </div>
-        </div>
-
-        <div class="training-profile-note">
-          All names, schools, locations, birthdays, and profiles
-          in this activity are fictional and used only for training.
-        </div>
-
-        <article class="identity-repair-game">
-
-          <div class="profile-area">
+          <div class="identity-repair-layout">
             <button
               class="identity-flip-card"
               id="identityFlipCard"
               type="button"
-              aria-label="Flip the fictional identity card"
+              aria-label="Flip fictional student identity card"
               aria-pressed="false"
             >
               <span
                 class="identity-card-inner"
                 id="identityCardInner"
               >
-
-                <span class="identity-card-face identity-card-front">
+                <span class="identity-card-front">
                   <span class="training-label">
-                    FICTIONAL TRAINING ID
+                    Fictional Training Profile
                   </span>
 
                   <span
@@ -493,378 +716,623 @@
                     id="profileAvatar"
                     aria-hidden="true"
                   >
-                    👧
-                  </span>
-
-                  <span
-                    class="profile-name"
-                    id="profileName"
-                  >
-                    Loading profile...
+                    🙂
                   </span>
 
                   <span class="profile-details">
+                    <span class="profile-detail">
+                      <strong>Name</strong>
 
-                    <span>
-                      <strong>Birthday:</strong>
-                      <span id="profileBirthday"></span>
+                      <span id="profileName">
+                        Fictional Student
+                      </span>
                     </span>
 
-                    <span>
-                      <strong>School:</strong>
-                      <span id="profileSchool"></span>
+                    <span class="profile-detail">
+                      <strong>Birthday</strong>
+
+                      <span id="profileBirthday">
+                        Fictional Birthday
+                      </span>
                     </span>
 
-                    <span>
-                      <strong>Location:</strong>
-                      <span id="profileLocation"></span>
+                    <span class="profile-detail">
+                      <strong>School</strong>
+
+                      <span id="profileSchool">
+                        Fictional Flower School
+                      </span>
+                    </span>
+
+                    <span class="profile-detail">
+                      <strong>Location</strong>
+
+                      <span id="profileLocation">
+                        Fictional Location
+                      </span>
                     </span>
                   </span>
 
-                  <span class="unsafe-current-name">
-                    Current unsafe username:
+                  <span class="profile-unsafe-username">
+                    <strong>
+                      Unsafe Username
+                    </strong>
 
-                    <strong id="profileUnsafeUsername"></strong>
-                  </span>
-
-                  <span class="flip-instruction">
-                    🔄 Click the card to reveal safe interests
+                    <span id="profileUnsafeUsername">
+                      UnsafeUsername
+                    </span>
                   </span>
                 </span>
 
-                <span class="identity-card-face identity-card-back">
+                <span class="identity-card-back">
                   <span class="training-label">
-                    SAFE INTEREST CLUES
+                    Safe Interest Clues
                   </span>
 
-               <span class="interest-title">
-  Build a username that matches this student:
-</span>
+                  <h3>
+                    Favorite Things
+                  </h3>
 
-<span
-  class="profile-interest-mission"
-  id="profileInterestMission"
->
-  Use three of their favorite things.
-</span>
+                  <p id="profileInterestMission">
+                    Build a username using safe interests.
+                  </p>
 
                   <span
                     class="interest-list"
                     id="profileInterestList"
                   ></span>
 
-                  <span class="flip-instruction">
-                    🔄 Click again to view the private-information side
-                  </span>
+                  <p>
+                    Select the card again to return to the front.
+                  </p>
                 </span>
               </span>
             </button>
-          </div>
 
-          <div class="username-repair-area">
+            <article class="repair-builder">
+              <h3>
+                Build a Safer Username
+              </h3>
 
-            <div class="repair-heading">
-              <div>
-                <p class="eyebrow">
-                  Username Builder
-                </p>
-
-                <h3>
-  Build a username using this student’s interests
-</h3>
-
-<p class="repair-instruction">
-  Choose three words that match what the student likes. Do not use their
-  real name, birthday, school, or location.
-</p>
-              </div>
-
-              <button
-                class="small-button"
-                id="clearUsernameBlocks"
-                type="button"
-              >
-                Clear Builder
-              </button>
-            </div>
-
-            <div
-              class="word-block-bank"
-              id="wordBlockBank"
-            ></div>
-
-            <div
-              class="username-build-zone"
-              id="usernameBuildZone"
-              tabindex="0"
-              aria-label="Safe username building zone"
-            >
-              <p id="buildZoneMessage">
-  Choose three interest words from the back of the ID card.
-</p>
+              <p>
+                Choose words based on interests. Do not use names,
+                birthdays, schools, locations, or contact information.
+              </p>
 
               <div
-                id="selectedUsernameBlocks"
-                class="selected-blocks"
+                class="word-block-bank"
+                id="wordBlockBank"
+                aria-label="Username repair word choices"
               ></div>
-            </div>
 
-            <div class="username-preview">
-              <span>New username:</span>
+              <div
+                class="username-build-zone"
+                id="usernameBuildZone"
+              >
+                <p id="buildZoneMessage">
+                  Choose three safe interest-based words.
+                </p>
 
-              <strong id="repairedUsernamePreview">
-                Waiting for three blocks...
-              </strong>
-            </div>
+                <div
+                  class="selected-username-blocks"
+                  id="selectedUsernameBlocks"
+                  aria-live="polite"
+                ></div>
 
+                <div
+                  class="repaired-username-preview"
+                  id="repairedUsernamePreview"
+                  aria-live="polite"
+                >
+                  Waiting for three words...
+                </div>
+
+                <div class="repair-actions">
+                  <button
+                    class="small-button"
+                    id="clearRepairedUsername"
+                    type="button"
+                  >
+                    Clear Builder
+                  </button>
+
+                  <button
+                    class="button"
+                    id="checkRepairedUsername"
+                    type="button"
+                    disabled
+                  >
+                    Check Username
+                  </button>
+                </div>
+              </div>
+
+              <p
+                class="feedback"
+                id="identityRepairFeedback"
+                aria-live="polite"
+              ></p>
+            </article>
+          </div>
+
+          <div class="mission-actions">
             <button
-              class="button locked-action"
-              id="checkRepairedUsername"
+              class="button"
+              id="goFinalTest"
               type="button"
               disabled
             >
-              Check Username 🔍
+              Protect All 5 Profiles First
             </button>
+          </div>
+        </section>
+
+        <!-- ===============================================
+             STEP 5: FINAL TEST INTRODUCTION
+        ================================================ -->
+        <section
+          class="test-intro-zone hidden"
+          id="testIntroZone"
+          aria-labelledby="finalTestIntroTitle"
+        >
+          <article class="final-test-intro-card">
+            <div class="zone-header">
+              <div>
+                <p class="eyebrow">
+                  Step 5
+                </p>
+
+                <h2 id="finalTestIntroTitle">
+                  Identity Protector Final Test
+                </h2>
+
+                <p>
+                  Complete the final challenge to earn your Identity
+                  Protector Badge.
+                </p>
+              </div>
+            </div>
+
+            <div class="final-test-rules">
+              <article class="final-test-rule">
+                <span aria-hidden="true">
+                  📝
+                </span>
+
+                <div>
+                  <h3>
+                    20 Questions
+                  </h3>
+
+                  <p>
+                    Decide whether each example is safe to share
+                    or should remain private.
+                  </p>
+                </div>
+              </article>
+
+              <article class="final-test-rule">
+                <span aria-hidden="true">
+                  🎯
+                </span>
+
+                <div>
+                  <h3>
+                    Score 80% or Higher
+                  </h3>
+
+                  <p>
+                    Answer at least 16 out of 20 questions correctly
+                    to earn your badge.
+                  </p>
+                </div>
+              </article>
+
+              <article class="final-test-rule">
+                <span aria-hidden="true">
+                  💡
+                </span>
+
+                <div>
+                  <h3>
+                    Read Every Explanation
+                  </h3>
+
+                  <p>
+                    Meme will explain why each answer is safe
+                    or private.
+                  </p>
+                </div>
+              </article>
+
+              <article class="final-test-rule">
+                <span aria-hidden="true">
+                  🔁
+                </span>
+
+                <div>
+                  <h3>
+                    You Can Try Again
+                  </h3>
+
+                  <p>
+                    You can replay the mission if you do not earn
+                    the badge on your first attempt.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <div class="final-test-ready-message">
+              <strong id="finalTestHeroName">
+                Cyber Mentee
+              </strong>,
+              are you ready to become an Identity Protector?
+            </div>
+
+            <button
+              class="button"
+              id="beginFinalTest"
+              type="button"
+            >
+              Start Final Test
+            </button>
+          </article>
+        </section>
+
+        <!-- ===============================================
+             FINAL TEST QUESTIONS
+        ================================================ -->
+        <section
+          class="test-zone hidden"
+          id="testZone"
+          aria-labelledby="finalTestTitle"
+        >
+          <div class="zone-header">
+            <div>
+              <p class="eyebrow">
+                Step 5: Final Test
+              </p>
+
+              <h2 id="finalTestTitle">
+                Identity Protector Test
+              </h2>
+
+              <p>
+                Answer 20 questions. You need 80% or higher
+                to earn your badge.
+              </p>
+            </div>
+
+            <div
+              class="progress-pill"
+              aria-live="polite"
+            >
+              Question
+              <span id="testNumber">1</span>/20
+            </div>
+          </div>
+
+          <article class="scenario-card">
+            <h3 id="testQuestion">
+              Your first question will appear here.
+            </h3>
+
+            <div class="quiz-buttons">
+              <button
+                class="button test-choice"
+                type="button"
+                data-answer="safe"
+              >
+                Safe
+              </button>
+
+              <button
+                class="button test-choice private-btn"
+                type="button"
+                data-answer="private"
+              >
+                Private
+              </button>
+            </div>
 
             <p
               class="feedback"
-              id="identityRepairFeedback"
+              id="testFeedback"
+              aria-live="polite"
             ></p>
-          </div>
-        </article>
 
-       <button
-  class="button locked-action"
-  id="goFinalTest"
-  type="button"
-  disabled
- >
-  Protect All 5 Profiles to Unlock the Final Test
-</button>
-      </section>
+            <button
+              class="small-button hidden"
+              id="nextTest"
+              type="button"
+            >
+              Next Question
+            </button>
+          </article>
+        </section>
 
-      <!-- Step 5: Final Test Instructions -->
-<section
-  class="test-intro-zone hidden"
-  id="testIntroZone"
->
-  <article class="final-test-intro-card">
+        <!-- ===============================================
+             MISSION RESULT
+        ================================================ -->
+        <section
+          class="mission-result hidden"
+          id="missionResult"
+          aria-labelledby="resultTitle"
+        >
+          <img
+            src="../assets/mascot/congrats.png"
+            alt="Meme celebrating the completed mission"
+          >
 
-    <div
-      class="final-test-intro-icon"
-      aria-hidden="true"
-    >
-      🛡️
-    </div>
-
-    <p class="eyebrow">
-      Identity Island Badge Challenge
-    </p>
-
-    <h2>
-      Identity Protector Final Test
-    </h2>
-
-    <p class="final-test-intro-message">
-      You completed your training and helped protect five fictional
-      students. Now it is time to show that you can recognize safe
-      and private information on your own.
-    </p>
-
-    <div class="final-test-rules">
-
-      <article class="final-test-rule">
-        <span aria-hidden="true">📝</span>
-
-        <div>
-          <h3>20 Questions</h3>
-
-          <p>
-            Decide whether each example is safe to share or should
-            remain private.
-          </p>
-        </div>
-      </article>
-
-      <article class="final-test-rule">
-        <span aria-hidden="true">🎯</span>
-
-        <div>
-          <h3>Score 80% or Higher</h3>
-
-          <p>
-            Answer at least 16 out of 20 questions correctly to earn
-            your Identity Protector Badge.
-          </p>
-        </div>
-      </article>
-
-      <article class="final-test-rule">
-        <span aria-hidden="true">💡</span>
-
-        <div>
-          <h3>Read Every Explanation</h3>
-
-          <p>
-            Meme will explain why each answer is safe or private.
-          </p>
-        </div>
-      </article>
-
-      <article class="final-test-rule">
-        <span aria-hidden="true">🔁</span>
-
-        <div>
-          <h3>You Can Try Again</h3>
-
-          <p>
-            You can replay the mission if you do not earn the badge
-            on your first attempt.
-          </p>
-        </div>
-      </article>
-
-    </div>
-
-    <div class="final-test-ready-message">
-      <strong id="finalTestHeroName">
-        Cyber Mentee
-      </strong>,
-      are you ready to become an Identity Protector?
-    </div>
-
-    <button
-      class="button"
-      id="beginFinalTest"
-      type="button"
-    >
-      Start Final Test 🛡️
-    </button>
-
-  </article>
-</section>
-      <section
-        class="test-zone hidden"
-        id="testZone"
-      >
-        <div class="zone-header">
           <div>
             <p class="eyebrow">
-              Step 5: Final Test
+              Mission Complete
             </p>
 
-            <h2>
-              Identity Protector Test
+            <h2 id="resultTitle">
+              Identity Protector Badge Earned!
             </h2>
 
-            <p>
-              Answer 20 questions. You need 80% or higher to earn your badge.
+            <p
+              id="resultMessage"
+              aria-live="polite"
+            ></p>
+
+            <p class="earned-badge">
+              🛡️ Identity Protector
             </p>
+
+            <p class="points-earned">
+              Points Earned:
+              <span id="pointsEarned">0</span>
+            </p>
+
+            <p>
+              Stickers Found:
+              <span id="stickersFound">0</span>/5
+            </p>
+
+            <div class="mission-result-actions">
+              <a
+                class="button"
+                href="../index.html"
+              >
+                Return to Hero Headquarters
+              </a>
+
+              <button
+                class="small-button"
+                id="retryMission"
+                type="button"
+              >
+                Replay Mission
+              </button>
+            </div>
           </div>
-
-          <div class="progress-pill">
-            Question
-            <span id="testNumber">1</span>/20
-          </div>
-        </div>
-
-        <article class="scenario-card">
-          <h3 id="testQuestion"></h3>
-
-          <div class="quiz-buttons">
-            <button
-              class="button test-choice"
-              type="button"
-              data-answer="safe"
-            >
-              ✅ Safe
-            </button>
-
-            <button
-              class="button test-choice private-btn"
-              type="button"
-              data-answer="private"
-            >
-              🔒 Private
-            </button>
-          </div>
-
-          <p
-            class="feedback"
-            id="testFeedback"
-          ></p>
-
-          <button
-            class="small-button hidden"
-            id="nextTest"
-            type="button"
-          >
-            Next Question
-          </button>
-        </article>
+        </section>
       </section>
 
-      <!-- Mission Result -->
-      <section
-        class="mission-result hidden"
-        id="missionResult"
+      <!-- =================================================
+           MEME HELP DESK
+      ================================================== -->
+      <aside
+        class="meme-panel"
+        aria-labelledby="memeHelpTitle"
       >
         <img
-          src="../assets/mascot/congrats.png"
-          alt="Meme celebrating"
+          id="memeImage"
+          src="../assets/mascot/thinking.png"
+          alt="Meme helping with Identity Island"
         >
 
-        <div>
-          <p class="eyebrow">
-            Mission Complete
-          </p>
+        <h2 id="memeHelpTitle">
+          Meme Help Desk
+        </h2>
 
-          <h2 id="resultTitle">
-            Identity Protector Badge Earned!
-          </h2>
+        <p
+          id="memeTip"
+          aria-live="polite"
+        >
+          Select a word below whenever you need help.
+        </p>
 
-          <p id="resultMessage"></p>
+        <p class="mission-points-display">
+          Points:
+          <span id="missionPoints">0</span>
+        </p>
 
-          <p class="earned-badge">
-            🛡️ Identity Protector
-          </p>
+        <button
+          class="small-button meme-help-btn"
+          type="button"
+          data-tip="Sensitive information is information that could help someone identify you, find you, contact you, access your accounts, or pretend to be you."
+        >
+          Sensitive Information
+        </button>
 
-          <p class="points-earned">
-            Points Earned:
-            <span id="pointsEarned">0</span>
-          </p>
+        <button
+          class="small-button meme-help-btn"
+          type="button"
+          data-tip="An alias is a made-up name used instead of a real name. A safe alias should not reveal private information."
+        >
+          Alias
+        </button>
 
-          <p>
-            Stickers Found:
-            <span id="stickersFound">0</span>/5
-          </p>
+        <button
+          class="small-button meme-help-btn"
+          type="button"
+          data-tip="A username represents you on a website, app, or game. A safe username should not reveal your real name, birthday, school, address, phone number, or location."
+        >
+          Username
+        </button>
 
-          <a
-            class="button"
-            href="../dashboard.html"
-          >
-            Return to Hero Headquarters
-          </a>
+        <button
+          class="small-button meme-help-btn"
+          type="button"
+          data-tip="A cyber defense is an action that protects you or your information, such as using a safe username, blocking a stranger, or asking a trusted adult for help."
+        >
+          Defense
+        </button>
 
-          <button
-            class="small-button"
-            id="retryMission"
-            type="button"
-          >
-            Replay Mission
-          </button>
-        </div>
-      </section>
-    </section>
+        <button
+          class="small-button meme-help-btn"
+          type="button"
+          data-tip="When you are unsure, stop before clicking or sharing. Ask a trusted adult to help you decide what to do."
+        >
+          What If I’m Unsure?
+        </button>
+      </aside>
+    </div>
   </main>
 
-<script src="../js/identity-data.js"></script>
-<script src="../js/identity-core.js"></script>
-<script src="../js/identity-activities.js"></script>
-<script src="../js/identity-repair.js"></script>
-<script src="../js/identity-test.js"></script>
-<script src="../js/identity-progress.js"></script>
-<script src="../js/identity.js"></script>
-<script src="../js/identity-debug.js"></script>
+  <!-- =====================================================
+       REPLAY RESET
+  ====================================================== -->
+  <script>
+    "use strict";
+
+    (() => {
+      const parameters =
+        new URLSearchParams(window.location.search);
+
+      const replayRequested =
+        parameters.get("replay") === "true" ||
+        parameters.get("replay") === "1";
+
+      if (!replayRequested) {
+        return;
+      }
+
+      const missionProgressKeys = [
+        "safetiiIdentityProgress",
+        "identityCurrentStep",
+        "identityFoundObjects",
+        "identityUsernameProgress",
+        "identityBackpackProgress",
+        "identityProfileProgress",
+        "identityTestProgress",
+        "identityStickers"
+      ];
+
+      missionProgressKeys.forEach((key) => {
+        localStorage.removeItem(key);
+      });
+
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+    })();
+  </script>
+
+  <!-- =====================================================
+       IDENTITY ISLAND FILES
+       Keep this order.
+  ====================================================== -->
+  <script src="../js/identity-data.js"></script>
+  <script src="../js/identity-core.js"></script>
+  <script src="../js/identity-activities.js"></script>
+  <script src="../js/identity-repair.js"></script>
+  <script src="../js/identity-test.js"></script>
+  <script src="../js/identity-progress.js"></script>
+  <script src="../js/identity.js"></script>
+
+  <!-- =====================================================
+       SAFE PAGE FALLBACKS
+  ====================================================== -->
+  <script>
+    "use strict";
+
+    (() => {
+      const getElement = (id) =>
+        document.getElementById(id);
+
+      /*
+        This fallback keeps Accept Mission working even when
+        another Identity Island script throws an error.
+      */
+      const acceptMissionButton =
+        getElement("acceptMission");
+
+      if (acceptMissionButton) {
+        acceptMissionButton.addEventListener(
+          "click",
+          () => {
+            const missionAlert =
+              getElement("missionAlert");
+
+            const exploreZone =
+              getElement("exploreZone");
+
+            if (missionAlert) {
+              missionAlert.classList.add("hidden");
+            }
+
+            if (exploreZone) {
+              exploreZone.classList.remove("hidden");
+
+              exploreZone.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+              });
+            }
+          }
+        );
+      }
+
+      /*
+        Meme help buttons work independently from the main
+        mission JavaScript.
+      */
+      document
+        .querySelectorAll(".meme-help-btn")
+        .forEach((button) => {
+          button.addEventListener(
+            "click",
+            () => {
+              const memeTip =
+                getElement("memeTip");
+
+              if (!memeTip) {
+                return;
+              }
+
+              memeTip.textContent =
+                button.dataset.tip ||
+                "Ask a trusted adult when you are unsure.";
+            }
+          );
+        });
+
+      /*
+        Safe replay path for GitHub Pages.
+      */
+      const retryMissionButton =
+        getElement("retryMission");
+
+      if (retryMissionButton) {
+        retryMissionButton.addEventListener(
+          "click",
+          () => {
+            const confirmed =
+              window.confirm(
+                "Replay Identity Island from the beginning?"
+              );
+
+            if (!confirmed) {
+              return;
+            }
+
+            window.location.href =
+              `${window.location.pathname}?replay=true`;
+          }
+        );
+      }
+    })();
+  </script>
+
+  <!-- Load the debugger last. -->
+  <script src="../js/safetii-debug.js"></script>
 </body>
 </html>
