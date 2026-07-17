@@ -31,47 +31,64 @@
   <main class="identity-game">
 
     <!-- Meme Help Desk -->
-    <aside class="meme-panel">
-      <img
-        id="memeImage"
-        src="../assets/mascot/thinking.png"
-        alt="Meme helping"
-      >
+  <aside class="meme-panel">
+  <img
+    id="memeImage"
+    src="../assets/mascot/thinking.png"
+    alt="Meme helping"
+  >
 
-      <h2>Meme Help</h2>
+  <h2>Meme Help Desk</h2>
 
-      <p id="memeTip">
-        Click a button if you need help during your mission.
-      </p>
-      <p class="mission-points-display">
-  Points:
-  <span id="missionPoints">0</span>
-</p>
+  <p id="memeTip">
+    Select a word below whenever you need help.
+  </p>
 
-      <button
-        class="small-button meme-help-btn"
-        type="button"
-        data-tip="Private information can help someone find you, contact you, or pretend to be you."
-      >
-        What is private?
-      </button>
+  <p class="mission-points-display">
+    ⭐ Points:
+    <span id="missionPoints">0</span>
+  </p>
 
-      <button
-        class="small-button meme-help-btn"
-        type="button"
-        data-tip="If you are unsure, pause and ask a trusted adult before sharing."
-      >
-        I’m not sure
-      </button>
+  <button
+    class="small-button meme-help-btn"
+    type="button"
+    data-tip="Sensitive information is information that could help someone identify you, find you, contact you, access your accounts, or pretend to be you."
+  >
+    Sensitive Information
+  </button>
 
-      <button
-        class="small-button meme-help-btn"
-        type="button"
-        data-tip="A safe online name is any name that does not reveal your real name, school, birthday, address, phone number, or location."
-      >
-        Safe online names
-      </button>
-    </aside>
+  <button
+    class="small-button meme-help-btn"
+    type="button"
+    data-tip="An alias is a made-up name you use instead of your real name. A safe alias should not reveal private details."
+  >
+    Alias
+  </button>
+
+  <button
+    class="small-button meme-help-btn"
+    type="button"
+    data-tip="A username is the name that represents you on a website, app, or game. A safe username should not include your real name, birthday, school, address, phone number, or location."
+  >
+    Username
+  </button>
+
+  <button
+    class="small-button meme-help-btn"
+    type="button"
+    data-tip="A cyber defense is an action that protects you or your information, such as using a safe username, blocking a stranger, or asking a trusted adult for help."
+  >
+    Defense
+  </button>
+
+  <button
+    class="small-button meme-help-btn"
+    type="button"
+    data-tip="When you are unsure, stop before clicking or sharing. Ask a trusted adult to help you decide what to do."
+  >
+    What if I’m unsure?
+  </button>
+</aside>
 
     <section class="identity-stage">
 
@@ -292,12 +309,12 @@
             </div>
 
             <button
-              class="button"
-              id="generateUsername"
-              type="button"
-            >
-              Generate Username
-            </button>
+  class="small-button hidden"
+  id="approveUsername"
+  type="button"
+>
+  Finish Scan
+</button>
           </div>
 
           <div class="username-analysis">
