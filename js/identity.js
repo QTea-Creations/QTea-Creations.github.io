@@ -958,6 +958,35 @@
       initializeIdentityIsland,
       { once: true }
     );
+
+     const pageParameters = new URLSearchParams(
+  window.location.search
+);
+
+const isReplay =
+  pageParameters.get("replay") === "true";
+
+if (isReplay) {
+  localStorage.removeItem(
+    "safetiiIdentityProgress"
+  );
+
+  if (
+    window.IdentityGame &&
+    typeof window.IdentityGame.showSection ===
+      "function"
+  ) {
+    window.IdentityGame.showSection(
+      "missionAlert"
+    );
+  }
+
+  window.history.replaceState(
+    {},
+    document.title,
+    window.location.pathname
+  );
+}
   } else {
     initializeIdentityIsland();
   }
