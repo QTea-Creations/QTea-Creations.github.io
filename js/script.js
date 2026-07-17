@@ -391,22 +391,25 @@ function completeIdentityGameMission() {
   }
 }
 
-function replayIdentityMission() {
+"use strict";
+
+/* =========================================================
+   NOTEBOOK — REPLAY IDENTITY ISLAND
+   Runs only on notebook.html
+========================================================= */
+
+function replayIdentityMissionFromNotebook() {
   const confirmed = window.confirm(
     "Are you sure you want to replay Identity Island?\n\n" +
     "This will erase your current mission progress and return you to the beginning.\n\n" +
-    "Points, stickers already rewarded, and badges already earned will not be removed."
+    "Points, previously rewarded stickers, and earned badges will not be removed."
   );
 
   if (!confirmed) {
     return;
   }
 
-  /*
-    Remove saved progress for the current mission attempt.
-  */
-
-  const progressKeys = [
+  const identityProgressKeys = [
     "safetiiIdentityProgress",
     "identityCurrentStep",
     "identityFoundObjects",
@@ -417,51 +420,33 @@ function replayIdentityMission() {
     "identityStickers"
   ];
 
-  progressKeys.forEach((key) => {
+  identityProgressKeys.forEach((key) => {
     localStorage.removeItem(key);
   });
-
-  /*
-    Keep these values:
-      safetiiPoints
-      identityAwardedStickers
-      identityBadgeEarned
-
-    This prevents students from replaying the mission
-    repeatedly to collect the same sticker points.
-  */
 
   window.location.href =
     "missions/identity.html?replay=true";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  /*
-    These quiz elements only exist on the older
-    Identity game page. The checks prevent errors
-    on notebook.html and other pages.
-  */
+  const isNotebookPage =
+    window.location.pathname.endsWith("/notebook.html") ||
+    window.location.pathname.endsWith("notebook.html");
 
-  const identityQuestion =
-    document.getElementById("identityQuestion");
-
-  const quizButtons =
-    document.querySelectorAll(".quiz-choice");
-
-  const nextButton =
-    document.getElementById("nextQuestion");
-
-  if (identityQuestion) {
-    loadIdentityGameQuestion();
+  if (!isNotebookPage) {
+    return;
   }
 
-  quizButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      answerIdentityGame(
-        button.dataset.answer
-      );
-    });
-  });
+  const replayButton =
+    document.getElementById("retryMission");
+
+  if (replayButton) {
+    replayButton.addEventListener(
+      "click",
+      replayIdentityMissionFromNotebook
+    );
+  }
+});
 
   if (nextButton) {
     nextButton.addEventListener(
