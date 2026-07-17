@@ -975,10 +975,20 @@
         const points =
           byId("notebookPoints");
 
-        const savedHero =
-          localStorage.getItem(
-            HERO_KEY
-          ) || "Cyber Hero";
+let savedHero = null;
+
+try {
+  savedHero = JSON.parse(
+    localStorage.getItem(
+      HERO_KEY
+    ) || "null"
+  );
+} catch (error) {
+  console.error(
+    "Could not read the saved hero:",
+    error
+  );
+}
 
         const savedPoints =
           Number(
@@ -987,10 +997,11 @@
             ) || "0"
           );
 
-        if (heroName) {
-          heroName.textContent =
-            savedHero;
-        }
+if (heroName) {
+  heroName.textContent =
+    savedHero?.name ||
+    "Cyber Hero";
+}
 
         if (points) {
           points.textContent =
