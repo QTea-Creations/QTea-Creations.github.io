@@ -3191,3 +3191,32 @@ svg {
         width: 100%;
     }
 }
+
+/* Final Test button underneath the fictional ID card */
+
+.profile-area {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+}
+
+.profile-area #goFinalTest {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 58px;
+
+    margin: 0 !important;
+    padding: 13px 20px;
+
+    align-self: stretch;
+
+    white-space: normal;
+    line-height: 1.25;
+    text-align: center;
+}
+
+.profile-area #goFinalTest:disabled {
+    width: 100% !important;
+    max-width: none !important;
+}
