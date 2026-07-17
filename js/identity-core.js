@@ -86,15 +86,16 @@
   };
 
   game.showSection = function showSection(sectionId) {
-    const sectionIds = [
-      "missionAlert",
-      "exploreZone",
-      "usernameZone",
-      "practiceZone",
-      "identityCardZone",
-      "testZone",
-      "missionResult"
-    ];
+const sectionIds = [
+  "missionAlert",
+  "exploreZone",
+  "usernameZone",
+  "practiceZone",
+  "identityCardZone",
+  "testIntroZone",
+  "testZone",
+  "missionResult"
+];
 
     sectionIds.forEach((id) => {
       const section = game.byId(id);
