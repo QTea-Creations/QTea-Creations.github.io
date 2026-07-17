@@ -437,10 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const replayButton =
-    document.getElementById("retryMission");
-
-  if (replayButton) {
+   if (replayButton) {
     replayButton.addEventListener(
       "click",
       replayIdentityMissionFromNotebook
@@ -459,9 +456,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Notebook replay button.
   */
 
-  const retryButton =
-    document.getElementById("retryMission");
-
+ 
   if (retryButton) {
     retryButton.addEventListener(
       "click",
@@ -624,11 +619,6 @@ function replayIdentityMission() {
 
   window.location.href = "./missions/identity.html?replay=true";
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  const replayButton = document.getElementById(
-    "replayIdentityMission"
-  );
 
   if (replayButton) {
     replayButton.addEventListener(
