@@ -386,15 +386,38 @@
         return;
       }
 
-      game.showSection("missionResult");
+game.showSection("missionResult");
 
-      stickersElement.textContent =
-        String(
-          game.state.foundStickers.size
-        );
+/*
+  Synchronize the final sticker count with the stickers
+  visibly collected during this mission attempt.
+*/
+const collectedStickerNames =
+  Array.from(
+    document.querySelectorAll(
+      ".sticker.collected"
+    )
+  )
+    .map((button) =>
+      button.dataset.sticker?.trim()
+    )
+    .filter(Boolean);
 
-      if (passed) {
-        const earnedPoints = 50;
+collectedStickerNames.forEach(
+  (stickerName) => {
+    game.state.foundStickers.add(
+      stickerName
+    );
+  }
+);
+
+stickersElement.textContent =
+  String(
+    game.state.foundStickers.size
+  );
+
+if (passed) {
+  const earnedPoints = 100;
 
         const alreadyEarned =
           localStorage.getItem(
@@ -437,22 +460,33 @@
           )
         );
 
-        if (!alreadyEarned) {
-          const currentPoints =
-            Number(
-              localStorage.getItem(
-                "safetiiPoints"
-              ) || "0"
-            );
+     if (!alreadyEarned) {
+  const currentPoints =
+    Number(
+      localStorage.getItem(
+        "safetiiPoints"
+      ) || "0"
+    );
 
-          localStorage.setItem(
-            "safetiiPoints",
-            String(
-              currentPoints +
-              earnedPoints
-            )
-          );
-        }
+  localStorage.setItem(
+    "safetiiPoints",
+    String(
+      currentPoints +
+      earnedPoints
+    )
+  );
+}
+
+/*
+  Refresh the number shown in the Meme Help Desk
+  immediately after awarding the mission bonus.
+*/
+if (
+  typeof game.updateMissionPointsDisplay ===
+  "function"
+) {
+  game.updateMissionPointsDisplay();
+}
 
         title.textContent =
           "Identity Protector Badge Earned!";
