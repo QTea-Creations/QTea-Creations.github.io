@@ -245,7 +245,23 @@
   /* -------------------------------------------------------
      FINISH MISSION
   ------------------------------------------------------- */
+game.beginFinalTest = function beginFinalTest() {
+  game.state.testIndex = 0;
+  game.state.testCorrect = 0;
+  game.state.testAnswered = false;
 
+  game.showSection("testZone");
+  game.loadTest();
+
+  game.setMemeTip(
+    "The final test has begun! Read each question carefully.",
+    "thinking"
+  );
+
+  if (typeof game.saveIdentityProgress === "function") {
+    game.saveIdentityProgress();
+  }
+};
   game.finishMission =
     function finishMission() {
       const totalQuestions =
