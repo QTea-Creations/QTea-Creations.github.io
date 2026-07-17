@@ -156,29 +156,322 @@
   }
 
   function retryMission() {
-    if (
-      typeof game.resetMissionState ===
-      "function"
-    ) {
-      game.resetMissionState();
+  const confirmed = window.confirm(
+    "Are you sure you want to replay Identity Island?\n\n" +
+    "This will erase your current mission progress and return you to the beginning.\n\n" +
+    "Points and badges you already earned will not be removed."
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  /*
+    Reset all in-memory mission state.
+  */
+  if (
+    typeof game.resetMissionState ===
+    "function"
+  ) {
+    game.resetMissionState();
+  } else {
+    game.state.foundObjects = new Set();
+    game.state.foundStickers = new Set();
+
+    game.state.generatedUsername = "";
+    game.state.generatedUsernameIsSafe = true;
+    game.state.generatedUsernameReason = "";
+    game.state.usernamesChecked = 0;
+    game.state.usernameAwaitingApproval = false;
+
+    game.state.practiceIndex = 0;
+    game.state.practiceCorrect = 0;
+    game.state.practiceAnswered = false;
+
+    game.state.identityProfileIndex = 0;
+    game.state.profilesProtected = 0;
+    game.state.selectedRepairBlocks = [];
+    game.state.profileRepairComplete = false;
+
+    game.state.testIndex = 0;
+    game.state.testCorrect = 0;
+    game.state.testAnswered = false;
+  }
+
+  /*
+    Remove only the current mission-attempt progress.
+    Earned points and badges remain untouched.
+  */
+  localStorage.removeItem(
+    "safetiiIdentityProgress"
+  );
+
+  /*
+    Reset counters.
+  */
+  const counters = {
+    objectsFound: "0",
+    usernamesChecked: "0",
+    practiceCorrect: "0",
+    profilesProtected: "0",
+    testNumber: "1"
+  };
+
+  Object.entries(counters).forEach(
+    ([id, value]) => {
+      const element = game.byId(id);
+
+      if (element) {
+        element.textContent = value;
+      }
     }
+  );
 
-    resetPageDisplay();
+  /*
+    Reset explored objects.
+  */
+  document
+    .querySelectorAll(".island-object")
+    .forEach((button) => {
+      button.classList.remove(
+        "discovered",
+        "wiggle"
+      );
 
-    if (
-      typeof game.clearIdentityProgress ===
-      "function"
-    ) {
-      game.clearIdentityProgress();
-    }
+      button.disabled = false;
+    });
 
-    game.showSection("missionAlert");
+  /*
+    Reset the visible stickers for this attempt.
+    Previously earned sticker points are not awarded again.
+  */
+  document
+    .querySelectorAll(".sticker")
+    .forEach((button) => {
+      button.classList.remove(
+        "collected"
+      );
 
-    game.setMemeTip(
-      "Ready to replay Identity Island?",
-      "welcome"
+      button.textContent = "⭐";
+      button.disabled = false;
+    });
+
+  /*
+    Close the lesson popup.
+  */
+  const lessonPopup =
+    game.byId("lessonPopup");
+
+  if (lessonPopup) {
+    lessonPopup.classList.add("hidden");
+  }
+
+  /*
+    Reset Username Lab.
+  */
+  const generatedUsername =
+    game.byId("generatedUsername");
+
+  if (generatedUsername) {
+    generatedUsername.textContent =
+      "Press the button to generate a username!";
+  }
+
+  const usernameChecklist =
+    game.byId("usernameChecklist");
+
+  if (usernameChecklist) {
+    usernameChecklist.innerHTML = `
+      <p>
+        Generate a username to begin the safety scan.
+      </p>
+    `;
+  }
+
+  const approveUsername =
+    game.byId("approveUsername");
+
+  if (approveUsername) {
+    approveUsername.classList.add(
+      "hidden"
     );
   }
+
+  const usernameButton =
+    game.byId("goUsernameLab");
+
+  if (usernameButton) {
+    usernameButton.disabled = true;
+
+    usernameButton.classList.add(
+      "locked-action"
+    );
+
+    usernameButton.textContent =
+      "Unlock Safe Username Lab";
+  }
+
+  /*
+    Reset Backpack Rescue.
+  */
+  const backpackButton =
+    game.byId("goBackpackRescue");
+
+  if (backpackButton) {
+    backpackButton.disabled = true;
+
+    backpackButton.classList.add(
+      "locked-action"
+    );
+
+    backpackButton.textContent =
+      "Complete 3 Username Scans First";
+  }
+
+  const practiceFeedback =
+    game.byId("practiceFeedback");
+
+  if (practiceFeedback) {
+    practiceFeedback.textContent = "";
+    practiceFeedback.style.background =
+      "transparent";
+  }
+
+  /*
+    Reset Identity Card Repair Lab.
+  */
+  const wordBlockBank =
+    game.byId("wordBlockBank");
+
+  if (wordBlockBank) {
+    wordBlockBank.innerHTML = "";
+  }
+
+  const selectedBlocks =
+    game.byId(
+      "selectedUsernameBlocks"
+    );
+
+  if (selectedBlocks) {
+    selectedBlocks.innerHTML = "";
+  }
+
+  const repairedPreview =
+    game.byId(
+      "repairedUsernamePreview"
+    );
+
+  if (repairedPreview) {
+    repairedPreview.textContent =
+      "Waiting for three blocks...";
+  }
+
+  const buildMessage =
+    game.byId("buildZoneMessage");
+
+  if (buildMessage) {
+    buildMessage.textContent =
+      "Drop or click three safe blocks here.";
+  }
+
+  const repairFeedback =
+    game.byId(
+      "identityRepairFeedback"
+    );
+
+  if (repairFeedback) {
+    repairFeedback.textContent = "";
+    repairFeedback.style.background =
+      "transparent";
+  }
+
+  const checkRepairButton =
+    game.byId(
+      "checkRepairedUsername"
+    );
+
+  if (checkRepairButton) {
+    checkRepairButton.disabled = true;
+
+    checkRepairButton.classList.add(
+      "locked-action"
+    );
+  }
+
+  /*
+    Lock the final test again.
+  */
+  const finalTestButton =
+    game.byId("goFinalTest");
+
+  if (finalTestButton) {
+    finalTestButton.disabled = true;
+
+    finalTestButton.classList.add(
+      "locked-action"
+    );
+
+    finalTestButton.textContent =
+      "Protect All 5 Profiles to Unlock the Final Test";
+  }
+
+  /*
+    Reset final-test interface.
+  */
+  const testQuestion =
+    game.byId("testQuestion");
+
+  if (testQuestion) {
+    testQuestion.textContent = "";
+  }
+
+  const testFeedback =
+    game.byId("testFeedback");
+
+  if (testFeedback) {
+    testFeedback.textContent = "";
+    testFeedback.style.background =
+      "transparent";
+  }
+
+  const nextTest =
+    game.byId("nextTest");
+
+  if (nextTest) {
+    nextTest.classList.add("hidden");
+    nextTest.textContent =
+      "Next Question";
+  }
+
+  document
+    .querySelectorAll(".test-choice")
+    .forEach((button) => {
+      button.disabled = false;
+
+      button.classList.remove(
+        "correct-glow",
+        "shake"
+      );
+    });
+
+  /*
+    Return to the mission introduction.
+  */
+  game.showSection("missionAlert");
+
+  game.setMemeTip(
+    "Your mission has been reset. Accept the mission whenever you are ready!",
+    "welcome"
+  );
+
+  /*
+    Scroll to the top of the mission.
+  */
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
 
   function handleButtonClick(event) {
     const clickedElement =
