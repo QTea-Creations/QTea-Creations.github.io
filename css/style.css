@@ -923,10 +923,19 @@ flex-direction:column;
 gap:20px;
 }
 
-nav{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
+.navbar,
+.site-header,
+.main-header {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+   body {
+    padding-top: 0 !important;
+}
+
+    width: 100%;
+    z-index: 20;
 }
 
 .hero h1{
@@ -2614,4 +2623,94 @@ button:disabled,
 .interest-chip {
     border-color:
         var(--profile-color) !important;
+}
+
+/* =========================================================
+   NON-STICKY NAVIGATION
+========================================================= */
+
+html {
+    scroll-padding-top: 20px;
+}
+
+body {
+    padding-top: 0 !important;
+}
+
+.navbar,
+.site-navbar,
+.site-header,
+.main-header,
+header {
+    position: relative !important;
+
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+
+    width: 100%;
+    transform: none !important;
+}
+
+main,
+.page-main,
+.mission-main {
+    margin-top: 0 !important;
+    padding-top: 0;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+}
+
+.mission-layout {
+    width: min(1400px, calc(100% - 32px));
+    margin-inline: auto;
+}
+
+.mission-content,
+.mission-panel,
+.meme-panel {
+    min-width: 0;
+}
+
+
+@media (max-width: 950px) {
+    .mission-layout {
+        width: min(100% - 20px, 900px);
+        grid-template-columns: 1fr !important;
+    }
+
+    .meme-panel {
+        position: relative !important;
+        top: auto !important;
+        width: 100%;
+    }
+
+    .navbar-container,
+    .nav-container {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+.meme-panel {
+    position: relative !important;
+    top: auto !important;
 }
