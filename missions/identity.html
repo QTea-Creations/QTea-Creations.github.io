@@ -1,766 +1,650 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+"use strict";
 
-  <title>Identity Island | Safetii Net</title>
+/* =========================================================
+   SAFETII NET — IDENTITY ISLAND
+   Main Controller
+========================================================= */
 
-  <link rel="stylesheet" href="../css/style.css">
-</head>
+(() => {
+  const game = window.IdentityGame;
 
-<body class="page-identity">
+  if (!game) {
+    console.error(
+      "IdentityGame is missing. Check that the Identity Island scripts load in the correct order."
+    );
 
-  <header class="site-header">
-    <a href="../index.html" class="logo">
-      <img
-        src="../assets/SafetiiNet-logo-navbar.png"
-        alt="Safetii Net"
-      >
-    </a>
+    return;
+  }
 
-    <nav>
-      <a href="../dashboard.html">Hero Headquarters</a>
-      <a href="../index.html#missions">Missions</a>
-      <a href="../index.html#arcade">Cyber Arcade</a>
-      <a href="../parents.html">Parents</a>
-      <a href="../teachers.html">Teachers</a>
-    </nav>
-  </header>
+  function hasFunction(functionName) {
+    const exists =
+      typeof game[functionName] === "function";
 
-  <main class="identity-game">
+    if (!exists) {
+      console.error(
+        `Identity Island function is missing: ${functionName}`
+      );
+    }
 
-    <!-- Meme Help Desk -->
-    <aside class="meme-panel">
-      <img
-        id="memeImage"
-        src="../assets/mascot/thinking.png"
-        alt="Meme helping"
-      >
+    return exists;
+  }
 
-      <h2>Meme Help</h2>
+  function saveProgressSoon() {
+    window.setTimeout(() => {
+      if (
+        typeof game.saveIdentityProgress ===
+        "function"
+      ) {
+        game.saveIdentityProgress();
+      }
+    }, 100);
+  }
 
-      <p id="memeTip">
-        Click a button if you need help during your mission.
-      </p>
-      <p class="mission-points-display">
-  Points:
-  <span id="missionPoints">0</span>
-</p>
+  function resetPageDisplay() {
+    const counterValues = {
+      objectsFound: "0",
+      usernamesChecked: "0",
+      practiceCorrect: "0",
+      profilesProtected: "0"
+    };
 
-      <button
-        class="small-button meme-help-btn"
-        type="button"
-        data-tip="Private information can help someone find you, contact you, or pretend to be you."
-      >
-        What is private?
-      </button>
+    Object.entries(counterValues).forEach(
+      ([id, value]) => {
+        const element = game.byId(id);
 
-      <button
-        class="small-button meme-help-btn"
-        type="button"
-        data-tip="If you are unsure, pause and ask a trusted adult before sharing."
-      >
-        I’m not sure
-      </button>
+        if (element) {
+          element.textContent = value;
+        }
+      }
+    );
 
-      <button
-        class="small-button meme-help-btn"
-        type="button"
-        data-tip="A safe online name is any name that does not reveal your real name, school, birthday, address, phone number, or location."
-      >
-        Safe online names
-      </button>
-    </aside>
+    document
+      .querySelectorAll(".island-object")
+      .forEach((button) => {
+        button.classList.remove(
+          "discovered",
+          "wiggle"
+        );
+      });
 
-    <section class="identity-stage">
+    document
+      .querySelectorAll(".sticker")
+      .forEach((button) => {
+        button.classList.remove(
+          "collected"
+        );
 
-      <!-- Mission Introduction -->
-      <section class="mission-alert" id="missionAlert">
-        <p class="eyebrow">
-          📡 Incoming Message from Cyber HQ
+        button.textContent = "⭐";
+      });
+
+    const usernameButton =
+      game.byId("goUsernameLab");
+
+    if (usernameButton) {
+      usernameButton.disabled = true;
+
+      usernameButton.classList.add(
+        "locked-action"
+      );
+
+      usernameButton.textContent =
+        "Unlock Safe Username Lab";
+    }
+
+    const backpackButton =
+      game.byId("goBackpackRescue");
+
+    if (backpackButton) {
+      backpackButton.disabled = true;
+
+      backpackButton.classList.add(
+        "locked-action"
+      );
+
+      backpackButton.textContent =
+        "Complete 3 Username Scans First";
+    }
+
+    const finalTestButton =
+      game.byId("goFinalTest");
+
+    if (finalTestButton) {
+      finalTestButton.disabled = true;
+
+      finalTestButton.classList.add(
+        "locked-action"
+      );
+
+      finalTestButton.textContent =
+        "Protect All 5 Profiles to Unlock the Final Test";
+    }
+
+    const generatedUsername =
+      game.byId("generatedUsername");
+
+    if (generatedUsername) {
+      generatedUsername.textContent =
+        "Press the button to generate a username!";
+    }
+
+    const checklist =
+      game.byId("usernameChecklist");
+
+    if (checklist) {
+      checklist.innerHTML = `
+        <p>
+          Generate a username to begin the safety scan.
         </p>
-
-        <h1>Mission: Identity Island</h1>
-
-        <p class="alert-message">
-          <span id="missionHeroName">Cyber Mentee</span>!
-          A student named Ava needs help.
-        </p>
-
-        <div class="alert-actions">
-          <button
-            class="button"
-            id="acceptMission"
-            type="button"
-          >
-            Accept Mission
-          </button>
-
-          <a
-            class="small-button"
-            href="../dashboard.html"
-          >
-            Return to Hero Headquarters
-          </a>
-        </div>
-      </section>
-
-      <!-- Step 1 -->
-      <section
-        class="island-zone hidden"
-        id="exploreZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">Step 1: Explore</p>
-
-            <h2>Click around Identity Island</h2>
-
-            <p>
-              Find all 6 learning objects before the Username Lab unlocks.
-            </p>
-          </div>
-
-          <div class="progress-pill">
-            Objects Found:
-            <span id="objectsFound">0</span>/6
-          </div>
-        </div>
-
-        <div class="island-scene">
-          <button
-            class="island-object house"
-            type="button"
-            data-object="house"
-          >
-            🏠
-          </button>
-
-          <button
-            class="island-object school"
-            type="button"
-            data-object="school"
-          >
-            🏫
-          </button>
-
-          <button
-            class="island-object phone"
-            type="button"
-            data-object="phone"
-          >
-            📱
-          </button>
-
-          <button
-            class="island-object backpack"
-            type="button"
-            data-object="backpack"
-          >
-            🎒
-          </button>
-
-          <button
-            class="island-object pizza"
-            type="button"
-            data-object="pizza"
-          >
-            🍕
-          </button>
-
-          <button
-            class="island-object controller"
-            type="button"
-            data-object="controller"
-          >
-            🎮
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-one"
-            type="button"
-            data-sticker="Shield Sticker"
-          >
-            ⭐
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-two"
-            type="button"
-            data-sticker="Privacy Sticker"
-          >
-            ⭐
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-three"
-            type="button"
-            data-sticker="Hero Name Sticker"
-          >
-            ⭐
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-four"
-            type="button"
-            data-sticker="Trusted Adult Sticker"
-          >
-            ⭐
-          </button>
-
-          <button
-            class="sticker hidden-sticker sticker-five"
-            type="button"
-            data-sticker="Smart Share Sticker"
-          >
-            ⭐
-          </button>
-        </div>
-
-        <div
-          class="lesson-popup hidden"
-          id="lessonPopup"
-        >
-          <h3 id="lessonTitle"></h3>
-          <p id="lessonText"></p>
-
-          <button
-            class="small-button"
-            id="closeLesson"
-            type="button"
-          >
-            Got it!
-          </button>
-        </div>
-
-        <button
-          class="button locked-action"
-          id="goUsernameLab"
-          type="button"
-          disabled
-        >
-          Unlock Safe Username Lab
-        </button>
-      </section>
-
-      <!-- Step 2 -->
-      <section
-        class="username-zone hidden"
-        id="usernameZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">
-              Step 2: Safe Username Lab
-            </p>
-
-            <h2>🧪 Scan Safe and Unsafe Online Names</h2>
-
-            <p>
-              Decide whether each username protects personal information.
-            </p>
-          </div>
-
-          <div class="progress-pill">
-            Names Checked:
-            <span id="usernamesChecked">0</span>/3
-          </div>
-        </div>
-
-        <article class="username-lab">
-
-          <div class="username-machine">
-            <div
-              class="machine-lights"
-              aria-hidden="true"
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-            <p class="eyebrow">
-              Username Generator
-            </p>
-
-            <div
-              class="generated-username"
-              id="generatedUsername"
-            >
-              Press the button to generate a username!
-            </div>
-
-            <button
-              class="button"
-              id="generateUsername"
-              type="button"
-            >
-              Generate Username
-            </button>
-          </div>
-
-          <div class="username-analysis">
-            <h3>Meme’s Safety Scan</h3>
-
-            <div
-              id="usernameChecklist"
-              class="username-checklist"
-            >
-              <p>
-                Generate a username to begin the safety scan.
-              </p>
-            </div>
-
-            <button
-              class="small-button hidden"
-              id="approveUsername"
-              type="button"
-            >
-              Finish Scan
-            </button>
-          </div>
-        </article>
-
-        <section class="username-rules">
-          <h3>
-            Safe usernames should not include:
-          </h3>
-
-          <div class="username-rule-grid">
-            <div>🚫 Real first or last name</div>
-            <div>🚫 Birthday or birth year</div>
-            <div>🚫 School name</div>
-            <div>🚫 Address or location</div>
-            <div>🚫 Phone number</div>
-            <div>🚫 Password clues</div>
-          </div>
-        </section>
-
-        <button
-          class="button locked-action"
-          id="goBackpackRescue"
-          type="button"
-          disabled
-        >
-          Complete 3 Username Scans First
-        </button>
-      </section>
-
-      <!-- Step 3 -->
-      <section
-        class="practice-zone hidden"
-        id="practiceZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">
-              Step 3: Practice Game
-            </p>
-
-            <h2>Backpack Rescue</h2>
-
-            <p>
-              Drag each item into the correct zone.
-            </p>
-          </div>
-
-          <div class="progress-pill">
-            Sorted:
-            <span id="practiceCorrect">0</span>/10
-          </div>
-        </div>
-
-        <article class="backpack-game">
-
-          <div
-            class="drag-item-card"
-            id="dragItemCard"
-            draggable="true"
-          >
-            <p class="eyebrow">
-              Drag This Item
-            </p>
-
-            <h3 id="sortItemText">
-              Loading...
-            </h3>
-          </div>
-
-          <div class="sort-zones">
-
-            <div
-              class="sort-zone share-zone"
-              data-answer="safe"
-            >
-              ✅ Share Zone
-
-              <span>
-                Usually okay to share
-              </span>
-            </div>
-
-            <div
-              class="sort-zone protect-zone"
-              data-answer="private"
-            >
-              🔒 Protect Zone
-
-              <span>
-                Keep this private
-              </span>
-            </div>
-          </div>
-
-          <p
-            class="feedback"
-            id="practiceFeedback"
-          ></p>
-        </article>
-      </section>
-
-      <!-- Step 4 -->
-      <section
-        class="identity-card-zone hidden"
-        id="identityCardZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">
-              Step 4: Identity Card Repair Lab
-            </p>
-
-            <h2>
-              Repair Five Unsafe Usernames
-            </h2>
-
-            <p>
-              Flip each fictional ID card, discover safe interests,
-              and build a new username.
-            </p>
-          </div>
-
-          <div class="progress-pill">
-            Profiles Protected:
-            <span id="profilesProtected">0</span>/5
-          </div>
-        </div>
-
-        <div class="training-profile-note">
-          All names, schools, locations, birthdays, and profiles
-          in this activity are fictional and used only for training.
-        </div>
-
-        <article class="identity-repair-game">
-
-          <div class="profile-area">
-            <button
-              class="identity-flip-card"
-              id="identityFlipCard"
-              type="button"
-              aria-label="Flip the fictional identity card"
-              aria-pressed="false"
-            >
-              <span
-                class="identity-card-inner"
-                id="identityCardInner"
-              >
-
-                <span class="identity-card-face identity-card-front">
-                  <span class="training-label">
-                    FICTIONAL TRAINING ID
-                  </span>
-
-                  <span
-                    class="profile-avatar"
-                    id="profileAvatar"
-                    aria-hidden="true"
-                  >
-                    👧
-                  </span>
-
-                  <span
-                    class="profile-name"
-                    id="profileName"
-                  >
-                    Loading profile...
-                  </span>
-
-                  <span class="profile-details">
-
-                    <span>
-                      <strong>Birthday:</strong>
-                      <span id="profileBirthday"></span>
-                    </span>
-
-                    <span>
-                      <strong>School:</strong>
-                      <span id="profileSchool"></span>
-                    </span>
-
-                    <span>
-                      <strong>Location:</strong>
-                      <span id="profileLocation"></span>
-                    </span>
-                  </span>
-
-                  <span class="unsafe-current-name">
-                    Current unsafe username:
-
-                    <strong id="profileUnsafeUsername"></strong>
-                  </span>
-
-                  <span class="flip-instruction">
-                    🔄 Click the card to reveal safe interests
-                  </span>
-                </span>
-
-                <span class="identity-card-face identity-card-back">
-                  <span class="training-label">
-                    SAFE INTEREST CLUES
-                  </span>
-
-               <span class="interest-title">
-  Build a username that matches this student:
-</span>
-
-<span
-  class="profile-interest-mission"
-  id="profileInterestMission"
->
-  Use three of their favorite things.
-</span><span class="interest-title">
-  Build a username that matches this student:
-</span>
-
-<span
-  class="profile-interest-mission"
-  id="profileInterestMission"
->
-  Use three of their favorite things.
-</span>
-
-                  <span
-                    class="interest-list"
-                    id="profileInterestList"
-                  ></span>
-
-                  <span class="flip-instruction">
-                    🔄 Click again to view the private-information side
-                  </span>
-                </span>
-              </span>
-            </button>
-          </div>
-
-          <div class="username-repair-area">
-
-            <div class="repair-heading">
-              <div>
-                <p class="eyebrow">
-                  Username Builder
-                </p>
-
-                <h3>
-  Build a username using this student’s interests
-</h3>
-
-<p class="repair-instruction">
-  Choose three words that match what the student likes. Do not use their
-  real name, birthday, school, or location.
-</p>
-              </div>
-
-              <button
-                class="small-button"
-                id="clearUsernameBlocks"
-                type="button"
-              >
-                Clear Builder
-              </button>
-            </div>
-
-            <div
-              class="word-block-bank"
-              id="wordBlockBank"
-            ></div>
-
-            <div
-              class="username-build-zone"
-              id="usernameBuildZone"
-              tabindex="0"
-              aria-label="Safe username building zone"
-            >
-              <p id="buildZoneMessage">
-  Choose three interest words from the back of the ID card.
-</p>
-
-              <div
-                id="selectedUsernameBlocks"
-                class="selected-blocks"
-              ></div>
-            </div>
-
-            <div class="username-preview">
-              <span>New username:</span>
-
-              <strong id="repairedUsernamePreview">
-                Waiting for three blocks...
-              </strong>
-            </div>
-
-            <button
-              class="button locked-action"
-              id="checkRepairedUsername"
-              type="button"
-              disabled
-            >
-              Check Username 🔍
-            </button>
-
-            <p
-              class="feedback"
-              id="identityRepairFeedback"
-            ></p>
-          </div>
-        </article>
-
-       <button
-  class="button locked-action"
-  id="goFinalTest"
-  type="button"
-  disabled
- >
-  Protect All 5 Profiles to Unlock the Final Test
-</button>
-      </section>
-
-      <!-- Step 5 -->
-      <section
-        class="test-zone hidden"
-        id="testZone"
-      >
-        <div class="zone-header">
-          <div>
-            <p class="eyebrow">
-              Step 5: Final Test
-            </p>
-
-            <h2>
-              Identity Protector Test
-            </h2>
-
-            <p>
-              Answer 20 questions. You need 80% or higher to earn your badge.
-            </p>
-          </div>
-
-          <div class="progress-pill">
-            Question
-            <span id="testNumber">1</span>/20
-          </div>
-        </div>
-
-        <article class="scenario-card">
-          <h3 id="testQuestion"></h3>
-
-          <div class="quiz-buttons">
-            <button
-              class="button test-choice"
-              type="button"
-              data-answer="safe"
-            >
-              ✅ Safe
-            </button>
-
-            <button
-              class="button test-choice private-btn"
-              type="button"
-              data-answer="private"
-            >
-              🔒 Private
-            </button>
-          </div>
-
-          <p
-            class="feedback"
-            id="testFeedback"
-          ></p>
-
-          <button
-            class="small-button hidden"
-            id="nextTest"
-            type="button"
-          >
-            Next Question
-          </button>
-        </article>
-      </section>
-
-      <!-- Mission Result -->
-      <section
-        class="mission-result hidden"
-        id="missionResult"
-      >
-        <img
-          src="../assets/mascot/congrats.png"
-          alt="Meme celebrating"
-        >
-
-        <div>
-          <p class="eyebrow">
-            Mission Complete
-          </p>
-
-          <h2 id="resultTitle">
-            Identity Protector Badge Earned!
-          </h2>
-
-          <p id="resultMessage"></p>
-
-          <p class="earned-badge">
-            🛡️ Identity Protector
-          </p>
-
-          <p class="points-earned">
-            Points Earned:
-            <span id="pointsEarned">0</span>
-          </p>
-
-          <p>
-            Stickers Found:
-            <span id="stickersFound">0</span>/5
-          </p>
-
-          <a
-            class="button"
-            href="../dashboard.html"
-          >
-            Return to Hero Headquarters
-          </a>
-
-          <button
-            class="small-button"
-            id="retryMission"
-            type="button"
-          >
-            Replay Mission
-          </button>
-        </div>
-      </section>
-    </section>
-  </main>
-
-<script src="../js/identity-data.js"></script>
-<script src="../js/identity-core.js"></script>
-<script src="../js/identity-activities.js"></script>
-<script src="../js/identity-repair.js"></script>
-<script src="../js/identity-test.js"></script>
-
-<!-- Main controller attaches every button first -->
-<script src="../js/identity.js"></script>
-
-<!-- Progress restores the saved step last -->
-<script src="../js/identity-progress.js"></script>
-</body>
-</html>
+      `;
+    }
+
+    const approveUsername =
+      game.byId("approveUsername");
+
+    if (approveUsername) {
+      approveUsername.classList.add(
+        "hidden"
+      );
+    }
+
+    const lessonPopup =
+      game.byId("lessonPopup");
+
+    if (lessonPopup) {
+      lessonPopup.classList.add("hidden");
+    }
+  }
+
+  function retryMission() {
+    if (
+      typeof game.resetMissionState ===
+      "function"
+    ) {
+      game.resetMissionState();
+    }
+
+    resetPageDisplay();
+
+    if (
+      typeof game.clearIdentityProgress ===
+      "function"
+    ) {
+      game.clearIdentityProgress();
+    }
+
+    game.showSection("missionAlert");
+
+    game.setMemeTip(
+      "Ready to replay Identity Island?",
+      "welcome"
+    );
+  }
+
+  function handleButtonClick(event) {
+    const clickedElement =
+      event.target.closest(
+        "button, .sort-zone"
+      );
+
+    if (!clickedElement) {
+      return;
+    }
+
+    const id = clickedElement.id;
+
+    if (id === "acceptMission") {
+      if (hasFunction("acceptMission")) {
+        game.acceptMission();
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (id === "closeLesson") {
+      if (hasFunction("closeLessonPopup")) {
+        game.closeLessonPopup();
+      }
+
+      return;
+    }
+
+    if (id === "goUsernameLab") {
+      if (
+        clickedElement.disabled
+      ) {
+        return;
+      }
+
+      if (hasFunction("openUsernameLab")) {
+        game.openUsernameLab();
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (id === "generateUsername") {
+      if (hasFunction("generateUsername")) {
+        game.generateUsername();
+      }
+
+      return;
+    }
+
+    if (id === "approveUsername") {
+      if (
+        hasFunction(
+          "finishUsernameScan"
+        )
+      ) {
+        game.finishUsernameScan();
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (id === "goBackpackRescue") {
+      if (
+        clickedElement.disabled
+      ) {
+        return;
+      }
+
+      if (
+        hasFunction(
+          "startBackpackRescue"
+        )
+      ) {
+        game.startBackpackRescue();
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (id === "clearUsernameBlocks") {
+      if (
+        hasFunction(
+          "clearRepairBuilder"
+        )
+      ) {
+        game.clearRepairBuilder();
+      }
+
+      return;
+    }
+
+    if (id === "checkRepairedUsername") {
+      if (
+        clickedElement.disabled
+      ) {
+        return;
+      }
+
+      if (
+        hasFunction(
+          "checkRepairedUsername"
+        )
+      ) {
+        game.checkRepairedUsername();
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (id === "goFinalTest") {
+      if (
+        clickedElement.disabled
+      ) {
+        return;
+      }
+
+      if (
+        hasFunction("startFinalTest")
+      ) {
+        game.startFinalTest();
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (id === "beginFinalTest") {
+      if (
+        hasFunction("beginFinalTest")
+      ) {
+        game.beginFinalTest();
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (id === "nextTest") {
+      if (
+        hasFunction(
+          "nextTestQuestion"
+        )
+      ) {
+        game.nextTestQuestion();
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (id === "retryMission") {
+      retryMission();
+      return;
+    }
+
+    if (
+      clickedElement.classList.contains(
+        "meme-help-btn"
+      )
+    ) {
+      game.setMemeTip(
+        clickedElement.dataset.tip ||
+          "Meme is here to help.",
+        "thinking"
+      );
+
+      return;
+    }
+
+    if (
+      clickedElement.classList.contains(
+        "island-object"
+      )
+    ) {
+      if (hasFunction("openLesson")) {
+        game.openLesson(
+          clickedElement.dataset.object,
+          clickedElement
+        );
+
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (
+      clickedElement.classList.contains(
+        "sticker"
+      )
+    ) {
+      if (hasFunction("collectSticker")) {
+        game.collectSticker(
+          clickedElement
+        );
+
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (
+      clickedElement.classList.contains(
+        "sort-zone"
+      )
+    ) {
+      if (hasFunction("answerPractice")) {
+        game.answerPractice(
+          clickedElement.dataset.answer,
+          clickedElement
+        );
+
+        saveProgressSoon();
+      }
+
+      return;
+    }
+
+    if (
+      clickedElement.classList.contains(
+        "test-choice"
+      )
+    ) {
+      if (hasFunction("answerTest")) {
+        game.answerTest(
+          clickedElement.dataset.answer,
+          clickedElement
+        );
+
+        saveProgressSoon();
+      }
+    }
+  }
+
+  function setupBackpackDragAndDrop() {
+    const dragCard =
+      game.byId("dragItemCard");
+
+    if (dragCard) {
+      dragCard.addEventListener(
+        "dragstart",
+        (event) => {
+          if (!event.dataTransfer) {
+            return;
+          }
+
+          event.dataTransfer.setData(
+            "text/plain",
+            "backpack-item"
+          );
+
+          event.dataTransfer.effectAllowed =
+            "move";
+        }
+      );
+    }
+
+    document
+      .querySelectorAll(".sort-zone")
+      .forEach((zone) => {
+        zone.addEventListener(
+          "dragover",
+          (event) => {
+            event.preventDefault();
+
+            zone.classList.add(
+              "drag-over"
+            );
+          }
+        );
+
+        zone.addEventListener(
+          "dragleave",
+          () => {
+            zone.classList.remove(
+              "drag-over"
+            );
+          }
+        );
+
+        zone.addEventListener(
+          "drop",
+          (event) => {
+            event.preventDefault();
+
+            zone.classList.remove(
+              "drag-over"
+            );
+
+            if (
+              hasFunction(
+                "answerPractice"
+              )
+            ) {
+              game.answerPractice(
+                zone.dataset.answer,
+                zone
+              );
+
+              saveProgressSoon();
+            }
+          }
+        );
+      });
+  }
+
+  function setupIdentityCardFlip() {
+    const flipCard =
+      game.byId("identityFlipCard");
+
+    if (!flipCard) {
+      return;
+    }
+
+    flipCard.addEventListener(
+      "click",
+      () => {
+        const inner =
+          game.byId(
+            "identityCardInner"
+          );
+
+        if (!inner) {
+          return;
+        }
+
+        const flipped =
+          inner.classList.toggle(
+            "is-flipped"
+          );
+
+        flipCard.setAttribute(
+          "aria-pressed",
+          String(flipped)
+        );
+      }
+    );
+  }
+
+  function setupUsernameBuilderDropZone() {
+    const buildZone =
+      game.byId("usernameBuildZone");
+
+    if (!buildZone) {
+      return;
+    }
+
+    buildZone.addEventListener(
+      "dragover",
+      (event) => {
+        event.preventDefault();
+
+        buildZone.classList.add(
+          "drag-over"
+        );
+      }
+    );
+
+    buildZone.addEventListener(
+      "dragleave",
+      () => {
+        buildZone.classList.remove(
+          "drag-over"
+        );
+      }
+    );
+
+    buildZone.addEventListener(
+      "drop",
+      (event) => {
+        event.preventDefault();
+
+        buildZone.classList.remove(
+          "drag-over"
+        );
+
+        if (!event.dataTransfer) {
+          return;
+        }
+
+        const blockId =
+          event.dataTransfer.getData(
+            "text/plain"
+          );
+
+        if (!blockId) {
+          return;
+        }
+
+        const block =
+          document.querySelector(
+            `[data-block-id="${blockId}"]`
+          );
+
+        if (
+          hasFunction("addRepairBlock")
+        ) {
+          game.addRepairBlock(block);
+          saveProgressSoon();
+        }
+      }
+    );
+  }
+
+  function initializeIdentityIsland() {
+    if (
+      typeof game.byId !== "function"
+    ) {
+      console.error(
+        "identity-core.js did not load correctly."
+      );
+
+      return;
+    }
+
+    if (
+      typeof game.loadMissionHeroName ===
+      "function"
+    ) {
+      game.loadMissionHeroName();
+    }
+
+    /*
+      One delegated click listener handles all
+      static mission buttons. This still works
+      after progress restoration.
+    */
+    document.addEventListener(
+      "click",
+      handleButtonClick
+    );
+
+    setupBackpackDragAndDrop();
+    setupIdentityCardFlip();
+    setupUsernameBuilderDropZone();
+
+    game.controllerReady = true;
+
+    document.dispatchEvent(
+      new CustomEvent(
+        "identityControllerReady"
+      )
+    );
+
+    console.log(
+      "Identity Island controller loaded successfully."
+    );
+  }
+
+  if (
+    document.readyState === "loading"
+  ) {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeIdentityIsland,
+      { once: true }
+    );
+  } else {
+    initializeIdentityIsland();
+  }
+})();
