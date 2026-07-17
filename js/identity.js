@@ -479,6 +479,27 @@
         "button, .sort-zone"
       );
 
+     if (
+  id === "checkRepairedUsername"
+) {
+  if (clickedElement.disabled) {
+    return;
+  }
+
+  if (
+    typeof game.checkRepairedUsername ===
+    "function"
+  ) {
+    game.checkRepairedUsername();
+  } else {
+    console.error(
+      "checkRepairedUsername is missing."
+    );
+  }
+
+  return;
+}
+
     if (!clickedElement) {
       return;
     }
