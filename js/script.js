@@ -527,3 +527,60 @@ document.addEventListener(
   "DOMContentLoaded",
   updateIdentityMissionButton
 );
+"use strict";
+
+function replayIdentityMission() {
+  const confirmed = window.confirm(
+    "Are you sure you want to replay Identity Island?\n\n" +
+    "This will erase your current mission progress and return you to the beginning.\n\n" +
+    "Points and badges you already earned will not be removed."
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  /*
+    Erase progress for the current mission attempt.
+  */
+  const missionProgressKeys = [
+    "safetiiIdentityProgress",
+    "identityStickers",
+    "identityCurrentStep",
+    "identityFoundObjects",
+    "identityUsernameProgress",
+    "identityBackpackProgress",
+    "identityProfileProgress",
+    "identityTestProgress"
+  ];
+
+  missionProgressKeys.forEach((key) => {
+    localStorage.removeItem(key);
+  });
+
+  /*
+    Do not remove:
+      safetiiPoints
+      identityAwardedStickers
+      earned badges
+
+    Keeping identityAwardedStickers prevents students from
+    repeatedly replaying the mission to earn sticker points.
+  */
+
+  window.location.href = "./missions/identity.html?replay=true";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const replayButton = document.getElementById(
+    "replayIdentityMission"
+  );
+
+  if (replayButton) {
+    replayButton.addEventListener(
+      "click",
+      replayIdentityMission
+    );
+  }
+});
+
