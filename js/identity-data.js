@@ -472,7 +472,7 @@
         birthday: "December 11, 2014",
         school: "Lavender Lantern School",
         location: "Moonpetal Harbor",
-        cardColor: "#e5a928",
+        cardColor: "#f4b942",
         unsafeUsername: "AmaraLavender11",
         interestMission:
   "Amara loves gold, owls, popcorn, reading, and comets.",
