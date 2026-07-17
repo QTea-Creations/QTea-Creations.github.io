@@ -12,16 +12,14 @@
 ========================================================= */
 
 (() => {
-  const storage =
-    window.SafetiiStorage;
+const storage =
+  window.SafetiiStorage || null;
 
-  if (!storage) {
-    console.error(
-      "SafetiiStorage is missing. Load safetii-storage.js before login.js."
-    );
-
-    return;
-  }
+if (!storage) {
+  console.error(
+    "SafetiiStorage is missing. Hero choices will display, but the hero cannot be saved until safetii-storage.js loads."
+  );
+}
 
   const heroDraft = {
     color: "",
@@ -412,6 +410,14 @@
   }
 
   function createNewHero() {
+     if (!storage) {
+  window.alert(
+    "The hero storage system did not load. Check that js/safetii-storage.js exists and loads before js/login.js."
+  );
+
+  return;
+}
+     
     if (!heroDraft.name) {
       window.alert(
         "Meme says: Generate your Cyber Hero name first!"
