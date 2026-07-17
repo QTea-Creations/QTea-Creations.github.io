@@ -391,28 +391,97 @@ function completeIdentityGameMission() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadIdentityGameQuestion();
+function replayIdentityMission() {
+  const confirmed = window.confirm(
+    "Are you sure you want to replay Identity Island?\n\n" +
+    "This will erase your current mission progress and return you to the beginning.\n\n" +
+    "Points, stickers already rewarded, and badges already earned will not be removed."
+  );
 
-  document.querySelectorAll(".quiz-choice").forEach((button) => {
+  if (!confirmed) {
+    return;
+  }
+
+  /*
+    Remove saved progress for the current mission attempt.
+  */
+
+  const progressKeys = [
+    "safetiiIdentityProgress",
+    "identityCurrentStep",
+    "identityFoundObjects",
+    "identityUsernameProgress",
+    "identityBackpackProgress",
+    "identityProfileProgress",
+    "identityTestProgress",
+    "identityStickers"
+  ];
+
+  progressKeys.forEach((key) => {
+    localStorage.removeItem(key);
+  });
+
+  /*
+    Keep these values:
+      safetiiPoints
+      identityAwardedStickers
+      identityBadgeEarned
+
+    This prevents students from replaying the mission
+    repeatedly to collect the same sticker points.
+  */
+
+  window.location.href =
+    "missions/identity.html?replay=true";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  /*
+    These quiz elements only exist on the older
+    Identity game page. The checks prevent errors
+    on notebook.html and other pages.
+  */
+
+  const identityQuestion =
+    document.getElementById("identityQuestion");
+
+  const quizButtons =
+    document.querySelectorAll(".quiz-choice");
+
+  const nextButton =
+    document.getElementById("nextQuestion");
+
+  if (identityQuestion) {
+    loadIdentityGameQuestion();
+  }
+
+  quizButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      answerIdentityGame(button.dataset.answer);
+      answerIdentityGame(
+        button.dataset.answer
+      );
     });
   });
 
-  const next = document.getElementById("nextQuestion");
-  if (next) next.addEventListener("click", nextIdentityGameQuestion);
+  if (nextButton) {
+    nextButton.addEventListener(
+      "click",
+      nextIdentityGameQuestion
+    );
+  }
 
-  const retry = document.getElementById("retryMission");
-  if (retry) {
-    retry.addEventListener("click", () => {
-      identityGameIndex = 0;
-      identityGameScore = 0;
-      document.getElementById("identityScore").textContent = "0";
-      document.getElementById("missionComplete").classList.add("hidden");
-      loadIdentityGameQuestion();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+  /*
+    Notebook replay button.
+  */
+
+  const retryButton =
+    document.getElementById("retryMission");
+
+  if (retryButton) {
+    retryButton.addEventListener(
+      "click",
+      replayIdentityMission
+    );
   }
 });
 
