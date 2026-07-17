@@ -352,6 +352,7 @@
         birthday: "April 8, 2014",
         school: "Sunflower Spark Academy",
         location: "Petal Point",
+        cardColor: "#ff70bd",
         unsafeUsername: "SarahLee2014",
         interestMission:
   "Sarah loves pink, butterflies, tacos, drawing, and painting.",
@@ -381,6 +382,7 @@
         birthday: "June 17, 2013",
         school: "Bluebell Comet Middle School",
         location: "Cloudberry Cove",
+        cardColor: "#2eb8e6",
         unsafeUsername: "MateoBluebell13",
         interestMission:
   "Mateo loves blue, dolphins, pizza, soccer, and rockets.",
@@ -410,6 +412,7 @@
         birthday: "February 22, 2015",
         school: "Daisy Moon Elementary",
         location: "Starpetal Bay",
+        cardColor: "#8d63f7",
         unsafeUsername: "NiaBrooks22",
         interestMission:
   "Nia loves purple, pandas, berries, dancing, and stars.",
@@ -439,6 +442,7 @@
         birthday: "September 4, 2012",
         school: "Marigold Quest Academy",
         location: "Rainbow Fern",
+        cardColor: "#36b978",
         unsafeUsername: "OliverChen2012",
         interestMission:
   "Oliver loves green, turtles, noodles, building, and pixel games.",
@@ -468,6 +472,7 @@
         birthday: "December 11, 2014",
         school: "Lavender Lantern School",
         location: "Moonpetal Harbor",
+        cardColor: "#e5a928",
         unsafeUsername: "AmaraLavender11",
         interestMission:
   "Amara loves gold, owls, popcorn, reading, and comets.",
