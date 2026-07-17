@@ -2714,3 +2714,214 @@ svg {
     position: relative !important;
     top: auto !important;
 }
+
+/* =========================================================
+   IDENTITY ISLAND — FINAL POLISH OVERRIDES
+========================================================= */
+
+/* Keep generated usernames readable without awkward giant text */
+
+.generated-username {
+    min-height: 110px !important;
+    padding: 20px !important;
+
+    font-size: clamp(
+        1.35rem,
+        2.15vw,
+        2.25rem
+    ) !important;
+
+    line-height: 1.08 !important;
+    text-align: center;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* Fix Correct text overlapping the explanation */
+
+.scan-result {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    align-items: start !important;
+
+    text-align: left;
+}
+
+.scan-result span {
+    display: block;
+
+    font-size: 1.1rem !important;
+    font-weight: 900;
+}
+
+.scan-result p {
+    margin: 0 !important;
+    line-height: 1.45;
+}
+
+/* Give profile cards a cleaner version of their own color.
+   Mixing gold with cyan caused Amara's olive-green appearance. */
+
+.identity-card-front {
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(255, 255, 255, 0.5),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            var(--profile-color),
+            color-mix(
+                in srgb,
+                var(--profile-color) 62%,
+                #ffffff
+            )
+        ) !important;
+}
+
+/* Compact the Identity Repair screen on desktop */
+
+@media (min-width: 1001px) {
+    .identity-card-zone {
+        padding: 24px !important;
+    }
+
+    .identity-card-zone .zone-header {
+        margin-bottom: 14px !important;
+    }
+
+    .identity-card-zone .zone-header h2 {
+        font-size: clamp(
+            2rem,
+            2.8vw,
+            3rem
+        ) !important;
+    }
+
+    .training-profile-note {
+        margin-bottom: 14px !important;
+        padding: 10px 14px !important;
+    }
+
+    .identity-repair-game {
+        grid-template-columns:
+            minmax(300px, 0.78fr)
+            minmax(0, 1.22fr) !important;
+
+        gap: 20px !important;
+    }
+
+    .identity-flip-card,
+    .identity-card-inner {
+        min-height: 430px !important;
+    }
+
+    .identity-card-face {
+        padding: 20px !important;
+    }
+
+    .training-label {
+        margin-bottom: 10px !important;
+        padding: 7px 13px !important;
+    }
+
+    .profile-avatar {
+        width: 76px !important;
+        height: 76px !important;
+        margin-bottom: 8px !important;
+
+        font-size: 2.6rem !important;
+    }
+
+    .profile-name {
+        margin-bottom: 10px !important;
+
+        font-size: clamp(
+            1.8rem,
+            2.5vw,
+            2.55rem
+        ) !important;
+
+        line-height: 1.05;
+    }
+
+    .profile-details {
+        gap: 6px !important;
+
+        padding: 14px !important;
+
+        font-size: 0.92rem !important;
+    }
+
+    .unsafe-current-name {
+        margin-top: 12px !important;
+        padding: 11px !important;
+
+        font-size: 0.9rem;
+    }
+
+    .flip-instruction {
+        margin-top: 12px !important;
+
+        font-size: 0.88rem;
+    }
+
+    .username-repair-area {
+        padding: 20px !important;
+    }
+
+    .repair-heading {
+        margin-bottom: 14px !important;
+    }
+
+    .repair-heading h3 {
+        font-size: 1.45rem !important;
+        line-height: 1.2;
+    }
+
+    .repair-instruction {
+        font-size: 0.9rem;
+        line-height: 1.35;
+    }
+
+    .word-block-bank {
+        gap: 8px !important;
+        margin-bottom: 14px !important;
+    }
+
+    .repair-word-block {
+        padding: 9px 12px !important;
+
+        font-size: 0.9rem !important;
+    }
+
+    .username-build-zone {
+        min-height: 115px !important;
+        padding: 14px !important;
+        gap: 10px !important;
+    }
+
+    .selected-repair-block {
+        padding: 8px 11px !important;
+    }
+
+    .username-preview {
+        margin: 14px 0 !important;
+        padding: 12px !important;
+    }
+
+    .username-preview strong {
+        font-size: clamp(
+            1.2rem,
+            2vw,
+            1.75rem
+        ) !important;
+    }
+
+    #goFinalTest {
+        margin-top: 14px !important;
+    }
+}
