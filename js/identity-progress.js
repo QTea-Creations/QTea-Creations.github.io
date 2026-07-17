@@ -2,26 +2,42 @@
 
 /* =========================================================
    SAFETII NET — IDENTITY ISLAND
-   Progress Saving + Developer Testing Tools
+   Progress Saving, Restoration, and Testing Tools
 ========================================================= */
-      
+
 (() => {
   const game = window.IdentityGame;
 
   if (!game || !game.state) {
     console.error(
-      "Identity progress could not load. Make sure this file loads after the other Identity Island files."
+      "Identity progress could not load. Check the script order."
     );
 
     return;
   }
 
-  const STORAGE_KEY = "safetiiIdentityProgress";
+  const STORAGE_KEY =
+    "safetiiIdentityProgress";
+
+  const VALID_SECTIONS = [
+    "missionAlert",
+    "exploreZone",
+    "usernameZone",
+    "practiceZone",
+    "identityCardZone",
+    "testIntroZone",
+    "testZone",
+    "missionResult"
+  ];
 
   const DEFAULT_PROGRESS = {
+    version: 2,
+
     started: false,
     completed: false,
-    currentSection: "missionAlert",
+
+    currentSection:
+      "missionAlert",
 
     foundObjects: [],
     foundStickers: [],
@@ -39,68 +55,127 @@
     testAnswered: false
   };
 
-  /* -------------------------------------------------------
-     STORAGE HELPERS
-  ------------------------------------------------------- */
+  let restorationComplete = false;
+  let saveTimer = null;
+
+  function cloneDefaultProgress() {
+    return {
+      ...DEFAULT_PROGRESS,
+      foundObjects: [],
+      foundStickers: []
+    };
+  }
 
   function readSavedProgress() {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const rawProgress =
+        localStorage.getItem(
+          STORAGE_KEY
+        );
 
-      if (!saved) {
-        return { ...DEFAULT_PROGRESS };
+      if (!rawProgress) {
+        return cloneDefaultProgress();
       }
 
+      const parsedProgress =
+        JSON.parse(rawProgress);
+
       return {
-        ...DEFAULT_PROGRESS,
-        ...JSON.parse(saved)
+        ...cloneDefaultProgress(),
+        ...parsedProgress,
+
+        foundObjects:
+          Array.isArray(
+            parsedProgress.foundObjects
+          )
+            ? parsedProgress.foundObjects
+            : [],
+
+        foundStickers:
+          Array.isArray(
+            parsedProgress.foundStickers
+          )
+            ? parsedProgress.foundStickers
+            : []
       };
     } catch (error) {
       console.error(
-        "Identity Island progress could not be read:",
+        "Could not read Identity Island progress:",
         error
       );
 
-      return { ...DEFAULT_PROGRESS };
+      return cloneDefaultProgress();
     }
   }
 
-  function saveProgress() {
-    const state = game.state;
+  function getVisibleSectionId() {
+    const visibleSection =
+      VALID_SECTIONS.find(
+        (sectionId) => {
+          const section =
+            document.getElementById(
+              sectionId
+            );
 
-    const activeSection =
-      document.querySelector(
-        ".identity-stage > section:not(.hidden)"
+          return (
+            section &&
+            !section.classList.contains(
+              "hidden"
+            )
+          );
+        }
       );
 
-    const existing = readSavedProgress();
+    return (
+      visibleSection ||
+      "missionAlert"
+    );
+  }
+
+  function saveProgress() {
+    if (!restorationComplete) {
+      return;
+    }
+
+    const state = game.state;
+    const previous =
+      readSavedProgress();
+
+    const currentSection =
+      getVisibleSectionId();
+
+    const started =
+      previous.started ||
+      currentSection !==
+        "missionAlert" ||
+      state.foundObjects.size > 0 ||
+      state.usernamesChecked > 0 ||
+      state.practiceIndex > 0 ||
+      state.profilesProtected > 0 ||
+      state.testIndex > 0;
+
+    const completed =
+      localStorage.getItem(
+        "identityMissionCompleted"
+      ) === "true";
 
     const progress = {
-      ...existing,
+      version: 2,
 
-      started:
-        existing.started ||
-        state.foundObjects.size > 0 ||
-        state.usernamesChecked > 0 ||
-        state.practiceIndex > 0 ||
-        state.profilesProtected > 0 ||
-        state.testIndex > 0,
+      started,
+      completed,
 
-      completed:
-        localStorage.getItem(
-          "identityMissionCompleted"
-        ) === "true",
-
-      currentSection:
-        activeSection?.id ||
-        existing.currentSection ||
-        "missionAlert",
+      currentSection,
 
       foundObjects:
-        Array.from(state.foundObjects),
+        Array.from(
+          state.foundObjects
+        ),
 
       foundStickers:
-        Array.from(state.foundStickers),
+        Array.from(
+          state.foundStickers
+        ),
 
       usernamesChecked:
         state.usernamesChecked,
@@ -133,73 +208,111 @@
     );
 
     /*
-      Save stickers separately too, so the
-      Cyber Notebook can read them immediately.
+      The notebook reads this key too.
     */
     localStorage.setItem(
       "identityStickers",
-      JSON.stringify(progress.foundStickers)
+      JSON.stringify(
+        progress.foundStickers
+      )
     );
   }
 
-  function markMissionStarted() {
-    const progress = readSavedProgress();
+  function scheduleSave() {
+    window.clearTimeout(saveTimer);
 
-    progress.started = true;
-
-    if (
-      !progress.currentSection ||
-      progress.currentSection === "missionAlert"
-    ) {
-      progress.currentSection = "exploreZone";
-    }
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(progress)
+    saveTimer = window.setTimeout(
+      saveProgress,
+      150
     );
   }
 
-  /* -------------------------------------------------------
-     RESTORE STATE
-  ------------------------------------------------------- */
-
-  function restoreState(progress) {
+  function restoreMissionState(progress) {
     const state = game.state;
 
     state.foundObjects =
-      new Set(progress.foundObjects);
+      new Set(
+        progress.foundObjects
+      );
 
     state.foundStickers =
-      new Set(progress.foundStickers);
+      new Set(
+        progress.foundStickers
+      );
 
     state.usernamesChecked =
-      progress.usernamesChecked;
+      Math.max(
+        0,
+        Number(
+          progress.usernamesChecked
+        ) || 0
+      );
 
     state.practiceIndex =
-      progress.practiceIndex;
+      Math.max(
+        0,
+        Number(
+          progress.practiceIndex
+        ) || 0
+      );
 
     state.practiceCorrect =
-      progress.practiceCorrect;
+      Math.max(
+        0,
+        Number(
+          progress.practiceCorrect
+        ) || 0
+      );
 
     state.identityProfileIndex =
-      progress.identityProfileIndex;
+      Math.max(
+        0,
+        Number(
+          progress.identityProfileIndex
+        ) || 0
+      );
 
     state.profilesProtected =
-      progress.profilesProtected;
+      Math.max(
+        0,
+        Number(
+          progress.profilesProtected
+        ) || 0
+      );
 
     state.testIndex =
-      progress.testIndex;
+      Math.max(
+        0,
+        Number(
+          progress.testIndex
+        ) || 0
+      );
 
     state.testCorrect =
-      progress.testCorrect;
+      Math.max(
+        0,
+        Number(
+          progress.testCorrect
+        ) || 0
+      );
 
     state.testAnswered =
-      progress.testAnswered;
+      Boolean(
+        progress.testAnswered
+      );
+
+    /*
+      Temporary interaction state should not
+      be restored halfway through a click.
+    */
+    state.practiceAnswered = false;
+    state.usernameAwaitingApproval = false;
+    state.selectedRepairBlocks = [];
+    state.profileRepairComplete = false;
   }
 
   function restoreCounters(progress) {
-    const values = {
+    const counterValues = {
       objectsFound:
         progress.foundObjects.length,
 
@@ -213,69 +326,81 @@
         progress.profilesProtected
     };
 
-    Object.entries(values).forEach(
-      ([id, value]) => {
-        const element =
-          document.getElementById(id);
+    Object.entries(
+      counterValues
+    ).forEach(([id, value]) => {
+      const element =
+        document.getElementById(id);
 
-        if (element) {
-          element.textContent =
-            String(value);
-        }
+      if (element) {
+        element.textContent =
+          String(value);
       }
-    );
+    });
   }
 
-  function restoreExploredObjects(progress) {
+  function restoreIslandObjects(
+    progress
+  ) {
     document
-      .querySelectorAll(".island-object")
+      .querySelectorAll(
+        ".island-object"
+      )
       .forEach((button) => {
-        if (
+        const wasFound =
           progress.foundObjects.includes(
             button.dataset.object
-          )
-        ) {
-          button.classList.add(
-            "discovered"
           );
-        }
+
+        button.classList.toggle(
+          "discovered",
+          wasFound
+        );
       });
 
     document
       .querySelectorAll(".sticker")
       .forEach((button) => {
-        if (
+        const wasFound =
           progress.foundStickers.includes(
             button.dataset.sticker
-          )
-        ) {
-          button.classList.add(
-            "collected"
           );
 
-          button.textContent = "✨";
-        }
+        button.classList.toggle(
+          "collected",
+          wasFound
+        );
+
+        button.textContent =
+          wasFound ? "✨" : "⭐";
       });
   }
 
-  function restoreUnlockedButtons(progress) {
+  function restoreUnlockedButtons(
+    progress
+  ) {
     const usernameButton =
       document.getElementById(
         "goUsernameLab"
       );
 
-    if (
-      usernameButton &&
-      progress.foundObjects.length >= 6
-    ) {
-      usernameButton.disabled = false;
+    if (usernameButton) {
+      const isUnlocked =
+        progress.foundObjects.length >=
+        6;
 
-      usernameButton.classList.remove(
-        "locked-action"
+      usernameButton.disabled =
+        !isUnlocked;
+
+      usernameButton.classList.toggle(
+        "locked-action",
+        !isUnlocked
       );
 
       usernameButton.textContent =
-        "Open Safe Username Lab 🧪";
+        isUnlocked
+          ? "Open Safe Username Lab 🧪"
+          : "Unlock Safe Username Lab";
     }
 
     const backpackButton =
@@ -283,18 +408,22 @@
         "goBackpackRescue"
       );
 
-    if (
-      backpackButton &&
-      progress.usernamesChecked >= 3
-    ) {
-      backpackButton.disabled = false;
+    if (backpackButton) {
+      const isUnlocked =
+        progress.usernamesChecked >= 3;
 
-      backpackButton.classList.remove(
-        "locked-action"
+      backpackButton.disabled =
+        !isUnlocked;
+
+      backpackButton.classList.toggle(
+        "locked-action",
+        !isUnlocked
       );
 
       backpackButton.textContent =
-        "Start Backpack Rescue 🎒";
+        isUnlocked
+          ? "Start Backpack Rescue 🎒"
+          : "Complete 3 Username Scans First";
     }
 
     const finalButton =
@@ -302,77 +431,129 @@
         "goFinalTest"
       );
 
-    if (
-      finalButton &&
-      progress.profilesProtected >= 5
-    ) {
-      finalButton.disabled = false;
+    if (finalButton) {
+      const requiredProfiles =
+        game.data.identityProfiles.length;
 
-      finalButton.classList.remove(
-        "locked-action"
+      const isUnlocked =
+        progress.profilesProtected >=
+        requiredProfiles;
+
+      finalButton.disabled =
+        !isUnlocked;
+
+      finalButton.classList.toggle(
+        "locked-action",
+        !isUnlocked
       );
 
       finalButton.textContent =
-        "Begin Identity Protector Final Test 🛡️";
+        isUnlocked
+          ? "Begin Identity Protector Final Test 🛡️"
+          : "Protect All 5 Profiles to Unlock the Final Test";
     }
   }
 
-  function restoreCurrentActivity(progress) {
-    const section =
-      progress.currentSection;
+  function chooseResumeSection(
+    progress
+  ) {
+    if (progress.completed) {
+      return "missionResult";
+    }
 
-    if (
-      !progress.started &&
-      !progress.completed
-    ) {
-      game.showSection("missionAlert");
-      return;
+    if (!progress.started) {
+      return "missionAlert";
     }
 
     if (
-      progress.completed
+      VALID_SECTIONS.includes(
+        progress.currentSection
+      ) &&
+      progress.currentSection !==
+        "missionResult"
     ) {
-      game.showSection("missionResult");
-      return;
+      return progress.currentSection;
     }
 
-    const validSections = [
-      "missionAlert",
-      "exploreZone",
-      "usernameZone",
-      "practiceZone",
-      "identityCardZone",
-      "testIntroZone",
-      "testZone",
-      "missionResult"
-    ];
-
-    const sectionToOpen =
-      validSections.includes(section)
-        ? section
-        : "exploreZone";
-
-    game.showSection(sectionToOpen);
+    if (
+      progress.testIndex > 0
+    ) {
+      return "testZone";
+    }
 
     if (
-      sectionToOpen === "practiceZone" &&
+      progress.profilesProtected >=
+      game.data.identityProfiles.length
+    ) {
+      return "testIntroZone";
+    }
+
+    if (
+      progress.practiceIndex >=
+      game.data.practiceQuestions.length
+    ) {
+      return "identityCardZone";
+    }
+
+    if (
+      progress.usernamesChecked >= 3
+    ) {
+      return "practiceZone";
+    }
+
+    if (
+      progress.foundObjects.length >= 6
+    ) {
+      return "usernameZone";
+    }
+
+    return "exploreZone";
+  }
+
+  function loadRestoredSection(
+    sectionId
+  ) {
+    game.showSection(sectionId);
+
+    if (
+      sectionId === "practiceZone" &&
       typeof game.loadPractice ===
         "function"
     ) {
+      const maximumIndex =
+        game.data.practiceQuestions.length -
+        1;
+
+      game.state.practiceIndex =
+        Math.min(
+          game.state.practiceIndex,
+          maximumIndex
+        );
+
       game.loadPractice();
     }
 
     if (
-      sectionToOpen ===
+      sectionId ===
         "identityCardZone" &&
       typeof game.loadIdentityProfile ===
         "function"
     ) {
+      const maximumIndex =
+        game.data.identityProfiles.length -
+        1;
+
+      game.state.identityProfileIndex =
+        Math.min(
+          game.state.identityProfileIndex,
+          maximumIndex
+        );
+
       game.loadIdentityProfile();
     }
 
     if (
-      sectionToOpen ===
+      sectionId ===
         "testIntroZone" &&
       typeof game.loadFinalTestHeroName ===
         "function"
@@ -381,9 +562,20 @@
     }
 
     if (
-      sectionToOpen === "testZone" &&
-      typeof game.loadTest === "function"
+      sectionId === "testZone" &&
+      typeof game.loadTest ===
+        "function"
     ) {
+      const maximumIndex =
+        game.data.testQuestions.length -
+        1;
+
+      game.state.testIndex =
+        Math.min(
+          game.state.testIndex,
+          maximumIndex
+        );
+
       game.loadTest();
     }
   }
@@ -392,263 +584,39 @@
     const progress =
       readSavedProgress();
 
-    restoreState(progress);
+    restoreMissionState(progress);
     restoreCounters(progress);
-    restoreExploredObjects(progress);
+    restoreIslandObjects(progress);
     restoreUnlockedButtons(progress);
-    restoreCurrentActivity(progress);
-  }
 
-  /* -------------------------------------------------------
-     WRAP SECTION CHANGES SO THEY SAVE
-  ------------------------------------------------------- */
+    const resumeSection =
+      chooseResumeSection(progress);
 
-  const originalShowSection =
-    game.showSection.bind(game);
-
-  game.showSection = function showAndSave(
-    sectionId
-  ) {
-    originalShowSection(sectionId);
-
-    const progress =
-      readSavedProgress();
-
-    progress.currentSection = sectionId;
-
-    if (sectionId !== "missionAlert") {
-      progress.started = true;
-    }
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(progress)
+    loadRestoredSection(
+      resumeSection
     );
 
-    window.setTimeout(
-      saveProgress,
-      50
+    restorationComplete = true;
+
+    /*
+      Save once after restoration so older
+      progress formats are updated safely.
+    */
+    scheduleSave();
+
+    console.log(
+      `Identity Island progress restored at: ${resumeSection}`
     );
-  };
-
-  /* -------------------------------------------------------
-     DEVELOPER TESTING TOOLBAR
-  ------------------------------------------------------- */
-
-  function setDeveloperStep(step) {
-    const state = game.state;
-
-    switch (step) {
-      case "intro":
-        game.showSection("missionAlert");
-        break;
-
-      case "explore":
-        markMissionStarted();
-        game.showSection("exploreZone");
-        break;
-
-      case "username":
-        state.foundObjects =
-          new Set([
-            "house",
-            "school",
-            "phone",
-            "backpack",
-            "pizza",
-            "controller"
-          ]);
-
-        game.showSection("usernameZone");
-        break;
-
-      case "backpack":
-        state.foundObjects =
-          new Set([
-            "house",
-            "school",
-            "phone",
-            "backpack",
-            "pizza",
-            "controller"
-          ]);
-
-        state.usernamesChecked = 3;
-        state.practiceIndex = 0;
-        state.practiceCorrect = 0;
-
-        game.showSection("practiceZone");
-
-        if (
-          typeof game.loadPractice ===
-          "function"
-        ) {
-          game.loadPractice();
-        }
-
-        break;
-
-      case "cards":
-        state.foundObjects =
-          new Set([
-            "house",
-            "school",
-            "phone",
-            "backpack",
-            "pizza",
-            "controller"
-          ]);
-
-        state.usernamesChecked = 3;
-
-        state.practiceIndex =
-          game.data.practiceQuestions.length;
-
-        state.practiceCorrect =
-          game.data.practiceQuestions.length;
-
-        state.identityProfileIndex = 0;
-        state.profilesProtected = 0;
-
-        game.showSection(
-          "identityCardZone"
-        );
-
-        if (
-          typeof game.loadIdentityProfile ===
-          "function"
-        ) {
-          game.loadIdentityProfile();
-        }
-
-        break;
-
-      case "testIntro":
-        state.foundObjects =
-          new Set([
-            "house",
-            "school",
-            "phone",
-            "backpack",
-            "pizza",
-            "controller"
-          ]);
-
-        state.usernamesChecked = 3;
-
-        state.practiceIndex =
-          game.data.practiceQuestions.length;
-
-        state.practiceCorrect =
-          game.data.practiceQuestions.length;
-
-        state.identityProfileIndex =
-          game.data.identityProfiles.length;
-
-        state.profilesProtected =
-          game.data.identityProfiles.length;
-
-        game.showSection(
-          "testIntroZone"
-        );
-
-        if (
-          typeof game.loadFinalTestHeroName ===
-          "function"
-        ) {
-          game.loadFinalTestHeroName();
-        }
-
-        break;
-
-      case "test":
-        state.foundObjects =
-          new Set([
-            "house",
-            "school",
-            "phone",
-            "backpack",
-            "pizza",
-            "controller"
-          ]);
-
-        state.usernamesChecked = 3;
-
-        state.practiceCorrect =
-          game.data.practiceQuestions.length;
-
-        state.identityProfileIndex =
-          game.data.identityProfiles.length;
-
-        state.profilesProtected =
-          game.data.identityProfiles.length;
-
-        state.testIndex = 0;
-        state.testCorrect = 0;
-        state.testAnswered = false;
-
-        game.showSection("testZone");
-
-        if (
-          typeof game.loadTest ===
-          "function"
-        ) {
-          game.loadTest();
-        }
-
-        break;
-
-      default:
-        return;
-    }
-
-    restoreCounters({
-      foundObjects:
-        Array.from(state.foundObjects),
-
-      usernamesChecked:
-        state.usernamesChecked,
-
-      practiceCorrect:
-        state.practiceCorrect,
-
-      profilesProtected:
-        state.profilesProtected
-    });
-
-    restoreExploredObjects({
-      foundObjects:
-        Array.from(state.foundObjects),
-
-      foundStickers:
-        Array.from(state.foundStickers)
-    });
-
-    restoreUnlockedButtons({
-      foundObjects:
-        Array.from(state.foundObjects),
-
-      usernamesChecked:
-        state.usernamesChecked,
-
-      profilesProtected:
-        state.profilesProtected
-    });
-
-    saveProgress();
   }
 
   function createDeveloperToolbar() {
-    const query =
+    const searchParams =
       new URLSearchParams(
         window.location.search
       );
 
     const developerMode =
-      query.get("dev") === "1" ||
-      localStorage.getItem(
-        "safetiiDeveloperMode"
-      ) === "true";
+      searchParams.get("dev") === "1";
 
     if (!developerMode) {
       return;
@@ -663,66 +631,204 @@
     toolbar.innerHTML = `
       <strong>🛠 Mission Tester</strong>
 
-      <button type="button" data-dev-step="intro">
+      <button type="button" data-dev-section="missionAlert">
         Intro
       </button>
 
-      <button type="button" data-dev-step="explore">
+      <button type="button" data-dev-section="exploreZone">
         Explore
       </button>
 
-      <button type="button" data-dev-step="username">
+      <button type="button" data-dev-section="usernameZone">
         Username Lab
       </button>
 
-      <button type="button" data-dev-step="backpack">
+      <button type="button" data-dev-section="practiceZone">
         Backpack
       </button>
 
-      <button type="button" data-dev-step="cards">
+      <button type="button" data-dev-section="identityCardZone">
         ID Cards
       </button>
 
-      <button type="button" data-dev-step="testIntro">
-        Test Intro
+      <button type="button" data-dev-section="testIntroZone">
+        Test Instructions
       </button>
 
-      <button type="button" data-dev-step="test">
+      <button type="button" data-dev-section="testZone">
         Test Questions
       </button>
 
-      <button type="button" id="clearIdentityProgress">
+      <button type="button" id="resetDeveloperMission">
         Reset Mission
       </button>
     `;
 
-    document.body.appendChild(toolbar);
+    document.body.appendChild(
+      toolbar
+    );
 
     toolbar
       .querySelectorAll(
-        "[data-dev-step]"
+        "[data-dev-section]"
       )
       .forEach((button) => {
         button.addEventListener(
           "click",
           () => {
-            setDeveloperStep(
-              button.dataset.devStep
+            const sectionId =
+              button.dataset.devSection;
+
+            const state =
+              game.state;
+
+            if (
+              sectionId ===
+                "usernameZone" ||
+              sectionId ===
+                "practiceZone" ||
+              sectionId ===
+                "identityCardZone" ||
+              sectionId ===
+                "testIntroZone" ||
+              sectionId ===
+                "testZone"
+            ) {
+              state.foundObjects =
+                new Set([
+                  "house",
+                  "school",
+                  "phone",
+                  "backpack",
+                  "pizza",
+                  "controller"
+                ]);
+            }
+
+            if (
+              sectionId ===
+                "practiceZone" ||
+              sectionId ===
+                "identityCardZone" ||
+              sectionId ===
+                "testIntroZone" ||
+              sectionId ===
+                "testZone"
+            ) {
+              state.usernamesChecked = 3;
+            }
+
+            if (
+              sectionId ===
+                "identityCardZone" ||
+              sectionId ===
+                "testIntroZone" ||
+              sectionId ===
+                "testZone"
+            ) {
+              state.practiceIndex =
+                game.data.practiceQuestions.length;
+
+              state.practiceCorrect =
+                game.data.practiceQuestions.length;
+            }
+
+            if (
+              sectionId ===
+                "testIntroZone" ||
+              sectionId ===
+                "testZone"
+            ) {
+              state.identityProfileIndex =
+                game.data.identityProfiles.length;
+
+              state.profilesProtected =
+                game.data.identityProfiles.length;
+            }
+
+            if (
+              sectionId ===
+              "practiceZone"
+            ) {
+              state.practiceIndex = 0;
+              state.practiceCorrect = 0;
+            }
+
+            if (
+              sectionId ===
+              "identityCardZone"
+            ) {
+              state.identityProfileIndex = 0;
+              state.profilesProtected = 0;
+            }
+
+            if (
+              sectionId ===
+              "testZone"
+            ) {
+              state.testIndex = 0;
+              state.testCorrect = 0;
+              state.testAnswered = false;
+            }
+
+            restoreCounters({
+              foundObjects:
+                Array.from(
+                  state.foundObjects
+                ),
+
+              usernamesChecked:
+                state.usernamesChecked,
+
+              practiceCorrect:
+                state.practiceCorrect,
+
+              profilesProtected:
+                state.profilesProtected
+            });
+
+            restoreIslandObjects({
+              foundObjects:
+                Array.from(
+                  state.foundObjects
+                ),
+
+              foundStickers:
+                Array.from(
+                  state.foundStickers
+                )
+            });
+
+            restoreUnlockedButtons({
+              foundObjects:
+                Array.from(
+                  state.foundObjects
+                ),
+
+              usernamesChecked:
+                state.usernamesChecked,
+
+              profilesProtected:
+                state.profilesProtected
+            });
+
+            loadRestoredSection(
+              sectionId
             );
+
+            scheduleSave();
           }
         );
       });
 
     toolbar
       .querySelector(
-        "#clearIdentityProgress"
+        "#resetDeveloperMission"
       )
-      .addEventListener(
+      ?.addEventListener(
         "click",
         () => {
-          localStorage.removeItem(
-            STORAGE_KEY
-          );
+          game.clearIdentityProgress();
 
           localStorage.removeItem(
             "identityMissionCompleted"
@@ -741,9 +847,13 @@
       );
   }
 
-  /* -------------------------------------------------------
-     PUBLIC HELPERS
-  ------------------------------------------------------- */
+  function clearProgress() {
+    localStorage.removeItem(
+      STORAGE_KEY
+    );
+
+    restorationComplete = false;
+  }
 
   game.saveIdentityProgress =
     saveProgress;
@@ -752,31 +862,82 @@
     readSavedProgress;
 
   game.clearIdentityProgress =
-    function clearIdentityProgress() {
-      localStorage.removeItem(
-        STORAGE_KEY
-      );
+    clearProgress;
+
+  function initializeProgressSystem() {
+    /*
+      The main controller sends this event
+      after all click and drag listeners exist.
+    */
+    const startRestoration = () => {
+      if (restorationComplete) {
+        return;
+      }
+
+      restoreProgress();
+      createDeveloperToolbar();
     };
 
-  /* -------------------------------------------------------
-     START
-  ------------------------------------------------------- */
+    if (game.controllerReady) {
+      startRestoration();
+    } else {
+      document.addEventListener(
+        "identityControllerReady",
+        startRestoration,
+        { once: true }
+      );
 
-document.addEventListener("DOMContentLoaded", () => {
-  /*
-    Wait one moment so the main Identity Island
-    controller can attach all button listeners first.
-  */
-  window.setTimeout(() => {
-    restoreProgress();
-    createDeveloperToolbar();
-  }, 100);
+      /*
+        Safety fallback in case a browser misses
+        the custom event.
+      */
+      window.setTimeout(
+        startRestoration,
+        300
+      );
+    }
 
-  window.setInterval(saveProgress, 1000);
+    /*
+      Capture game activity without replacing
+      showSection or removing button listeners.
+    */
+    document.addEventListener(
+      "click",
+      scheduleSave,
+      true
+    );
 
-  window.addEventListener(
-    "beforeunload",
-    saveProgress
-  );
-});
+    document.addEventListener(
+      "drop",
+      scheduleSave,
+      true
+    );
+
+    window.addEventListener(
+      "beforeunload",
+      () => {
+        if (restorationComplete) {
+          saveProgress();
+        }
+      }
+    );
+
+    window.setInterval(() => {
+      if (restorationComplete) {
+        saveProgress();
+      }
+    }, 2000);
+  }
+
+  if (
+    document.readyState === "loading"
+  ) {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeProgressSystem,
+      { once: true }
+    );
+  } else {
+    initializeProgressSystem();
+  }
 })();
