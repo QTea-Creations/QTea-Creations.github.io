@@ -436,33 +436,41 @@
       }
 
       const safePatterns = [
-        () =>
-          `${game.randomItem(
-            words.colors
-          )}${game.randomItem(
-            words.animals
-          )}${game.randomItem(
-            words.powers
-          )}`,
+  () =>
+    `${game.randomItem(
+      words.colors
+    )}${game.randomItem(
+      words.animals
+    )}`,
 
-        () =>
-          `${game.randomItem(
-            words.traits
-          )}${game.randomItem(
-            words.animals
-          )}${game.randomItem(
-            words.powers
-          )}`,
+  () =>
+    `${game.randomItem(
+      words.traits
+    )}${game.randomItem(
+      words.animals
+    )}`,
 
-        () =>
-          `${game.randomItem(
-            words.colors
-          )}${game.randomItem(
-            words.traits
-          )}${game.randomItem(
-            words.animals
-          )}`
-      ];
+  () =>
+    `${game.randomItem(
+      words.animals
+    )}${game.randomItem(
+      words.powers
+    )}`,
+
+  () =>
+    `${game.randomItem(
+      words.colors
+    )}${game.randomItem(
+      words.powers
+    )}`,
+
+  () =>
+    `${game.randomItem(
+      words.traits
+    )}${game.randomItem(
+      words.powers
+    )}`
+];
 
       state.generatedUsernameIsSafe =
         Math.random() > 0.33;
