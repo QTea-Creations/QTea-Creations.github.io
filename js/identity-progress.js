@@ -4,7 +4,7 @@
    SAFETII NET — IDENTITY ISLAND
    Progress Saving + Developer Testing Tools
 ========================================================= */
-
+      
 (() => {
   const game = window.IdentityGame;
 
@@ -762,25 +762,21 @@
      START
   ------------------------------------------------------- */
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-      restoreProgress();
-      createDeveloperToolbar();
+document.addEventListener("DOMContentLoaded", () => {
+  /*
+    Wait one moment so the main Identity Island
+    controller can attach all button listeners first.
+  */
+  window.setTimeout(() => {
+    restoreProgress();
+    createDeveloperToolbar();
+  }, 100);
 
-      /*
-        Save continuously during development.
-        This also catches sticker clicks and game updates.
-      */
-      window.setInterval(
-        saveProgress,
-        750
-      );
+  window.setInterval(saveProgress, 1000);
 
-      window.addEventListener(
-        "beforeunload",
-        saveProgress
-      );
-    }
+  window.addEventListener(
+    "beforeunload",
+    saveProgress
   );
+});
 })();
