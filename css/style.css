@@ -2515,3 +2515,103 @@ body.notebook-page-bg {
     background: #ff6b79;
     color: #ffffff;
 }
+
+/* ===========================
+   Meme Help Desk Refinement
+=========================== */
+
+.meme-panel {
+    align-items: center !important;
+    text-align: center;
+}
+
+.meme-panel #memeImage {
+    width: 215px !important;
+    height: 215px !important;
+    max-width: 100%;
+    object-fit: contain;
+
+    transform: scaleX(-1);
+    transform-origin: center;
+}
+
+.mission-points-display {
+    width: 100%;
+    margin: 8px 0 18px;
+    padding: 13px 18px;
+
+    background: linear-gradient(
+        135deg,
+        #ffe76b,
+        #fff6b0
+    );
+
+    border: 3px solid #e6b921;
+    border-radius: 999px;
+
+    color: #23324d;
+    font-size: 1.15rem;
+    font-weight: 900;
+}
+
+/* Disabled game buttons should clearly look unavailable */
+
+button:disabled,
+.button:disabled,
+.locked-action {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    filter: grayscale(0.65);
+    transform: none !important;
+}
+
+#generateUsername:disabled {
+    background: #cfd5df !important;
+    color: #6d7582 !important;
+    box-shadow: none !important;
+}
+
+/* Different ID colors */
+
+.identity-flip-card {
+    --profile-color: #7d4cff;
+}
+
+.identity-card-front {
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(255, 255, 255, 0.45),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            var(--profile-color),
+            color-mix(
+                in srgb,
+                var(--profile-color) 55%,
+                #15d3dc
+            )
+        ) !important;
+}
+
+.identity-card-back {
+    border: 7px solid
+        var(--profile-color);
+}
+
+.identity-card-front .training-label,
+.identity-card-back .training-label {
+    border: 3px solid
+        var(--profile-color);
+}
+
+.profile-avatar {
+    border-color:
+        var(--profile-color) !important;
+}
+
+.interest-chip {
+    border-color:
+        var(--profile-color) !important;
+}
