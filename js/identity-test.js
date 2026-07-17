@@ -12,7 +12,6 @@
     console.error(
       "IdentityGame is missing. Make sure identity-data.js and identity-core.js load before identity-test.js."
     );
-
     return;
   }
 
@@ -20,12 +19,11 @@
     console.error(
       "Identity Island data or state is missing. Check identity-data.js and identity-core.js."
     );
-
     return;
   }
 
   /* -------------------------------------------------------
-     START FINAL TEST
+     OPEN FINAL TEST INSTRUCTION PANEL
   ------------------------------------------------------- */
 
   game.startFinalTest = function startFinalTest() {
@@ -38,10 +36,77 @@
         `Protect all five profiles first. You protected ${protectedProfiles} out of ${requiredProfiles}.`,
         "thinking"
       );
-
       return;
     }
 
+    game.showSection("testIntroZone");
+
+    if (
+      typeof game.loadFinalTestHeroName ===
+      "function"
+    ) {
+      game.loadFinalTestHeroName();
+    }
+
+    game.setMemeTip(
+      "Read the instructions carefully. Press Start Final Test when you are ready.",
+      "thinking"
+    );
+
+    if (
+      typeof game.saveIdentityProgress ===
+      "function"
+    ) {
+      game.saveIdentityProgress();
+    }
+  };
+
+  /* -------------------------------------------------------
+     LOAD HERO NAME ON TEST INTRO
+  ------------------------------------------------------- */
+
+  game.loadFinalTestHeroName =
+    function loadFinalTestHeroName() {
+      const heroNameElement =
+        game.byId("finalTestHeroName");
+
+      if (!heroNameElement) {
+        return;
+      }
+
+      try {
+        const savedHero =
+          localStorage.getItem("safetiiHero");
+
+        if (!savedHero) {
+          heroNameElement.textContent =
+            "Cyber Mentee";
+          return;
+        }
+
+        const hero = JSON.parse(savedHero);
+
+        heroNameElement.textContent =
+          typeof hero.name === "string" &&
+          hero.name.trim()
+            ? hero.name
+            : "Cyber Mentee";
+      } catch (error) {
+        console.error(
+          "Could not load the final-test hero name:",
+          error
+        );
+
+        heroNameElement.textContent =
+          "Cyber Mentee";
+      }
+    };
+
+  /* -------------------------------------------------------
+     BEGIN QUESTION 1
+  ------------------------------------------------------- */
+
+  game.beginFinalTest = function beginFinalTest() {
     game.state.testIndex = 0;
     game.state.testCorrect = 0;
     game.state.testAnswered = false;
@@ -50,9 +115,16 @@
     game.loadTest();
 
     game.setMemeTip(
-      "Final test time! You need at least 80 percent to earn your Identity Protector Badge.",
+      "The final test has begun! Read each question carefully.",
       "thinking"
     );
+
+    if (
+      typeof game.saveIdentityProgress ===
+      "function"
+    ) {
+      game.saveIdentityProgress();
+    }
   };
 
   /* -------------------------------------------------------
@@ -60,7 +132,9 @@
   ------------------------------------------------------- */
 
   game.loadTest = function loadTest() {
-    const questions = game.data.testQuestions || [];
+    const questions =
+      game.data.testQuestions || [];
+
     const currentQuestion =
       questions[game.state.testIndex];
 
@@ -86,7 +160,6 @@
       console.error(
         "Final test could not load. One or more required HTML elements are missing."
       );
-
       return;
     }
 
@@ -99,8 +172,10 @@
     feedbackElement.textContent = "";
     feedbackElement.style.background =
       "transparent";
-
     feedbackElement.style.color = "";
+
+    nextButton.textContent =
+      "Next Question";
 
     nextButton.classList.add("hidden");
 
@@ -150,7 +225,6 @@
       console.error(
         "The test answer could not be checked."
       );
-
       return;
     }
 
@@ -216,7 +290,23 @@
       );
     }
 
+    const isLastQuestion =
+      game.state.testIndex ===
+      questions.length - 1;
+
+    nextButton.textContent =
+      isLastQuestion
+        ? "See My Results 🏆"
+        : "Next Question";
+
     nextButton.classList.remove("hidden");
+
+    if (
+      typeof game.saveIdentityProgress ===
+      "function"
+    ) {
+      game.saveIdentityProgress();
+    }
   };
 
   /* -------------------------------------------------------
@@ -240,28 +330,19 @@
       }
 
       game.loadTest();
+
+      if (
+        typeof game.saveIdentityProgress ===
+        "function"
+      ) {
+        game.saveIdentityProgress();
+      }
     };
 
   /* -------------------------------------------------------
      FINISH MISSION
   ------------------------------------------------------- */
-game.beginFinalTest = function beginFinalTest() {
-  game.state.testIndex = 0;
-  game.state.testCorrect = 0;
-  game.state.testAnswered = false;
 
-  game.showSection("testZone");
-  game.loadTest();
-
-  game.setMemeTip(
-    "The final test has begun! Read each question carefully.",
-    "thinking"
-  );
-
-  if (typeof game.saveIdentityProgress === "function") {
-    game.saveIdentityProgress();
-  }
-};
   game.finishMission =
     function finishMission() {
       const totalQuestions =
@@ -302,7 +383,6 @@ game.beginFinalTest = function beginFinalTest() {
         console.error(
           "Mission result elements are missing."
         );
-
         return;
       }
 
@@ -316,7 +396,6 @@ game.beginFinalTest = function beginFinalTest() {
       if (passed) {
         const earnedPoints = 50;
 
-       
         const alreadyEarned =
           localStorage.getItem(
             "identityBadgeEarned"
@@ -332,16 +411,19 @@ game.beginFinalTest = function beginFinalTest() {
           "true"
         );
 
+        const previousBestScore =
+          Number(
+            localStorage.getItem(
+              "identityBestScore"
+            ) || "0"
+          );
+
         localStorage.setItem(
           "identityBestScore",
           String(
             Math.max(
               percentage,
-              Number(
-                localStorage.getItem(
-                  "identityBestScore"
-                ) || "0"
-              )
+              previousBestScore
             )
           )
         );
@@ -376,7 +458,7 @@ game.beginFinalTest = function beginFinalTest() {
           "Identity Protector Badge Earned!";
 
         message.textContent =
-          `You scored ${percentage}%. You helped Ava protect her identity and completed Identity Island!`;
+          `You answered ${game.state.testCorrect} out of ${totalQuestions} correctly and scored ${percentage}%. You completed Identity Island!`;
 
         pointsElement.textContent =
           alreadyEarned
@@ -392,27 +474,32 @@ game.beginFinalTest = function beginFinalTest() {
           "Mission complete! You earned the Identity Protector Badge!",
           "congrats"
         );
+      } else {
+        title.textContent =
+          "Almost There, Cyber Mentee!";
 
-        return;
+        message.textContent =
+          `You answered ${game.state.testCorrect} out of ${totalQuestions} correctly and scored ${percentage}%. You need at least 80% to earn the Identity Protector Badge.`;
+
+        pointsElement.textContent = "0";
+
+        if (badgeElement) {
+          badgeElement.style.display =
+            "none";
+        }
+
+        game.setMemeTip(
+          "You are close! Review what you learned and try again.",
+          "thinking"
+        );
       }
 
-      title.textContent =
-        "Almost There, Cyber Mentee!";
-
-      message.textContent =
-        `You scored ${percentage}%. You need at least 80% to earn the Identity Protector Badge.`;
-
-      pointsElement.textContent = "0";
-
-      if (badgeElement) {
-        badgeElement.style.display =
-          "none";
+      if (
+        typeof game.saveIdentityProgress ===
+        "function"
+      ) {
+        game.saveIdentityProgress();
       }
-
-      game.setMemeTip(
-        "You are close! Review what you learned and try again.",
-        "thinking"
-      );
     };
 
   console.log(
