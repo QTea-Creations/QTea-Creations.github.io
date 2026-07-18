@@ -89,6 +89,12 @@
 const sectionIds = [
   "missionAlert",
   "exploreZone",
+
+  "piecesOfMeZone",
+  "trustCircleZone",
+  "clueCollectorZone",
+  "impostorZone",
+
   "usernameZone",
   "practiceZone",
   "identityCardZone",
