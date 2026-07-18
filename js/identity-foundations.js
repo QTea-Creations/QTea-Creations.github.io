@@ -1855,7 +1855,6 @@ function finishFoundationAcademy() {
   /* =====================================================
      OVERRIDE THE OLD EXPLORE → USERNAME TRANSITION
   ===================================================== */
-
 game.openUsernameLab =
   function openUsernameLab() {
     if (
@@ -1878,8 +1877,8 @@ game.openUsernameLab =
       ) === "true";
 
     /*
-      During a normal visit, completed players
-      may continue directly to the Username Lab.
+      On a normal visit, a player who already completed
+      the Foundations Academy may continue to Username Lab.
     */
     if (
       progress.academyComplete &&
@@ -1891,8 +1890,7 @@ game.openUsernameLab =
     }
 
     /*
-      During replay, always restart all four
-      Foundations learning games.
+      During replay, always restart the four new games.
     */
     if (replayMode) {
       progress = {
@@ -1911,23 +1909,6 @@ game.openUsernameLab =
 
     game.loadPiecesOfMe();
   };
-
-        return;
-      }
-
-      if (
-        progress.academyComplete
-      ) {
-        finishFoundationAcademy();
-        return;
-      }
-
-      game.showSection(
-        "piecesOfMeZone"
-      );
-
-      game.loadPiecesOfMe();
-    };
 
   /* =====================================================
      EVENT LISTENERS
