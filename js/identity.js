@@ -655,19 +655,42 @@
       return;
     }
 
-    /* -------------------------------------------------
-       REPLAY
+/* -------------------------------------------------
+   REPLAY MISSION
+------------------------------------------------- */
 
-       identity.html already controls this button.
-       Returning prevents two confirmation boxes.
-    ------------------------------------------------- */
+if (
+  id === "retryMission"
+) {
+  const confirmed =
+    window.confirm(
+      "Replay Identity Island from the beginning?"
+    );
 
-    if (
-      id === "retryMission"
-    ) {
-      return;
-    }
+  if (!confirmed) {
+    return;
   }
+
+  /*
+    Reset the four new Identity Foundations games.
+  */
+  localStorage.removeItem(
+    "safetiiIdentityFoundationsV1"
+  );
+
+  /*
+    Do not remove:
+    identityFoundationsRewardAwarded
+
+    Keeping that key prevents children from earning
+    the same 50-point Foundations reward repeatedly.
+  */
+
+  window.location.href =
+    "identity.html?replay=true";
+
+  return;
+}
 
   /* =====================================================
      BACKPACK DRAG AND DROP
