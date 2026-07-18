@@ -6837,3 +6837,31 @@ body.page-home
         grid-template-columns: 1fr;
     }
 }
+
+.foundation-next-area {
+    margin-top: 24px;
+    padding: 20px;
+
+    background: #fff8d7;
+
+    border: 3px solid #ffe76b;
+    border-radius: 22px;
+
+    text-align: center;
+}
+
+.foundation-next-area p {
+    margin: 0 0 14px;
+
+    color: #23324d;
+    font-weight: 800;
+}
+
+.foundation-next-area .button {
+    margin: 0;
+}
+
+.foundation-next-area .button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
