@@ -606,7 +606,7 @@
 </section>
 
 
-<!-- GAME 4: IDENTITY IMPOSTOR RESPONSE -->
+<!-- GAME 4: IMPOSTOR ALERT -->
 <section
   class="identity-foundation-zone hidden"
   id="impostorZone"
@@ -619,17 +619,16 @@
       </p>
 
       <h2 id="impostorTitle">
-        🚨 Identity Impostor Response
+        🚨 Impostor Alert
       </h2>
 
       <p>
-        Help a student respond when someone copies
-        their identity online.
+        Help Maya choose every action that will protect her identity.
       </p>
     </div>
 
     <div class="progress-pill">
-      Response Steps:
+      Safe Actions:
       <span id="impostorProgress">0</span>/5
     </div>
   </div>
@@ -637,73 +636,97 @@
   <article class="foundation-game-card">
     <div class="impostor-scenario">
       <div class="impostor-profile real-profile">
-        <span aria-hidden="true">👧🏽</span>
+        <span aria-hidden="true">
+          👧🏽
+        </span>
 
         <div>
-          <small>Real Account</small>
-          <strong>@MayaCreates</strong>
+          <small>
+            Maya’s Account
+          </small>
+
+          <strong>
+            @MayaCreates
+          </strong>
         </div>
       </div>
 
-      <div class="impostor-warning" aria-hidden="true">
+      <div
+        class="impostor-warning"
+        aria-hidden="true"
+      >
         ⚠️
       </div>
 
       <div class="impostor-profile fake-profile">
-        <span aria-hidden="true">👧🏽</span>
+        <span aria-hidden="true">
+          👧🏽
+        </span>
 
         <div>
-          <small>Copied Account</small>
-          <strong>@MayaCreates_Free</strong>
+          <small>
+            Copied Account
+          </small>
+
+          <strong>
+            @MayaCreates_Free
+          </strong>
         </div>
       </div>
     </div>
 
     <div class="impostor-story">
       <h3>
-        Someone copied Maya’s picture and name.
+        Someone copied Maya’s picture and username.
       </h3>
 
       <p>
-        The fake account is messaging Maya’s friends and asking
-        them to click a link. Put the safest response steps in order.
+        The copied account is messaging Maya’s friends and sending
+        suspicious links.
+      </p>
+    </div>
+
+    <div class="impostor-question">
+      <p class="foundation-prompt-label">
+        What should Maya do?
+      </p>
+
+      <h3>
+        Select every safe action.
+      </h3>
+
+      <p>
+        More than one answer is correct.
       </p>
     </div>
 
     <div
-      class="response-step-bank"
-      id="responseStepBank"
+      class="impostor-choice-grid"
+      id="impostorChoiceGrid"
     ></div>
 
-    <div class="response-order-panel">
-      <p class="foundation-prompt-label">
-        Your response plan
+    <div class="impostor-check-panel">
+      <p>
+        Selected:
+        <strong id="selectedImpostorCount">
+          0
+        </strong>
       </p>
-
-      <div
-        class="response-order-list"
-        id="responseOrderList"
-      >
-        <p class="empty-response-message">
-          Select the five steps in the safest order.
-        </p>
-      </div>
-
-      <button
-        class="small-button"
-        id="clearResponseOrder"
-        type="button"
-      >
-        Clear Response
-      </button>
 
       <button
         class="button"
-        id="checkResponseOrder"
+        id="checkImpostorChoices"
         type="button"
-        disabled
       >
-        Check Response Plan
+        Check My Choices 🛡️
+      </button>
+
+      <button
+        class="small-button"
+        id="clearImpostorChoices"
+        type="button"
+      >
+        Clear Choices
       </button>
 
       <p
