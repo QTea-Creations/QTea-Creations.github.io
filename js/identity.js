@@ -3,22 +3,10 @@
 /* =========================================================
    SAFETII NET — IDENTITY ISLAND
    MAIN CONTROLLER
-
-   Controls:
-   - Mission buttons
-   - Island objects
-   - Stickers
-   - Meme help
-   - Username Lab
-   - Backpack Rescue
-   - Identity Repair
-   - Final Test
-   - Mission replay
 ========================================================= */
 
 (() => {
-  const game =
-    window.IdentityGame;
+  const game = window.IdentityGame;
 
   if (!game) {
     console.error(
@@ -31,12 +19,10 @@
   const SECTION_IDS = [
     "missionAlert",
     "exploreZone",
-
     "piecesOfMeZone",
     "trustCircleZone",
     "clueCollectorZone",
     "impostorZone",
-
     "usernameZone",
     "practiceZone",
     "identityCardZone",
@@ -45,59 +31,52 @@
     "missionResult"
   ];
 
-  function hasFunction(
-    functionName
-  ) {
-    const exists =
+  function run(functionName, ...args) {
+    if (
       typeof game[
         functionName
-      ] === "function";
-
-    if (!exists) {
+      ] !== "function"
+    ) {
       console.error(
         `Identity Island function is missing: ${functionName}`
       );
+
+      return false;
     }
 
-    return exists;
+    game[functionName](...args);
+
+    return true;
   }
 
-  function saveProgressSoon() {
-    window.setTimeout(
-      () => {
-        if (
-          typeof game
-            .saveIdentityProgress ===
-          "function"
-        ) {
-          game.saveIdentityProgress();
-        }
-      },
-      100
-    );
+  function saveSoon() {
+    window.setTimeout(() => {
+      if (
+        typeof game
+          .saveIdentityProgress ===
+        "function"
+      ) {
+        game.saveIdentityProgress();
+      }
+    }, 100);
   }
 
   /* =====================================================
      SECTION SWITCHER
   ===================================================== */
 
-  function installCompleteSectionSwitcher() {
+  function installSectionSwitcher() {
     game.showSection =
       function showSection(
         sectionId
       ) {
         SECTION_IDS.forEach(
           (id) => {
-            const section =
-              document.getElementById(
-                id
-              );
-
-            if (section) {
-              section.classList.add(
+            document
+              .getElementById(id)
+              ?.classList.add(
                 "hidden"
               );
-            }
           }
         );
 
@@ -137,7 +116,7 @@
     game.data.lessons =
       game.data.lessons || {};
 
-    const requiredLessons = {
+    const lessons = {
       sensitiveInformation: {
         title:
           "🔐 Sensitive Information",
@@ -188,7 +167,7 @@
     };
 
     Object.entries(
-      requiredLessons
+      lessons
     ).forEach(
       ([key, lesson]) => {
         if (
@@ -202,150 +181,54 @@
   }
 
   /* =====================================================
-     HIDE UNUSED OLD USERNAME BUTTONS
+     HIDE OLD USERNAME BUTTONS
   ===================================================== */
 
   function hideUnusedUsernameButtons() {
-    const safeButton =
+    const oldSafeButton =
       document.getElementById(
         "markUsernameSafe"
       );
 
-    const unsafeButton =
+    const oldUnsafeButton =
       document.getElementById(
         "markUsernameUnsafe"
       );
 
     if (
-      !safeButton ||
-      !unsafeButton
+      !oldSafeButton ||
+      !oldUnsafeButton
     ) {
       return;
     }
 
-    const container =
-      safeButton.closest(
+    oldSafeButton
+      .closest(
         ".username-decision-buttons"
-      );
-
-    if (container) {
-      container.classList.add(
+      )
+      ?.classList.add(
         "hidden"
       );
-    }
   }
 
   /* =====================================================
      REPLAY MISSION
   ===================================================== */
 
-function replayMission() {
-  const confirmed =
-    window.confirm(
-      "Replay Identity Island from the beginning?\n\n" +
-      "This will reset all lessons, learning games, practice activities, and the final test."
-    );
+  function replayMission() {
+    const confirmed =
+      window.confirm(
+        "Replay Identity Island from the beginning?\n\n" +
+        "This will reset all lessons, learning games, practice activities, and the final test."
+      );
 
-  if (!confirmed) {
-    return;
-  }
-
-  /*
-    Original Identity Island progress.
-  */
-  const originalMissionKeys = [
-    "safetiiIdentityProgress",
-    "identityCurrentStep",
-    "identityFoundObjects",
-    "identityUsernameProgress",
-    "identityBackpackProgress",
-    "identityProfileProgress",
-    "identityTestProgress",
-    "identityStickers"
-  ];
-
-  /*
-    New Identity Foundations Academy progress:
-    - Pieces of Me
-    - Trust Circle
-    - Clue Collector
-    - Impostor Alert
-  */
-  const foundationKeys = [
-    "safetiiIdentityFoundationsV1"
-  ];
-
-  [
-    ...originalMissionKeys,
-    ...foundationKeys
-  ].forEach((key) => {
-    localStorage.removeItem(key);
-  });
-
-  /*
-    Do not remove this key.
-
-    It prevents a player from repeatedly collecting
-    the 50-point Foundations reward by replaying.
-  */
-  localStorage.setItem(
-    "identityReplayRequested",
-    "true"
-  );
-
-  /*
-    Use replace so the browser does not return to the
-    completed mission when the Back button is pressed.
-
-    The timestamp also prevents the browser from showing
-    an old cached copy of the page.
-  */
-  window.location.replace(
-    `${window.location.pathname}?replay=true&reset=${Date.now()}`
-  );
-}
-
-   /* =====================================================
-   MAIN CLICK HANDLER
-===================================================== */
-
-       const keysToReset = [
-      "safetiiIdentityProgress",
-      "safetiiIdentityFoundationsV1",
-
-      "identityCurrentStep",
-      "identityFoundObjects",
-      "identityUsernameProgress",
-      "identityBackpackProgress",
-      "identityProfileProgress",
-      "identityTestProgress",
-      "identityStickers"
-    ];
-
-    keysToReset.forEach(
-      (key) => {
-        localStorage.removeItem(
-          key
-        );
-      }
-    );
-
-    /*
-      Do not remove:
-      identityFoundationsRewardAwarded
-
-      This prevents replaying the four new games
-      from repeatedly awarding 50 points.
-    */
-
-    window.location.href =
-      `${window.location.pathname}?replay=true`;
-  }
+    if (!confirmed) {
+      return;
+    }
 
     const keysToReset = [
       "safetiiIdentityProgress",
       "safetiiIdentityFoundationsV1",
-
       "identityCurrentStep",
       "identityFoundObjects",
       "identityUsernameProgress",
@@ -364,15 +247,17 @@ function replayMission() {
     );
 
     /*
-      Do not remove:
-      identityFoundationsRewardAwarded
-
-      This prevents replaying the four new games
-      from repeatedly awarding 50 points.
+      Keep the reward key so replaying cannot
+      award the same 50 points repeatedly.
     */
+    localStorage.setItem(
+      "identityReplayRequested",
+      "true"
+    );
 
-    window.location.href =
-      `${window.location.pathname}?replay=true`;
+    window.location.replace(
+      `${window.location.pathname}?replay=true&reset=${Date.now()}`
+    );
   }
 
   /* =====================================================
@@ -391,177 +276,121 @@ function replayMission() {
       return;
     }
 
-    const clickedElement =
+    const clicked =
       event.target.closest(
         "button, a"
       );
 
-    if (!clickedElement) {
+    if (!clicked) {
       return;
     }
 
     const id =
-      clickedElement.id || "";
-
-    /* -------------------------------------------------
-       ACCEPT MISSION
-    ------------------------------------------------- */
+      clicked.id || "";
 
     if (
       id === "acceptMission"
     ) {
       if (
-        hasFunction(
+        run(
           "acceptMission"
         )
       ) {
-        game.acceptMission();
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
 
-    /* -------------------------------------------------
-       LEARNING OBJECTS
-    ------------------------------------------------- */
-
     if (
-      clickedElement.matches(
+      clicked.matches(
         ".island-object"
       )
     ) {
       const objectKey =
-        clickedElement.dataset
-          .object;
+        clicked.dataset.object;
 
       if (
         objectKey &&
-        hasFunction(
-          "openLesson"
-        )
-      ) {
-        game.openLesson(
+        run(
+          "openLesson",
           objectKey,
-          clickedElement
-        );
-
-        saveProgressSoon();
-      }
-
-      return;
-    }
-
-    if (
-      id === "closeLessonPopup" ||
-      id === "closeLesson"
-    ) {
-      if (
-        hasFunction(
-          "closeLessonPopup"
+          clicked
         )
       ) {
-        game.closeLessonPopup();
+        saveSoon();
       }
 
       return;
     }
 
-    /* -------------------------------------------------
-       STICKERS
-    ------------------------------------------------- */
+    if (
+      id ===
+        "closeLessonPopup" ||
+      id ===
+        "closeLesson"
+    ) {
+      run(
+        "closeLessonPopup"
+      );
+
+      return;
+    }
 
     if (
-      clickedElement.matches(
+      clicked.matches(
         ".sticker"
       )
     ) {
       if (
-        hasFunction(
-          "collectSticker"
+        run(
+          "collectSticker",
+          clicked
         )
       ) {
-        game.collectSticker(
-          clickedElement
-        );
-
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
 
-    /* -------------------------------------------------
-       MEME HELP
-    ------------------------------------------------- */
-
     if (
-      clickedElement.matches(
+      clicked.matches(
         ".meme-help-btn"
       )
     ) {
-      const tip =
-        clickedElement.dataset.tip ||
-        "Ask a trusted adult whenever you are unsure.";
-
-      if (
-        hasFunction(
-          "setMemeTip"
-        )
-      ) {
-        game.setMemeTip(
-          tip,
-          "thinking"
-        );
-      }
+      run(
+        "setMemeTip",
+        clicked.dataset.tip ||
+          "Ask a trusted adult whenever you are unsure.",
+        "thinking"
+      );
 
       return;
     }
-
-    /* -------------------------------------------------
-       OPEN FOUNDATIONS / USERNAME LAB
-    ------------------------------------------------- */
 
     if (
       id === "goUsernameLab"
     ) {
       if (
-        clickedElement.disabled
-      ) {
-        return;
-      }
-
-      if (
-        hasFunction(
+        !clicked.disabled &&
+        run(
           "openUsernameLab"
         )
       ) {
-        game.openUsernameLab();
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
 
-    /* -------------------------------------------------
-       USERNAME LAB
-    ------------------------------------------------- */
-
     if (
       id === "generateUsername"
     ) {
-      if (
-        clickedElement.disabled
-      ) {
-        return;
-      }
-
-      if (
-        hasFunction(
+      if (!clicked.disabled) {
+        run(
           "generateUsername"
-        )
-      ) {
-        game.generateUsername();
+        );
       }
 
       return;
@@ -571,86 +400,59 @@ function replayMission() {
       id === "approveUsername"
     ) {
       if (
-        clickedElement.disabled
-      ) {
-        return;
-      }
-
-      if (
-        hasFunction(
+        !clicked.disabled &&
+        run(
           "finishUsernameScan"
         )
       ) {
-        game.finishUsernameScan();
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
-
-    /* -------------------------------------------------
-       BACKPACK RESCUE
-    ------------------------------------------------- */
 
     if (
       id === "goBackpackRescue"
     ) {
       if (
-        clickedElement.disabled
-      ) {
-        return;
-      }
-
-      if (
-        hasFunction(
+        !clicked.disabled &&
+        run(
           "startBackpackRescue"
         )
       ) {
-        game.startBackpackRescue();
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
 
     if (
-      clickedElement.matches(
+      clicked.matches(
         ".sorting-zone, .sort-zone"
       )
     ) {
       const choice =
-        clickedElement.dataset
-          .choice ||
-        clickedElement.dataset
-          .answer;
+        clicked.dataset.choice ||
+        clicked.dataset.answer;
 
       if (
         choice &&
-        hasFunction(
-          "answerPractice"
+        run(
+          "answerPractice",
+          choice,
+          clicked
         )
       ) {
-        game.answerPractice(
-          choice,
-          clickedElement
-        );
-
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
 
-    /* -------------------------------------------------
-       OPTIONAL REPAIR BUTTON
-    ------------------------------------------------- */
-
     if (
       id === "goIdentityRepair"
     ) {
-      if (
-        clickedElement.disabled
-      ) {
+      if (clicked.disabled) {
         return;
       }
 
@@ -658,22 +460,14 @@ function replayMission() {
         "identityCardZone"
       );
 
-      if (
-        typeof game
-          .loadIdentityProfile ===
-        "function"
-      ) {
-        game.loadIdentityProfile();
-      }
+      run(
+        "loadIdentityProfile"
+      );
 
-      saveProgressSoon();
+      saveSoon();
 
       return;
     }
-
-    /* -------------------------------------------------
-       FLIP IDENTITY CARD
-    ------------------------------------------------- */
 
     if (
       id === "identityFlipCard"
@@ -692,7 +486,7 @@ function replayMission() {
           "is-flipped"
         );
 
-      clickedElement.setAttribute(
+      clicked.setAttribute(
         "aria-pressed",
         String(flipped)
       );
@@ -700,23 +494,15 @@ function replayMission() {
       return;
     }
 
-    /* -------------------------------------------------
-       USERNAME REPAIR BUILDER
-    ------------------------------------------------- */
-
     if (
       id ===
         "clearRepairedUsername" ||
       id ===
         "clearUsernameBlocks"
     ) {
-      if (
-        hasFunction(
-          "clearRepairBuilder"
-        )
-      ) {
-        game.clearRepairBuilder();
-      }
+      run(
+        "clearRepairBuilder"
+      );
 
       return;
     }
@@ -726,43 +512,27 @@ function replayMission() {
       "checkRepairedUsername"
     ) {
       if (
-        clickedElement.disabled
-      ) {
-        return;
-      }
-
-      if (
-        hasFunction(
+        !clicked.disabled &&
+        run(
           "checkRepairedUsername"
         )
       ) {
-        game.checkRepairedUsername();
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
 
-    /* -------------------------------------------------
-       FINAL TEST
-    ------------------------------------------------- */
-
     if (
       id === "goFinalTest"
     ) {
       if (
-        clickedElement.disabled
-      ) {
-        return;
-      }
-
-      if (
-        hasFunction(
+        !clicked.disabled &&
+        run(
           "startFinalTest"
         )
       ) {
-        game.startFinalTest();
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -772,38 +542,33 @@ function replayMission() {
       id === "beginFinalTest"
     ) {
       if (
-        hasFunction(
+        run(
           "beginFinalTest"
         )
       ) {
-        game.beginFinalTest();
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
 
     if (
-      clickedElement.matches(
+      clicked.matches(
         ".test-choice"
       )
     ) {
       const answer =
-        clickedElement.dataset
-          .answer;
+        clicked.dataset.answer;
 
       if (
         answer &&
-        hasFunction(
-          "answerTest"
+        run(
+          "answerTest",
+          answer,
+          clicked
         )
       ) {
-        game.answerTest(
-          answer,
-          clickedElement
-        );
-
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -813,26 +578,20 @@ function replayMission() {
       id === "nextTest"
     ) {
       if (
-        hasFunction(
+        run(
           "nextTestQuestion"
         )
       ) {
-        game.nextTestQuestion();
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
     }
 
-    /* -------------------------------------------------
-       REPLAY
-    ------------------------------------------------- */
-
     if (
       id === "retryMission"
     ) {
       replayMission();
-      return;
     }
   }
 
@@ -846,27 +605,25 @@ function replayMission() {
         "dragItemCard"
       );
 
-    if (dragCard) {
-      dragCard.addEventListener(
-        "dragstart",
-        (event) => {
-          if (
-            !event.dataTransfer
-          ) {
-            return;
-          }
-
-          event.dataTransfer.setData(
-            "text/plain",
-            "backpack-item"
-          );
-
-          event.dataTransfer
-            .effectAllowed =
-            "move";
+    dragCard?.addEventListener(
+      "dragstart",
+      (event) => {
+        if (
+          !event.dataTransfer
+        ) {
+          return;
         }
-      );
-    }
+
+        event.dataTransfer.setData(
+          "text/plain",
+          "backpack-item"
+        );
+
+        event.dataTransfer
+          .effectAllowed =
+          "move";
+      }
+    );
 
     document
       .querySelectorAll(
@@ -909,16 +666,13 @@ function replayMission() {
 
               if (
                 choice &&
-                hasFunction(
-                  "answerPractice"
-                )
-              ) {
-                game.answerPractice(
+                run(
+                  "answerPractice",
                   choice,
                   zone
-                );
-
-                saveProgressSoon();
+                )
+              ) {
+                saveSoon();
               }
             }
           );
@@ -976,10 +730,9 @@ function replayMission() {
         }
 
         const blockId =
-          event.dataTransfer
-            .getData(
-              "text/plain"
-            );
+          event.dataTransfer.getData(
+            "text/plain"
+          );
 
         if (!blockId) {
           return;
@@ -992,25 +745,107 @@ function replayMission() {
             )
           ).find(
             (element) =>
-              element.dataset
-                .blockId ===
+              element.dataset.blockId ===
               blockId
           );
 
         if (
           block &&
-          hasFunction(
-            "addRepairBlock"
+          run(
+            "addRepairBlock",
+            block
           )
         ) {
-          game.addRepairBlock(
-            block
-          );
-
-          saveProgressSoon();
+          saveSoon();
         }
       }
     );
+  }
+
+  /* =====================================================
+     REPLAY SCREEN RESET
+  ===================================================== */
+
+  function resetReplayScreen() {
+    const parameters =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    if (
+      parameters.get(
+        "replay"
+      ) !== "true"
+    ) {
+      return;
+    }
+
+    game.showSection(
+      "missionAlert"
+    );
+
+    if (
+      game.state?.foundObjects instanceof
+      Set
+    ) {
+      game.state.foundObjects.clear();
+    }
+
+    const objectsFound =
+      document.getElementById(
+        "objectsFound"
+      );
+
+    if (objectsFound) {
+      objectsFound.textContent =
+        "0";
+    }
+
+    document
+      .querySelectorAll(
+        ".island-object"
+      )
+      .forEach(
+        (object) => {
+          object.classList.remove(
+            "found",
+            "completed",
+            "correct-glow"
+          );
+
+          object.disabled =
+            false;
+        }
+      );
+
+    document
+      .querySelectorAll(
+        ".sticker"
+      )
+      .forEach(
+        (sticker) => {
+          sticker.classList.remove(
+            "collected"
+          );
+
+          sticker.disabled =
+            false;
+        }
+      );
+
+    const usernameButton =
+      document.getElementById(
+        "goUsernameLab"
+      );
+
+    if (usernameButton) {
+      usernameButton.disabled =
+        true;
+
+      usernameButton.classList.add(
+        "locked-action"
+      );
+    }
   }
 
   /* =====================================================
@@ -1029,16 +864,13 @@ function replayMission() {
       return;
     }
 
-    /*
-      Prevent the controller from installing twice.
-    */
     if (
       game.controllerReady
     ) {
       return;
     }
 
-    installCompleteSectionSwitcher();
+    installSectionSwitcher();
     installLessonCompatibility();
     hideUnusedUsernameButtons();
 
@@ -1062,79 +894,13 @@ function replayMission() {
       "click",
       handleButtonClick
     );
-     
-if (
-  replayParameters.get(
-    "replay"
-  ) === "true"
-) {
-  game.showSection(
-    "missionAlert"
-  );
 
-  if (
-    game.state?.foundObjects instanceof
-    Set
-  ) {
-    game.state.foundObjects.clear();
-  }
-
-  const objectsFound =
-    document.getElementById(
-      "objectsFound"
-    );
-
-  if (objectsFound) {
-    objectsFound.textContent =
-      "0";
-  }
-
-  document
-    .querySelectorAll(
-      ".island-object"
-    )
-    .forEach((object) => {
-      object.classList.remove(
-        "found",
-        "completed",
-        "correct-glow"
-      );
-
-      object.disabled =
-        false;
-    });
-
-  document
-    .querySelectorAll(
-      ".sticker"
-    )
-    .forEach((sticker) => {
-      sticker.classList.remove(
-        "collected"
-      );
-
-      sticker.disabled =
-        false;
-    });
-
-  const usernameButton =
-    document.getElementById(
-      "goUsernameLab"
-    );
-
-  if (usernameButton) {
-    usernameButton.disabled =
-      true;
-
-    usernameButton.classList.add(
-      "locked-action"
-    );
-  }
-}
     setupBackpackDragAndDrop();
     setupUsernameBuilderDropZone();
+    resetReplayScreen();
 
-    game.controllerReady = true;
+    game.controllerReady =
+      true;
 
     document.dispatchEvent(
       new CustomEvent(
