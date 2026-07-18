@@ -296,7 +296,7 @@
           "acceptMission"
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -318,7 +318,7 @@
           clicked
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -348,7 +348,7 @@
           clicked
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -378,7 +378,7 @@
           "openUsernameLab"
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -405,7 +405,7 @@
           "finishUsernameScan"
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -420,7 +420,7 @@
           "startBackpackRescue"
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -443,7 +443,7 @@
           clicked
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -464,7 +464,7 @@
         "loadIdentityProfile"
       );
 
-      saveSoon();
+      saveProgressSoon();
 
       return;
     }
@@ -517,7 +517,7 @@
           "checkRepairedUsername"
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -532,7 +532,7 @@
           "startFinalTest"
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -546,7 +546,7 @@
           "beginFinalTest"
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -568,7 +568,7 @@
           clicked
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -582,7 +582,7 @@
           "nextTestQuestion"
         )
       ) {
-        saveSoon();
+        saveProgressSoon();
       }
 
       return;
@@ -598,87 +598,245 @@
   /* =====================================================
      BACKPACK DRAG AND DROP
   ===================================================== */
+function setupBackpackDragAndDrop() {
+  const dragCard =
+    document.getElementById(
+      "dragItemCard"
+    );
 
-  function setupBackpackDragAndDrop() {
-    const dragCard =
-      document.getElementById(
-        "dragItemCard"
+  const zones =
+    document.querySelectorAll(
+      ".image-sort-zone"
+    );
+
+  if (!dragCard) {
+    console.error(
+      "Backpack Rescue drag card is missing."
+    );
+
+    return;
+  }
+
+  function openZone(zone) {
+    const image =
+      zone.querySelector(
+        ".sort-zone-image"
       );
 
-    dragCard?.addEventListener(
-      "dragstart",
+    const openImage =
+      zone.dataset.openImage;
+
+    if (
+      image &&
+      openImage
+    ) {
+      image.src =
+        openImage;
+    }
+
+    zone.classList.add(
+      "drag-over",
+      "zone-open"
+    );
+  }
+
+  function closeZone(zone) {
+    const image =
+      zone.querySelector(
+        ".sort-zone-image"
+      );
+
+    const closedImage =
+      zone.dataset.closedImage;
+
+    if (
+      image &&
+      closedImage
+    ) {
+      image.src =
+        closedImage;
+    }
+
+    zone.classList.remove(
+      "drag-over",
+      "zone-open"
+    );
+  }
+
+  function closeAllZones() {
+    zones.forEach(
+      (zone) => {
+        closeZone(zone);
+      }
+    );
+  }
+
+  dragCard.addEventListener(
+    "dragstart",
+    (event) => {
+      if (
+        !event.dataTransfer
+      ) {
+        return;
+      }
+
+      event.dataTransfer.setData(
+        "text/plain",
+        "backpack-item"
+      );
+
+      event.dataTransfer.effectAllowed =
+        "move";
+
+      dragCard.classList.add(
+        "is-dragging"
+      );
+
+      closeAllZones();
+    }
+  );
+
+  dragCard.addEventListener(
+    "dragend",
+    () => {
+      dragCard.classList.remove(
+        "is-dragging"
+      );
+
+      closeAllZones();
+    }
+  );
+
+  zones.forEach((zone) => {
+    zone.addEventListener(
+      "dragenter",
       (event) => {
+        event.preventDefault();
+
+        openZone(zone);
+      }
+    );
+
+    zone.addEventListener(
+      "dragover",
+      (event) => {
+        event.preventDefault();
+
         if (
-          !event.dataTransfer
+          event.dataTransfer
+        ) {
+          event.dataTransfer.dropEffect =
+            "move";
+        }
+
+        openZone(zone);
+      }
+    );
+
+    zone.addEventListener(
+      "dragleave",
+      (event) => {
+        /*
+          Do not close when the pointer only moves
+          between the image and text inside the zone.
+        */
+        const nextElement =
+          event.relatedTarget;
+
+        if (
+          nextElement instanceof Node &&
+          zone.contains(
+            nextElement
+          )
         ) {
           return;
         }
 
-        event.dataTransfer.setData(
-          "text/plain",
-          "backpack-item"
-        );
-
-        event.dataTransfer
-          .effectAllowed =
-          "move";
+        closeZone(zone);
       }
     );
 
-    document
-      .querySelectorAll(
-        ".sorting-zone, .sort-zone"
-      )
-      .forEach(
-        (zone) => {
-          zone.addEventListener(
-            "dragover",
-            (event) => {
-              event.preventDefault();
+    zone.addEventListener(
+      "drop",
+      (event) => {
+        event.preventDefault();
 
-              zone.classList.add(
-                "drag-over"
-              );
-            }
+        const choice =
+          zone.dataset.answer ||
+          zone.dataset.choice;
+
+        /*
+          Close the backpack or safe as soon as
+          the item is released.
+        */
+        closeZone(zone);
+
+        dragCard.classList.remove(
+          "is-dragging"
+        );
+
+        if (
+          choice &&
+          typeof game
+            .answerPractice ===
+          "function"
+        ) {
+          game.answerPractice(
+            choice,
+            zone
           );
 
-          zone.addEventListener(
-            "dragleave",
-            () => {
-              zone.classList.remove(
-                "drag-over"
-              );
-            }
-          );
-
-          zone.addEventListener(
-            "drop",
-            (event) => {
-              event.preventDefault();
-
-              zone.classList.remove(
-                "drag-over"
-              );
-
-              const choice =
-                zone.dataset.choice ||
-                zone.dataset.answer;
-
-              if (
-                choice &&
-                run(
-                  "answerPractice",
-                  choice,
-                  zone
-                )
-              ) {
-                saveSoon();
-              }
-            }
-          );
+          saveProgressSoon();
         }
-      );
-  }
+      }
+    );
+
+    /*
+      Keep clicking available as an accessible
+      alternative to dragging.
+    */
+    zone.addEventListener(
+      "click",
+      () => {
+        const choice =
+          zone.dataset.answer ||
+          zone.dataset.choice;
+
+        closeZone(zone);
+
+        if (
+          choice &&
+          typeof game
+            .answerPractice ===
+          "function"
+        ) {
+          game.answerPractice(
+            choice,
+            zone
+          );
+
+          saveProgressSoon();
+        }
+      }
+    );
+
+    zone.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key !== "Enter" &&
+          event.key !== " "
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+
+        zone.click();
+      }
+    );
+  });
+}
 
   /* =====================================================
      USERNAME BUILDER DROP ZONE
@@ -756,7 +914,7 @@
             block
           )
         ) {
-          saveSoon();
+          saveProgressSoon();
         }
       }
     );
