@@ -19,16 +19,22 @@
   const STORAGE_KEY =
     "safetiiIdentityProgress";
 
-  const VALID_SECTIONS = [
-    "missionAlert",
-    "exploreZone",
-    "usernameZone",
-    "practiceZone",
-    "identityCardZone",
-    "testIntroZone",
-    "testZone",
-    "missionResult"
-  ];
+const VALID_SECTIONS = [
+  "missionAlert",
+  "exploreZone",
+
+  "piecesOfMeZone",
+  "trustCircleZone",
+  "clueCollectorZone",
+  "impostorZone",
+
+  "usernameZone",
+  "practiceZone",
+  "identityCardZone",
+  "testIntroZone",
+  "testZone",
+  "missionResult"
+];
 
   const DEFAULT_PROGRESS = {
     version: 2,
