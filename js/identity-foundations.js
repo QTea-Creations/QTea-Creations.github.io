@@ -221,176 +221,259 @@
     }
   ];
 
-  const clueProfiles = [
-    {
-      avatar: "⚽",
-      name:
-        "@GoalGetterMia",
-      post:
-        "Great practice at Westview Academy! We meet beside the blue gym every Tuesday at 5:30. ⚽",
-      clues: [
-        {
-          label:
-            "Favorite sport",
-          revealing:
-            false
-        },
-        {
-          label:
-            "School name",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Weekly schedule",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Exact meeting location",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Soccer emoji",
-          revealing:
-            false
-        }
-      ],
-      explanation:
-        "The school, repeated schedule, and meeting location could help someone find Mia."
-    },
+const clueProfiles = [
+  {
+    avatar: "⚽",
 
-    {
-      avatar: "🎂",
-      name:
-        "@JaydenTurns10",
-      post:
-        "Only three days until my birthday! My party is at 1842 River Street. Everyone come at 2:00!",
-      clues: [
-        {
-          label:
-            "Birthday countdown",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Exact home address",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Party time",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Excited feeling",
-          revealing:
-            false
-        },
-        {
-          label:
-            "Cake emoji",
-          revealing:
-            false
-        }
-      ],
-      explanation:
-        "The post reveals Jayden’s approximate birthday, address, and the time people will gather."
-    },
+    name:
+      "@GoalGetterMia",
 
-    {
-      avatar: "📸",
-      name:
-        "@ArtWithNia",
-      post:
-        "My newest painting! The photo also shows Nia’s school badge and a street sign reflected in the window.",
-      clues: [
-        {
-          label:
-            "Painting",
-          revealing:
-            false
-        },
-        {
-          label:
-            "School badge",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Street-sign reflection",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Favorite hobby",
-          revealing:
-            false
-        },
-        {
-          label:
-            "Photo background",
-          revealing:
-            true
-        }
-      ],
-      explanation:
-        "Photos can reveal information in badges, reflections, signs, and backgrounds."
-    },
+    post:
+      "Great practice at Westview Academy! We meet beside the blue gym every Tuesday at 5:30. ⚽",
 
-    {
-      avatar: "✈️",
-      name:
-        "@FamilyTripKai",
-      post:
-        "We leave for vacation tonight and will be gone for two whole weeks! Our house will finally be quiet.",
-      clues: [
-        {
-          label:
-            "Travel interest",
-          revealing:
-            false
-        },
-        {
-          label:
-            "Departure time",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Length of trip",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Home will be empty",
-          revealing:
-            true
-        },
-        {
-          label:
-            "Airplane emoji",
-          revealing:
-            false
-        }
-      ],
-      explanation:
-        "Posting live travel details can tell people exactly when a family is away from home."
-    }
-  ];
+    clues: [
+      {
+        label:
+          "Favorite sport",
 
+        revealing:
+          false
+      },
+
+      {
+        label:
+          "School name",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Weekly schedule",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Exact meeting location",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Soccer emoji",
+
+        revealing:
+          false
+      },
+
+      {
+        label:
+          "Team colors",
+
+        revealing:
+          false
+      }
+    ],
+
+    explanation:
+      "The school, repeated schedule, and meeting location could help someone find Mia."
+  },
+
+  {
+    avatar: "🎂",
+
+    name:
+      "@JaydenTurns10",
+
+    post:
+      "Only three days until my birthday! My party is at 1842 River Street. Everyone come at 2:00!",
+
+    clues: [
+      {
+        label:
+          "Birthday countdown",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Exact home address",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Party time",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Excited feeling",
+
+        revealing:
+          false
+      },
+
+      {
+        label:
+          "Cake emoji",
+
+        revealing:
+          false
+      },
+
+      {
+        label:
+          "Favorite dessert",
+
+        revealing:
+          false
+      }
+    ],
+
+    explanation:
+      "The post reveals Jayden’s approximate birthday, address, and the time people will gather."
+  },
+
+  {
+    avatar: "📸",
+
+    name:
+      "@ArtWithNia",
+
+    post:
+      "My newest painting! The photo also shows Nia’s school badge and a street sign reflected in the window.",
+
+    clues: [
+      {
+        label:
+          "Painting",
+
+        revealing:
+          false
+      },
+
+      {
+        label:
+          "School badge",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Street-sign reflection",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Favorite hobby",
+
+        revealing:
+          false
+      },
+
+      {
+        label:
+          "Photo background",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Paint colors",
+
+        revealing:
+          false
+      }
+    ],
+
+    explanation:
+      "Photos can reveal information in badges, reflections, signs, and backgrounds."
+  },
+
+  {
+    avatar: "✈️",
+
+    name:
+      "@FamilyTripKai",
+
+    post:
+      "We leave for vacation tonight and will be gone for two whole weeks! Our house will finally be quiet.",
+
+    clues: [
+      {
+        label:
+          "Travel interest",
+
+        revealing:
+          false
+      },
+
+      {
+        label:
+          "Departure time",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Length of trip",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Home will be empty",
+
+        revealing:
+          true
+      },
+
+      {
+        label:
+          "Airplane emoji",
+
+        revealing:
+          false
+      },
+
+      {
+        label:
+          "Vacation excitement",
+
+        revealing:
+          false
+      }
+    ],
+
+    explanation:
+      "Posting live travel details can tell people exactly when a family is away from home."
+  }
+];
   const impostorSteps = [
     {
       id: "stop",
