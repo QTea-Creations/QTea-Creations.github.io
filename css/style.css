@@ -6707,3 +6707,133 @@ body.page-home
         margin-inline: auto;
     }
 }
+
+/* =========================================================
+   IMPOSTOR ALERT — SELECT ALL SAFE ACTIONS
+========================================================= */
+
+.impostor-question {
+    margin: 22px 0 16px;
+    padding: 20px;
+
+    background: #f5f1ff;
+
+    border: 3px solid #ded5ff;
+    border-radius: 22px;
+
+    text-align: center;
+}
+
+.impostor-question h3 {
+    margin: 4px 0 7px;
+
+    color: #23324d;
+}
+
+.impostor-choice-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+.impostor-choice {
+    min-height: 92px;
+    padding: 16px;
+
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    align-items: center;
+    gap: 12px;
+
+    background: #ffffff;
+    color: #23324d;
+
+    border: 4px solid #dce5f2;
+    border-radius: 20px;
+
+    font-weight: 800;
+    line-height: 1.4;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.impostor-choice:hover:not(:disabled) {
+    transform: translateY(-3px);
+
+    border-color: #7d4cff;
+
+    box-shadow:
+        0 8px 18px
+        rgba(74, 55, 150, 0.14);
+}
+
+.impostor-choice-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    background: #f3efff;
+
+    border-radius: 50%;
+
+    font-size: 1.35rem;
+}
+
+.impostor-choice.selected-impostor-choice {
+    background: #fff8d7;
+
+    border-color: #ffe76b;
+}
+
+.impostor-choice.correct-impostor-choice {
+    background: #e9fff3;
+
+    border-color: #35c878;
+}
+
+.impostor-choice.incorrect-impostor-choice {
+    background: #fff0f5;
+
+    border-color: #ff77aa;
+}
+
+.impostor-choice.missed-impostor-choice {
+    background: #eef8ff;
+
+    border-color: #3ba8e8;
+
+    opacity: 0.85;
+}
+
+.impostor-check-panel {
+    margin-top: 20px;
+    padding: 20px;
+
+    background: #effaff;
+
+    border: 3px solid #15d3dc;
+    border-radius: 22px;
+}
+
+.impostor-check-panel .button,
+.impostor-check-panel .small-button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+    .impostor-choice-grid {
+        grid-template-columns: 1fr;
+    }
+}
