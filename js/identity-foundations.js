@@ -1387,14 +1387,32 @@ game.loadImpostorGame =
       );
     }
 
-    game
-      .byId(
-        "finishFoundationAcademy"
-      )
-      ?.classList.add(
-        "hidden"
-      );
+     const finishButton =
+  game.byId(
+    "finishFoundationAcademy"
+  );
 
+const nextMessage =
+  game.byId(
+    "foundationNextMessage"
+  );
+
+if (finishButton) {
+  finishButton.disabled = true;
+
+  finishButton.classList.add(
+    "locked-action"
+  );
+
+  finishButton.textContent =
+    "Complete Impostor Alert First";
+}
+
+if (nextMessage) {
+  nextMessage.textContent =
+    "Select every safe action and check your choices to continue.";
+}
+     
     game.setMemeTip(
       "Select every action that helps Maya stop contact, save evidence, get help, report the account, or protect her real account.",
       "thinking"
@@ -1497,13 +1515,31 @@ function clearImpostorChoices() {
     );
   }
 
-  game
-    .byId(
-      "finishFoundationAcademy"
-    )
-    ?.classList.add(
-      "hidden"
-    );
+const finishButton =
+  game.byId(
+    "finishFoundationAcademy"
+  );
+
+const nextMessage =
+  game.byId(
+    "foundationNextMessage"
+  );
+
+if (finishButton) {
+  finishButton.disabled = true;
+
+  finishButton.classList.add(
+    "locked-action"
+  );
+
+  finishButton.textContent =
+    "Complete Impostor Alert First";
+}
+
+if (nextMessage) {
+  nextMessage.textContent =
+    "Select every safe action and check your choices to continue.";
+}
 
   updateImpostorSelectionCount();
 }
@@ -1609,13 +1645,31 @@ function checkImpostorChoices() {
 
     awardAcademyPoints();
 
-    game
-      .byId(
-        "finishFoundationAcademy"
-      )
-      ?.classList.remove(
-        "hidden"
-      );
+const finishButton =
+  game.byId(
+    "finishFoundationAcademy"
+  );
+
+const nextMessage =
+  game.byId(
+    "foundationNextMessage"
+  );
+
+if (finishButton) {
+  finishButton.disabled = false;
+
+  finishButton.classList.remove(
+    "locked-action"
+  );
+
+  finishButton.textContent =
+    "Enter the Safe Username Lab";
+}
+
+if (nextMessage) {
+  nextMessage.textContent =
+    "Impostor Alert complete! Continue to the Safe Username Lab.";
+}
 
     game.setMemeTip(
       "You found every safe response and completed Identity Foundations Academy!",
@@ -1775,13 +1829,20 @@ if (
   return;
 }
 
-    if (
-      event.target.closest(
-        "#finishFoundationAcademy"
-      )
-    ) {
-      finishFoundationAcademy();
-    }
+ const finishButton =
+  event.target.closest(
+    "#finishFoundationAcademy"
+  );
+
+if (finishButton) {
+  if (finishButton.disabled) {
+    return;
+  }
+
+  finishFoundationAcademy();
+
+  return;
+}
   }
 
   function restoreVisibleFoundation() {
