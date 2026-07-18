@@ -154,10 +154,11 @@
     "nextClueProfile",
 
     "impostorZone",
-    "responseStepBank",
-    "responseOrderList",
-    "checkResponseOrder",
     "finishFoundationAcademy",
+     "impostorChoiceGrid",
+"selectedImpostorCount",
+"checkImpostorChoices",
+"clearImpostorChoices",
 
     "usernameZone",
     "generateUsername",
