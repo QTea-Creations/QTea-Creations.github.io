@@ -1703,7 +1703,113 @@ if (nextMessage) {
 
   saveProgress();
 }
+/* =====================================================
+   FOUNDATION COMPLETION AND REWARD
+===================================================== */
 
+function awardAcademyPoints() {
+  const rewardKey =
+    "identityFoundationsRewardAwarded";
+
+  /*
+    Only award the Foundations points once.
+  */
+  if (
+    localStorage.getItem(
+      rewardKey
+    ) === "true"
+  ) {
+    return;
+  }
+
+  const storedPoints =
+    Number(
+      localStorage.getItem(
+        "safetiiPoints"
+      ) || "0"
+    );
+
+  const currentPoints =
+    Number.isFinite(
+      storedPoints
+    )
+      ? storedPoints
+      : 0;
+
+  localStorage.setItem(
+    "safetiiPoints",
+    String(
+      currentPoints +
+        ACADEMY_REWARD
+    )
+  );
+
+  localStorage.setItem(
+    rewardKey,
+    "true"
+  );
+
+  if (
+    typeof game
+      .updateMissionPointsDisplay ===
+    "function"
+  ) {
+    game.updateMissionPointsDisplay();
+  }
+
+  console.log(
+    `Identity Foundations reward awarded: ${ACADEMY_REWARD} points`
+  );
+}
+
+
+function finishFoundationAcademy() {
+  /*
+    Prevent moving forward unless the
+    Impostor Alert was completed.
+  */
+  if (
+    !progress.impostorComplete ||
+    !progress.academyComplete
+  ) {
+    game.setMemeTip(
+      "Complete Impostor Alert before entering the Safe Username Lab.",
+      "thinking"
+    );
+
+    return;
+  }
+
+  game.showSection(
+    "usernameZone"
+  );
+
+  const generateButton =
+    game.byId(
+      "generateUsername"
+    );
+
+  if (generateButton) {
+    generateButton.disabled =
+      false;
+
+    generateButton.classList.remove(
+      "locked-action"
+    );
+
+    generateButton.setAttribute(
+      "aria-disabled",
+      "false"
+    );
+  }
+
+  game.setMemeTip(
+    "Identity Foundations complete! Now use what you learned to scan safe and unsafe usernames.",
+    "welcome"
+  );
+
+  saveProgress();
+}
   /* =====================================================
      OVERRIDE THE OLD EXPLORE → USERNAME TRANSITION
   ===================================================== */
