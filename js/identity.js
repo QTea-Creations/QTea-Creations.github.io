@@ -1025,7 +1025,81 @@ function replayMission() {
       "click",
       handleButtonClick
     );
+     
+game.controllerReady = true;
+     const replayParameters =
+  new URLSearchParams(
+    window.location.search
+  );
 
+if (
+  replayParameters.get(
+    "replay"
+  ) === "true"
+) {
+  game.showSection(
+    "missionAlert"
+  );
+
+  if (
+    game.state?.foundObjects instanceof
+    Set
+  ) {
+    game.state.foundObjects.clear();
+  }
+
+  const objectsFound =
+    document.getElementById(
+      "objectsFound"
+    );
+
+  if (objectsFound) {
+    objectsFound.textContent =
+      "0";
+  }
+
+  document
+    .querySelectorAll(
+      ".island-object"
+    )
+    .forEach((object) => {
+      object.classList.remove(
+        "found",
+        "completed",
+        "correct-glow"
+      );
+
+      object.disabled =
+        false;
+    });
+
+  document
+    .querySelectorAll(
+      ".sticker"
+    )
+    .forEach((sticker) => {
+      sticker.classList.remove(
+        "collected"
+      );
+
+      sticker.disabled =
+        false;
+    });
+
+  const usernameButton =
+    document.getElementById(
+      "goUsernameLab"
+    );
+
+  if (usernameButton) {
+    usernameButton.disabled =
+      true;
+
+    usernameButton.classList.add(
+      "locked-action"
+    );
+  }
+}
     setupBackpackDragAndDrop();
     setupUsernameBuilderDropZone();
 
