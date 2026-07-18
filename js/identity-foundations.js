@@ -46,25 +46,48 @@
     academyComplete: false
   };
 
-let progress =
-  readProgress();
+/* =====================================================
+   RESET ALL NEW GAMES DURING REPLAY
+===================================================== */
+
+const pageParameters =
+  new URLSearchParams(
+    window.location.search
+  );
 
 const replayRequested =
+  pageParameters.get(
+    "replay"
+  ) === "true" ||
   localStorage.getItem(
     "identityReplayRequested"
   ) === "true";
+
+if (replayRequested) {
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+}
+
+let progress =
+  readProgress();
 
 if (replayRequested) {
   progress = {
     ...defaultProgress
   };
 
-  localStorage.removeItem(
-    STORAGE_KEY
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(progress)
   );
 
   localStorage.removeItem(
     "identityReplayRequested"
+  );
+
+  console.log(
+    "Identity Foundations reset for replay."
   );
 }
 
@@ -1833,16 +1856,61 @@ function finishFoundationAcademy() {
      OVERRIDE THE OLD EXPLORE → USERNAME TRANSITION
   ===================================================== */
 
-  game.openUsernameLab =
-    function openUsernameLab() {
-      if (
-        game.state
-          .foundObjects.size < 6
-      ) {
-        game.setMemeTip(
-          `Find all six learning objects first. You found ${game.state.foundObjects.size}.`,
-          "thinking"
-        );
+game.openUsernameLab =
+  function openUsernameLab() {
+    if (
+      game.state
+        .foundObjects.size < 6
+    ) {
+      game.setMemeTip(
+        `Find all six learning objects first. You found ${game.state.foundObjects.size}.`,
+        "thinking"
+      );
+
+      return;
+    }
+
+    const replayMode =
+      new URLSearchParams(
+        window.location.search
+      ).get(
+        "replay"
+      ) === "true";
+
+    /*
+      During a normal visit, completed players
+      may continue directly to the Username Lab.
+    */
+    if (
+      progress.academyComplete &&
+      !replayMode
+    ) {
+      finishFoundationAcademy();
+
+      return;
+    }
+
+    /*
+      During replay, always restart all four
+      Foundations learning games.
+    */
+    if (replayMode) {
+      progress = {
+        ...defaultProgress
+      };
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(progress)
+      );
+    }
+
+    game.showSection(
+      "piecesOfMeZone"
+    );
+
+    game.loadPiecesOfMe();
+  };
 
         return;
       }
