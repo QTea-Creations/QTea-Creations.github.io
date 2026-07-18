@@ -305,6 +305,43 @@ function replayMission() {
   );
 }
 
+   /* =====================================================
+   MAIN CLICK HANDLER
+===================================================== */
+
+       const keysToReset = [
+      "safetiiIdentityProgress",
+      "safetiiIdentityFoundationsV1",
+
+      "identityCurrentStep",
+      "identityFoundObjects",
+      "identityUsernameProgress",
+      "identityBackpackProgress",
+      "identityProfileProgress",
+      "identityTestProgress",
+      "identityStickers"
+    ];
+
+    keysToReset.forEach(
+      (key) => {
+        localStorage.removeItem(
+          key
+        );
+      }
+    );
+
+    /*
+      Do not remove:
+      identityFoundationsRewardAwarded
+
+      This prevents replaying the four new games
+      from repeatedly awarding 50 points.
+    */
+
+    window.location.href =
+      `${window.location.pathname}?replay=true`;
+  }
+
     const keysToReset = [
       "safetiiIdentityProgress",
       "safetiiIdentityFoundationsV1",
@@ -1026,12 +1063,6 @@ function replayMission() {
       handleButtonClick
     );
      
-game.controllerReady = true;
-     const replayParameters =
-  new URLSearchParams(
-    window.location.search
-  );
-
 if (
   replayParameters.get(
     "replay"
