@@ -903,22 +903,70 @@
             >
               ✅ Share Zone
 
-              <span>
-                Usually okay to share
-              </span>
-            </div>
+<div class="sort-zones">
 
-            <div
-              class="sort-zone protect-zone"
-              data-answer="private"
-            >
-              🔒 Protect Zone
+  <!-- BACKPACK: SAFE TO SHARE -->
+  <div
+    class="sort-zone share-zone image-sort-zone"
+    id="backpackDropZone"
+    data-answer="safe"
+    data-closed-image="../assets/images/Backback.png"
+    data-open-image="../assets/images/openBackback.png"
+    role="button"
+    tabindex="0"
+    aria-label="Backpack: usually okay to share"
+  >
+    <img
+      class="sort-zone-image"
+      id="backpackZoneImage"
+      src="../assets/images/Backback.png"
+      alt="Closed backpack"
+      draggable="false"
+    >
 
-              <span>
-                Keep this private
-              </span>
-            </div>
-          </div>
+    <div class="sort-zone-label">
+      <strong>
+        Backpack
+      </strong>
+
+      <span>
+        Usually okay to share
+      </span>
+    </div>
+  </div>
+
+
+  <!-- SAFE: KEEP PRIVATE -->
+  <div
+    class="sort-zone protect-zone image-sort-zone"
+    id="safeDropZone"
+    data-answer="private"
+    data-closed-image="../assets/images/Safe.png"
+    data-open-image="../assets/images/openSafe.png"
+    role="button"
+    tabindex="0"
+    aria-label="Safe: keep this information private"
+  >
+    <img
+      class="sort-zone-image"
+      id="safeZoneImage"
+      src="../assets/images/Safe.png"
+      alt="Closed safe"
+      draggable="false"
+    >
+
+    <div class="sort-zone-label">
+      <strong>
+        Safe
+      </strong>
+
+      <span>
+        Keep this private
+      </span>
+    </div>
+  </div>
+
+</div>
 
           <p
             class="feedback"
