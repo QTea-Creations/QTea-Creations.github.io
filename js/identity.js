@@ -239,16 +239,71 @@
      REPLAY MISSION
   ===================================================== */
 
-  function replayMission() {
-    const confirmed =
-      window.confirm(
-        "Replay Identity Island from the beginning?\n\n" +
-        "Your mission progress will reset. Previously earned badge rewards will not be awarded twice."
-      );
+function replayMission() {
+  const confirmed =
+    window.confirm(
+      "Replay Identity Island from the beginning?\n\n" +
+      "This will reset all lessons, learning games, practice activities, and the final test."
+    );
 
-    if (!confirmed) {
-      return;
-    }
+  if (!confirmed) {
+    return;
+  }
+
+  /*
+    Original Identity Island progress.
+  */
+  const originalMissionKeys = [
+    "safetiiIdentityProgress",
+    "identityCurrentStep",
+    "identityFoundObjects",
+    "identityUsernameProgress",
+    "identityBackpackProgress",
+    "identityProfileProgress",
+    "identityTestProgress",
+    "identityStickers"
+  ];
+
+  /*
+    New Identity Foundations Academy progress:
+    - Pieces of Me
+    - Trust Circle
+    - Clue Collector
+    - Impostor Alert
+  */
+  const foundationKeys = [
+    "safetiiIdentityFoundationsV1"
+  ];
+
+  [
+    ...originalMissionKeys,
+    ...foundationKeys
+  ].forEach((key) => {
+    localStorage.removeItem(key);
+  });
+
+  /*
+    Do not remove this key.
+
+    It prevents a player from repeatedly collecting
+    the 50-point Foundations reward by replaying.
+  */
+  localStorage.setItem(
+    "identityReplayRequested",
+    "true"
+  );
+
+  /*
+    Use replace so the browser does not return to the
+    completed mission when the Back button is pressed.
+
+    The timestamp also prevents the browser from showing
+    an old cached copy of the page.
+  */
+  window.location.replace(
+    `${window.location.pathname}?replay=true&reset=${Date.now()}`
+  );
+}
 
     const keysToReset = [
       "safetiiIdentityProgress",
