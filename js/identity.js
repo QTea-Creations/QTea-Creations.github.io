@@ -16,16 +16,22 @@
     return;
   }
 
-  const SECTION_IDS = [
-    "missionAlert",
-    "exploreZone",
-    "usernameZone",
-    "practiceZone",
-    "identityCardZone",
-    "testIntroZone",
-    "testZone",
-    "missionResult"
-  ];
+const SECTION_IDS = [
+  "missionAlert",
+  "exploreZone",
+
+  "piecesOfMeZone",
+  "trustCircleZone",
+  "clueCollectorZone",
+  "impostorZone",
+
+  "usernameZone",
+  "practiceZone",
+  "identityCardZone",
+  "testIntroZone",
+  "testZone",
+  "missionResult"
+];
 
   function hasFunction(functionName) {
     const exists =
