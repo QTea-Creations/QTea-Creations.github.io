@@ -46,8 +46,27 @@
     academyComplete: false
   };
 
-  let progress =
-    readProgress();
+let progress =
+  readProgress();
+
+const replayRequested =
+  localStorage.getItem(
+    "identityReplayRequested"
+  ) === "true";
+
+if (replayRequested) {
+  progress = {
+    ...defaultProgress
+  };
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+  localStorage.removeItem(
+    "identityReplayRequested"
+  );
+}
 
   let piecesAnswered = false;
   let trustAnswered = false;
