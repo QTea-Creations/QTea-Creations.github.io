@@ -55,8 +55,8 @@
   let selectedClues =
     new Set();
 
-  let responseOrder = [];
-
+let selectedImpostorChoices =
+  new Set();
   const piecesOfMeItems = [
     {
       text:
@@ -474,42 +474,85 @@ const clueProfiles = [
       "Posting live travel details can tell people exactly when a family is away from home."
   }
 ];
-  const impostorSteps = [
-    {
-      id: "stop",
-      label:
-        "Stop responding to the fake account",
-      order: 1
-    },
+const impostorChoices = [
+  {
+    id: "stop",
 
-    {
-      id: "save",
-      label:
-        "Save screenshots and account details",
-      order: 2
-    },
+    label:
+      "Stop responding to the copied account",
 
-    {
-      id: "tell",
-      label:
-        "Tell a trusted adult",
-      order: 3
-    },
+    safe:
+      true,
 
-    {
-      id: "block",
-      label:
-        "Block and report the fake account",
-      order: 4
-    },
+    explanation:
+      "Maya should not argue with or continue messaging the copied account."
+  },
 
-    {
-      id: "secure",
-      label:
-        "Review and secure the real account",
-      order: 5
-    }
-  ];
+  {
+    id: "save",
+
+    label:
+      "Save screenshots and account details",
+
+    safe:
+      true,
+
+    explanation:
+      "Screenshots can help Maya and a trusted adult explain and report what happened."
+  },
+
+  {
+    id: "tell",
+
+    label:
+      "Tell a trusted adult",
+
+    safe:
+      true,
+
+    explanation:
+      "A trusted adult can help Maya report the account and protect her information."
+  },
+
+  {
+    id: "report",
+
+    label:
+      "Block and report the copied account",
+
+    safe:
+      true,
+
+    explanation:
+      "Blocking stops contact, and reporting alerts the app or website."
+  },
+
+  {
+    id: "secure",
+
+    label:
+      "Review and secure Maya’s real account",
+
+    safe:
+      true,
+
+    explanation:
+      "Maya should check her password, privacy settings, and recent account activity with an adult."
+  },
+
+  {
+    id: "confront",
+
+    label:
+      "Message the copied account and demand that they stop",
+
+    safe:
+      false,
+
+    explanation:
+      "Maya should not confront the copied account. Responding could make the situation worse."
+  }
+];
 
   function readProgress() {
     try {
@@ -1260,194 +1303,75 @@ const clueProfiles = [
     game.loadImpostorGame();
   }
 
-  /* =====================================================
-     GAME 4 — IDENTITY IMPOSTOR RESPONSE
-  ===================================================== */
+/* =====================================================
+   GAME 4 — IMPOSTOR ALERT
+===================================================== */
 
-  game.loadImpostorGame =
-    function loadImpostorGame() {
-      const bank =
-        game.byId(
-          "responseStepBank"
-        );
-
-      if (!bank) {
-        return;
-      }
-
-      responseOrder = [];
-
-      bank.innerHTML = "";
-
-      game
-        .shuffleItems(
-          impostorSteps
-        )
-        .forEach((step) => {
-          const button =
-            document.createElement(
-              "button"
-            );
-
-          button.type = "button";
-
-          button.className =
-            "response-step";
-
-          button.dataset.stepId =
-            step.id;
-
-          button.textContent =
-            step.label;
-
-          button.addEventListener(
-            "click",
-            () => {
-              addResponseStep(
-                step,
-                button
-              );
-            }
-          );
-
-          bank.appendChild(
-            button
-          );
-        });
-
-      updateResponseOrder();
-
-      const feedback =
-        game.byId(
-          "impostorFeedback"
-        );
-
-      if (feedback) {
-        feedback.textContent = "";
-
-        feedback.classList.remove(
-          "foundation-feedback-correct",
-          "foundation-feedback-wrong"
-        );
-      }
-
-      game
-        .byId(
-          "finishFoundationAcademy"
-        )
-        ?.classList.add(
-          "hidden"
-        );
-
-      game.setMemeTip(
-        "Do not argue with an impostor. Stop, save evidence, tell a trusted adult, report the account, and secure the real account.",
-        "thinking"
+game.loadImpostorGame =
+  function loadImpostorGame() {
+    const grid =
+      game.byId(
+        "impostorChoiceGrid"
       );
-    };
 
-  function addResponseStep(
-    step,
-    button
-  ) {
-    if (
-      responseOrder.some(
-        (item) =>
-          item.id === step.id
-      )
-    ) {
+    if (!grid) {
+      console.error(
+        "Impostor choice grid is missing."
+      );
+
       return;
     }
 
-    responseOrder.push(step);
+    selectedImpostorChoices =
+      new Set();
 
-    button.disabled = true;
+    grid.innerHTML = "";
 
-    button.classList.add(
-      "used-response-step"
+    impostorChoices.forEach(
+      (choice) => {
+        const button =
+          document.createElement(
+            "button"
+          );
+
+        button.type = "button";
+
+        button.className =
+          "impostor-choice";
+
+        button.dataset.choiceId =
+          choice.id;
+
+        button.innerHTML = `
+          <span
+            class="impostor-choice-icon"
+            aria-hidden="true"
+          >
+            🛡️
+          </span>
+
+          <span>
+            ${choice.label}
+          </span>
+        `;
+
+        button.addEventListener(
+          "click",
+          () => {
+            toggleImpostorChoice(
+              choice.id,
+              button
+            );
+          }
+        );
+
+        grid.appendChild(
+          button
+        );
+      }
     );
 
-    updateResponseOrder();
-  }
-
-  function updateResponseOrder() {
-    const list =
-      game.byId(
-        "responseOrderList"
-      );
-
-    const counter =
-      game.byId(
-        "impostorProgress"
-      );
-
-    const checkButton =
-      game.byId(
-        "checkResponseOrder"
-      );
-
-    if (counter) {
-      counter.textContent =
-        String(
-          responseOrder.length
-        );
-    }
-
-    if (checkButton) {
-      checkButton.disabled =
-        responseOrder.length !==
-        impostorSteps.length;
-    }
-
-    if (!list) {
-      return;
-    }
-
-    if (
-      responseOrder.length === 0
-    ) {
-      list.innerHTML = `
-        <p class="empty-response-message">
-          Select the five steps in the safest order.
-        </p>
-      `;
-
-      return;
-    }
-
-    list.innerHTML =
-      responseOrder
-        .map(
-          (step, index) => `
-            <div class="ordered-response-step">
-              <span>
-                ${index + 1}
-              </span>
-
-              <p>
-                ${step.label}
-              </p>
-            </div>
-          `
-        )
-        .join("");
-  }
-
-  function clearResponseOrder() {
-    responseOrder = [];
-
-    document
-      .querySelectorAll(
-        ".response-step"
-      )
-      .forEach((button) => {
-        button.disabled = false;
-
-        button.classList.remove(
-          "used-response-step"
-        );
-      });
-
-    updateResponseOrder();
+    updateImpostorSelectionCount();
 
     const feedback =
       game.byId(
@@ -1456,142 +1380,275 @@ const clueProfiles = [
 
     if (feedback) {
       feedback.textContent = "";
-    }
-  }
 
-  function checkResponseOrder() {
-    const correct =
-      responseOrder.every(
-        (step, index) =>
-          step.order ===
-          index + 1
-      );
-
-    if (correct) {
-      progress.impostorComplete =
-        true;
-
-      progress.academyComplete =
-        true;
-
-      setFeedback(
-        "impostorFeedback",
-        "Mission response complete! Stop, save evidence, tell a trusted adult, block and report, then secure the real account.",
-        true
-      );
-
-      awardAcademyPoints();
-
-      game
-        .byId(
-          "finishFoundationAcademy"
-        )
-        ?.classList.remove(
-          "hidden"
-        );
-
-      game.setMemeTip(
-        "You completed Identity Foundations Academy and earned 50 points!",
-        "congrats"
-      );
-
-      disableButtons(
-        ".response-step"
-      );
-    } else {
-      setFeedback(
-        "impostorFeedback",
-        "Those are the right actions, but the order needs work. Start by stopping contact and saving evidence before blocking the account.",
-        false
-      );
-
-      game.setMemeTip(
-        "Evidence may disappear after an account is blocked. Save it first.",
-        "wrong"
+      feedback.classList.remove(
+        "foundation-feedback-correct",
+        "foundation-feedback-wrong"
       );
     }
 
-    saveProgress();
-  }
-
-  function awardAcademyPoints() {
-    const rewardKey =
-      "identityFoundationsRewardAwarded";
-
-    if (
-      localStorage.getItem(
-        rewardKey
-      ) === "true"
-    ) {
-      return;
-    }
-
-    const currentPoints =
-      Number(
-        localStorage.getItem(
-          "safetiiPoints"
-        ) || "0"
-      );
-
-    const safePoints =
-      Number.isFinite(
-        currentPoints
+    game
+      .byId(
+        "finishFoundationAcademy"
       )
-        ? currentPoints
-        : 0;
-
-    localStorage.setItem(
-      "safetiiPoints",
-      String(
-        safePoints +
-          ACADEMY_REWARD
-      )
-    );
-
-    localStorage.setItem(
-      rewardKey,
-      "true"
-    );
-
-    if (
-      typeof game
-        .updateMissionPointsDisplay ===
-      "function"
-    ) {
-      game.updateMissionPointsDisplay();
-    }
-  }
-
-  function finishFoundationAcademy() {
-    game.showSection(
-      "usernameZone"
-    );
-
-    const generateButton =
-      game.byId(
-        "generateUsername"
+      ?.classList.add(
+        "hidden"
       );
-
-    if (generateButton) {
-      generateButton.disabled = false;
-
-      generateButton.classList.remove(
-        "locked-action"
-      );
-
-      generateButton.setAttribute(
-        "aria-disabled",
-        "false"
-      );
-    }
 
     game.setMemeTip(
-      "Identity Foundations complete! Now use what you learned to scan safe and unsafe usernames.",
-      "welcome"
+      "Select every action that helps Maya stop contact, save evidence, get help, report the account, or protect her real account.",
+      "thinking"
+    );
+  };
+
+function toggleImpostorChoice(
+  choiceId,
+  button
+) {
+  if (
+    selectedImpostorChoices.has(
+      choiceId
+    )
+  ) {
+    selectedImpostorChoices.delete(
+      choiceId
     );
 
-    saveProgress();
+    button.classList.remove(
+      "selected-impostor-choice"
+    );
+  } else {
+    selectedImpostorChoices.add(
+      choiceId
+    );
+
+    button.classList.add(
+      "selected-impostor-choice"
+    );
   }
+
+  updateImpostorSelectionCount();
+}
+
+function updateImpostorSelectionCount() {
+  const safeSelectedCount =
+    impostorChoices.filter(
+      (choice) =>
+        choice.safe &&
+        selectedImpostorChoices.has(
+          choice.id
+        )
+    ).length;
+
+  const selectedCount =
+    game.byId(
+      "selectedImpostorCount"
+    );
+
+  const progressCount =
+    game.byId(
+      "impostorProgress"
+    );
+
+  if (selectedCount) {
+    selectedCount.textContent =
+      String(
+        selectedImpostorChoices.size
+      );
+  }
+
+  if (progressCount) {
+    progressCount.textContent =
+      String(
+        safeSelectedCount
+      );
+  }
+}
+
+function clearImpostorChoices() {
+  selectedImpostorChoices.clear();
+
+  document
+    .querySelectorAll(
+      ".impostor-choice"
+    )
+    .forEach((button) => {
+      button.disabled = false;
+
+      button.classList.remove(
+        "selected-impostor-choice",
+        "correct-impostor-choice",
+        "incorrect-impostor-choice",
+        "missed-impostor-choice"
+      );
+    });
+
+  const feedback =
+    game.byId(
+      "impostorFeedback"
+    );
+
+  if (feedback) {
+    feedback.textContent = "";
+
+    feedback.classList.remove(
+      "foundation-feedback-correct",
+      "foundation-feedback-wrong"
+    );
+  }
+
+  game
+    .byId(
+      "finishFoundationAcademy"
+    )
+    ?.classList.add(
+      "hidden"
+    );
+
+  updateImpostorSelectionCount();
+}
+
+function checkImpostorChoices() {
+  const safeChoices =
+    impostorChoices.filter(
+      (choice) =>
+        choice.safe
+    );
+
+  const unsafeChoices =
+    impostorChoices.filter(
+      (choice) =>
+        !choice.safe
+    );
+
+  const selectedEverySafeChoice =
+    safeChoices.every(
+      (choice) =>
+        selectedImpostorChoices.has(
+          choice.id
+        )
+    );
+
+  const selectedAnyUnsafeChoice =
+    unsafeChoices.some(
+      (choice) =>
+        selectedImpostorChoices.has(
+          choice.id
+        )
+    );
+
+  const correct =
+    selectedEverySafeChoice &&
+    !selectedAnyUnsafeChoice;
+
+  document
+    .querySelectorAll(
+      ".impostor-choice"
+    )
+    .forEach((button) => {
+      const choiceId =
+        button.dataset.choiceId;
+
+      const choice =
+        impostorChoices.find(
+          (item) =>
+            item.id === choiceId
+        );
+
+      if (!choice) {
+        return;
+      }
+
+      button.disabled = true;
+
+      const selected =
+        selectedImpostorChoices.has(
+          choice.id
+        );
+
+      if (
+        choice.safe &&
+        selected
+      ) {
+        button.classList.add(
+          "correct-impostor-choice"
+        );
+      }
+
+      if (
+        !choice.safe &&
+        selected
+      ) {
+        button.classList.add(
+          "incorrect-impostor-choice"
+        );
+      }
+
+      if (
+        choice.safe &&
+        !selected
+      ) {
+        button.classList.add(
+          "missed-impostor-choice"
+        );
+      }
+    });
+
+  if (correct) {
+    progress.impostorComplete =
+      true;
+
+    progress.academyComplete =
+      true;
+
+    setFeedback(
+      "impostorFeedback",
+      "Excellent! Maya should stop interacting, save evidence, tell a trusted adult, block and report the copied account, and secure her real account. These actions may happen together or with an adult’s help.",
+      true
+    );
+
+    awardAcademyPoints();
+
+    game
+      .byId(
+        "finishFoundationAcademy"
+      )
+      ?.classList.remove(
+        "hidden"
+      );
+
+    game.setMemeTip(
+      "You found every safe response and completed Identity Foundations Academy!",
+      "congrats"
+    );
+  } else if (
+    selectedAnyUnsafeChoice
+  ) {
+    setFeedback(
+      "impostorFeedback",
+      "Do not message or confront the copied account. Maya should stop responding and get help instead. Review the highlighted choices.",
+      false
+    );
+
+    game.setMemeTip(
+      "Do not argue with an impostor. Stop contact, save evidence, and ask a trusted adult for help.",
+      "wrong"
+    );
+  } else {
+    setFeedback(
+      "impostorFeedback",
+      "You found some safe actions, but Maya needs more protection. Think about saving evidence, getting help, reporting the account, and securing her real account.",
+      false
+    );
+
+    game.setMemeTip(
+      "Look for every action that helps Maya document, report, and protect her identity.",
+      "thinking"
+    );
+  }
+
+  saveProgress();
+}
 
   /* =====================================================
      OVERRIDE THE OLD EXPLORE → USERNAME TRANSITION
@@ -1698,23 +1755,25 @@ const clueProfiles = [
       return;
     }
 
-    if (
-      event.target.closest(
-        "#clearResponseOrder"
-      )
-    ) {
-      clearResponseOrder();
-      return;
-    }
+if (
+  event.target.closest(
+    "#clearImpostorChoices"
+  )
+) {
+  clearImpostorChoices();
 
-    if (
-      event.target.closest(
-        "#checkResponseOrder"
-      )
-    ) {
-      checkResponseOrder();
-      return;
-    }
+  return;
+}
+
+if (
+  event.target.closest(
+    "#checkImpostorChoices"
+  )
+) {
+  checkImpostorChoices();
+
+  return;
+}
 
     if (
       event.target.closest(
