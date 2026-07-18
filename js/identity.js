@@ -296,7 +296,7 @@
           "acceptMission"
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -318,7 +318,7 @@
           clicked
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -348,7 +348,7 @@
           clicked
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -378,7 +378,7 @@
           "openUsernameLab"
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -405,7 +405,7 @@
           "finishUsernameScan"
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -420,7 +420,7 @@
           "startBackpackRescue"
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -443,7 +443,7 @@
           clicked
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -464,7 +464,7 @@
         "loadIdentityProfile"
       );
 
-      saveProgressSoon();
+      saveSoon();
 
       return;
     }
@@ -517,7 +517,7 @@
           "checkRepairedUsername"
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -532,7 +532,7 @@
           "startFinalTest"
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -546,7 +546,7 @@
           "beginFinalTest"
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -568,7 +568,7 @@
           clicked
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -582,7 +582,7 @@
           "nextTestQuestion"
         )
       ) {
-        saveProgressSoon();
+        saveSoon();
       }
 
       return;
@@ -786,7 +786,7 @@ function setupBackpackDragAndDrop() {
             zone
           );
 
-          saveProgressSoon();
+          saveSoon();
         }
       }
     );
@@ -815,7 +815,7 @@ function setupBackpackDragAndDrop() {
             zone
           );
 
-          saveProgressSoon();
+          saveSoon();
         }
       }
     );
@@ -914,7 +914,7 @@ function setupBackpackDragAndDrop() {
             block
           )
         ) {
-          saveProgressSoon();
+          saveSoon();
         }
       }
     );
