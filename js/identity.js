@@ -2,11 +2,23 @@
 
 /* =========================================================
    SAFETII NET — IDENTITY ISLAND
-   Main Controller
+   MAIN CONTROLLER
+
+   Controls:
+   - Mission buttons
+   - Island objects
+   - Stickers
+   - Meme help
+   - Username Lab
+   - Backpack Rescue
+   - Identity Repair
+   - Final Test
+   - Mission replay
 ========================================================= */
 
 (() => {
-  const game = window.IdentityGame;
+  const game =
+    window.IdentityGame;
 
   if (!game) {
     console.error(
@@ -16,27 +28,30 @@
     return;
   }
 
-const SECTION_IDS = [
-  "missionAlert",
-  "exploreZone",
+  const SECTION_IDS = [
+    "missionAlert",
+    "exploreZone",
 
-  "piecesOfMeZone",
-  "trustCircleZone",
-  "clueCollectorZone",
-  "impostorZone",
+    "piecesOfMeZone",
+    "trustCircleZone",
+    "clueCollectorZone",
+    "impostorZone",
 
-  "usernameZone",
-  "practiceZone",
-  "identityCardZone",
-  "testIntroZone",
-  "testZone",
-  "missionResult"
-];
+    "usernameZone",
+    "practiceZone",
+    "identityCardZone",
+    "testIntroZone",
+    "testZone",
+    "missionResult"
+  ];
 
-  function hasFunction(functionName) {
+  function hasFunction(
+    functionName
+  ) {
     const exists =
-      typeof game[functionName] ===
-      "function";
+      typeof game[
+        functionName
+      ] === "function";
 
     if (!exists) {
       console.error(
@@ -48,37 +63,43 @@ const SECTION_IDS = [
   }
 
   function saveProgressSoon() {
-    window.setTimeout(() => {
-      if (
-        typeof game.saveIdentityProgress ===
-        "function"
-      ) {
-        game.saveIdentityProgress();
-      }
-    }, 100);
+    window.setTimeout(
+      () => {
+        if (
+          typeof game
+            .saveIdentityProgress ===
+          "function"
+        ) {
+          game.saveIdentityProgress();
+        }
+      },
+      100
+    );
   }
 
   /* =====================================================
-     SECTION COMPATIBILITY
-
-     identity-core.js does not currently include
-     testIntroZone in its list. This replacement prevents
-     two mission sections from appearing at once.
+     SECTION SWITCHER
   ===================================================== */
 
   function installCompleteSectionSwitcher() {
     game.showSection =
-      function showSection(sectionId) {
-        SECTION_IDS.forEach((id) => {
-          const section =
-            document.getElementById(id);
+      function showSection(
+        sectionId
+      ) {
+        SECTION_IDS.forEach(
+          (id) => {
+            const section =
+              document.getElementById(
+                id
+              );
 
-          if (section) {
-            section.classList.add(
-              "hidden"
-            );
+            if (section) {
+              section.classList.add(
+                "hidden"
+              );
+            }
           }
-        });
+        );
 
         const activeSection =
           document.getElementById(
@@ -106,10 +127,6 @@ const SECTION_IDS = [
 
   /* =====================================================
      LESSON COMPATIBILITY
-
-     The restored HTML uses newer lesson names than the
-     current identity-data.js. These lessons are added only
-     when the matching key is missing.
   ===================================================== */
 
   function installLessonCompatibility() {
@@ -126,7 +143,7 @@ const SECTION_IDS = [
           "🔐 Sensitive Information",
 
         text:
-          "Sensitive information includes details that could identify you, locate you, contact you, access your accounts, or help someone pretend to be you. Keep names, addresses, phone numbers, birthdays, school details, passwords, and exact locations private."
+          "Sensitive information includes details that could identify you, locate you, contact you, access your accounts, or help someone pretend to be you."
       },
 
       safeSharing: {
@@ -134,7 +151,7 @@ const SECTION_IDS = [
           "💬 Safe Sharing",
 
         text:
-          "Before sharing online, ask whether the information could reveal who you are or where you can be found. General interests such as a favorite color, animal, hobby, or game are usually safer than personal details."
+          "Before sharing online, ask whether the information could reveal who you are or where you can be found."
       },
 
       usernames: {
@@ -142,7 +159,7 @@ const SECTION_IDS = [
           "🎮 Safe Usernames",
 
         text:
-          "A safe username should not include your real name, birthday, school, address, phone number, or location. Use made-up words and general interests instead."
+          "A safe username should not include your real name, birthday, school, address, phone number, or location."
       },
 
       passwords: {
@@ -150,7 +167,7 @@ const SECTION_IDS = [
           "🔑 Password Protection",
 
         text:
-          "Passwords are private and should never be shared with friends or strangers. Use a strong, unique password and ask a trusted adult for help managing it."
+          "Passwords are private and should never be shared with friends or strangers."
       },
 
       trustedAdults: {
@@ -158,7 +175,7 @@ const SECTION_IDS = [
           "🤝 Trusted Adults",
 
         text:
-          "A trusted adult can help when someone asks for private information, makes you uncomfortable, or pressures you to keep an online secret. Stop and ask for help before responding."
+          "A trusted adult can help when someone asks for private information or makes you uncomfortable online."
       },
 
       digitalFootprint: {
@@ -166,30 +183,26 @@ const SECTION_IDS = [
           "👣 Digital Footprints",
 
         text:
-          "Posts, photos, comments, usernames, and messages can leave a digital footprint. Pause before sharing because online information can be copied, saved, or seen by more people than you expected."
+          "Posts, photos, comments, usernames, and messages can leave a digital footprint."
       }
     };
 
     Object.entries(
       requiredLessons
-    ).forEach(([key, lesson]) => {
-      if (
-        !game.data.lessons[key]
-      ) {
-        game.data.lessons[key] =
-          lesson;
+    ).forEach(
+      ([key, lesson]) => {
+        if (
+          !game.data.lessons[key]
+        ) {
+          game.data.lessons[key] =
+            lesson;
+        }
       }
-    });
+    );
   }
 
   /* =====================================================
-     OLD USERNAME BUTTON COMPATIBILITY
-
-     identity-activities.js creates the working Safe and
-     Unsafe buttons after generating a username.
-
-     The restored HTML also contains an older disabled pair,
-     so this hides only that unused older pair.
+     HIDE UNUSED OLD USERNAME BUTTONS
   ===================================================== */
 
   function hideUnusedUsernameButtons() {
@@ -223,12 +236,65 @@ const SECTION_IDS = [
   }
 
   /* =====================================================
-     MAIN BUTTON HANDLER
+     REPLAY MISSION
   ===================================================== */
 
-  function handleButtonClick(event) {
+  function replayMission() {
+    const confirmed =
+      window.confirm(
+        "Replay Identity Island from the beginning?\n\n" +
+        "Your mission progress will reset. Previously earned badge rewards will not be awarded twice."
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    const keysToReset = [
+      "safetiiIdentityProgress",
+      "safetiiIdentityFoundationsV1",
+
+      "identityCurrentStep",
+      "identityFoundObjects",
+      "identityUsernameProgress",
+      "identityBackpackProgress",
+      "identityProfileProgress",
+      "identityTestProgress",
+      "identityStickers"
+    ];
+
+    keysToReset.forEach(
+      (key) => {
+        localStorage.removeItem(
+          key
+        );
+      }
+    );
+
+    /*
+      Do not remove:
+      identityFoundationsRewardAwarded
+
+      This prevents replaying the four new games
+      from repeatedly awarding 50 points.
+    */
+
+    window.location.href =
+      `${window.location.pathname}?replay=true`;
+  }
+
+  /* =====================================================
+     MAIN CLICK HANDLER
+  ===================================================== */
+
+  function handleButtonClick(
+    event
+  ) {
     if (
-      !(event.target instanceof Element)
+      !(
+        event.target instanceof
+        Element
+      )
     ) {
       return;
     }
@@ -274,7 +340,8 @@ const SECTION_IDS = [
       )
     ) {
       const objectKey =
-        clickedElement.dataset.object;
+        clickedElement.dataset
+          .object;
 
       if (
         objectKey &&
@@ -360,7 +427,7 @@ const SECTION_IDS = [
     }
 
     /* -------------------------------------------------
-       USERNAME LAB
+       OPEN FOUNDATIONS / USERNAME LAB
     ------------------------------------------------- */
 
     if (
@@ -383,6 +450,10 @@ const SECTION_IDS = [
 
       return;
     }
+
+    /* -------------------------------------------------
+       USERNAME LAB
+    ------------------------------------------------- */
 
     if (
       id === "generateUsername"
@@ -456,8 +527,10 @@ const SECTION_IDS = [
       )
     ) {
       const choice =
-        clickedElement.dataset.choice ||
-        clickedElement.dataset.answer;
+        clickedElement.dataset
+          .choice ||
+        clickedElement.dataset
+          .answer;
 
       if (
         choice &&
@@ -477,11 +550,7 @@ const SECTION_IDS = [
     }
 
     /* -------------------------------------------------
-       OPTIONAL IDENTITY REPAIR BUTTON
-
-       Backpack Rescue normally moves to this section
-       automatically. This keeps the button functional
-       if it is enabled later.
+       OPTIONAL REPAIR BUTTON
     ------------------------------------------------- */
 
     if (
@@ -498,13 +567,15 @@ const SECTION_IDS = [
       );
 
       if (
-        typeof game.loadIdentityProfile ===
+        typeof game
+          .loadIdentityProfile ===
         "function"
       ) {
         game.loadIdentityProfile();
       }
 
       saveProgressSoon();
+
       return;
     }
 
@@ -542,8 +613,10 @@ const SECTION_IDS = [
     ------------------------------------------------- */
 
     if (
-      id === "clearRepairedUsername" ||
-      id === "clearUsernameBlocks"
+      id ===
+        "clearRepairedUsername" ||
+      id ===
+        "clearUsernameBlocks"
     ) {
       if (
         hasFunction(
@@ -557,7 +630,8 @@ const SECTION_IDS = [
     }
 
     if (
-      id === "checkRepairedUsername"
+      id ===
+      "checkRepairedUsername"
     ) {
       if (
         clickedElement.disabled
@@ -578,7 +652,7 @@ const SECTION_IDS = [
     }
 
     /* -------------------------------------------------
-       FINAL TEST INTRODUCTION
+       FINAL TEST
     ------------------------------------------------- */
 
     if (
@@ -617,17 +691,14 @@ const SECTION_IDS = [
       return;
     }
 
-    /* -------------------------------------------------
-       FINAL TEST ANSWERS
-    ------------------------------------------------- */
-
     if (
       clickedElement.matches(
         ".test-choice"
       )
     ) {
       const answer =
-        clickedElement.dataset.answer;
+        clickedElement.dataset
+          .answer;
 
       if (
         answer &&
@@ -661,42 +732,17 @@ const SECTION_IDS = [
       return;
     }
 
-/* -------------------------------------------------
-   REPLAY MISSION
-------------------------------------------------- */
+    /* -------------------------------------------------
+       REPLAY
+    ------------------------------------------------- */
 
-if (
-  id === "retryMission"
-) {
-  const confirmed =
-    window.confirm(
-      "Replay Identity Island from the beginning?"
-    );
-
-  if (!confirmed) {
-    return;
+    if (
+      id === "retryMission"
+    ) {
+      replayMission();
+      return;
+    }
   }
-
-  /*
-    Reset the four new Identity Foundations games.
-  */
-  localStorage.removeItem(
-    "safetiiIdentityFoundationsV1"
-  );
-
-  /*
-    Do not remove:
-    identityFoundationsRewardAwarded
-
-    Keeping that key prevents children from earning
-    the same 50-point Foundations reward repeatedly.
-  */
-
-  window.location.href =
-    "identity.html?replay=true";
-
-  return;
-}
 
   /* =====================================================
      BACKPACK DRAG AND DROP
@@ -723,7 +769,8 @@ if (
             "backpack-item"
           );
 
-          event.dataTransfer.effectAllowed =
+          event.dataTransfer
+            .effectAllowed =
             "move";
         }
       );
@@ -733,60 +780,62 @@ if (
       .querySelectorAll(
         ".sorting-zone, .sort-zone"
       )
-      .forEach((zone) => {
-        zone.addEventListener(
-          "dragover",
-          (event) => {
-            event.preventDefault();
+      .forEach(
+        (zone) => {
+          zone.addEventListener(
+            "dragover",
+            (event) => {
+              event.preventDefault();
 
-            zone.classList.add(
-              "drag-over"
-            );
-          }
-        );
+              zone.classList.add(
+                "drag-over"
+              );
+            }
+          );
 
-        zone.addEventListener(
-          "dragleave",
-          () => {
-            zone.classList.remove(
-              "drag-over"
-            );
-          }
-        );
+          zone.addEventListener(
+            "dragleave",
+            () => {
+              zone.classList.remove(
+                "drag-over"
+              );
+            }
+          );
 
-        zone.addEventListener(
-          "drop",
-          (event) => {
-            event.preventDefault();
+          zone.addEventListener(
+            "drop",
+            (event) => {
+              event.preventDefault();
 
-            zone.classList.remove(
-              "drag-over"
-            );
-
-            const choice =
-              zone.dataset.choice ||
-              zone.dataset.answer;
-
-            if (
-              choice &&
-              hasFunction(
-                "answerPractice"
-              )
-            ) {
-              game.answerPractice(
-                choice,
-                zone
+              zone.classList.remove(
+                "drag-over"
               );
 
-              saveProgressSoon();
+              const choice =
+                zone.dataset.choice ||
+                zone.dataset.answer;
+
+              if (
+                choice &&
+                hasFunction(
+                  "answerPractice"
+                )
+              ) {
+                game.answerPractice(
+                  choice,
+                  zone
+                );
+
+                saveProgressSoon();
+              }
             }
-          }
-        );
-      });
+          );
+        }
+      );
   }
 
   /* =====================================================
-     USERNAME BUILDER DRAG AND DROP
+     USERNAME BUILDER DROP ZONE
   ===================================================== */
 
   function setupUsernameBuilderDropZone() {
@@ -835,9 +884,10 @@ if (
         }
 
         const blockId =
-          event.dataTransfer.getData(
-            "text/plain"
-          );
+          event.dataTransfer
+            .getData(
+              "text/plain"
+            );
 
         if (!blockId) {
           return;
@@ -850,7 +900,8 @@ if (
             )
           ).find(
             (element) =>
-              element.dataset.blockId ===
+              element.dataset
+                .blockId ===
               blockId
           );
 
@@ -887,7 +938,7 @@ if (
     }
 
     /*
-      Prevent the controller from being installed twice.
+      Prevent the controller from installing twice.
     */
     if (
       game.controllerReady
@@ -900,23 +951,21 @@ if (
     hideUnusedUsernameButtons();
 
     if (
-      typeof game.loadMissionHeroName ===
+      typeof game
+        .loadMissionHeroName ===
       "function"
     ) {
       game.loadMissionHeroName();
     }
 
     if (
-      typeof game.updateMissionPointsDisplay ===
+      typeof game
+        .updateMissionPointsDisplay ===
       "function"
     ) {
       game.updateMissionPointsDisplay();
     }
 
-    /*
-      One delegated click handler controls the page.
-      There is no second identity-card listener.
-    */
     document.addEventListener(
       "click",
       handleButtonClick
@@ -927,10 +976,6 @@ if (
 
     game.controllerReady = true;
 
-    /*
-      identity-progress.js waits for this event before
-      restoring the saved mission.
-    */
     document.dispatchEvent(
       new CustomEvent(
         "identityControllerReady"
