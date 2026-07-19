@@ -1,0 +1,444 @@
+/* =========================================================
+   SAFETII NET — BACKPACK RESCUE
+========================================================= */
+
+.backpack-action-guide {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+.backpack-action-guide article {
+  padding: 20px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  background: #ffffff;
+
+  border: 3px solid #e0dcf4;
+  border-radius: 22px;
+}
+
+.backpack-action-guide article > span {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #e9faff,
+      #f5efff
+    );
+
+  border-radius: 16px;
+
+  font-size: 1.7rem;
+}
+
+.backpack-action-guide h3 {
+  margin: 0 0 6px;
+
+  color: #172448;
+}
+
+.backpack-action-guide p {
+  margin: 0;
+
+  color: #6c7890;
+
+  line-height: 1.55;
+}
+
+.backpack-action-guide small {
+  display: block;
+  margin-top: 7px;
+
+  color: #7d43ff;
+
+  font-weight: 800;
+}
+
+.backpack-rescue-stage {
+  margin-top: 24px;
+  padding: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f5f0ff,
+      #eafcff
+    );
+
+  border: 3px solid #ddd4ff;
+  border-radius: 28px;
+
+  box-shadow:
+    0 16px 32px
+    rgba(48, 57, 102, 0.08);
+}
+
+.digital-backpack {
+  position: relative;
+
+  width: 190px;
+  height: 220px;
+  flex: 0 0 auto;
+}
+
+.backpack-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  width: 80px;
+  height: 45px;
+
+  transform:
+    translateX(-50%);
+
+  border: 14px solid #5c46c7;
+  border-bottom: 0;
+  border-radius:
+    28px 28px 0 0;
+}
+
+.backpack-main {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  top: 30px;
+  bottom: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  background:
+    linear-gradient(
+      145deg,
+      #7354f4,
+      #2bb9d2
+    );
+
+  border: 5px solid #ffffff;
+  border-radius:
+    38px 38px 30px 30px;
+
+  box-shadow:
+    0 18px 30px
+    rgba(55, 52, 125, 0.2);
+}
+
+.backpack-logo {
+  position: absolute;
+  top: 17px;
+  left: 18px;
+
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  background: #ffffff;
+  color: #6846d9;
+
+  border-radius: 13px;
+
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.backpack-item-icon {
+  font-size: 4.1rem;
+}
+
+.backpack-pocket {
+  position: absolute;
+  left: 39px;
+  right: 39px;
+  bottom: 0;
+
+  height: 65px;
+
+  background: #5840c4;
+
+  border: 5px solid #ffffff;
+  border-radius: 20px 20px 27px 27px;
+}
+
+.backpack-item-details {
+  max-width: 540px;
+}
+
+.backpack-item-details h2 {
+  margin: 5px 0 9px;
+
+  color: #172448;
+
+  font-size: clamp(
+    1.5rem,
+    2.5vw,
+    2.1rem
+  );
+}
+
+.backpack-item-details p:last-child {
+  margin: 0;
+
+  color: #68748b;
+
+  line-height: 1.6;
+}
+
+.backpack-message-card {
+  margin-top: 22px;
+  padding: 25px;
+
+  background: #ffffff;
+
+  border: 3px solid #dce3f5;
+  border-radius: 27px;
+
+  box-shadow:
+    0 16px 32px
+    rgba(48, 57, 102, 0.09);
+}
+
+.backpack-message-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.backpack-message-header > span:first-child {
+  color: #172448;
+
+  font-weight: 900;
+}
+
+.backpack-risk-badge {
+  padding: 7px 11px;
+
+  background: #fff1bf;
+  color: #8a6200;
+
+  border: 2px solid #ffd46d;
+  border-radius: 999px;
+
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.backpack-message-card blockquote {
+  margin: 20px 0 0;
+  padding: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f7f3ff,
+      #eefcff
+    );
+
+  border: 3px solid #e2dcf7;
+  border-radius: 20px;
+
+  color: #172448;
+
+  font-size: clamp(
+    1.05rem,
+    1.8vw,
+    1.4rem
+  );
+
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.backpack-detail-grid {
+  margin-top: 18px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.backpack-detail-grid article {
+  padding: 15px;
+
+  background: #f8f9fd;
+
+  border: 2px solid #e5e8f2;
+  border-radius: 16px;
+}
+
+.backpack-detail-grid span {
+  display: block;
+
+  color: #7b8498;
+
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.backpack-detail-grid strong {
+  display: block;
+  margin-top: 5px;
+
+  color: #172448;
+
+  line-height: 1.45;
+}
+
+.backpack-question-prompt {
+  margin: 25px 0 13px;
+
+  color: #172448;
+
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.backpack-answer-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+.backpack-answer-choice {
+  min-height: 170px;
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+
+  background: #ffffff;
+  color: #172448;
+
+  border: 3px solid #dce3f5;
+  border-radius: 23px;
+
+  font-family: inherit;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.backpack-answer-choice:hover:not(:disabled) {
+  transform: translateY(-5px);
+
+  border-color: #7d43ff;
+
+  box-shadow:
+    0 15px 28px
+    rgba(54, 52, 112, 0.14);
+}
+
+.backpack-answer-choice:disabled {
+  cursor: default;
+}
+
+.backpack-answer-choice > span {
+  font-size: 2.5rem;
+}
+
+.backpack-answer-choice strong {
+  font-size: 1rem;
+}
+
+.backpack-answer-choice small {
+  color: #778196;
+
+  font-size: 0.73rem;
+  line-height: 1.45;
+}
+
+.keep-choice {
+  border-color: #9ddbb8;
+}
+
+.delete-choice {
+  border-color: #b8bfd2;
+}
+
+.report-choice {
+  border-color: #f0a0b0;
+}
+
+.adult-choice {
+  border-color: #f2c270;
+}
+
+.backpack-answer-choice.correct-answer,
+.backpack-answer-choice.reveal-correct-answer {
+  background: #e9fff3;
+
+  border-color: #31bf76;
+
+  box-shadow:
+    0 0 0 5px
+    rgba(49, 191, 118, 0.13);
+}
+
+.backpack-answer-choice.wrong-answer {
+  background: #fff0f3;
+
+  border-color: #ee5576;
+
+  box-shadow:
+    0 0 0 5px
+    rgba(238, 85, 118, 0.12);
+}
+
+@media (max-width: 780px) {
+  .backpack-action-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .backpack-rescue-stage {
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .backpack-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .backpack-answer-grid {
+    grid-template-columns: 1fr;
+  }
+}
