@@ -1,359 +1,197 @@
 "use strict";
 
 /* =========================================================
-   SAFETII NET — GLOBAL PAGE DEBUGGER
+   SAFETII NET — UNIVERSAL DEBUGGER
 
-   Turn on:
-   Add ?debug=1 to any Safetii Net page.
+   Supports:
+   - Main website
+   - Identity Island
+   - Cyber Arcade
+   - Individual arcade games
 
-   Example:
-   login.html?debug=1
-
-   Turn off:
-   Add ?debug=0 to any page.
-
-   Keyboard shortcut:
-   Ctrl + Shift + D
+   DEVELOPMENT TOOL ONLY
 ========================================================= */
 
 (() => {
-  const DEBUG_STORAGE_KEY =
-    "safetiiDebugMode";
+  const DEBUG_PREFIX =
+    "[Safetii Debug]";
 
-  const issues = [];
-  const issueKeys = new Set();
+  const pagePath =
+    window.location.pathname;
 
-  let debugPanel = null;
-  let debugEnabled = false;
+  const isIdentityPage =
+    pagePath.includes(
+      "/missions/identity"
+    );
 
-  const pageRules = {
-    "login.html": {
-      requiredIds: [
-        "colorChoices",
-        "animalChoices",
-        "powerChoices",
-        "heroName",
-        "chosenColor",
-        "chosenAnimal",
-        "chosenPower",
-        "generateHero",
-        "saveHero"
-      ],
+  const isArcadeHome =
+    pagePath.endsWith(
+      "/arcade/"
+    ) ||
+    pagePath.endsWith(
+      "/arcade/index.html"
+    );
 
-      requiredScripts: [
-        "safetii-storage.js",
-        "login.js"
-      ],
+  const isArcadeGame =
+    pagePath.includes(
+      "/arcade/games/"
+    );
 
-      forbiddenScripts: [
-        "script.js"
-      ]
-    },
+  const isClueCollector =
+    pagePath.includes(
+      "clue-collector"
+    );
 
-    "dashboard.html": {
-      requiredIds: [
-        "dashboardHeroName",
-        "dashboardColor",
-        "dashboardAnimal",
-        "dashboardPower",
-        "identityMissionButton"
-      ],
-
-      recommendedScripts: [
-        "safetii-storage.js",
-        "dashboard.js"
-      ]
-    },
-
-    "notebook.html": {
-      requiredIds: [
-        "notebookHeroName",
-        "notebookPoints",
-        "identityMissionStatus",
-        "identityNotebookBadge",
-        "identityBadgeText",
-        "identityStickerBook",
-        "identityMissionAction",
-        "replayIdentityFromNotebook"
-      ],
-
-      recommendedScripts: [
-        "safetii-storage.js",
-        "notebook.js"
-      ]
-    },
-
-    "identity.html": {
-      requiredIds: [
-        "missionAlert",
-        "acceptMission",
-        "exploreZone",
-        "objectsFound",
-        "lessonPopup",
-        "goUsernameLab",
-        "usernameZone",
-        "generateUsername",
-        "approveUsername",
-        "goBackpackRescue",
-        "practiceZone",
-        "dragItemCard",
-        "identityCardZone",
-        "identityFlipCard",
-        "identityCardInner",
-        "checkRepairedUsername",
-        "goFinalTest",
-        "testIntroZone",
-        "beginFinalTest",
-        "testZone",
-        "nextTest",
-        "missionResult",
-        "retryMission"
-      ],
-
-      requiredScripts: [
-        "identity-data.js",
-        "identity-core.js",
-        "identity-activities.js",
-        "identity-repair.js",
-        "identity-test.js",
-        "identity-progress.js",
-        "identity.js"
-      ],
-
-      requiredGameFunctions: [
-        "acceptMission",
-        "openLesson",
-        "closeLessonPopup",
-        "collectSticker",
-        "openUsernameLab",
-        "generateUsername",
-        "finishUsernameScan",
-        "startBackpackRescue",
-        "answerPractice",
-        "loadIdentityProfile",
-        "checkRepairedUsername",
-        "startFinalTest",
-        "beginFinalTest",
-        "answerTest",
-        "nextTestQuestion"
-      ]
-    }
-  };
+  const problems = [];
+  const warnings = [];
+  const passes = [];
 
   /* =====================================================
-     DEBUG MODE
+     CONSOLE OUTPUT
   ===================================================== */
 
-  function configureDebugMode() {
-    const parameters =
-      new URLSearchParams(
-        window.location.search
-      );
+  function pass(message) {
+    passes.push(message);
 
-    const requestedMode =
-      parameters.get("debug");
-
-    if (requestedMode === "1") {
-      localStorage.setItem(
-        DEBUG_STORAGE_KEY,
-        "true"
-      );
-    }
-
-    if (requestedMode === "0") {
-      localStorage.removeItem(
-        DEBUG_STORAGE_KEY
-      );
-    }
-
-    debugEnabled =
-      localStorage.getItem(
-        DEBUG_STORAGE_KEY
-      ) === "true";
-  }
-
-  configureDebugMode();
-
-  document.addEventListener(
-    "keydown",
-    (event) => {
-      const pressedShortcut =
-        event.ctrlKey &&
-        event.shiftKey &&
-        event.key.toLowerCase() === "d";
-
-      if (!pressedShortcut) {
-        return;
-      }
-
-      event.preventDefault();
-
-      const currentlyEnabled =
-        localStorage.getItem(
-          DEBUG_STORAGE_KEY
-        ) === "true";
-
-      if (currentlyEnabled) {
-        localStorage.removeItem(
-          DEBUG_STORAGE_KEY
-        );
-      } else {
-        localStorage.setItem(
-          DEBUG_STORAGE_KEY,
-          "true"
-        );
-      }
-
-      window.location.reload();
-    }
-  );
-
-  /* =====================================================
-     REPORT HELPERS
-  ===================================================== */
-
-  function addIssue(
-    level,
-    title,
-    detail = ""
-  ) {
-    const issueKey =
-      `${level}|${title}|${detail}`;
-
-    if (issueKeys.has(issueKey)) {
-      return;
-    }
-
-    issueKeys.add(issueKey);
-
-    issues.push({
-      level,
-      title,
-      detail
-    });
-
-    renderPanel();
-  }
-
-  function addError(
-    title,
-    detail = ""
-  ) {
-    addIssue(
-      "error",
-      title,
-      detail
+    console.log(
+      `%c✔ ${DEBUG_PREFIX} ${message}`,
+      [
+        "color: #168a52",
+        "font-weight: 800"
+      ].join(";")
     );
   }
 
-  function addWarning(
-    title,
-    detail = ""
-  ) {
-    addIssue(
-      "warning",
-      title,
-      detail
+  function warn(message) {
+    warnings.push(message);
+
+    console.warn(
+      `⚠ ${DEBUG_PREFIX} ${message}`
     );
   }
 
-  function getFileName(path) {
-    if (!path) {
-      return "";
-    }
+  function fail(message) {
+    problems.push(message);
 
-    try {
-      const url =
-        new URL(
-          path,
-          window.location.href
-        );
-
-      return (
-        url.pathname
-          .split("/")
-          .pop() || ""
-      );
-    } catch (error) {
-      return String(path)
-        .split("/")
-        .pop();
-    }
-  }
-
-  function getCurrentPageName() {
-    const pageName =
-      window.location.pathname
-        .split("/")
-        .pop();
-
-    return pageName ||
-      "index.html";
+    console.error(
+      `✖ ${DEBUG_PREFIX} ${message}`
+    );
   }
 
   /* =====================================================
-     CATCH JAVASCRIPT AND RESOURCE ERRORS EARLY
+     CATCH ERRORS BEFORE OTHER SCRIPTS FINISH
   ===================================================== */
 
   window.addEventListener(
     "error",
     (event) => {
-      const target =
-        event.target;
+      const filename =
+        event.filename ||
+        "unknown file";
 
-      if (
-        target &&
-        target !== window
-      ) {
-        const tagName =
-          target.tagName ||
-          "RESOURCE";
+      const line =
+        event.lineno ||
+        "?";
 
-        const source =
-          target.src ||
-          target.href ||
-          "(unknown source)";
+      const column =
+        event.colno ||
+        "?";
 
-        addError(
-          `${tagName} failed to load`,
-          source
-        );
-
-        return;
-      }
-
-      const location =
-        event.filename
-          ? `${event.filename}:${event.lineno || "?"}`
-          : "Unknown script";
-
-      addError(
-        event.message ||
-          "JavaScript error",
-
-        location
+      fail(
+        `${event.message} — ${filename}:${line}:${column}`
       );
-    },
-    true
+
+      showDebuggerPanel();
+    }
   );
 
   window.addEventListener(
     "unhandledrejection",
     (event) => {
       const reason =
-        event.reason;
+        event.reason?.message ||
+        String(
+          event.reason ||
+          "Unknown promise error"
+        );
 
-      addError(
-        "Unhandled promise error",
-
-        reason?.message ||
-          String(reason || "Unknown rejection")
+      fail(
+        `Unhandled promise error: ${reason}`
       );
+
+      showDebuggerPanel();
     }
   );
 
   /* =====================================================
-     DOM CHECKS
+     HELPERS
+  ===================================================== */
+
+  function byId(id) {
+    return document.getElementById(
+      id
+    );
+  }
+
+  function getFileName(url) {
+    try {
+      return new URL(
+        url,
+        window.location.href
+      ).pathname
+        .split("/")
+        .pop();
+    } catch {
+      return url;
+    }
+  }
+
+  function checkElement(id) {
+    const element =
+      byId(id);
+
+    if (element) {
+      pass(
+        `Element #${id} exists.`
+      );
+
+      return true;
+    }
+
+    fail(
+      `Missing element #${id}.`
+    );
+
+    return false;
+  }
+
+  function checkGlobal(
+    name,
+    expectedType
+  ) {
+    const value =
+      window[name];
+
+    if (
+      typeof value ===
+      expectedType
+    ) {
+      pass(
+        `window.${name} is available.`
+      );
+
+      return true;
+    }
+
+    fail(
+      `window.${name} is missing or is not a ${expectedType}.`
+    );
+
+    return false;
+  }
+
+  /* =====================================================
+     DUPLICATE IDS
   ===================================================== */
 
   function checkDuplicateIds() {
@@ -376,74 +214,97 @@
         );
       });
 
-    counts.forEach(
-      (count, id) => {
-        if (count > 1) {
-          addError(
-            `Duplicate HTML ID: #${id}`,
+    const duplicates =
+      Array.from(
+        counts.entries()
+      ).filter(
+        ([, count]) =>
+          count > 1
+      );
 
-            `${count} elements use this ID. Every ID must be unique.`
-          );
-        }
+    if (
+      duplicates.length === 0
+    ) {
+      pass(
+        "No duplicate HTML IDs found."
+      );
+
+      return;
+    }
+
+    duplicates.forEach(
+      ([id, count]) => {
+        fail(
+          `Duplicate ID #${id} appears ${count} times.`
+        );
       }
     );
   }
 
-  function checkEmptyAttributes() {
-    document
-      .querySelectorAll(
-        "img, script, link, a"
-      )
-      .forEach((element) => {
-        const attributeName =
-          element.tagName === "A"
-            ? "href"
-            : element.tagName === "LINK"
-              ? "href"
-              : "src";
+  /* =====================================================
+     SCRIPT PATH CHECKER
+  ===================================================== */
 
-        if (
-          !element.hasAttribute(
-            attributeName
-          )
-        ) {
+  function checkScripts() {
+    const scripts =
+      Array.from(
+        document.scripts
+      );
+
+    scripts.forEach(
+      (script) => {
+        if (!script.src) {
           return;
         }
 
-        const value =
-          element
-            .getAttribute(
-              attributeName
-            )
-            ?.trim();
+        const source =
+          script.getAttribute(
+            "src"
+          );
 
-        if (!value) {
-          addWarning(
-            `${element.tagName} has an empty ${attributeName}`,
-
-            element.outerHTML.slice(
-              0,
-              180
-            )
+        if (
+          source.includes("././")
+        ) {
+          fail(
+            `Suspicious script path: ${source}. Replace ././ with the correct ../ or ../../ path.`
           );
         }
 
-        if (
-          element.tagName === "A" &&
-          value === "#"
-        ) {
-          addWarning(
-            "Link points only to #",
+        pass(
+          `Script included: ${getFileName(script.src)}`
+        );
+      }
+    );
+  }
 
-            element.textContent.trim() ||
-              element.outerHTML.slice(
-                0,
-                120
-              )
+  /* =====================================================
+     STYLESHEET PATH CHECKER
+  ===================================================== */
+
+  function checkStylesheets() {
+    document
+      .querySelectorAll(
+        'link[rel="stylesheet"]'
+      )
+      .forEach((link) => {
+        const href =
+          link.getAttribute(
+            "href"
+          ) || "";
+
+        if (
+          href.includes("././")
+        ) {
+          fail(
+            `Suspicious stylesheet path: ${href}.`
           );
         }
       });
   }
+
+  /* =====================================================
+     IMAGE CHECKER
+  ===================================================== */
 
   function checkImages() {
     document
@@ -451,874 +312,468 @@
       .forEach((image) => {
         if (
           image.complete &&
-          image.naturalWidth === 0
+          image.naturalWidth > 0
         ) {
-          addError(
-            "Broken image",
-
-            image.currentSrc ||
-              image.src ||
-              image.getAttribute("src") ||
-              "Unknown image"
-          );
+          return;
         }
 
-        if (
-          !image.hasAttribute("alt")
-        ) {
-          addWarning(
-            "Image is missing alt text",
+        image.addEventListener(
+          "error",
+          () => {
+            fail(
+              `Image failed to load: ${image.getAttribute("src")}`
+            );
 
-            image.src ||
-              image.outerHTML.slice(
-                0,
-                140
-              )
+            showDebuggerPanel();
+          },
+          {
+            once: true
+          }
+        );
+      });
+  }
+
+  /* =====================================================
+     LINK CHECKER
+  ===================================================== */
+
+  function checkArcadeLinks() {
+    document
+      .querySelectorAll("a")
+      .forEach((link) => {
+        const text =
+          link.textContent
+            .trim()
+            .toLowerCase();
+
+        const href =
+          link.getAttribute(
+            "href"
+          ) || "";
+
+        if (
+          text.includes(
+            "cyber arcade"
+          ) &&
+          (
+            href === "#arcade" ||
+            href.endsWith(
+              "index.html#arcade"
+            )
+          )
+        ) {
+          warn(
+            `Cyber Arcade link still points to the homepage section: ${href}`
           );
         }
       });
   }
 
-  function checkScripts() {
-    const scriptFiles =
+  /* =====================================================
+     BUTTON CLICK TEST
+  ===================================================== */
+
+  function monitorButton(
+    id,
+    label
+  ) {
+    const button =
+      byId(id);
+
+    if (!button) {
+      fail(
+        `${label} button #${id} is missing.`
+      );
+
+      return;
+    }
+
+    pass(
+      `${label} button #${id} exists.`
+    );
+
+    button.addEventListener(
+      "click",
+      () => {
+        console.log(
+          `%c🖱 ${DEBUG_PREFIX} ${label} was clicked.`,
+          "color: #6d38db; font-weight: 900"
+        );
+      },
+      {
+        capture: true
+      }
+    );
+  }
+
+  /* =====================================================
+     IDENTITY ISLAND CHECKS
+  ===================================================== */
+
+  function checkIdentityIsland() {
+    pass(
+      "Running Identity Island checks."
+    );
+
+    checkGlobal(
+      "IdentityGame",
+      "object"
+    );
+
+    [
+      "missionAlert",
+      "exploreZone",
+      "piecesOfMeZone",
+      "trustCircleZone",
+      "clueCollectorZone",
+      "impostorZone",
+      "usernameZone",
+      "practiceZone",
+      "identityCardZone",
+      "testIntroZone",
+      "testZone"
+    ].forEach(
+      checkElement
+    );
+
+    monitorButton(
+      "acceptMission",
+      "Accept Mission"
+    );
+  }
+
+  /* =====================================================
+     ARCADE HOME CHECKS
+  ===================================================== */
+
+  function checkArcadeHome() {
+    pass(
+      "Running Cyber Arcade homepage checks."
+    );
+
+    checkGlobal(
+      "SafetiiArcade",
+      "object"
+    );
+
+    const gameLinks =
+      document.querySelectorAll(
+        'a[href*="/games/"], a[href*="games/"]'
+      );
+
+    if (
+      gameLinks.length > 0
+    ) {
+      pass(
+        `${gameLinks.length} arcade game link(s) found.`
+      );
+    } else {
+      warn(
+        "No arcade game links were found."
+      );
+    }
+  }
+
+  /* =====================================================
+     GENERAL ARCADE GAME CHECKS
+  ===================================================== */
+
+  function checkArcadeGame() {
+    pass(
+      "Running arcade game checks."
+    );
+
+    checkGlobal(
+      "SafetiiArcade",
+      "object"
+    );
+
+    [
+      "introScreen",
+      "playScreen",
+      "resultScreen",
+      "startGame",
+      "globalPoints"
+    ].forEach(
+      checkElement
+    );
+
+    monitorButton(
+      "startGame",
+      "Start Game"
+    );
+  }
+
+  /* =====================================================
+     CLUE COLLECTOR CHECKS
+  ===================================================== */
+
+  function checkClueCollector() {
+    pass(
+      "Running Clue Collector checks."
+    );
+
+    const requiredElements = [
+      "startGame",
+      "introScreen",
+      "playScreen",
+      "resultScreen",
+      "dynamicSocialStage",
+      "checkAnswers",
+      "clearSelections",
+      "nextProfile",
+      "profileNumber",
+      "profileTotal",
+      "currentScore",
+      "currentHeat",
+      "clueFeedbackPanel",
+      "clueExplanationPopup"
+    ];
+
+    requiredElements.forEach(
+      checkElement
+    );
+
+    const scoreScript =
       Array.from(
         document.scripts
-      )
-        .map((script) =>
-          getFileName(script.src)
-        )
-        .filter(Boolean);
-
-    const counts =
-      new Map();
-
-    scriptFiles.forEach((file) => {
-      counts.set(
-        file,
-        (counts.get(file) || 0) + 1
+      ).find(
+        (script) =>
+          script.src.includes(
+            "arcade-score.js"
+          )
       );
-    });
 
-    counts.forEach(
-      (count, file) => {
-        if (count > 1) {
-          addWarning(
-            `Script loaded more than once: ${file}`,
+    const clueScript =
+      Array.from(
+        document.scripts
+      ).find(
+        (script) =>
+          script.src.includes(
+            "clue-collector.js"
+          )
+      );
 
-            `${count} copies were found.`
-          );
-        }
-      }
-    );
-
-    return scriptFiles;
-  }
-
-  function checkRenderedJson() {
-    document
-      .querySelectorAll(
-        "h1, h2, h3, p, strong"
-      )
-      .forEach((element) => {
-        const text =
-          element.textContent.trim();
-
-        const looksLikeJson =
-          text.startsWith("{") &&
-          text.includes('"name"');
-
-        if (looksLikeJson) {
-          addError(
-            "Saved hero object is being displayed as text",
-
-            `Parse safetiiHero with JSON.parse() and display hero.name instead. Found in <${element.tagName.toLowerCase()}>.`
-          );
-        }
-      });
-  }
-
-  function checkDocumentBasics() {
-    if (!document.title.trim()) {
-      addWarning(
-        "Page title is empty"
+    if (scoreScript) {
+      pass(
+        "arcade-score.js is included."
+      );
+    } else {
+      fail(
+        "arcade-score.js is not included."
       );
     }
 
-    if (!document.body) {
-      addError(
-        "Document body is missing"
+    if (clueScript) {
+      pass(
+        "clue-collector.js is included."
       );
-
-      return;
+    } else {
+      fail(
+        "clue-collector.js is not included."
+      );
     }
 
     if (
-      document.body.children.length === 0
+      window.SafetiiArcade
     ) {
-      addError(
-        "Page body is empty"
+      const requiredFunctions = [
+        "startRound",
+        "answerQuestion",
+        "finishRound",
+        "getCurrentRound",
+        "getGlobalPoints"
+      ];
+
+      requiredFunctions.forEach(
+        (functionName) => {
+          if (
+            typeof window
+              .SafetiiArcade[
+                functionName
+              ] === "function"
+          ) {
+            pass(
+              `SafetiiArcade.${functionName}() exists.`
+            );
+          } else {
+            fail(
+              `SafetiiArcade.${functionName}() is missing.`
+            );
+          }
+        }
       );
     }
 
-    const stylesheets =
-      document.querySelectorAll(
-        'link[rel="stylesheet"]'
-      );
+    const startButton =
+      byId("startGame");
 
-    if (
-      stylesheets.length === 0
-    ) {
-      addWarning(
-        "No external stylesheet was found"
+    if (startButton) {
+      window.setTimeout(
+        () => {
+          const intro =
+            byId("introScreen");
+
+          const play =
+            byId("playScreen");
+
+          if (
+            !intro ||
+            !play
+          ) {
+            return;
+          }
+
+          console.log(
+            `${DEBUG_PREFIX} Start button ready for manual testing.`
+          );
+        },
+        500
       );
     }
   }
 
   /* =====================================================
-     PAGE-SPECIFIC CHECKS
+     VISUAL DEBUG PANEL
   ===================================================== */
 
-  function checkRequiredIds(
-    requiredIds
-  ) {
-    requiredIds.forEach((id) => {
-      if (
-        !document.getElementById(id)
-      ) {
-        addError(
-          `Required element is missing: #${id}`
-        );
-      }
-    });
-  }
-
-  function checkRequiredScripts(
-    requiredScripts,
-    loadedScripts
-  ) {
-    requiredScripts.forEach(
-      (requiredFile) => {
-        if (
-          !loadedScripts.includes(
-            requiredFile
-          )
-        ) {
-          addError(
-            `Required script is missing: ${requiredFile}`
-          );
-        }
-      }
-    );
-  }
-
-  function checkRecommendedScripts(
-    recommendedScripts,
-    loadedScripts
-  ) {
-    recommendedScripts.forEach(
-      (recommendedFile) => {
-        if (
-          !loadedScripts.includes(
-            recommendedFile
-          )
-        ) {
-          addWarning(
-            `Recommended script is not loaded: ${recommendedFile}`
-          );
-        }
-      }
-    );
-  }
-
-  function checkForbiddenScripts(
-    forbiddenScripts,
-    loadedScripts
-  ) {
-    forbiddenScripts.forEach(
-      (forbiddenFile) => {
-        if (
-          loadedScripts.includes(
-            forbiddenFile
-          )
-        ) {
-          addError(
-            `Conflicting script is still loaded: ${forbiddenFile}`,
-
-            "This page should use its dedicated controller instead."
-          );
-        }
-      }
-    );
-  }
-
-  function checkIdentityGameFunctions(
-    functionNames
-  ) {
-    const game =
-      window.IdentityGame;
-
-    if (!game) {
-      addError(
-        "window.IdentityGame is missing",
-
-        "One of the Identity Island scripts failed before creating the game namespace."
-      );
-
-      return;
-    }
-
-    functionNames.forEach(
-      (functionName) => {
-        if (
-          typeof game[
-            functionName
-          ] !== "function"
-        ) {
-          addError(
-            `Identity function is missing: game.${functionName}()`
-          );
-        }
-      }
-    );
-  }
-
-  function checkPageRules() {
-    const pageName =
-      getCurrentPageName();
-
-    const rules =
-      pageRules[pageName];
-
-    if (!rules) {
-      return;
-    }
-
-    const loadedScripts =
-      checkScripts();
-
-    if (rules.requiredIds) {
-      checkRequiredIds(
-        rules.requiredIds
-      );
-    }
-
-    if (rules.requiredScripts) {
-      checkRequiredScripts(
-        rules.requiredScripts,
-        loadedScripts
-      );
-    }
-
-    if (rules.recommendedScripts) {
-      checkRecommendedScripts(
-        rules.recommendedScripts,
-        loadedScripts
-      );
-    }
-
-    if (rules.forbiddenScripts) {
-      checkForbiddenScripts(
-        rules.forbiddenScripts,
-        loadedScripts
-      );
-    }
-
+  function createDebuggerPanel() {
     if (
-      rules.requiredGameFunctions
-    ) {
-      checkIdentityGameFunctions(
-        rules.requiredGameFunctions
-      );
-    }
-  }
-
-  /* =====================================================
-     STORAGE CHECKS
-  ===================================================== */
-
-  function safelyParseStorage(
-    key
-  ) {
-    const rawValue =
-      localStorage.getItem(key);
-
-    if (rawValue === null) {
-      return null;
-    }
-
-    try {
-      return JSON.parse(rawValue);
-    } catch (error) {
-      addError(
-        `Saved data is invalid: ${key}`,
-
-        error.message
-      );
-
-      return null;
-    }
-  }
-
-  function checkHeroStorage() {
-    const legacyHero =
-      localStorage.getItem(
-        "safetiiHero"
-      );
-
-    if (legacyHero !== null) {
-      const parsedHero =
-        safelyParseStorage(
-          "safetiiHero"
-        );
-
-      if (
-        parsedHero &&
-        typeof parsedHero !== "object"
-      ) {
-        addWarning(
-          "safetiiHero is not stored as an object"
-        );
-      }
-
-      if (
-        parsedHero &&
-        !parsedHero.name
-      ) {
-        addWarning(
-          "Saved hero has no name"
-        );
-      }
-    }
-
-    const multiHeroStore =
-      localStorage.getItem(
-        "safetiiHeroesV1"
-      );
-
-    if (multiHeroStore === null) {
-      return;
-    }
-
-    const store =
-      safelyParseStorage(
-        "safetiiHeroesV1"
-      );
-
-    if (
-      !store ||
-      typeof store !== "object"
+      byId("safetiiDebuggerPanel")
     ) {
       return;
     }
 
-    if (!Array.isArray(store.heroes)) {
-      addError(
-        "Multi-hero save has no heroes array"
-      );
-
-      return;
-    }
-
-    if (
-      store.activeHeroId &&
-      !store.heroes.some(
-        (hero) =>
-          hero.id ===
-          store.activeHeroId
-      )
-    ) {
-      addError(
-        "Active hero ID does not match a saved hero",
-
-        store.activeHeroId
-      );
-    }
-
-    const duplicateHeroIds =
-      store.heroes
-        .map((hero) => hero.id)
-        .filter(
-          (id, index, allIds) =>
-            id &&
-            allIds.indexOf(id) !==
-              index
-        );
-
-    if (
-      duplicateHeroIds.length > 0
-    ) {
-      addError(
-        "Two saved heroes share the same ID",
-
-        duplicateHeroIds.join(", ")
-      );
-    }
-  }
-
-  function checkIdentityStorage() {
-    const progress =
-      safelyParseStorage(
-        "safetiiIdentityProgress"
-      );
-
-    const stickerArray =
-      safelyParseStorage(
-        "identityStickers"
-      );
-
-    if (
-      progress?.foundStickers &&
-      Array.isArray(stickerArray)
-    ) {
-      const progressCount =
-        progress.foundStickers.length;
-
-      const stickerCount =
-        stickerArray.length;
-
-      if (
-        progressCount !==
-        stickerCount
-      ) {
-        addWarning(
-          "Identity sticker saves do not match",
-
-          `Progress has ${progressCount}; identityStickers has ${stickerCount}.`
-        );
-      }
-    }
-  }
-
-  function checkStorage() {
-    checkHeroStorage();
-    checkIdentityStorage();
-  }
-
-  /* =====================================================
-     PANEL
-  ===================================================== */
-
-  function createPanel() {
-    if (
-      debugPanel ||
-      !debugEnabled
-    ) {
-      return;
-    }
-
-    const style =
-      document.createElement(
-        "style"
-      );
-
-    style.textContent = `
-      #safetiiDebugPanel {
-        position: fixed;
-        right: 16px;
-        bottom: 16px;
-        z-index: 2147483647;
-
-        width: min(420px, calc(100vw - 32px));
-        max-height: 72vh;
-
-        display: flex;
-        flex-direction: column;
-
-        background: #15213a;
-        color: #ffffff;
-
-        border: 4px solid #ffe76b;
-        border-radius: 22px;
-
-        box-shadow:
-          0 18px 55px
-          rgba(0, 0, 0, 0.45);
-
-        font-family:
-          Arial,
-          Helvetica,
-          sans-serif;
-      }
-
-      #safetiiDebugPanel * {
-        box-sizing: border-box;
-      }
-
-      .safetii-debug-header {
-        padding: 14px 16px;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-
-        background: #23324d;
-        border-radius: 17px 17px 0 0;
-      }
-
-      .safetii-debug-title {
-        margin: 0;
-        color: #ffe76b;
-        font-size: 1rem;
-      }
-
-      .safetii-debug-summary {
-        margin: 4px 0 0;
-        font-size: 0.78rem;
-      }
-
-      .safetii-debug-close {
-        padding: 7px 10px;
-
-        background: #ffffff;
-        color: #23324d;
-
-        border: 0;
-        border-radius: 10px;
-
-        font-weight: 900;
-        cursor: pointer;
-      }
-
-      .safetii-debug-list {
-        margin: 0;
-        padding: 12px;
-
-        display: grid;
-        gap: 10px;
-
-        overflow-y: auto;
-        list-style: none;
-      }
-
-      .safetii-debug-item {
-        padding: 11px;
-
-        border-radius: 13px;
-
-        font-size: 0.82rem;
-        line-height: 1.4;
-      }
-
-      .safetii-debug-error {
-        background: #541f32;
-        border: 2px solid #ff6b8f;
-      }
-
-      .safetii-debug-warning {
-        background: #51421d;
-        border: 2px solid #ffe76b;
-      }
-
-      .safetii-debug-good {
-        background: #174c3a;
-        border: 2px solid #53e0a5;
-      }
-
-      .safetii-debug-item strong {
-        display: block;
-        margin-bottom: 3px;
-      }
-
-      .safetii-debug-detail {
-        color: #e4ebf7;
-        overflow-wrap: anywhere;
-      }
-
-      .safetii-debug-actions {
-        padding: 12px;
-
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-
-        border-top: 1px solid
-          rgba(255, 255, 255, 0.16);
-      }
-
-      .safetii-debug-actions button {
-        padding: 9px 12px;
-
-        background: #ffffff;
-        color: #23324d;
-
-        border: 0;
-        border-radius: 10px;
-
-        font-weight: 900;
-        cursor: pointer;
-      }
-
-      .safetii-debug-actions button:hover {
-        background: #15d3dc;
-      }
-    `;
-
-    document.head.appendChild(
-      style
-    );
-
-    debugPanel =
+    const panel =
       document.createElement(
         "aside"
       );
 
-    debugPanel.id =
-      "safetiiDebugPanel";
+    panel.id =
+      "safetiiDebuggerPanel";
 
-    debugPanel.setAttribute(
-      "aria-label",
-      "Safetii Net debugger"
-    );
+    panel.innerHTML = `
+      <button
+        id="safetiiDebuggerToggle"
+        type="button"
+        aria-expanded="true"
+      >
+        🛠 Debugger
+      </button>
 
-    document.body.appendChild(
-      debugPanel
-    );
-  }
+      <div id="safetiiDebuggerContent">
+        <strong>
+          Safetii Net Debugger
+        </strong>
 
-  function createReportText() {
-    const pageName =
-      getCurrentPageName();
+        <p id="safetiiDebuggerSummary">
+          Checking page…
+        </p>
 
-    const lines = [
-      "SAFETII NET DEBUG REPORT",
-      `Page: ${pageName}`,
-      `URL: ${window.location.href}`,
-      `Generated: ${new Date().toLocaleString()}`,
-      ""
-    ];
-
-    if (issues.length === 0) {
-      lines.push(
-        "No problems were detected."
-      );
-
-      return lines.join("\n");
-    }
-
-    issues.forEach(
-      (issue, index) => {
-        lines.push(
-          `${index + 1}. [${issue.level.toUpperCase()}] ${issue.title}`
-        );
-
-        if (issue.detail) {
-          lines.push(
-            `   ${issue.detail}`
-          );
-        }
-      }
-    );
-
-    return lines.join("\n");
-  }
-
-  async function copyReport() {
-    const report =
-      createReportText();
-
-    try {
-      await navigator.clipboard.writeText(
-        report
-      );
-
-      window.alert(
-        "Debug report copied."
-      );
-    } catch (error) {
-      console.log(report);
-
-      window.alert(
-        "The browser could not copy automatically. The report was printed in the console."
-      );
-    }
-  }
-
-  function renderPanel() {
-    if (
-      !debugPanel ||
-      !debugEnabled
-    ) {
-      return;
-    }
-
-    const errorCount =
-      issues.filter(
-        (issue) =>
-          issue.level === "error"
-      ).length;
-
-    const warningCount =
-      issues.filter(
-        (issue) =>
-          issue.level === "warning"
-      ).length;
-
-    const issueMarkup =
-      issues.length === 0
-        ? `
-          <li class="
-            safetii-debug-item
-            safetii-debug-good
-          ">
-            <strong>
-              ✅ No problems detected
-            </strong>
-
-            This page passed the current checks.
-          </li>
-        `
-        : issues
-            .map((issue) => {
-              const icon =
-                issue.level === "error"
-                  ? "❌"
-                  : "⚠️";
-
-              const cssClass =
-                issue.level === "error"
-                  ? "safetii-debug-error"
-                  : "safetii-debug-warning";
-
-              return `
-                <li class="
-                  safetii-debug-item
-                  ${cssClass}
-                ">
-                  <strong>
-                    ${icon}
-                    ${escapeHtml(
-                      issue.title
-                    )}
-                  </strong>
-
-                  ${
-                    issue.detail
-                      ? `
-                        <div class="
-                          safetii-debug-detail
-                        ">
-                          ${escapeHtml(
-                            issue.detail
-                          )}
-                        </div>
-                      `
-                      : ""
-                  }
-                </li>
-              `;
-            })
-            .join("");
-
-    debugPanel.innerHTML = `
-      <div class="safetii-debug-header">
-        <div>
-          <h2 class="safetii-debug-title">
-            🐞 Safetii Debug:
-            ${escapeHtml(
-              getCurrentPageName()
-            )}
-          </h2>
-
-          <p class="safetii-debug-summary">
-            ${errorCount} error(s) ·
-            ${warningCount} warning(s)
-          </p>
-        </div>
+        <div id="safetiiDebuggerProblems"></div>
 
         <button
-          class="safetii-debug-close"
-          id="closeSafetiiDebug"
-          type="button"
-          aria-label="Hide debugger"
-        >
-          ×
-        </button>
-      </div>
-
-      <ul class="safetii-debug-list">
-        ${issueMarkup}
-      </ul>
-
-      <div class="safetii-debug-actions">
-        <button
-          id="rerunSafetiiDebug"
+          id="safetiiRunChecks"
           type="button"
         >
-          Re-run Checks
-        </button>
-
-        <button
-          id="copySafetiiDebug"
-          type="button"
-        >
-          Copy Report
-        </button>
-
-        <button
-          id="disableSafetiiDebug"
-          type="button"
-        >
-          Turn Off
+          Run Checks Again
         </button>
       </div>
     `;
 
-    document
-      .getElementById(
-        "closeSafetiiDebug"
-      )
+    Object.assign(
+      panel.style,
+      {
+        position: "fixed",
+        left: "14px",
+        bottom: "14px",
+        zIndex: "99999",
+        width: "min(390px, calc(100vw - 28px))",
+        padding: "12px",
+        background: "rgba(22, 29, 52, 0.97)",
+        color: "white",
+        border: "3px solid #7d43ff",
+        borderRadius: "16px",
+        boxShadow: "0 14px 36px rgba(0,0,0,.3)",
+        fontFamily: "Arial, sans-serif",
+        fontSize: "13px"
+      }
+    );
+
+    document.body.appendChild(
+      panel
+    );
+
+    byId("safetiiDebuggerToggle")
       ?.addEventListener(
         "click",
         () => {
-          debugPanel.style.display =
-            "none";
+          const content =
+            byId(
+              "safetiiDebuggerContent"
+            );
+
+          const hidden =
+            content?.hidden;
+
+          if (content) {
+            content.hidden =
+              !hidden;
+          }
         }
       );
 
-    document
-      .getElementById(
-        "rerunSafetiiDebug"
-      )
+    byId("safetiiRunChecks")
       ?.addEventListener(
         "click",
-        () => {
-          window.location.reload();
-        }
-      );
-
-    document
-      .getElementById(
-        "copySafetiiDebug"
-      )
-      ?.addEventListener(
-        "click",
-        copyReport
-      );
-
-    document
-      .getElementById(
-        "disableSafetiiDebug"
-      )
-      ?.addEventListener(
-        "click",
-        () => {
-          localStorage.removeItem(
-            DEBUG_STORAGE_KEY
-          );
-
-          window.location.reload();
-        }
+        runChecks
       );
   }
 
-  function escapeHtml(value) {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  function showDebuggerPanel() {
+    createDebuggerPanel();
+
+    const summary =
+      byId(
+        "safetiiDebuggerSummary"
+      );
+
+    const problemArea =
+      byId(
+        "safetiiDebuggerProblems"
+      );
+
+    if (summary) {
+      summary.textContent =
+        problems.length > 0
+          ? `${problems.length} problem(s), ${warnings.length} warning(s)`
+          : `No detected errors. ${warnings.length} warning(s).`;
+    }
+
+    if (problemArea) {
+      const problemHtml =
+        problems
+          .slice(-8)
+          .map(
+            (problem) =>
+              `<p style="color:#ff9fbd;margin:7px 0;">✖ ${problem}</p>`
+          )
+          .join("");
+
+      const warningHtml =
+        warnings
+          .slice(-5)
+          .map(
+            (warning) =>
+              `<p style="color:#ffe782;margin:7px 0;">⚠ ${warning}</p>`
+          )
+          .join("");
+
+      problemArea.innerHTML =
+        problemHtml +
+        warningHtml ||
+        '<p style="color:#85f0b7;">✔ No problems detected.</p>';
+    }
   }
 
   /* =====================================================
@@ -1326,53 +781,53 @@
   ===================================================== */
 
   function runChecks() {
-    checkDocumentBasics();
-    checkDuplicateIds();
-    checkEmptyAttributes();
-    checkImages();
-    checkScripts();
-    checkRenderedJson();
-    checkStorage();
-    checkPageRules();
-
-    renderPanel();
+    problems.length = 0;
+    warnings.length = 0;
+    passes.length = 0;
 
     console.group(
-      `🐞 Safetii Debug: ${getCurrentPageName()}`
+      `${DEBUG_PREFIX} Page Report`
     );
 
-    if (issues.length === 0) {
-      console.log(
-        "✅ No problems detected."
-      );
-    } else {
-      issues.forEach((issue) => {
-        const method =
-          issue.level === "error"
-            ? "error"
-            : "warn";
+    console.log(
+      "Page:",
+      window.location.href
+    );
 
-        console[method](
-          issue.title,
-          issue.detail
-        );
-      });
+    checkDuplicateIds();
+    checkScripts();
+    checkStylesheets();
+    checkImages();
+    checkArcadeLinks();
+
+    if (isIdentityPage) {
+      checkIdentityIsland();
+    }
+
+    if (isArcadeHome) {
+      checkArcadeHome();
+    }
+
+    if (isArcadeGame) {
+      checkArcadeGame();
+    }
+
+    if (isClueCollector) {
+      checkClueCollector();
     }
 
     console.groupEnd();
+
+    showDebuggerPanel();
   }
 
+  /* =====================================================
+     START AFTER HTML LOADS
+  ===================================================== */
+
   function initializeDebugger() {
-    if (!debugEnabled) {
-      return;
-    }
+    createDebuggerPanel();
 
-    createPanel();
-
-    /*
-      Give other DOMContentLoaded scripts a moment
-      to create their buttons and page content.
-    */
     window.setTimeout(
       runChecks,
       250
@@ -1380,7 +835,8 @@
   }
 
   if (
-    document.readyState === "loading"
+    document.readyState ===
+    "loading"
   ) {
     document.addEventListener(
       "DOMContentLoaded",
