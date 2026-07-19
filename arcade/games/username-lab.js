@@ -394,38 +394,37 @@
      WHEEL DEFINITIONS
   ===================================================== */
 
-  const wheelDefinitions = [
-    {
-      element: "wheelOne",
-      word: "wheelOneWord",
-      category: "wheelOneCategory",
-      warning: "wheelOneWarning",
-      lockButton: "wheelOneLock",
-      rerollButton: "wheelOneReroll",
-      defaultCategory: "style"
-    },
+const wheelDefinitions = [
+  {
+    element: "wheelOne",
+    wordElement: "wheelOneWord",
+    category: "wheelOneCategory",
+    warning: "wheelOneWarning",
+    lockButton: "wheelOneLock",
+    rerollButton: "wheelOneReroll",
+    defaultCategory: "style"
+  },
 
-    {
-      element: "wheelTwo",
-      word: "wheelTwoWord",
-      category: "wheelTwoCategory",
-      warning: "wheelTwoWarning",
-      lockButton: "wheelTwoLock",
-      rerollButton: "wheelTwoReroll",
-      defaultCategory: "creature"
-    },
+  {
+    element: "wheelTwo",
+    wordElement: "wheelTwoWord",
+    category: "wheelTwoCategory",
+    warning: "wheelTwoWarning",
+    lockButton: "wheelTwoLock",
+    rerollButton: "wheelTwoReroll",
+    defaultCategory: "creature"
+  },
 
-    {
-      element: "wheelThree",
-      word: "wheelThreeWord",
-      category: "wheelThreeCategory",
-      warning: "wheelThreeWarning",
-      lockButton: "wheelThreeLock",
-      rerollButton: "wheelThreeReroll",
-      defaultCategory: "power"
-    }
-  ];
-
+  {
+    element: "wheelThree",
+    wordElement: "wheelThreeWord",
+    category: "wheelThreeCategory",
+    warning: "wheelThreeWarning",
+    lockButton: "wheelThreeLock",
+    rerollButton: "wheelThreeReroll",
+    defaultCategory: "power"
+  }
+];
   /* =====================================================
      GAME STATE
   ===================================================== */
