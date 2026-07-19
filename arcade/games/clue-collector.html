@@ -28,34 +28,68 @@
     rel="stylesheet"
   >
 
-  <link
-    rel="stylesheet"
-    href="../../css/style.css"
-  >
+ <link
+  rel="stylesheet"
+  href="../../css/style.css"
+>
 
-  <link
-    rel="stylesheet"
-    href="../../css/arcade-game.css"
-  >
+<link
+  rel="stylesheet"
+  href="../../css/arcade-game.css"
+>
 </head>
 
 <body class="arcade-game-page">
 
-  <header class="game-topbar">
-    <a
-      class="game-back-link"
-      href="../index.html"
+<header class="site-header arcade-site-header">
+
+  <a
+    href="../../index.html"
+    class="logo"
+  >
+    <img
+      src="../../assets/SafetiiNet-logo-navbar.png"
+      alt="Safetii Net"
     >
-      ← Cyber Arcade
+  </a>
+
+  <nav class="arcade-main-nav">
+    <a href="../../dashboard.html">
+      Hero Headquarters
     </a>
 
-    <div class="game-topbar-title">
-      <span>🔎</span>
+    <a href="../../index.html#missions">
+      Missions
+    </a>
 
-      <strong>
-        Clue Collector
-      </strong>
-    </div>
+    <a
+      href="../index.html"
+      class="active-nav-link"
+      aria-current="page"
+    >
+      Cyber Arcade
+    </a>
+
+    <a href="../../parents.html">
+      Parents
+    </a>
+
+    <a href="../../teachers.html">
+      Teachers
+    </a>
+  </nav>
+
+  <div class="game-points-pill arcade-navbar-points">
+    ⭐
+
+    <span id="globalPoints">
+      0
+    </span>
+
+    Points
+  </div>
+
+</header>
 
     <div class="game-points-pill">
       ⭐
@@ -884,8 +918,7 @@
   </main>
 
 
-  <script src="../../js/arcade/arcade-score.js"></script>
+ <script src="../../js/arcade/arcade-score.js"></script>
 
-  <script src="../../js/arcade/games/clue-collector.js"></script>
-</body>
+<script src="../../js/arcade/games/clue-collector.js"></script>
 </html>
