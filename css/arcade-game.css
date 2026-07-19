@@ -1010,3 +1010,239 @@ a {
         font-size: 1.8rem;
     }
 }
+
+/* =========================================================
+   MEME ARCADE REACTIONS
+========================================================= */
+
+.question-stage {
+    position: relative;
+}
+
+.arcade-meme-reaction {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 500;
+
+    width: min(360px, calc(100vw - 32px));
+    padding: 15px;
+
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    align-items: center;
+    gap: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.97);
+
+    border: 4px solid var(--game-yellow);
+    border-radius: 24px;
+
+    box-shadow:
+        0 20px 45px
+        rgba(34, 37, 81, 0.26);
+}
+
+.arcade-meme-reaction.hidden {
+    display: none;
+}
+
+.arcade-meme-reaction.show-reaction {
+    animation:
+        memeReactionEntrance
+        550ms
+        cubic-bezier(
+            0.2,
+            1.4,
+            0.4,
+            1
+        )
+        both;
+}
+
+.arcade-meme-reaction.correct-reaction {
+    border-color: var(--game-green);
+}
+
+.arcade-meme-reaction.wrong-reaction {
+    border-color: var(--game-pink);
+}
+
+.arcade-meme-reaction img {
+    width: 105px;
+    height: 125px;
+
+    display: block;
+
+    object-fit: contain;
+
+    animation:
+        memeFloating
+        1.5s
+        ease-in-out
+        infinite;
+}
+
+.arcade-meme-speech {
+    padding: 12px;
+
+    background: #f7f5ff;
+
+    border: 2px solid var(--game-border);
+    border-radius: 17px;
+}
+
+.arcade-meme-speech strong {
+    display: block;
+
+    color: var(--game-purple);
+
+    font-size: 1rem;
+}
+
+.arcade-meme-speech p {
+    margin: 5px 0 0;
+
+    color: #59667c;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.result-meme-celebration {
+    position: relative;
+
+    width: 230px;
+    height: 180px;
+    margin: 0 auto 15px;
+}
+
+.result-meme-celebration img {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 145px;
+    height: 175px;
+
+    object-fit: contain;
+
+    animation:
+        resultMemeBounce
+        1.2s
+        ease-in-out
+        infinite;
+}
+
+.result-meme-celebration .result-icon {
+    position: absolute;
+    right: 0;
+    top: 30px;
+
+    width: 95px;
+    height: 95px;
+    margin: 0;
+
+    animation:
+        trophyPulse
+        1.4s
+        ease-in-out
+        infinite;
+}
+
+@keyframes memeReactionEntrance {
+    0% {
+        opacity: 0;
+        transform:
+            translateX(130%)
+            rotate(8deg)
+            scale(0.75);
+    }
+
+    70% {
+        opacity: 1;
+        transform:
+            translateX(-10px)
+            rotate(-3deg)
+            scale(1.05);
+    }
+
+    100% {
+        opacity: 1;
+        transform:
+            translateX(0)
+            rotate(0)
+            scale(1);
+    }
+}
+
+@keyframes memeFloating {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50% {
+        transform:
+            translateY(-9px)
+            rotate(2deg);
+    }
+}
+
+@keyframes resultMemeBounce {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-3deg);
+    }
+
+    50% {
+        transform:
+            translateY(-13px)
+            rotate(3deg);
+    }
+}
+
+@keyframes trophyPulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@media (max-width: 650px) {
+    .arcade-meme-reaction {
+        right: 10px;
+        bottom: 10px;
+
+        grid-template-columns:
+            80px 1fr;
+    }
+
+    .arcade-meme-reaction img {
+        width: 80px;
+        height: 100px;
+    }
+}
+
+@media (
+    prefers-reduced-motion:
+    reduce
+) {
+    .arcade-meme-reaction,
+    .arcade-meme-reaction img,
+    .result-meme-celebration img,
+    .result-meme-celebration
+    .result-icon {
+        animation: none;
+    }
+}
