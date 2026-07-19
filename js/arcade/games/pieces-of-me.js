@@ -385,6 +385,8 @@ byId(
   ===================================================== */
 
   function loadQuestion() {
+     closeCategoryHint();
+     
     const question =
       questions[
         currentQuestionIndex
