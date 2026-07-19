@@ -248,6 +248,8 @@
   ===================================================== */
 
   function startGame() {
+     hideMemeReaction();
+     
     currentQuestionIndex =
       0;
 
@@ -390,6 +392,106 @@
     updateLiveScore();
   }
 
+   /* =====================================================
+   MEME REACTIONS
+===================================================== */
+
+function showMemeReaction({
+  correct,
+  points
+}) {
+  const reaction =
+    byId(
+      "memeReaction"
+    );
+
+  const image =
+    byId(
+      "memeReactionImage"
+    );
+
+  if (
+    !reaction ||
+    !image
+  ) {
+    return;
+  }
+
+  reaction.classList.remove(
+    "hidden",
+    "show-reaction",
+    "correct-reaction",
+    "wrong-reaction"
+  );
+
+  /*
+    Restart the entrance animation each time.
+  */
+  void reaction.offsetWidth;
+
+  reaction.classList.add(
+    "show-reaction",
+    correct
+      ? "correct-reaction"
+      : "wrong-reaction"
+  );
+
+  if (correct) {
+    image.src =
+      "../../assets/mascot/congrats.png";
+
+    image.alt =
+      "Meme celebrates a correct answer";
+
+    setText(
+      "memeReactionTitle",
+      "Cyber-smart answer!"
+    );
+
+    setText(
+      "memeReactionMessage",
+      `You earned ${points} points.`
+    );
+  } else {
+    image.src =
+      "../../assets/mascot/wrong.png";
+
+    image.alt =
+      "Meme encourages the player after an incorrect answer";
+
+    setText(
+      "memeReactionTitle",
+      "Good investigation!"
+    );
+
+    setText(
+      "memeReactionMessage",
+      "No points this time, but remember the clue for your next round."
+    );
+  }
+}
+
+function hideMemeReaction() {
+  const reaction =
+    byId(
+      "memeReaction"
+    );
+
+  if (!reaction) {
+    return;
+  }
+
+  reaction.classList.add(
+    "hidden"
+  );
+
+  reaction.classList.remove(
+    "show-reaction",
+    "correct-reaction",
+    "wrong-reaction"
+  );
+}
+
   /* =====================================================
      ANSWER QUESTION
   ===================================================== */
@@ -468,6 +570,13 @@
         points:
           result.pointsEarned
       });
+       
+       showMemeReaction({
+  correct: true,
+  points:
+    result.pointsEarned
+});
+       
     } else {
       button.classList.add(
         "wrong-answer"
@@ -485,6 +594,12 @@
         points:
           0
       });
+
+       showMemeReaction({
+  correct: false,
+  points: 0
+});
+       
     }
 
     updateLiveScore();
@@ -572,6 +687,8 @@
   ===================================================== */
 
   function nextQuestion() {
+     hideMemeReaction();
+     
     if (
       !currentQuestionAnswered
     ) {
@@ -744,16 +861,18 @@
      PLAY AGAIN
   ===================================================== */
 
-  byId(
-    "playAgain"
-  )?.addEventListener(
-    "click",
-    () => {
-      showScreen(
-        "introScreen"
-      );
-    }
-  );
+byId(
+  "playAgain"
+)?.addEventListener(
+  "click",
+  () => {
+    hideMemeReaction();
+
+    showScreen(
+      "introScreen"
+    );
+  }
+);
 
   document.addEventListener(
     "safetiiPointsChanged",
