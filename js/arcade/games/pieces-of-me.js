@@ -103,18 +103,18 @@
     },
 
     {
-      id:
-        "favorite-subject",
+  id:
+    "favorite-subject",
 
-      text:
-        "Jordan’s favorite subject is science.",
+  text:
+    "Jordan’s favorite subject is science.",
 
-      category:
-        "personal",
+  category:
+    "expression",
 
-      explanation:
-        "A favorite subject is a general personal detail, but it should still be shared thoughtfully."
-    },
+  explanation:
+    "A favorite subject is a broad preference and is usually safe self-expression."
+},
 
     {
       id:
