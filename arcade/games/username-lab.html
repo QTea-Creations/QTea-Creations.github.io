@@ -8,9 +8,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Username Lab | Cyber Arcade
-  </title>
+  <title>Username Lab | Cyber Arcade</title>
 
   <link
     rel="preconnect"
@@ -30,23 +28,27 @@
 
   <link
     rel="stylesheet"
-    href="../../css/style.css?v=9"
+    href="../../css/style.css?v=22"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/arcade-game.css?v=9"
+    href="../../css/arcade-game.css?v=22"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/username-lab.css?v=1"
+    href="../../css/username-lab.css?v=22"
   >
 
-  <script src="../../js/safetii-debug.js?v=9"></script>
+  <script src="../../js/safetii-debug.js?v=22"></script>
 </head>
 
 <body class="arcade-game-page">
+
+  <!-- ================================================
+       NAVIGATION
+  ================================================= -->
 
   <header class="site-header arcade-site-header">
 
@@ -101,51 +103,133 @@
   </header>
 
 
-  <main class="game-shell">
+  <main class="username-page-shell">
 
-    <!-- INTRO SCREEN -->
+    <!-- ================================================
+         INTRO SCREEN
+    ================================================= -->
 
     <section
-      class="game-screen"
+      class="username-screen"
       id="introScreen"
     >
-      <div class="game-intro-card">
 
-        <div class="game-intro-icon">
+      <div class="username-intro-card">
+
+        <div class="username-intro-icon">
           🧪
         </div>
 
         <p class="game-eyebrow">
-          Digital Identity Experiment
+          Cyber Identity Creation Lab
         </p>
 
         <h1>
           Username Lab
         </h1>
 
-        <p class="game-intro-description">
-          Examine possible usernames and decide which ones are safe,
-          risky, or unsafe. Protect personal information while still
-          creating something fun and memorable.
+        <p class="username-intro-copy">
+          The Username Machine is receiving a mix of safe words and
+          dangerous identity clues. Build creative usernames without
+          revealing who you are in real life.
         </p>
 
 
-        <section class="game-instruction-panel">
+        <!-- MACHINE PREVIEW -->
 
-          <div class="instruction-heading">
+        <section class="username-machine-preview">
 
-            <span aria-hidden="true">
-              🧬
+          <div class="preview-dispenser">
+
+            <span class="preview-machine-light"></span>
+
+            <strong>
+              Ingredient Dispenser
+            </strong>
+
+            <div class="preview-ingredient-row">
+
+              <span class="preview-ingredient safe-preview">
+                Purple
+              </span>
+
+              <span class="preview-ingredient danger-preview">
+                Maya
+              </span>
+
+              <span class="preview-ingredient safe-preview">
+                Dragon
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="preview-machine-arrow">
+            ➜
+          </div>
+
+
+          <div class="preview-mixing-chamber">
+
+            <span>
+              ⚙️
+            </span>
+
+            <strong>
+              Username Mixer
+            </strong>
+
+            <p>
+              PurpleDragon
+            </p>
+
+          </div>
+
+
+          <div class="preview-machine-arrow">
+            ➜
+          </div>
+
+
+          <div class="preview-scanner">
+
+            <span>
+              🛡️
+            </span>
+
+            <strong>
+              Safety Scanner
+            </strong>
+
+            <p>
+              Safe!
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- HOW TO PLAY -->
+
+        <section class="username-briefing">
+
+          <div class="username-briefing-heading">
+
+            <span>
+              🔬
             </span>
 
             <div>
 
               <p class="game-eyebrow">
-                Lab Briefing
+                Lab Instructions
               </p>
 
               <h2>
-                Build a Safer Username
+                Build Without Revealing
               </h2>
 
             </div>
@@ -157,24 +241,20 @@
 
             <article>
 
-              <span>
-                🎨
+              <span class="rule-number">
+                1
               </span>
 
               <div>
 
                 <h3>
-                  Use Interests
+                  Inspect the Ingredients
                 </h3>
 
                 <p>
-                  Hobbies, animals, colors, fictional ideas,
-                  and creative words are usually safer choices.
+                  Words and numbers will arrive from the dispenser.
+                  Some are creative, while others reveal real identity.
                 </p>
-
-                <small>
-                  Example: CosmicPanda
-                </small>
 
               </div>
 
@@ -183,24 +263,20 @@
 
             <article>
 
-              <span>
-                🚫
+              <span class="rule-number">
+                2
               </span>
 
               <div>
 
                 <h3>
-                  Skip Full Names
+                  Mix Safe Words
                 </h3>
 
                 <p>
-                  Avoid using first and last names together,
-                  especially on public accounts.
+                  Drag colors, animals, powers, hobbies, and imaginary
+                  words into the Username Mixer.
                 </p>
-
-                <small>
-                  Avoid: MayaJohnson
-                </small>
 
               </div>
 
@@ -209,24 +285,20 @@
 
             <article>
 
-              <span>
-                🎂
+              <span class="rule-number">
+                3
               </span>
 
               <div>
 
                 <h3>
-                  Hide Birth Information
+                  Eject Identity Clues
                 </h3>
 
                 <p>
-                  Birth years, exact ages, and birthdays can help
-                  strangers guess someone’s identity.
+                  Throw real names, birthdays, schools, cities,
+                  addresses, and account secrets into the Eject Bin.
                 </p>
-
-                <small>
-                  Avoid: Tyler2014
-                </small>
 
               </div>
 
@@ -235,116 +307,33 @@
 
             <article>
 
-              <span>
-                🏫
+              <span class="rule-number">
+                4
               </span>
 
               <div>
 
                 <h3>
-                  Protect Locations
+                  Scan Your Creation
                 </h3>
 
                 <p>
-                  Do not include schools, teams, cities,
-                  streets, neighborhoods, or house numbers.
+                  Build a complete username and run it through the
+                  scanner before the laboratory timer expires.
                 </p>
-
-                <small>
-                  Avoid: EastRidgeEagle24
-                </small>
 
               </div>
 
             </article>
-
-          </div>
-
-
-          <div class="instruction-rule">
-
-            <span aria-hidden="true">
-              🎯
-            </span>
-
-            <p>
-              Judge the whole username. Several harmless-looking
-              clues can combine to identify someone.
-            </p>
 
           </div>
 
         </section>
 
 
-        <div class="game-rules">
+        <!-- HEAT LEVELS -->
 
-          <article>
-
-            <span>
-              🔬
-            </span>
-
-            <div>
-
-              <strong>
-                Analyze Every Ingredient
-              </strong>
-
-              <p>
-                Look for names, ages, schools, locations, and routines.
-              </p>
-
-            </div>
-
-          </article>
-
-
-          <article>
-
-            <span>
-              ⭐
-            </span>
-
-            <div>
-
-              <strong>
-                First Answer Counts
-              </strong>
-
-              <p>
-                Only a correct first verdict earns points.
-              </p>
-
-            </div>
-
-          </article>
-
-
-          <article>
-
-            <span>
-              🔥
-            </span>
-
-            <div>
-
-              <strong>
-                Increase the Difficulty
-              </strong>
-
-              <p>
-                Hot usernames contain clues that must be combined.
-              </p>
-
-            </div>
-
-          </article>
-
-        </div>
-
-
-        <div class="heat-selection">
+        <section class="username-heat-section">
 
           <p class="heat-selection-title">
             Choose a Heat Level
@@ -357,6 +346,7 @@
               type="button"
               data-heat="mild"
             >
+
               <span class="heat-choice-icon">
                 🌶️
               </span>
@@ -366,12 +356,13 @@
               </strong>
 
               <small>
-                Clear safe and unsafe choices
+                Clear ingredients and a slower machine
               </small>
 
               <span class="heat-point-label">
-                10 points each
+                10 base points
               </span>
+
             </button>
 
 
@@ -380,6 +371,7 @@
               type="button"
               data-heat="spicy"
             >
+
               <span class="heat-choice-icon">
                 🌶️🌶️
               </span>
@@ -389,12 +381,13 @@
               </strong>
 
               <small>
-                Several clues mixed together
+                Mixed identity clues and faster rounds
               </small>
 
               <span class="heat-point-label">
-                20 points each
+                20 base points
               </span>
+
             </button>
 
 
@@ -403,6 +396,7 @@
               type="button"
               data-heat="hot"
             >
+
               <span class="heat-choice-icon">
                 🌶️🌶️🌶️
               </span>
@@ -412,90 +406,57 @@
               </strong>
 
               <small>
-                Tricky identity combinations
+                Subtle combinations and contaminated ingredients
               </small>
 
               <span class="heat-point-label">
-                30 points each
+                30 base points
               </span>
+
             </button>
 
           </div>
 
-        </div>
+        </section>
 
 
         <button
-          class="game-primary-button"
+          class="game-primary-button username-start-button"
           id="startGame"
           type="button"
         >
-          Enter the Username Lab
+          Power Up the Username Lab
         </button>
 
       </div>
+
     </section>
 
 
-    <!-- PLAY SCREEN -->
+    <!-- ================================================
+         PLAY SCREEN
+    ================================================= -->
 
     <section
-      class="game-screen hidden"
+      class="username-screen hidden"
       id="playScreen"
     >
-      <div class="play-layout">
 
-        <aside class="game-sidebar">
+      <!-- HUD -->
 
-          <div class="sidebar-game-icon">
+      <section class="username-hud">
+
+        <div class="username-hud-title">
+
+          <span>
             🧪
-          </div>
+          </span>
 
-          <p class="game-eyebrow">
-            Username Lab
-          </p>
+          <div>
 
-          <h2>
-            Test the username
-          </h2>
-
-          <p>
-            Decide whether the username protects or exposes
-            the person behind it.
-          </p>
-
-
-          <div class="live-stat">
-
-            <span>
-              Score
-            </span>
-
-            <strong id="currentScore">
-              0
-            </strong>
-
-          </div>
-
-
-          <div class="live-stat">
-
-            <span>
-              Correct
-            </span>
-
-            <strong id="correctCount">
-              0
-            </strong>
-
-          </div>
-
-
-          <div class="live-stat">
-
-            <span>
-              Heat
-            </span>
+            <p class="game-eyebrow">
+              Username Lab
+            </p>
 
             <strong id="currentHeat">
               Mild
@@ -503,362 +464,701 @@
 
           </div>
 
+        </div>
 
-          <button
-            class="sidebar-hint-button"
-            id="openUsernameHint"
-            type="button"
-            aria-expanded="false"
-            aria-controls="usernameHintPanel"
+
+        <div class="username-hud-stat">
+
+          <span>
+            ⏱️ Time
+          </span>
+
+          <strong id="timeRemaining">
+            75
+          </strong>
+
+        </div>
+
+
+        <div class="username-hud-stat">
+
+          <span>
+            ⭐ Score
+          </span>
+
+          <strong id="currentScore">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="username-hud-stat">
+
+          <span>
+            🔥 Combo
+          </span>
+
+          <strong id="comboCount">
+            x0
+          </strong>
+
+        </div>
+
+
+        <div class="username-hud-stat">
+
+          <span>
+            ❤️ Lives
+          </span>
+
+          <strong id="livesDisplay">
+            ❤️❤️❤️
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- ROUND PROGRESS -->
+
+      <section class="username-progress-bar">
+
+        <div>
+
+          Usernames built:
+
+          <strong id="usernamesBuilt">
+            0
+          </strong>
+
+          /
+
+          <strong id="usernameGoal">
+            5
+          </strong>
+
+        </div>
+
+
+        <div class="progress-track">
+
+          <div
+            class="progress-fill"
+            id="usernameProgressFill"
+          ></div>
+
+        </div>
+
+
+        <div>
+
+          Best combo:
+
+          <strong id="bestComboLive">
+            x0
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- LABORATORY -->
+
+      <section class="username-lab-layout">
+
+        <!-- MEME CONTROL PANEL -->
+
+        <aside class="username-meme-panel">
+
+          <img
+            id="memeLabImage"
+            src="../../assets/mascot/thinking.png"
+            alt="Meme helps inside the Username Lab"
           >
-            💡 Username Guide
-          </button>
+
+          <div class="username-meme-speech">
+
+            <strong id="memeLabTitle">
+              Lab ready!
+            </strong>
+
+            <p id="memeLabMessage">
+              Inspect each ingredient before placing it in the mixer.
+            </p>
+
+          </div>
 
 
-          <a
-            class="sidebar-exit-link"
-            href="../index.html"
-          >
-            Exit Game
-          </a>
+          <section class="lab-power-panel">
+
+            <button
+              class="lab-power-button"
+              id="ingredientScannerButton"
+              type="button"
+            >
+
+              <span>
+                📡
+              </span>
+
+              <div>
+
+                <strong>
+                  Ingredient Scanner
+                </strong>
+
+                <small id="ingredientScannerCount">
+                  2 available
+                </small>
+
+              </div>
+
+            </button>
+
+
+            <button
+              class="lab-power-button"
+              id="purifyButton"
+              type="button"
+            >
+
+              <span>
+                ✨
+              </span>
+
+              <div>
+
+                <strong>
+                  Purify Mixer
+                </strong>
+
+                <small id="purifyCount">
+                  1 available
+                </small>
+
+              </div>
+
+            </button>
+
+          </section>
+
+
+          <section class="lab-goal-card">
+
+            <span>
+              Current Recipe
+            </span>
+
+            <strong id="recipeGoal">
+              Add 3 safe ingredients
+            </strong>
+
+            <small id="recipeProgress">
+              0 of 3 collected
+            </small>
+
+          </section>
 
         </aside>
 
 
-        <section class="question-stage">
+        <!-- MAIN MACHINE -->
 
-          <div class="question-progress-row">
+        <section class="username-machine-stage">
 
-            <div>
-              Experiment
+          <!-- DISPENSER -->
 
-              <strong id="questionNumber">
-                1
-              </strong>
+          <section class="ingredient-dispenser">
 
-              of
-
-              <strong id="questionTotal">
-                8
-              </strong>
-            </div>
-
-
-            <div class="question-tools">
-
-              <div class="question-score-value">
-                +
-
-                <span id="questionPointValue">
-                  10
-                </span>
-
-                possible
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="progress-track">
-
-            <div
-              class="progress-fill"
-              id="questionProgressFill"
-            ></div>
-
-          </div>
-
-
-          <aside
-            class="category-hint-panel hidden"
-            id="usernameHintPanel"
-            aria-label="Username safety guide"
-          >
-
-            <div class="category-hint-header">
+            <header>
 
               <div>
 
                 <p class="game-eyebrow">
-                  Quick Reference
+                  Ingredient Dispenser
                 </p>
 
-                <h3>
-                  What should stay out?
-                </h3>
+                <h2>
+                  Catch the Next Ingredient
+                </h2>
+
+              </div>
+
+
+              <div class="machine-status">
+
+                <span class="machine-status-light"></span>
+
+                <strong id="machineStatus">
+                  Running
+                </strong>
+
+              </div>
+
+            </header>
+
+
+            <div
+              class="ingredient-conveyor"
+              id="ingredientConveyor"
+            >
+
+              <div class="ingredient-track-lines"></div>
+
+
+              <div
+                class="ingredient-spawn-door"
+                aria-hidden="true"
+              >
+
+                <span>
+                  Incoming
+                </span>
+
+              </div>
+
+
+              <div
+                class="ingredient-layer"
+                id="ingredientLayer"
+              >
+
+                <!-- JavaScript inserts ingredients here -->
+
+              </div>
+
+
+              <div
+                class="ingredient-danger-gate"
+                id="ingredientDangerGate"
+              >
+
+                <span>
+                  ⚠️
+                </span>
+
+                <strong>
+                  Contamination Gate
+                </strong>
+
+                <small>
+                  Do not let ingredients reach this point
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <div class="active-ingredient-readout">
+
+              <div>
+
+                <span>
+                  Current ingredient
+                </span>
+
+                <strong id="activeIngredientText">
+                  Waiting for the machine...
+                </strong>
+
+              </div>
+
+
+              <div>
+
+                Ingredient type:
+
+                <strong id="activeIngredientCategory">
+                  Unknown
+                </strong>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- MIXER AND EJECT BIN -->
+
+          <section class="lab-destination-grid">
+
+            <!-- MIXER -->
+
+            <button
+              class="username-destination mixer-destination"
+              id="mixerDropZone"
+              type="button"
+              data-action="mix"
+            >
+
+              <div class="machine-destination-visual">
+
+                <div
+                  class="username-mixer"
+                  id="usernameMixer"
+                >
+
+                  <span class="mixer-gear gear-one">
+                    ⚙️
+                  </span>
+
+                  <span class="mixer-gear gear-two">
+                    ⚙️
+                  </span>
+
+                  <div class="mixer-window">
+
+                    <span>
+                      Username Mixer
+                    </span>
+
+                    <strong id="mixerPreview">
+                      Empty
+                    </strong>
+
+                  </div>
+
+                </div>
+
+
+                <span class="machine-drop-label">
+                  Add Ingredient
+                </span>
+
+              </div>
+
+
+              <div class="destination-copy">
+
+                <strong>
+                  Username Mixer
+                </strong>
+
+                <span>
+                  Add safe, creative ingredients
+                </span>
+
+              </div>
+
+            </button>
+
+
+            <!-- EJECT BIN -->
+
+            <button
+              class="username-destination eject-destination"
+              id="ejectDropZone"
+              type="button"
+              data-action="eject"
+            >
+
+              <div class="machine-destination-visual">
+
+                <div
+                  class="identity-eject-bin"
+                  id="identityEjectBin"
+                >
+
+                  <span class="eject-warning">
+                    ⚠️
+                  </span>
+
+                  <strong>
+                    IDENTITY CLUES
+                  </strong>
+
+                  <small>
+                    Eject dangerous ingredients
+                  </small>
+
+                </div>
+
+
+                <span class="machine-drop-label">
+                  Eject Ingredient
+                </span>
+
+              </div>
+
+
+              <div class="destination-copy">
+
+                <strong>
+                  Identity Eject Bin
+                </strong>
+
+                <span>
+                  Remove personal or identifying clues
+                </span>
+
+              </div>
+
+            </button>
+
+          </section>
+
+
+          <!-- USERNAME RECIPE -->
+
+          <section class="username-recipe-card">
+
+            <header>
+
+              <div>
+
+                <p class="game-eyebrow">
+                  Current Creation
+                </p>
+
+                <h2 id="currentUsername">
+                  No ingredients added
+                </h2>
 
               </div>
 
 
               <button
-                class="close-hint-button"
-                id="closeUsernameHint"
+                class="clear-mixer-button"
+                id="clearMixerButton"
                 type="button"
-                aria-label="Close username guide"
               >
-                ×
+                Clear Mixer
               </button>
 
-            </div>
+            </header>
 
-
-            <div class="social-risk-guide">
-
-              <span>
-                👤 Full or last names
-              </span>
-
-              <span>
-                🎂 Birth years and exact ages
-              </span>
-
-              <span>
-                🏫 School and team names
-              </span>
-
-              <span>
-                📍 Cities and neighborhoods
-              </span>
-
-              <span>
-                🏠 Street names and house numbers
-              </span>
-
-              <span>
-                📞 Phone-number pieces
-              </span>
-
-              <span>
-                🏅 Jersey numbers combined with teams
-              </span>
-
-              <span>
-                🔑 Password-like information
-              </span>
-
-            </div>
-
-
-            <p class="hint-penalty-note">
-              Opening the guide does not remove points.
-            </p>
-
-          </aside>
-
-
-          <article class="username-profile-card">
 
             <div
-              class="username-avatar"
-              id="profileAvatar"
-              aria-hidden="true"
+              class="selected-ingredient-list"
+              id="selectedIngredientList"
             >
-              🎮
+
+              <span class="empty-mixer-message">
+                Add safe ingredients to begin
+              </span>
+
             </div>
+
+
+            <div class="username-strength-meter">
+
+              <div class="strength-heading">
+
+                <span>
+                  Creativity Power
+                </span>
+
+                <strong id="creativityLabel">
+                  Empty
+                </strong>
+
+              </div>
+
+
+              <div class="strength-track">
+
+                <div
+                  class="strength-fill"
+                  id="creativityFill"
+                ></div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- SAFETY SCANNER -->
+
+          <section class="username-safety-scanner">
+
+            <div class="scanner-visual">
+
+              <span class="scanner-beam"></span>
+
+              <div class="scanner-screen">
+
+                <span>
+                  🛡️
+                </span>
+
+                <strong id="scannerStatus">
+                  Scanner Ready
+                </strong>
+
+                <small id="scannerMessage">
+                  Build a username before scanning
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="scan-username-button"
+              id="scanUsernameButton"
+              type="button"
+              disabled
+            >
+              Scan Username
+            </button>
+
+          </section>
+
+
+          <!-- FEEDBACK -->
+
+          <section
+            class="username-feedback hidden"
+            id="usernameFeedback"
+            aria-live="polite"
+          >
+
+            <span
+              class="username-feedback-icon"
+              id="usernameFeedbackIcon"
+            >
+              ✅
+            </span>
 
             <div>
 
-              <p class="game-eyebrow">
-                Account Creator
-              </p>
+              <strong id="usernameFeedbackTitle">
+                Ingredient accepted
+              </strong>
 
-              <h2 id="profileName">
-                Jordan needs a username.
-              </h2>
-
-              <p id="profileContext">
-                Jordan is creating a public gaming account.
+              <p id="usernameFeedbackMessage">
+                This ingredient is safe for a creative username.
               </p>
 
             </div>
 
-          </article>
 
+            <div class="username-feedback-points">
 
-          <article class="username-test-card">
-
-            <p class="question-label">
-              Test this username
-            </p>
-
-            <div
-              class="username-display"
-              id="usernameDisplay"
-            >
-              CosmicTiger
-            </div>
-
-
-            <div class="username-ingredient-row">
-
-              <span id="usernameClueOne">
-                Creative word
-              </span>
-
-              <span id="usernameClueTwo">
-                Favorite animal
-              </span>
-
-              <span id="usernameClueThree">
-                No personal information
-              </span>
-
-            </div>
-
-          </article>
-
-
-          <p class="username-question-prompt">
-            What is your safety verdict?
-          </p>
-
-
-          <div
-            class="username-answer-grid"
-            id="answerGrid"
-          >
-
-            <button
-              class="username-answer-choice safe-choice"
-              type="button"
-              data-verdict="safe"
-            >
+              <strong id="usernameFeedbackPoints">
+                +10
+              </strong>
 
               <span>
-                ✅
+                points
               </span>
-
-              <strong>
-                Safe Choice
-              </strong>
-
-              <small>
-                Creative and not personally identifying
-              </small>
-
-            </button>
-
-
-            <button
-              class="username-answer-choice caution-choice"
-              type="button"
-              data-verdict="caution"
-            >
-
-              <span>
-                ⚠️
-              </span>
-
-              <strong>
-                Use Caution
-              </strong>
-
-              <small>
-                Contains a detail that could reveal something
-              </small>
-
-            </button>
-
-
-            <button
-              class="username-answer-choice unsafe-choice"
-              type="button"
-              data-verdict="unsafe"
-            >
-
-              <span>
-                🚨
-              </span>
-
-              <strong>
-                Unsafe Choice
-              </strong>
-
-              <small>
-                Reveals clear identifying information
-              </small>
-
-            </button>
-
-          </div>
-
-
-          <div
-            class="answer-feedback hidden"
-            id="answerFeedback"
-            aria-live="polite"
-          >
-
-            <strong id="feedbackTitle">
-              Lab result
-            </strong>
-
-            <p id="feedbackText"></p>
-
-            <div class="question-points-result">
-
-              Points earned:
-
-              <strong id="pointsEarnedThisQuestion">
-                0
-              </strong>
 
             </div>
 
-          </div>
+          </section>
+
+        </section>
+
+      </section>
 
 
-          <aside
-            class="arcade-meme-reaction hidden"
-            id="memeReaction"
-            aria-live="polite"
+      <!-- ACCESSIBLE CONTROLS -->
+
+      <section class="username-accessible-controls">
+
+        <p>
+          Select the moving ingredient, then choose where it belongs:
+        </p>
+
+        <div>
+
+          <button
+            id="sendToMixerButton"
+            type="button"
           >
-
-            <img
-              id="memeReactionImage"
-              src="../../assets/mascot/congrats.png"
-              alt="Meme reacts to the username verdict"
-            >
-
-            <div class="arcade-meme-speech">
-
-              <strong id="memeReactionTitle">
-                Great analysis!
-              </strong>
-
-              <p id="memeReactionMessage">
-                You protected the player’s identity.
-              </p>
-
-            </div>
-
-          </aside>
+            ⚙️ Add to Mixer
+          </button>
 
 
           <button
-            class="game-primary-button hidden"
-            id="nextQuestion"
+            id="sendToEjectButton"
             type="button"
           >
-            Next Experiment
+            ⚠️ Eject Ingredient
           </button>
 
-        </section>
-      </div>
+        </div>
+
+      </section>
+
     </section>
 
 
-    <!-- RESULTS SCREEN -->
+    <!-- ================================================
+         SUCCESS OVERLAY
+    ================================================= -->
 
     <section
-      class="game-screen hidden"
+      class="username-success-overlay hidden"
+      id="usernameSuccessOverlay"
+      aria-live="polite"
+    >
+
+      <div class="username-success-card">
+
+        <span class="success-username-icon">
+          🛡️
+        </span>
+
+        <p class="game-eyebrow">
+          Username Approved
+        </p>
+
+        <h2 id="approvedUsername">
+          PurpleDragon
+        </h2>
+
+        <p id="approvedUsernameMessage">
+          This creation protects your real identity.
+        </p>
+
+
+        <div class="approved-points-card">
+
+          <span>
+            Build points
+          </span>
+
+          <strong id="approvedPoints">
+            +0
+          </strong>
+
+        </div>
+
+
+        <button
+          class="game-primary-button"
+          id="continueBuildingButton"
+          type="button"
+        >
+          Build Another Username
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================================
+         RESULTS SCREEN
+    ================================================= -->
+
+    <section
+      class="username-screen hidden"
       id="resultScreen"
     >
-      <div class="result-card">
 
-        <div class="result-meme-celebration">
+      <div class="username-results-card">
+
+        <div class="username-results-heading">
 
           <img
             id="resultMemeImage"
@@ -866,35 +1166,43 @@
             alt="Meme celebrates the completed Username Lab round"
           >
 
-          <div class="result-icon">
-            🧪
+          <div>
+
+            <p class="game-eyebrow">
+              Laboratory Complete
+            </p>
+
+            <h1 id="resultHeading">
+              Username Inventor!
+            </h1>
+
           </div>
 
         </div>
 
 
-        <p class="game-eyebrow">
-          Experiment Complete
-        </p>
+        <div class="username-rank-card">
 
-        <h1>
-          Final Score
-        </h1>
+          <span>
+            Lab Rank
+          </span>
+
+          <strong id="usernameRank">
+            Junior Username Builder
+          </strong>
+
+        </div>
 
 
-        <div class="final-score">
+        <div class="username-final-score">
+
+          <span>
+            Final Score
+          </span>
 
           <strong id="finalScore">
             0
           </strong>
-
-          <span>
-            /
-
-            <span id="maximumScore">
-              80
-            </span>
-          </span>
 
         </div>
 
@@ -908,7 +1216,46 @@
         </div>
 
 
-        <div class="result-stat-grid">
+        <div class="username-result-grid">
+
+          <article>
+
+            <span>
+              Usernames Built
+            </span>
+
+            <strong id="finalUsernamesBuilt">
+              0/5
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Safe Ingredients
+            </span>
+
+            <strong id="finalSafeIngredients">
+              0
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Dangers Ejected
+            </span>
+
+            <strong id="finalDangersEjected">
+              0
+            </strong>
+
+          </article>
+
 
           <article>
 
@@ -926,11 +1273,11 @@
           <article>
 
             <span>
-              Correct
+              Best Combo
             </span>
 
-            <strong id="finalCorrect">
-              0/8
+            <strong id="finalBestCombo">
+              x0
             </strong>
 
           </article>
@@ -967,7 +1314,10 @@
         <p
           class="result-message"
           id="resultMessage"
-        ></p>
+        >
+          Creative usernames can express your personality without
+          exposing your real name, birthday, school, or location.
+        </p>
 
 
         <div class="result-actions">
@@ -977,7 +1327,7 @@
             id="playAgain"
             type="button"
           >
-            Play Again
+            Reopen the Lab
           </button>
 
 
@@ -991,14 +1341,19 @@
         </div>
 
       </div>
+
     </section>
 
   </main>
 
 
-  <script src="../../js/arcade/arcade-score.js?v=9"></script>
+  <!-- ================================================
+       SCRIPTS
+  ================================================= -->
 
-  <script src="username-lab.js?v=1"></script>
+  <script src="../../js/arcade/arcade-score.js?v=22"></script>
+
+  <script src="username-lab.js?v=22"></script>
 
 </body>
 </html>
