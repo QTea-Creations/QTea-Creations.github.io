@@ -2107,3 +2107,1073 @@ a {
         bottom: 10px;
     }
 }
+
+/* =========================================================
+   CLUE COLLECTOR — DYNAMIC MULTI-PLATFORM POSTS
+========================================================= */
+
+.dynamic-social-stage {
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.dynamic-post-card {
+    width: 100%;
+    overflow: hidden;
+
+    background: white;
+
+    border: 4px solid #dcd8e8;
+    border-radius: 26px;
+
+    box-shadow:
+        0 20px 42px
+        rgba(41, 46, 91, 0.16);
+}
+
+/* =========================================================
+   GENERAL DYNAMIC HOTSPOTS
+========================================================= */
+
+.dynamic-clue-hotspot {
+    position: relative;
+
+    display: inline-block;
+
+    margin: 3px;
+    padding: 7px 10px;
+
+    background:
+        rgba(255, 255, 255, 0.9);
+
+    color: var(--game-navy);
+
+    border: 3px solid transparent;
+    border-radius: 11px;
+
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1.4;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform 160ms ease,
+        background 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.dynamic-clue-hotspot:hover {
+    transform: translateY(-2px);
+
+    background: #fff6bd;
+
+    border-color: #ffd63d;
+}
+
+.dynamic-clue-hotspot.selected-clue {
+    background: #fff0a5;
+
+    border-color: #ffc928;
+
+    box-shadow:
+        0 0 0 5px
+        rgba(255, 201, 40, 0.18);
+}
+
+.dynamic-clue-hotspot.correct-clue {
+    background: #dffbea;
+    color: #155d3a;
+
+    border-color: #39c983;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(57, 201, 131, 0.16);
+}
+
+.dynamic-clue-hotspot.incorrect-clue {
+    background: #ffe3ec;
+    color: #982447;
+
+    border-color: #ef527f;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(239, 82, 127, 0.14);
+}
+
+.dynamic-clue-hotspot.missed-clue {
+    background: #fff0bd;
+    color: #7d4b00;
+
+    border-color: #ff9f2e;
+
+    animation:
+        dynamicMissedPulse
+        900ms
+        ease-in-out
+        infinite;
+}
+
+.dynamic-clue-hotspot.safe-unselected-clue {
+    opacity: 0.68;
+}
+
+.dynamic-clue-hotspot.review-ready::after {
+    content: "!";
+
+    position: absolute;
+    top: -12px;
+    right: -12px;
+
+    width: 25px;
+    height: 25px;
+
+    display: grid;
+    place-items: center;
+
+    background: #ffd13f;
+    color: #25324e;
+
+    border: 2px solid white;
+    border-radius: 50%;
+
+    font-size: 0.76rem;
+    font-weight: 900;
+
+    box-shadow:
+        0 5px 11px
+        rgba(33, 39, 75, 0.25);
+}
+
+.dynamic-clue-hotspot.correct-clue.review-ready::after {
+    content: "✓";
+
+    background: #39c983;
+    color: white;
+}
+
+.dynamic-clue-hotspot.incorrect-clue.review-ready::after {
+    content: "×";
+
+    background: #ef527f;
+    color: white;
+}
+
+.dynamic-clue-hotspot.missed-clue.review-ready::after {
+    content: "!";
+
+    background: #ff9f2e;
+    color: white;
+}
+
+.account-clue-hotspot {
+    background: transparent;
+
+    padding: 4px 7px;
+}
+
+.caption-clue-hotspot {
+    margin: 4px 2px;
+
+    background: #f8f7fc;
+}
+
+.media-clue-hotspot {
+    background:
+        rgba(255, 255, 255, 0.94);
+
+    box-shadow:
+        0 8px 18px
+        rgba(28, 37, 73, 0.14);
+}
+
+.dynamic-avatar {
+    width: 50px;
+    height: 50px;
+
+    display: grid;
+    place-items: center;
+
+    flex: 0 0 auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffe16a,
+            #ff78b1
+        );
+
+    border: 3px solid white;
+    border-radius: 50%;
+
+    box-shadow:
+        0 5px 12px
+        rgba(38, 43, 79, 0.16);
+
+    font-size: 1.5rem;
+}
+
+.dynamic-account-copy {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.dynamic-media-title {
+    position: relative;
+    z-index: 2;
+
+    margin: 12px 0;
+
+    color: white;
+
+    font-size:
+        clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 900;
+
+    text-align: center;
+
+    text-shadow:
+        0 3px 8px
+        rgba(20, 25, 52, 0.45);
+}
+
+.dynamic-media-emoji {
+    position: relative;
+    z-index: 2;
+
+    font-size:
+        clamp(4rem, 12vw, 7rem);
+
+    filter:
+        drop-shadow(
+            0 10px 12px
+            rgba(25, 30, 64, 0.18)
+        );
+}
+
+.dynamic-media-clues {
+    position: relative;
+    z-index: 4;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* =========================================================
+   PLATFORM BADGE AND REVIEW LEGEND
+========================================================= */
+
+.platform-round-badge {
+    padding: 7px 12px;
+
+    background: #efe9ff;
+    color: var(--game-purple);
+
+    border: 2px solid #d5c8fa;
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 900;
+}
+
+.platform-preview-row {
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.platform-preview-chip {
+    padding: 8px 12px;
+
+    background: white;
+    color: #5b6880;
+
+    border: 2px solid var(--game-border);
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.heat-point-label {
+    margin-top: 4px;
+
+    color: var(--game-purple);
+
+    font-size: 0.68rem;
+    font-weight: 900;
+}
+
+.clue-review-legend {
+    max-width: 780px;
+    margin: 18px auto 0;
+    padding: 14px;
+
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+
+    background: #f8f7fd;
+
+    border: 3px solid var(--game-border);
+    border-radius: 18px;
+}
+
+.clue-review-legend > div {
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    color: #5e6b80;
+
+    font-size: 0.71rem;
+}
+
+.legend-dot {
+    width: 13px;
+    height: 13px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+}
+
+.correct-dot {
+    background: #39c983;
+}
+
+.incorrect-dot {
+    background: #ef527f;
+}
+
+.missed-dot {
+    background: #ff9f2e;
+}
+
+/* =========================================================
+   INSTAGRAM-STYLE
+========================================================= */
+
+.instagram-dynamic-card {
+    max-width: 650px;
+    margin: 0 auto;
+
+    background: white;
+}
+
+.dynamic-account-header {
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dynamic-account-copy {
+    flex: 1;
+}
+
+.dynamic-menu {
+    color: #687285;
+
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.instagram-media {
+    position: relative;
+
+    min-height: 410px;
+    padding: 55px 24px 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 15%,
+            rgba(255, 255, 255, 0.38),
+            transparent 26%
+        ),
+        linear-gradient(
+            160deg,
+            #ffcf57,
+            #ff709c 45%,
+            #8a54e9
+        );
+}
+
+.instagram-media::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            -35deg,
+            transparent,
+            transparent 24px,
+            rgba(255, 255, 255, 0.08) 24px,
+            rgba(255, 255, 255, 0.08) 48px
+        );
+}
+
+.instagram-action-row {
+    padding: 13px 16px 7px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    font-size: 1.45rem;
+}
+
+.instagram-action-row .action-spacer {
+    margin-left: auto;
+}
+
+.dynamic-caption-area {
+    padding: 4px 16px 20px;
+}
+
+.dynamic-caption-area > strong {
+    display: block;
+
+    margin-bottom: 6px;
+}
+
+.dynamic-caption-area small {
+    display: block;
+
+    margin-top: 10px;
+
+    color: #8a93a2;
+}
+
+/* =========================================================
+   TIKTOK-STYLE
+========================================================= */
+
+.tiktok-dynamic-card {
+    max-width: 520px;
+    margin: 0 auto;
+
+    background: #101014;
+    color: white;
+
+    border-color: #24242e;
+}
+
+.tiktok-video-stage {
+    position: relative;
+
+    min-height: 680px;
+    padding: 70px 70px 120px 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(44, 240, 231, 0.28),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(255, 44, 85, 0.35),
+            transparent 35%
+        ),
+        linear-gradient(
+            155deg,
+            #181926,
+            #09090d
+        );
+}
+
+.tiktok-top-label {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: white;
+
+    font-size: 0.78rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.tiktok-main-emoji {
+    font-size: 7rem;
+}
+
+.tiktok-side-actions {
+    position: absolute;
+    right: 15px;
+    bottom: 150px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    font-size: 1.6rem;
+}
+
+.tiktok-bottom-copy {
+    position: absolute;
+    left: 16px;
+    right: 65px;
+    bottom: 22px;
+}
+
+.tiktok-bottom-copy small {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #d5d8e0;
+}
+
+.tiktok-dynamic-card
+.dynamic-clue-hotspot {
+    color: white;
+
+    background:
+        rgba(20, 20, 28, 0.72);
+
+    border-color:
+        rgba(255, 255, 255, 0.18);
+}
+
+.tiktok-dynamic-card
+.dynamic-clue-hotspot:hover {
+    background:
+        rgba(255, 219, 78, 0.25);
+
+    border-color: #ffe15a;
+}
+
+/* =========================================================
+   YOUTUBE-STYLE
+========================================================= */
+
+.youtube-dynamic-card {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.youtube-video-stage {
+    position: relative;
+
+    min-height: 420px;
+    padding: 55px 25px 45px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #40506e,
+            #172239
+        );
+}
+
+.youtube-play-button {
+    position: absolute;
+    z-index: 6;
+
+    width: 76px;
+    height: 54px;
+
+    display: grid;
+    place-items: center;
+
+    background: #ff1744;
+    color: white;
+
+    border-radius: 15px;
+
+    font-size: 1.7rem;
+
+    opacity: 0.9;
+}
+
+.youtube-video-stage
+.dynamic-media-emoji {
+    opacity: 0.68;
+}
+
+.youtube-video-bar {
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    bottom: 10px;
+
+    padding-top: 8px;
+
+    color: white;
+
+    border-top: 4px solid #ff1744;
+
+    font-size: 0.7rem;
+}
+
+.youtube-information {
+    padding: 18px;
+}
+
+.youtube-title-row {
+    margin-bottom: 16px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.youtube-title-row
+.dynamic-clue-hotspot {
+    font-size: 1rem;
+}
+
+.youtube-channel-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.youtube-channel-row > div:nth-child(2) {
+    flex: 1;
+}
+
+.youtube-channel-row small {
+    display: block;
+
+    color: #7d8798;
+}
+
+.youtube-subscribe-button {
+    padding: 10px 17px;
+
+    background: #171717;
+    color: white;
+
+    border: 0;
+    border-radius: 999px;
+
+    font-weight: 800;
+}
+
+.youtube-description-box {
+    margin-top: 17px;
+    padding: 16px;
+
+    background: #f1f1f1;
+
+    border-radius: 15px;
+}
+
+.youtube-description-box > strong {
+    display: block;
+
+    margin-bottom: 8px;
+}
+
+/* =========================================================
+   SNAPCHAT-STYLE
+========================================================= */
+
+.snapchat-dynamic-card {
+    max-width: 480px;
+    margin: 0 auto;
+
+    background: #f9ef33;
+
+    border-color: #f2de1e;
+}
+
+.snapchat-story-stage {
+    position: relative;
+
+    min-height: 690px;
+    padding: 85px 22px 110px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 18%,
+            rgba(255, 255, 255, 0.35),
+            transparent 27%
+        ),
+        linear-gradient(
+            180deg,
+            #ffed3e,
+            #ffb446
+        );
+}
+
+.snapchat-story-header {
+    position: absolute;
+    top: 17px;
+    left: 15px;
+    right: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.snapchat-story-header > div:nth-child(2) {
+    flex: 1;
+}
+
+.snapchat-story-header small {
+    display: block;
+
+    color: #6c5c19;
+}
+
+.snapchat-main-emoji {
+    font-size: 7rem;
+}
+
+.snapchat-location-copy {
+    justify-content: center;
+}
+
+.snapchat-caption-box {
+    margin-top: 16px;
+
+    text-align: center;
+}
+
+.snapchat-reply-bar {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+
+    width: calc(100% - 45px);
+    padding: 12px;
+
+    transform: translateX(-50%);
+
+    background:
+        rgba(255, 255, 255, 0.45);
+    color: #574d17;
+
+    border: 2px solid
+        rgba(255, 255, 255, 0.72);
+    border-radius: 999px;
+
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* =========================================================
+   DISCORD-STYLE
+========================================================= */
+
+.discord-dynamic-card {
+    min-height: 530px;
+
+    display: grid;
+    grid-template-columns:
+        72px 1fr;
+
+    background: #313338;
+    color: #f2f3f5;
+
+    border-color: #1e1f22;
+}
+
+.discord-server-bar {
+    padding: 15px 9px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    background: #1e1f22;
+}
+
+.discord-server-bar span {
+    width: 45px;
+    height: 45px;
+
+    display: grid;
+    place-items: center;
+
+    background: #313338;
+
+    border-radius: 15px;
+
+    font-size: 0.9rem;
+    font-weight: 900;
+}
+
+.discord-server-bar span:first-child {
+    background: #5865f2;
+    color: white;
+}
+
+.discord-channel-area {
+    min-width: 0;
+}
+
+.discord-channel-header {
+    padding: 17px;
+
+    background: #2b2d31;
+
+    border-bottom: 1px solid #1f2024;
+
+    font-weight: 900;
+}
+
+.discord-message {
+    padding: 24px 18px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+}
+
+.discord-message-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.discord-user-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.discord-user-line small {
+    color: #949ba4;
+}
+
+.discord-shared-screen {
+    margin-top: 16px;
+    padding: 20px;
+
+    background: #232428;
+
+    border: 1px solid #111214;
+    border-radius: 12px;
+}
+
+.discord-shared-screen
+.dynamic-media-emoji {
+    font-size: 3rem;
+}
+
+.discord-shared-screen > strong {
+    display: block;
+
+    margin: 10px 0;
+}
+
+.discord-message-box {
+    margin: 18px;
+    padding: 13px 16px;
+
+    background: #383a40;
+    color: #949ba4;
+
+    border-radius: 10px;
+
+    font-size: 0.78rem;
+}
+
+.discord-dynamic-card
+.dynamic-clue-hotspot {
+    color: #f2f3f5;
+
+    background: #404249;
+
+    border-color: #555861;
+}
+
+.discord-dynamic-card
+.dynamic-clue-hotspot:hover {
+    background: #4b4e57;
+
+    border-color: #f0c847;
+}
+
+/* =========================================================
+   FEEDBACK POPUP IMPROVEMENTS
+========================================================= */
+
+.explanation-classification {
+    margin-top: 14px;
+    padding: 9px 12px;
+
+    display: inline-block;
+
+    background: #fff0ba;
+    color: #795000;
+
+    border: 2px solid #ffc944;
+    border-radius: 999px;
+
+    font-size: 0.72rem;
+    font-weight: 900;
+}
+
+.explanation-classification.safe-classification {
+    background: #e4faee;
+    color: #17613d;
+
+    border-color: #45c985;
+}
+
+.explanation-alert-icon.safe-explanation-icon {
+    background: #45c985 !important;
+    color: white;
+}
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes dynamicMissedPulse {
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 0
+            rgba(255, 159, 46, 0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 8px
+            rgba(255, 159, 46, 0.25);
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 760px) {
+    .clue-review-legend {
+        grid-template-columns: 1fr;
+    }
+
+    .instagram-media,
+    .youtube-video-stage {
+        min-height: 330px;
+    }
+
+    .tiktok-video-stage,
+    .snapchat-story-stage {
+        min-height: 590px;
+    }
+
+    .discord-dynamic-card {
+        grid-template-columns:
+            54px 1fr;
+    }
+
+    .discord-server-bar span {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 520px) {
+    .dynamic-clue-hotspot {
+        padding: 6px 8px;
+
+        font-size: 0.72rem;
+    }
+
+    .dynamic-account-header {
+        padding: 11px;
+    }
+
+    .dynamic-avatar {
+        width: 42px;
+        height: 42px;
+
+        font-size: 1.2rem;
+    }
+
+    .instagram-media {
+        min-height: 290px;
+    }
+
+    .tiktok-video-stage,
+    .snapchat-story-stage {
+        min-height: 540px;
+    }
+
+    .youtube-video-stage {
+        min-height: 270px;
+    }
+
+    .youtube-play-button {
+        width: 60px;
+        height: 44px;
+    }
+
+    .discord-message {
+        padding: 18px 10px;
+    }
+}
+
+@media (
+    prefers-reduced-motion:
+    reduce
+) {
+    .dynamic-clue-hotspot,
+    .dynamic-clue-hotspot.missed-clue {
+        animation: none;
+        transition: none;
+    }
+}
