@@ -242,7 +242,80 @@
         );
       }
     );
+/* =====================================================
+   CATEGORY HINT PANEL
+===================================================== */
 
+function openCategoryHint() {
+  const panel =
+    byId(
+      "categoryHintPanel"
+    );
+
+  const button =
+    byId(
+      "openCategoryHint"
+    );
+
+  panel?.classList.remove(
+    "hidden"
+  );
+
+  button?.setAttribute(
+    "aria-expanded",
+    "true"
+  );
+}
+
+function closeCategoryHint() {
+  const panel =
+    byId(
+      "categoryHintPanel"
+    );
+
+  const button =
+    byId(
+      "openCategoryHint"
+    );
+
+  panel?.classList.add(
+    "hidden"
+  );
+
+  button?.setAttribute(
+    "aria-expanded",
+    "false"
+  );
+}
+
+byId(
+  "openCategoryHint"
+)?.addEventListener(
+  "click",
+  () => {
+    const panel =
+      byId(
+        "categoryHintPanel"
+      );
+
+    if (
+      panel?.classList.contains(
+        "hidden"
+      )
+    ) {
+      openCategoryHint();
+    } else {
+      closeCategoryHint();
+    }
+  }
+);
+
+byId(
+  "closeCategoryHint"
+)?.addEventListener(
+  "click",
+  closeCategoryHint
+);
   /* =====================================================
      START GAME
   ===================================================== */
