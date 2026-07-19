@@ -1349,15 +1349,55 @@ function getAllProfileClues(profile) {
       closeHint
     );
 
-  /* =====================================================
-     START GAME
-  ===================================================== */
+ /* =====================================================
+   START GAME
+===================================================== */
 
-  function startGame() {
+function getHeatPointValue() {
+  const fallbackPoints = {
+    mild: 10,
+    spicy: 20,
+    hot: 30
+  };
+
+  return (
+    arcade.HEAT_LEVELS?.[
+      selectedHeat
+    ]?.pointsPerCorrect ||
+    fallbackPoints[
+      selectedHeat
+    ] ||
+    10
+  );
+}
+
+function startGame() {
+  console.log(
+    "Start Investigation clicked.",
+    {
+      selectedHeat,
+      arcadeAvailable:
+        Boolean(arcade)
+    }
+  );
+
+  try {
     activeProfiles =
       profilesByHeat[
         selectedHeat
-      ] || profilesByHeat.mild;
+      ] ||
+      profilesByHeat.mild;
+
+    if (
+      !Array.isArray(
+        activeProfiles
+      ) ||
+      activeProfiles.length === 0
+    ) {
+      throw new Error(
+        `No profiles were found for ${selectedHeat}.`
+      );
+    }
 
     currentProfileIndex = 0;
     solvedProfiles = 0;
@@ -1369,7 +1409,11 @@ function getAllProfileClues(profile) {
         `clue-collector-${selectedHeat}`,
 
       gameName:
-        `Clue Collector ${heatNames[selectedHeat]}`,
+        `Clue Collector ${
+          heatNames[
+            selectedHeat
+          ] || "Mild"
+        }`,
 
       heatLevel:
         selectedHeat,
@@ -1385,26 +1429,92 @@ function getAllProfileClues(profile) {
 
     setText(
       "currentHeat",
-      heatNames[selectedHeat]
+      heatNames[
+        selectedHeat
+      ] || "Mild"
     );
 
     setText(
       "questionPointValue",
-      arcade.HEAT_LEVELS[
-        selectedHeat
-      ].pointsPerCorrect
+      getHeatPointValue()
     );
 
-    showScreen("playScreen");
+    showScreen(
+      "playScreen"
+    );
+
     loadProfile();
+
+    console.log(
+      "Clue Collector started successfully."
+    );
+  } catch (error) {
+    console.error(
+      "Clue Collector could not start:",
+      error
+    );
+
+    alert(
+      `Clue Collector could not start: ${
+        error.message
+      }`
+    );
+  }
+}
+
+function connectStartButton() {
+  const startButton =
+    byId(
+      "startGame"
+    );
+
+  if (!startButton) {
+    console.error(
+      "Start Investigation button #startGame was not found."
+    );
+
+    return;
   }
 
-  byId("startGame")
-    ?.addEventListener(
-      "click",
-      startGame
-    );
+  /*
+    Prevent accidentally attaching the handler twice.
+  */
+  if (
+    startButton.dataset
+      .clueCollectorConnected ===
+    "true"
+  ) {
+    return;
+  }
 
+  startButton.dataset
+    .clueCollectorConnected =
+    "true";
+
+  startButton.addEventListener(
+    "click",
+    startGame
+  );
+
+  console.log(
+    "Start Investigation button connected."
+  );
+}
+
+if (
+  document.readyState ===
+  "loading"
+) {
+  document.addEventListener(
+    "DOMContentLoaded",
+    connectStartButton,
+    {
+      once: true
+    }
+  );
+} else {
+  connectStartButton();
+}
   /* =====================================================
      DYNAMIC POST RENDERING
   ===================================================== */
