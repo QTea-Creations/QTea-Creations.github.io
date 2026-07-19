@@ -30,23 +30,27 @@
 
   <link
     rel="stylesheet"
-    href="../../css/style.css?v=10"
+    href="../../css/style.css?v=11"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/arcade-game.css?v=10"
+    href="../../css/arcade-game.css?v=11"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/backpack-rescue.css?v=1"
+    href="../../css/backpack-rescue.css?v=2"
   >
 
-  <script src="../../js/safetii-debug.js?v=10"></script>
+  <script src="../../js/safetii-debug.js?v=11"></script>
 </head>
 
 <body class="arcade-game-page">
+
+  <!-- =================================================
+       NAVIGATION
+  ================================================== -->
 
   <header class="site-header arcade-site-header">
 
@@ -103,7 +107,9 @@
 
   <main class="game-shell">
 
-    <!-- INTRO SCREEN -->
+    <!-- =================================================
+         INTRO SCREEN
+    ================================================== -->
 
     <section
       class="game-screen"
@@ -116,7 +122,7 @@
         </div>
 
         <p class="game-eyebrow">
-          Digital Emergency Challenge
+          Identity Sorting Challenge
         </p>
 
         <h1>
@@ -124,11 +130,13 @@
         </h1>
 
         <p class="game-intro-description">
-          Your digital backpack is filling up with messages,
-          files, account alerts, links, and online problems.
-          Choose the safest action before danger gets packed inside.
+          Sort each piece of information into the correct place.
+          Put information that is usually okay to share inside the
+          backpack. Put private information inside the safe.
         </p>
 
+
+        <!-- HOW TO PLAY -->
 
         <section class="game-instruction-panel">
 
@@ -145,7 +153,7 @@
               </p>
 
               <h2>
-                Choose the Best Safety Action
+                Backpack or Safe?
               </h2>
 
             </div>
@@ -153,27 +161,28 @@
           </div>
 
 
-          <div class="backpack-action-guide">
+          <div class="backpack-instruction-grid">
 
-            <article>
+            <article class="backpack-instruction-card">
 
-              <span>
-                ✅
-              </span>
+              <img
+                src="../../assets/images/Backpack.png"
+                alt="Closed Safetii Net backpack"
+              >
 
               <div>
 
                 <h3>
-                  Keep It
+                  Backpack — Share Zone
                 </h3>
 
                 <p>
-                  The item appears safe, expected, and appropriate
-                  to keep or use.
+                  Place broad interests, harmless preferences,
+                  hobbies, talents, and safe self-expression here.
                 </p>
 
                 <small>
-                  Example: A school file sent through the normal portal.
+                  Examples: favorite animal, hobby, favorite color
                 </small>
 
               </div>
@@ -181,77 +190,26 @@
             </article>
 
 
-            <article>
+            <article class="backpack-instruction-card">
 
-              <span>
-                🗑️
-              </span>
-
-              <div>
-
-                <h3>
-                  Delete It
-                </h3>
-
-                <p>
-                  Remove suspicious messages, unknown files,
-                  unsafe downloads, or scam links.
-                </p>
-
-                <small>
-                  Example: A fake prize message with a strange link.
-                </small>
-
-              </div>
-
-            </article>
-
-
-            <article>
-
-              <span>
-                🚫
-              </span>
+              <img
+                src="../../assets/images/Safe.png"
+                alt="Closed safe"
+              >
 
               <div>
 
                 <h3>
-                  Block and Report
+                  Safe — Protect Zone
                 </h3>
 
                 <p>
-                  Stop contact with accounts that threaten,
-                  harass, impersonate, or repeatedly target someone.
+                  Place information that could identify, locate,
+                  contact, or give access to someone here.
                 </p>
 
                 <small>
-                  Example: A stranger sending repeated harmful messages.
-                </small>
-
-              </div>
-
-            </article>
-
-
-            <article>
-
-              <span>
-                👨‍👩‍👧
-              </span>
-
-              <div>
-
-                <h3>
-                  Tell a Trusted Adult
-                </h3>
-
-                <p>
-                  Get help when there are threats, bullying,
-                  account theft, emergencies, or confusing situations.
-                </p>
-
-                <small>
-                  Example: Someone threatens to share a private photo.
+                  Examples: password, address, school, live location
                 </small>
 
               </div>
@@ -268,8 +226,9 @@
             </span>
 
             <p>
-              Some situations need more than one action. Choose the
-              most important first step shown in the answer choices.
+              Drag the information card over the correct container.
+              The backpack or safe will open when it is ready to
+              receive the card.
             </p>
 
           </div>
@@ -277,22 +236,24 @@
         </section>
 
 
+        <!-- GAME RULES -->
+
         <div class="game-rules">
 
           <article>
 
             <span>
-              ⚡
+              🖱️
             </span>
 
             <div>
 
               <strong>
-                Rescue Quickly
+                Drag and Drop
               </strong>
 
               <p>
-                Study the situation and choose the safest response.
+                Move each information card into the correct container.
               </p>
 
             </div>
@@ -309,11 +270,11 @@
             <div>
 
               <strong>
-                First Choice Counts
+                First Drop Counts
               </strong>
 
               <p>
-                Only a correct first answer earns points.
+                Correct first drops earn points. Wrong drops earn zero.
               </p>
 
             </div>
@@ -330,11 +291,11 @@
             <div>
 
               <strong>
-                Increase the Danger
+                Turn Up the Heat
               </strong>
 
               <p>
-                Hot rounds combine several warning signs.
+                Higher heat levels contain more subtle identity clues.
               </p>
 
             </div>
@@ -343,6 +304,8 @@
 
         </div>
 
+
+        <!-- HEAT SELECTION -->
 
         <div class="heat-selection">
 
@@ -366,7 +329,7 @@
               </strong>
 
               <small>
-                Clear safety decisions
+                Clear sharing choices
               </small>
 
               <span class="heat-point-label">
@@ -389,7 +352,7 @@
               </strong>
 
               <small>
-                Messages, files, and account risks
+                Personal details mixed with safe information
               </small>
 
               <span class="heat-point-label">
@@ -412,7 +375,7 @@
               </strong>
 
               <small>
-                Tricky digital emergencies
+                Several clues combined together
               </small>
 
               <span class="heat-point-label">
@@ -430,20 +393,24 @@
           id="startGame"
           type="button"
         >
-          Begin the Rescue
+          Begin Backpack Rescue
         </button>
 
       </div>
     </section>
 
 
-    <!-- PLAY SCREEN -->
+    <!-- =================================================
+         PLAY SCREEN
+    ================================================== -->
 
     <section
       class="game-screen hidden"
       id="playScreen"
     >
       <div class="play-layout">
+
+        <!-- SIDEBAR -->
 
         <aside class="game-sidebar">
 
@@ -456,11 +423,11 @@
           </p>
 
           <h2>
-            Protect the backpack
+            Sort the information
           </h2>
 
           <p>
-            Choose the safest action for each digital item.
+            Drag each card into the backpack or safe.
           </p>
 
 
@@ -480,7 +447,7 @@
           <div class="live-stat">
 
             <span>
-              Rescued
+              Correct
             </span>
 
             <strong id="correctCount">
@@ -510,7 +477,7 @@
             aria-expanded="false"
             aria-controls="backpackHintPanel"
           >
-            💡 Rescue Guide
+            💡 Sorting Guide
           </button>
 
 
@@ -523,6 +490,8 @@
 
         </aside>
 
+
+        <!-- GAME AREA -->
 
         <section class="question-stage">
 
@@ -538,23 +507,19 @@
               of
 
               <strong id="questionTotal">
-                8
+                10
               </strong>
             </div>
 
 
-            <div class="question-tools">
+            <div class="question-score-value">
+              +
 
-              <div class="question-score-value">
-                +
+              <span id="questionPointValue">
+                10
+              </span>
 
-                <span id="questionPointValue">
-                  10
-                </span>
-
-                possible
-              </div>
-
+              possible
             </div>
 
           </div>
@@ -575,7 +540,7 @@
           <aside
             class="category-hint-panel hidden"
             id="backpackHintPanel"
-            aria-label="Digital rescue guide"
+            aria-label="Backpack Rescue sorting guide"
           >
 
             <div class="category-hint-header">
@@ -587,7 +552,7 @@
                 </p>
 
                 <h3>
-                  What action should come first?
+                  Where should it go?
                 </h3>
 
               </div>
@@ -597,7 +562,7 @@
                 class="close-hint-button"
                 id="closeBackpackHint"
                 type="button"
-                aria-label="Close rescue guide"
+                aria-label="Close sorting guide"
               >
                 ×
               </button>
@@ -605,39 +570,36 @@
             </div>
 
 
-            <div class="social-risk-guide">
+            <div class="backpack-hint-list">
 
-              <span>
-                ✅ Expected and verified → Keep it
-              </span>
+              <article>
 
-              <span>
-                🗑️ Strange link or unknown file → Delete it
-              </span>
+                <span>
+                  🎒
+                </span>
 
-              <span>
-                🚫 Harassment or fake account → Block and report
-              </span>
+                <p>
+                  <strong>Backpack:</strong>
+                  hobbies, interests, broad preferences, favorite
+                  subjects, talents, and harmless self-expression.
+                </p>
 
-              <span>
-                👨‍👩‍👧 Threat or emergency → Tell a trusted adult
-              </span>
+              </article>
 
-              <span>
-                🔑 Password request → Never send it
-              </span>
 
-              <span>
-                💵 Prize or payment demand → Stop and verify
-              </span>
+              <article>
 
-              <span>
-                📸 Private-image threat → Save evidence and get help
-              </span>
+                <span>
+                  🔒
+                </span>
 
-              <span>
-                📱 Hacked account → Tell an adult and secure it
-              </span>
+                <p>
+                  <strong>Safe:</strong>
+                  names, passwords, account codes, addresses, schools,
+                  birthdays, schedules, and precise locations.
+                </p>
+
+              </article>
 
             </div>
 
@@ -649,203 +611,130 @@
           </aside>
 
 
-          <!-- BACKPACK DISPLAY -->
+          <!-- DRAG CARD -->
 
-          <article class="backpack-rescue-stage">
+          <article
+            class="backpack-drag-card"
+            id="dragItemCard"
+            draggable="true"
+            tabindex="0"
+            role="button"
+            aria-describedby="dragInstructions"
+          >
 
-            <div class="digital-backpack">
+            <p class="game-eyebrow">
+              Drag This Information
+            </p>
 
-              <span class="backpack-handle"></span>
+            <h2 id="sortItemText">
+              Loading information...
+            </h2>
 
-              <div class="backpack-main">
+            <p
+              class="drag-card-category"
+              id="sortItemContext"
+            >
+              Decide whether this belongs in the backpack or safe.
+            </p>
 
-                <span class="backpack-logo">
-                  SN
-                </span>
+            <span class="drag-handle">
+              ⋮⋮ Drag Me ⋮⋮
+            </span>
+
+          </article>
+
+
+          <p
+            class="keyboard-drag-instructions"
+            id="dragInstructions"
+          >
+            You can also select the Backpack or Safe buttons
+            underneath the images.
+          </p>
+
+
+          <!-- SORTING CONTAINERS -->
+
+          <div class="backpack-sort-grid">
+
+            <!-- BACKPACK -->
+
+            <button
+              class="backpack-drop-zone share-drop-zone"
+              id="shareZone"
+              type="button"
+              data-answer="safe"
+            >
+
+              <div class="drop-image-frame">
+
+                <img
+                  class="drop-container-image"
+                  id="backpackImage"
+                  src="../../assets/images/Backpack.png"
+                  data-closed-src="../../assets/images/Backpack.png"
+                  data-open-src="../../assets/images/openBackpack.png"
+                  alt="Backpack share zone"
+                  draggable="false"
+                >
 
                 <div
-                  class="backpack-item-icon"
-                  id="itemIcon"
+                  class="drop-ready-message"
                   aria-hidden="true"
                 >
-                  📩
+                  Drop Here!
                 </div>
 
               </div>
 
-              <div class="backpack-pocket"></div>
-
-            </div>
-
-
-            <div class="backpack-item-details">
-
-              <p class="game-eyebrow">
-                New Digital Item
-              </p>
-
-              <h2 id="itemTitle">
-                Message Received
-              </h2>
-
-              <p id="itemContext">
-                A new message appeared in the digital backpack.
-              </p>
-
-            </div>
-
-          </article>
-
-
-          <!-- ITEM CARD -->
-
-          <article class="backpack-message-card">
-
-            <div class="backpack-message-header">
-
-              <span id="itemType">
-                Direct Message
-              </span>
-
-              <span
-                class="backpack-risk-badge"
-                id="riskBadge"
-              >
-                Needs Review
-              </span>
-
-            </div>
-
-
-            <blockquote id="itemMessage">
-              “Click this link to receive free game coins.”
-            </blockquote>
-
-
-            <div class="backpack-detail-grid">
-
-              <article>
-
-                <span>
-                  Sender or Source
-                </span>
-
-                <strong id="itemSource">
-                  Unknown account
-                </strong>
-
-              </article>
-
-
-              <article>
-
-                <span>
-                  Extra Detail
-                </span>
-
-                <strong id="itemExtraDetail">
-                  Includes an unfamiliar link
-                </strong>
-
-              </article>
-
-            </div>
-
-          </article>
-
-
-          <p class="backpack-question-prompt">
-            What should the hero do first?
-          </p>
-
-
-          <!-- ACTION CHOICES -->
-
-          <div
-            class="backpack-answer-grid"
-            id="answerGrid"
-          >
-
-            <button
-              class="backpack-answer-choice keep-choice"
-              type="button"
-              data-action="keep"
-            >
-
-              <span>
-                ✅
-              </span>
-
               <strong>
-                Keep It
+                Share Zone
               </strong>
 
-              <small>
-                The item appears safe and expected
-              </small>
+              <span>
+                Usually okay to share
+              </span>
 
             </button>
 
 
-            <button
-              class="backpack-answer-choice delete-choice"
-              type="button"
-              data-action="delete"
-            >
-
-              <span>
-                🗑️
-              </span>
-
-              <strong>
-                Delete It
-              </strong>
-
-              <small>
-                Remove the suspicious item without opening it
-              </small>
-
-            </button>
-
+            <!-- SAFE -->
 
             <button
-              class="backpack-answer-choice report-choice"
+              class="backpack-drop-zone protect-drop-zone"
+              id="protectZone"
               type="button"
-              data-action="report"
+              data-answer="private"
             >
 
-              <span>
-                🚫
-              </span>
+              <div class="drop-image-frame">
+
+                <img
+                  class="drop-container-image"
+                  id="safeImage"
+                  src="../../assets/images/Safe.png"
+                  data-closed-src="../../assets/images/Safe.png"
+                  data-open-src="../../assets/images/openSafe.png"
+                  alt="Safe protect zone"
+                  draggable="false"
+                >
+
+                <div
+                  class="drop-ready-message"
+                  aria-hidden="true"
+                >
+                  Drop Here!
+                </div>
+
+              </div>
 
               <strong>
-                Block and Report
+                Protect Zone
               </strong>
-
-              <small>
-                Stop the account and report its behavior
-              </small>
-
-            </button>
-
-
-            <button
-              class="backpack-answer-choice adult-choice"
-              type="button"
-              data-action="adult"
-            >
 
               <span>
-                👨‍👩‍👧
+                Keep this information private
               </span>
-
-              <strong>
-                Tell a Trusted Adult
-              </strong>
-
-              <small>
-                Get help with a dangerous or serious situation
-              </small>
 
             </button>
 
@@ -861,7 +750,7 @@
           >
 
             <strong id="feedbackTitle">
-              Rescue result
+              Sorting result
             </strong>
 
             <p id="feedbackText"></p>
@@ -890,17 +779,17 @@
             <img
               id="memeReactionImage"
               src="../../assets/mascot/congrats.png"
-              alt="Meme reacts to the rescue choice"
+              alt="Meme reacts to the sorting answer"
             >
 
             <div class="arcade-meme-speech">
 
               <strong id="memeReactionTitle">
-                Backpack protected!
+                Great sorting!
               </strong>
 
               <p id="memeReactionMessage">
-                You chose the safest action.
+                You placed the information safely.
               </p>
 
             </div>
@@ -921,7 +810,9 @@
     </section>
 
 
-    <!-- RESULTS SCREEN -->
+    <!-- =================================================
+         RESULTS SCREEN
+    ================================================== -->
 
     <section
       class="game-screen hidden"
@@ -945,7 +836,7 @@
 
 
         <p class="game-eyebrow">
-          Rescue Complete
+          Backpack Rescue Complete
         </p>
 
         <h1>
@@ -963,7 +854,7 @@
             /
 
             <span id="maximumScore">
-              80
+              100
             </span>
           </span>
 
@@ -997,11 +888,11 @@
           <article>
 
             <span>
-              Items Rescued
+              Correctly Sorted
             </span>
 
             <strong id="finalCorrect">
-              0/8
+              0/10
             </strong>
 
           </article>
@@ -1067,9 +958,13 @@
   </main>
 
 
-  <script src="../../js/arcade/arcade-score.js?v=10"></script>
+  <!-- =================================================
+       SCRIPTS
+  ================================================== -->
 
-  <script src="backpack-rescue.js?v=1"></script>
+  <script src="../../js/arcade/arcade-score.js?v=11"></script>
+
+  <script src="backpack-rescue.js?v=2"></script>
 
 </body>
 </html>
