@@ -95,6 +95,121 @@
           zero points for that question.
         </p>
 
+        <section class="game-instruction-panel">
+  <div class="instruction-heading">
+    <span aria-hidden="true">
+      📘
+    </span>
+
+    <div>
+      <p class="game-eyebrow">
+        How to Play
+      </p>
+
+      <h2>
+        Know the Four Categories
+      </h2>
+    </div>
+  </div>
+
+  <div class="identity-category-guide">
+    <article class="category-guide-card expression-guide">
+      <span class="category-guide-icon">
+        🎨
+      </span>
+
+      <div>
+        <h3>
+          Safe Self-Expression
+        </h3>
+
+        <p>
+          Hobbies, favorite subjects, talents, interests,
+          and broad preferences.
+        </p>
+
+        <small>
+          Example: “I love drawing.”
+        </small>
+      </div>
+    </article>
+
+    <article class="category-guide-card personal-guide">
+      <span class="category-guide-icon">
+        👤
+      </span>
+
+      <div>
+        <h3>
+          Personal Information
+        </h3>
+
+        <p>
+          General facts that deserve care but do not directly
+          identify or locate someone.
+        </p>
+
+        <small>
+          Example: “I have two siblings.”
+        </small>
+      </div>
+    </article>
+
+    <article class="category-guide-card private-guide">
+      <span class="category-guide-icon">
+        🔒
+      </span>
+
+      <div>
+        <h3>
+          Private Information
+        </h3>
+
+        <p>
+          Grade, age, birthday, school, address,
+          neighborhood, location, or schedule.
+        </p>
+
+        <small>
+          Example: “I attend Westview Academy.”
+        </small>
+      </div>
+    </article>
+
+    <article class="category-guide-card secret-guide">
+      <span class="category-guide-icon">
+        🔑
+      </span>
+
+      <div>
+        <h3>
+          Secret Information
+        </h3>
+
+        <p>
+          Passwords, PINs, verification codes,
+          and account recovery information.
+        </p>
+
+        <small>
+          Example: “My login code is 482991.”
+        </small>
+      </div>
+    </article>
+  </div>
+
+  <div class="instruction-rule">
+    <span aria-hidden="true">
+      🎯
+    </span>
+
+    <p>
+      Choose one category for every clue. Only a correct
+      first answer earns points.
+    </p>
+  </div>
+</section>
+
         <div class="game-rules">
           <article>
             <span>
@@ -298,13 +413,25 @@
               </strong>
             </div>
 
-            <div class="question-score-value">
-              +
-              <span id="questionPointValue">
-                10
-              </span>
-              possible
-            </div>
+            <div class="question-tools">
+  <div class="question-score-value">
+    +
+    <span id="questionPointValue">
+      10
+    </span>
+    possible
+  </div>
+
+  <button
+    class="hint-toggle-button"
+    id="openCategoryHint"
+    type="button"
+    aria-expanded="false"
+    aria-controls="categoryHintPanel"
+  >
+    💡 Category Hint
+  </button>
+</div>
           </div>
 
           <div class="progress-track">
@@ -313,7 +440,85 @@
               id="questionProgressFill"
             ></div>
           </div>
+<aside
+  class="category-hint-panel hidden"
+  id="categoryHintPanel"
+  aria-label="Identity category hints"
+>
+  <div class="category-hint-header">
+    <div>
+      <p class="game-eyebrow">
+        Quick Reference
+      </p>
 
+      <h3>
+        Which category fits?
+      </h3>
+    </div>
+
+    <button
+      class="close-hint-button"
+      id="closeCategoryHint"
+      type="button"
+      aria-label="Close category hint"
+    >
+      ×
+    </button>
+  </div>
+
+  <div class="category-hint-list">
+    <article>
+      <span>
+        🎨
+      </span>
+
+      <p>
+        <strong>Safe Self-Expression:</strong>
+        hobbies, favorite subjects, talents, interests,
+        and broad preferences.
+      </p>
+    </article>
+
+    <article>
+      <span>
+        👤
+      </span>
+
+      <p>
+        <strong>Personal Information:</strong>
+        general facts that deserve care but do not directly
+        identify or locate someone.
+      </p>
+    </article>
+
+    <article>
+      <span>
+        🔒
+      </span>
+
+      <p>
+        <strong>Private Information:</strong>
+        grade, age, birthday, school, address,
+        neighborhood, location, and schedule.
+      </p>
+    </article>
+
+    <article>
+      <span>
+        🔑
+      </span>
+
+      <p>
+        <strong>Secret Information:</strong>
+        passwords, PINs, login codes, and recovery details.
+      </p>
+    </article>
+  </div>
+
+  <p class="hint-penalty-note">
+    Hints help you learn and do not remove points.
+  </p>
+</aside>
           <article class="identity-profile-card">
             <div class="profile-avatar">
               🦸🏽
