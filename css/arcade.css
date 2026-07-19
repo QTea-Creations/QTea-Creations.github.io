@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Cyber Arcade | Safetii Net
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/arcade.css"
+  >
+</head>
+
+<body class="arcade-page">
+
+  <header class="arcade-topbar">
+    <a
+      class="arcade-brand"
+      href="../index.html"
+      aria-label="Return to Safetii Net home"
+    >
+      <span class="arcade-brand-icon">
+        🛡️
+      </span>
+
+      <span>
+        Safetii Net
+      </span>
+    </a>
+
+    <nav class="arcade-nav">
+      <a href="../index.html">
+        Home
+      </a>
+
+      <a href="../missions.html">
+        Missions
+      </a>
+
+      <a
+        class="active"
+        href="index.html"
+      >
+        Cyber Arcade
+      </a>
+
+      <a href="../about.html">
+        About
+      </a>
+    </nav>
+
+    <div class="arcade-points-pill">
+      ⭐
+      <span id="arcadeTotalPoints">
+        0
+      </span>
+      Points
+    </div>
+  </header>
+
+
+  <main class="arcade-main">
+
+    <!-- HERO -->
+    <section class="arcade-hero">
+      <div class="arcade-hero-copy">
+        <p class="arcade-eyebrow">
+          Welcome to the
+        </p>
+
+        <h1>
+          Cyber Arcade
+        </h1>
+
+        <p>
+          Replay your favorite mission games, sharpen your
+          cybersecurity skills, and compete for higher scores.
+        </p>
+
+        <div class="arcade-hero-actions">
+          <button
+            class="arcade-primary-button"
+            id="playFeaturedGame"
+            type="button"
+          >
+            Play Featured Game
+          </button>
+
+          <button
+            class="arcade-secondary-button"
+            id="viewAllGames"
+            type="button"
+          >
+            View All Games
+          </button>
+        </div>
+      </div>
+
+      <div class="arcade-hero-visual">
+        <div class="arcade-machine">
+          <div class="arcade-machine-screen">
+            <span>
+              🎮
+            </span>
+
+            <strong>
+              Ready Player?
+            </strong>
+
+            <small>
+              Choose your heat level
+            </small>
+          </div>
+
+          <div class="arcade-machine-controls">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PLAYER STATS -->
+    <section
+      class="arcade-stats"
+      aria-label="Cyber Arcade player statistics"
+    >
+      <article>
+        <span>
+          🎯
+        </span>
+
+        <div>
+          <strong id="arcadeGamesPlayed">
+            0
+          </strong>
+
+          <small>
+            Games Played
+          </small>
+        </div>
+      </article>
+
+      <article>
+        <span>
+          🏆
+        </span>
+
+        <div>
+          <strong id="arcadePerfectRounds">
+            0
+          </strong>
+
+          <small>
+            Perfect Rounds
+          </small>
+        </div>
+      </article>
+
+      <article>
+        <span>
+          ⭐
+        </span>
+
+        <div>
+          <strong id="arcadeStarsEarned">
+            0
+          </strong>
+
+          <small>
+            Best Stars
+          </small>
+        </div>
+      </article>
+
+      <article>
+        <span>
+          🔥
+        </span>
+
+        <div>
+          <strong id="arcadeGamesCompleted">
+            0
+          </strong>
+
+          <small>
+            Games Completed
+          </small>
+        </div>
+      </article>
+    </section>
+
+
+    <!-- HEAT LEVEL GUIDE -->
+    <section class="heat-guide">
+      <div class="section-heading">
+        <div>
+          <p class="arcade-eyebrow">
+            Choose your challenge
+          </p>
+
+          <h2>
+            Heat Levels
+          </h2>
+        </div>
+
+        <p>
+          Hotter games award more points for every correct answer.
+        </p>
+      </div>
+
+      <div class="heat-level-cards">
+        <article class="heat-card mild-card">
+          <span class="heat-peppers">
+            🌶️
+          </span>
+
+          <div>
+            <h3>
+              Mild
+            </h3>
+
+            <p>
+              A friendly warm-up with straightforward questions.
+            </p>
+
+            <strong>
+              10 points per correct answer
+            </strong>
+          </div>
+        </article>
+
+        <article class="heat-card spicy-card">
+          <span class="heat-peppers">
+            🌶️🌶️
+          </span>
+
+          <div>
+            <h3>
+              Spicy
+            </h3>
+
+            <p>
+              More clues, closer choices, and trickier situations.
+            </p>
+
+            <strong>
+              20 points per correct answer
+            </strong>
+          </div>
+        </article>
+
+        <article class="heat-card hot-card">
+          <span class="heat-peppers">
+            🌶️🌶️🌶️
+          </span>
+
+          <div>
+            <h3>
+              Hot
+            </h3>
+
+            <p>
+              The most challenging version for experienced players.
+            </p>
+
+            <strong>
+              30 points per correct answer
+            </strong>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- FILTERS -->
+    <section
+      class="arcade-browser"
+      id="arcadeGames"
+    >
+      <div class="section-heading arcade-games-heading">
+        <div>
+          <p class="arcade-eyebrow">
+            Pick a game
+          </p>
+
+          <h2>
+            Arcade Games
+          </h2>
+        </div>
+
+        <div class="arcade-search-wrapper">
+          <label
+            class="sr-only"
+            for="arcadeSearch"
+          >
+            Search arcade games
+          </label>
+
+          <input
+            id="arcadeSearch"
+            type="search"
+            placeholder="Search games..."
+            autocomplete="off"
+          >
+        </div>
+      </div>
+
+      <div
+        class="arcade-filters"
+        aria-label="Filter arcade games"
+      >
+        <button
+          class="arcade-filter active"
+          type="button"
+          data-filter="all"
+        >
+          All Games
+        </button>
+
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="identity"
+        >
+          Identity
+        </button>
+
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="passwords"
+        >
+          Passwords
+        </button>
+
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="phishing"
+        >
+          Phishing
+        </button>
+
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="footprint"
+        >
+          Digital Footprint
+        </button>
+
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="response"
+        >
+          Cyber Response
+        </button>
+
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="original"
+        >
+          Arcade Originals
+        </button>
+      </div>
+
+
+      <!-- GAME GRID -->
+      <div
+        class="arcade-game-grid"
+        id="arcadeGameGrid"
+      >
+
+        <!-- PIECES OF ME -->
+        <article
+          class="arcade-game-card featured-game"
+          data-category="identity"
+          data-game-id="pieces-of-me"
+          data-game-name="Pieces of Me"
+        >
+          <div class="game-card-art pieces-art">
+            <span>
+              🧩
+            </span>
+
+            <div class="game-card-badge">
+              Featured
+            </div>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat mild">
+                🌶️ Mild
+              </span>
+            </div>
+
+            <h3>
+              Pieces of Me
+            </h3>
+
+            <p>
+              Sort identity clues into self-expression, personal,
+              private, and secret information.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/pieces-of-me.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- TRUST CIRCLE -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="trust-circle"
+          data-game-name="Trust Circle"
+        >
+          <div class="game-card-art trust-art">
+            <span>
+              🤝
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat mild">
+                🌶️ Mild
+              </span>
+            </div>
+
+            <h3>
+              Trust Circle
+            </h3>
+
+            <p>
+              Decide who belongs in your trusted, known, and unknown
+              circles.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/trust-circle.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- CLUE COLLECTOR -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="clue-collector"
+          data-game-name="Clue Collector"
+        >
+          <div class="game-card-art clue-art">
+            <span>
+              🔎
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat spicy">
+                🌶️🌶️ Spicy
+              </span>
+            </div>
+
+            <h3>
+              Clue Collector
+            </h3>
+
+            <p>
+              Investigate profiles and uncover details that reveal
+              more than expected.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/clue-collector.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- IMPOSTOR ALERT -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="impostor-alert"
+          data-game-name="Impostor Alert"
+        >
+          <div class="game-card-art impostor-art">
+            <span>
+              🚨
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat spicy">
+                🌶️🌶️ Spicy
+              </span>
+            </div>
+
+            <h3>
+              Impostor Alert
+            </h3>
+
+            <p>
+              Choose the safest actions when someone copies an online
+              identity.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/impostor-alert.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- USERNAME LAB -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="username-lab"
+          data-game-name="Safe Username Lab"
+        >
+          <div class="game-card-art username-art">
+            <span>
+              🎮
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat spicy">
+                🌶️🌶️ Spicy
+              </span>
+            </div>
+
+            <h3>
+              Safe Username Lab
+            </h3>
+
+            <p>
+              Scan usernames and identify clues that expose private
+              information.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/username-lab.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- BACKPACK RESCUE -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="backpack-rescue"
+          data-game-name="Backpack Rescue"
+        >
+          <div class="game-card-art backpack-art">
+            <img
+              src="../assets/images/Backback.png"
+              alt=""
+            >
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat hot">
+                🌶️🌶️🌶️ Hot
+              </span>
+            </div>
+
+            <h3>
+              Backpack Rescue
+            </h3>
+
+            <p>
+              Sort shareable information into the backpack and private
+              information into the safe.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/backpack-rescue.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- IDENTITY REPAIR -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="identity-repair"
+          data-game-name="Identity Repair"
+        >
+          <div class="game-card-art repair-art">
+            <span>
+              🛠️
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat hot">
+                🌶️🌶️🌶️ Hot
+              </span>
+            </div>
+
+            <h3>
+              Identity Repair
+            </h3>
+
+            <p>
+              Repair unsafe profiles and build safer usernames from
+              protected information.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/identity-repair.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- COMING SOON -->
+        <article
+          class="arcade-game-card coming-soon-card"
+          data-category="passwords"
+          data-game-name="Password Power-Up"
+        >
+          <div class="game-card-art coming-art">
+            <span>
+              🔐
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Passwords
+              </span>
+
+              <span class="coming-badge">
+                Coming Soon
+              </span>
+            </div>
+
+            <h3>
+              Password Power-Up
+            </h3>
+
+            <p>
+              Build strong passwords and defend accounts from common
+              attacks.
+            </p>
+
+            <button
+              class="play-game-button disabled"
+              type="button"
+              disabled
+            >
+              Coming Soon
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <p
+        class="no-games-message hidden"
+        id="noArcadeGames"
+      >
+        No games match that filter yet.
+      </p>
+    </section>
+
+  </main>
+
+
+  <footer class="arcade-footer">
+    <p>
+      Safetii Net Cyber Arcade
+    </p>
+
+    <a href="../index.html">
+      Return to Headquarters
+    </a>
+  </footer>
+
+
+  <script src="../js/arcade/arcade-score.js"></script>
+  <script src="../js/arcade/arcade-home.js"></script>
+</body>
+</html>
