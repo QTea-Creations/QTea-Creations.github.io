@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Username Lab | Cyber Arcade
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css?v=9"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/arcade-game.css?v=9"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/username-lab.css?v=1"
+  >
+
+  <script src="../../js/safetii-debug.js?v=9"></script>
+</head>
+
+<body class="arcade-game-page">
+
+  <header class="site-header arcade-site-header">
+
+    <a
+      href="../../index.html"
+      class="logo"
+    >
+      <img
+        src="../../assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+    </a>
+
+    <nav class="arcade-main-nav">
+
+      <a href="../../dashboard.html">
+        Hero Headquarters
+      </a>
+
+      <a href="../../index.html#missions">
+        Missions
+      </a>
+
+      <a
+        href="../index.html"
+        class="active-nav-link"
+        aria-current="page"
+      >
+        Cyber Arcade
+      </a>
+
+      <a href="../../parents.html">
+        Parents
+      </a>
+
+      <a href="../../teachers.html">
+        Teachers
+      </a>
+
+    </nav>
+
+    <div class="game-points-pill arcade-navbar-points">
+      ⭐
+
+      <span id="globalPoints">
+        0
+      </span>
+
+      Points
+    </div>
+
+  </header>
+
+
+  <main class="game-shell">
+
+    <!-- INTRO SCREEN -->
+
+    <section
+      class="game-screen"
+      id="introScreen"
+    >
+      <div class="game-intro-card">
+
+        <div class="game-intro-icon">
+          🧪
+        </div>
+
+        <p class="game-eyebrow">
+          Digital Identity Experiment
+        </p>
+
+        <h1>
+          Username Lab
+        </h1>
+
+        <p class="game-intro-description">
+          Examine possible usernames and decide which ones are safe,
+          risky, or unsafe. Protect personal information while still
+          creating something fun and memorable.
+        </p>
+
+
+        <section class="game-instruction-panel">
+
+          <div class="instruction-heading">
+
+            <span aria-hidden="true">
+              🧬
+            </span>
+
+            <div>
+
+              <p class="game-eyebrow">
+                Lab Briefing
+              </p>
+
+              <h2>
+                Build a Safer Username
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="username-rule-grid">
+
+            <article>
+
+              <span>
+                🎨
+              </span>
+
+              <div>
+
+                <h3>
+                  Use Interests
+                </h3>
+
+                <p>
+                  Hobbies, animals, colors, fictional ideas,
+                  and creative words are usually safer choices.
+                </p>
+
+                <small>
+                  Example: CosmicPanda
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span>
+                🚫
+              </span>
+
+              <div>
+
+                <h3>
+                  Skip Full Names
+                </h3>
+
+                <p>
+                  Avoid using first and last names together,
+                  especially on public accounts.
+                </p>
+
+                <small>
+                  Avoid: MayaJohnson
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span>
+                🎂
+              </span>
+
+              <div>
+
+                <h3>
+                  Hide Birth Information
+                </h3>
+
+                <p>
+                  Birth years, exact ages, and birthdays can help
+                  strangers guess someone’s identity.
+                </p>
+
+                <small>
+                  Avoid: Tyler2014
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span>
+                🏫
+              </span>
+
+              <div>
+
+                <h3>
+                  Protect Locations
+                </h3>
+
+                <p>
+                  Do not include schools, teams, cities,
+                  streets, neighborhoods, or house numbers.
+                </p>
+
+                <small>
+                  Avoid: EastRidgeEagle24
+                </small>
+
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <div class="instruction-rule">
+
+            <span aria-hidden="true">
+              🎯
+            </span>
+
+            <p>
+              Judge the whole username. Several harmless-looking
+              clues can combine to identify someone.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <div class="game-rules">
+
+          <article>
+
+            <span>
+              🔬
+            </span>
+
+            <div>
+
+              <strong>
+                Analyze Every Ingredient
+              </strong>
+
+              <p>
+                Look for names, ages, schools, locations, and routines.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              ⭐
+            </span>
+
+            <div>
+
+              <strong>
+                First Answer Counts
+              </strong>
+
+              <p>
+                Only a correct first verdict earns points.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              🔥
+            </span>
+
+            <div>
+
+              <strong>
+                Increase the Difficulty
+              </strong>
+
+              <p>
+                Hot usernames contain clues that must be combined.
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+
+        <div class="heat-selection">
+
+          <p class="heat-selection-title">
+            Choose a Heat Level
+          </p>
+
+          <div class="heat-choice-grid">
+
+            <button
+              class="heat-choice selected"
+              type="button"
+              data-heat="mild"
+            >
+              <span class="heat-choice-icon">
+                🌶️
+              </span>
+
+              <strong>
+                Mild
+              </strong>
+
+              <small>
+                Clear safe and unsafe choices
+              </small>
+
+              <span class="heat-point-label">
+                10 points each
+              </span>
+            </button>
+
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="spicy"
+            >
+              <span class="heat-choice-icon">
+                🌶️🌶️
+              </span>
+
+              <strong>
+                Spicy
+              </strong>
+
+              <small>
+                Several clues mixed together
+              </small>
+
+              <span class="heat-point-label">
+                20 points each
+              </span>
+            </button>
+
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="hot"
+            >
+              <span class="heat-choice-icon">
+                🌶️🌶️🌶️
+              </span>
+
+              <strong>
+                Hot
+              </strong>
+
+              <small>
+                Tricky identity combinations
+              </small>
+
+              <span class="heat-point-label">
+                30 points each
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="game-primary-button"
+          id="startGame"
+          type="button"
+        >
+          Enter the Username Lab
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- PLAY SCREEN -->
+
+    <section
+      class="game-screen hidden"
+      id="playScreen"
+    >
+      <div class="play-layout">
+
+        <aside class="game-sidebar">
+
+          <div class="sidebar-game-icon">
+            🧪
+          </div>
+
+          <p class="game-eyebrow">
+            Username Lab
+          </p>
+
+          <h2>
+            Test the username
+          </h2>
+
+          <p>
+            Decide whether the username protects or exposes
+            the person behind it.
+          </p>
+
+
+          <div class="live-stat">
+
+            <span>
+              Score
+            </span>
+
+            <strong id="currentScore">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="live-stat">
+
+            <span>
+              Correct
+            </span>
+
+            <strong id="correctCount">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="live-stat">
+
+            <span>
+              Heat
+            </span>
+
+            <strong id="currentHeat">
+              Mild
+            </strong>
+
+          </div>
+
+
+          <button
+            class="sidebar-hint-button"
+            id="openUsernameHint"
+            type="button"
+            aria-expanded="false"
+            aria-controls="usernameHintPanel"
+          >
+            💡 Username Guide
+          </button>
+
+
+          <a
+            class="sidebar-exit-link"
+            href="../index.html"
+          >
+            Exit Game
+          </a>
+
+        </aside>
+
+
+        <section class="question-stage">
+
+          <div class="question-progress-row">
+
+            <div>
+              Experiment
+
+              <strong id="questionNumber">
+                1
+              </strong>
+
+              of
+
+              <strong id="questionTotal">
+                8
+              </strong>
+            </div>
+
+
+            <div class="question-tools">
+
+              <div class="question-score-value">
+                +
+
+                <span id="questionPointValue">
+                  10
+                </span>
+
+                possible
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="progress-track">
+
+            <div
+              class="progress-fill"
+              id="questionProgressFill"
+            ></div>
+
+          </div>
+
+
+          <aside
+            class="category-hint-panel hidden"
+            id="usernameHintPanel"
+            aria-label="Username safety guide"
+          >
+
+            <div class="category-hint-header">
+
+              <div>
+
+                <p class="game-eyebrow">
+                  Quick Reference
+                </p>
+
+                <h3>
+                  What should stay out?
+                </h3>
+
+              </div>
+
+
+              <button
+                class="close-hint-button"
+                id="closeUsernameHint"
+                type="button"
+                aria-label="Close username guide"
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            <div class="social-risk-guide">
+
+              <span>
+                👤 Full or last names
+              </span>
+
+              <span>
+                🎂 Birth years and exact ages
+              </span>
+
+              <span>
+                🏫 School and team names
+              </span>
+
+              <span>
+                📍 Cities and neighborhoods
+              </span>
+
+              <span>
+                🏠 Street names and house numbers
+              </span>
+
+              <span>
+                📞 Phone-number pieces
+              </span>
+
+              <span>
+                🏅 Jersey numbers combined with teams
+              </span>
+
+              <span>
+                🔑 Password-like information
+              </span>
+
+            </div>
+
+
+            <p class="hint-penalty-note">
+              Opening the guide does not remove points.
+            </p>
+
+          </aside>
+
+
+          <article class="username-profile-card">
+
+            <div
+              class="username-avatar"
+              id="profileAvatar"
+              aria-hidden="true"
+            >
+              🎮
+            </div>
+
+            <div>
+
+              <p class="game-eyebrow">
+                Account Creator
+              </p>
+
+              <h2 id="profileName">
+                Jordan needs a username.
+              </h2>
+
+              <p id="profileContext">
+                Jordan is creating a public gaming account.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article class="username-test-card">
+
+            <p class="question-label">
+              Test this username
+            </p>
+
+            <div
+              class="username-display"
+              id="usernameDisplay"
+            >
+              CosmicTiger
+            </div>
+
+
+            <div class="username-ingredient-row">
+
+              <span id="usernameClueOne">
+                Creative word
+              </span>
+
+              <span id="usernameClueTwo">
+                Favorite animal
+              </span>
+
+              <span id="usernameClueThree">
+                No personal information
+              </span>
+
+            </div>
+
+          </article>
+
+
+          <p class="username-question-prompt">
+            What is your safety verdict?
+          </p>
+
+
+          <div
+            class="username-answer-grid"
+            id="answerGrid"
+          >
+
+            <button
+              class="username-answer-choice safe-choice"
+              type="button"
+              data-verdict="safe"
+            >
+
+              <span>
+                ✅
+              </span>
+
+              <strong>
+                Safe Choice
+              </strong>
+
+              <small>
+                Creative and not personally identifying
+              </small>
+
+            </button>
+
+
+            <button
+              class="username-answer-choice caution-choice"
+              type="button"
+              data-verdict="caution"
+            >
+
+              <span>
+                ⚠️
+              </span>
+
+              <strong>
+                Use Caution
+              </strong>
+
+              <small>
+                Contains a detail that could reveal something
+              </small>
+
+            </button>
+
+
+            <button
+              class="username-answer-choice unsafe-choice"
+              type="button"
+              data-verdict="unsafe"
+            >
+
+              <span>
+                🚨
+              </span>
+
+              <strong>
+                Unsafe Choice
+              </strong>
+
+              <small>
+                Reveals clear identifying information
+              </small>
+
+            </button>
+
+          </div>
+
+
+          <div
+            class="answer-feedback hidden"
+            id="answerFeedback"
+            aria-live="polite"
+          >
+
+            <strong id="feedbackTitle">
+              Lab result
+            </strong>
+
+            <p id="feedbackText"></p>
+
+            <div class="question-points-result">
+
+              Points earned:
+
+              <strong id="pointsEarnedThisQuestion">
+                0
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <aside
+            class="arcade-meme-reaction hidden"
+            id="memeReaction"
+            aria-live="polite"
+          >
+
+            <img
+              id="memeReactionImage"
+              src="../../assets/mascot/congrats.png"
+              alt="Meme reacts to the username verdict"
+            >
+
+            <div class="arcade-meme-speech">
+
+              <strong id="memeReactionTitle">
+                Great analysis!
+              </strong>
+
+              <p id="memeReactionMessage">
+                You protected the player’s identity.
+              </p>
+
+            </div>
+
+          </aside>
+
+
+          <button
+            class="game-primary-button hidden"
+            id="nextQuestion"
+            type="button"
+          >
+            Next Experiment
+          </button>
+
+        </section>
+      </div>
+    </section>
+
+
+    <!-- RESULTS SCREEN -->
+
+    <section
+      class="game-screen hidden"
+      id="resultScreen"
+    >
+      <div class="result-card">
+
+        <div class="result-meme-celebration">
+
+          <img
+            id="resultMemeImage"
+            src="../../assets/mascot/congrats.png"
+            alt="Meme celebrates the completed Username Lab round"
+          >
+
+          <div class="result-icon">
+            🧪
+          </div>
+
+        </div>
+
+
+        <p class="game-eyebrow">
+          Experiment Complete
+        </p>
+
+        <h1>
+          Final Score
+        </h1>
+
+
+        <div class="final-score">
+
+          <strong id="finalScore">
+            0
+          </strong>
+
+          <span>
+            /
+
+            <span id="maximumScore">
+              80
+            </span>
+          </span>
+
+        </div>
+
+
+        <div
+          class="final-stars"
+          id="finalStars"
+          aria-label="Stars earned"
+        >
+          ☆☆☆
+        </div>
+
+
+        <div class="result-stat-grid">
+
+          <article>
+
+            <span>
+              Accuracy
+            </span>
+
+            <strong id="finalAccuracy">
+              0%
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Correct
+            </span>
+
+            <strong id="finalCorrect">
+              0/8
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Best Score
+            </span>
+
+            <strong id="bestScore">
+              0
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Global Points Earned
+            </span>
+
+            <strong id="globalPointsEarned">
+              +0
+            </strong>
+
+          </article>
+
+        </div>
+
+
+        <p
+          class="result-message"
+          id="resultMessage"
+        ></p>
+
+
+        <div class="result-actions">
+
+          <button
+            class="game-primary-button"
+            id="playAgain"
+            type="button"
+          >
+            Play Again
+          </button>
+
+
+          <a
+            class="game-secondary-link"
+            href="../index.html"
+          >
+            Return to Cyber Arcade
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <script src="../../js/arcade/arcade-score.js?v=9"></script>
+
+  <script src="username-lab.js?v=1"></script>
+
+</body>
+</html>
