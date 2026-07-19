@@ -3,6 +3,9 @@
 /* =========================================================
    SAFETII NET — CYBER ARCADE
    BACKPACK RESCUE
+
+   Backpack = usually okay to share
+   Safe = protect this information
 ========================================================= */
 
 (() => {
@@ -23,477 +26,379 @@
     hot: "Hot"
   };
 
-  const actionNames = {
-    keep: "Keep It",
-    delete: "Delete It",
-    report: "Block and Report",
-    adult: "Tell a Trusted Adult"
+  const destinationNames = {
+    safe: "Backpack Share Zone",
+    private: "Safe Protect Zone"
   };
 
   /* =====================================================
-     RESCUE QUESTION BANKS
+     ARCADE-ONLY QUESTION BANKS
   ===================================================== */
 
   const itemsByHeat = {
     mild: [
       {
-        id: "mild-school-file",
-        icon: "📄",
-        title: "Homework File",
+        id: "mild-favorite-animal",
+        text:
+          "My favorite animal is a dolphin.",
         context:
-          "A worksheet appeared in the digital backpack.",
-        type: "School File",
-        badge: "Expected",
-        message:
-          "Math_Practice_Week4.pdf",
-        source:
-          "Normal school portal",
-        extra:
-          "Teacher posted it with today’s assignment",
-        action: "keep",
+          "This is a broad personal preference.",
+        answer:
+          "safe",
         explanation:
-          "The file arrived through the expected school portal and matches an assignment the student already knows about."
+          "A favorite animal is harmless self-expression and does not identify or locate someone."
       },
 
       {
-        id: "mild-free-coins",
-        icon: "🎁",
-        title: "Free Game Coins",
+        id: "mild-home-address",
+        text:
+          "My home address is 1842 River Street.",
         context:
-          "A message promises a large prize.",
-        type: "Direct Message",
-        badge: "Suspicious",
-        message:
-          "Click now to receive 50,000 free game coins!",
-        source:
-          "Unknown account",
-        extra:
-          "Includes an unfamiliar shortened link",
-        action: "delete",
+          "This reveals an exact physical location.",
+        answer:
+          "private",
         explanation:
-          "Unexpected prize messages and unfamiliar links are common scams. Delete the message without opening the link."
+          "A home address can tell strangers exactly where someone lives and belongs in the safe."
       },
 
       {
-        id: "mild-bullying",
-        icon: "😡",
-        title: "Mean Messages",
+        id: "mild-favorite-color",
+        text:
+          "Purple is my favorite color.",
         context:
-          "The same account keeps sending insulting messages.",
-        type: "Chat Messages",
-        badge: "Harassment",
-        message:
-          "Everyone hates you. I am going to keep messaging you.",
-        source:
-          "Student account",
-        extra:
-          "Repeated messages after being asked to stop",
-        action: "report",
+          "This is a broad preference.",
+        answer:
+          "safe",
         explanation:
-          "Repeated harassment should be blocked and reported so the platform can stop the contact."
+          "A favorite color is usually safe because it does not reveal someone’s identity or location."
       },
 
       {
-        id: "mild-threat",
-        icon: "🚨",
-        title: "Threatening Message",
+        id: "mild-password",
+        text:
+          "My game password is DragonHero42.",
         context:
-          "A frightening message appears in the backpack.",
-        type: "Direct Message",
-        badge: "Danger",
-        message:
-          "I know where you live, and I am coming for you.",
-        source:
-          "Unknown user",
-        extra:
-          "Threat involves possible real-world harm",
-        action: "adult",
+          "This can provide access to an account.",
+        answer:
+          "private",
         explanation:
-          "Threats should be shown to a trusted adult immediately. Save the message as evidence and do not respond."
+          "Passwords should never be shared. They belong in the Safe Protect Zone."
       },
 
       {
-        id: "mild-family-photo",
-        icon: "📸",
-        title: "Family Photo",
+        id: "mild-hobby",
+        text:
+          "I enjoy drawing comic-book heroes.",
         context:
-          "A parent sends a familiar picture through the family chat.",
-        type: "Photo",
-        badge: "Expected",
-        message:
-          "Photo from Saturday’s family dinner",
-        source:
-          "Known family group chat",
-        extra:
-          "No strange link or request",
-        action: "keep",
+          "This describes a hobby.",
+        answer:
+          "safe",
         explanation:
-          "The photo came through a known family chat and does not contain a suspicious request."
+          "A hobby is broad self-expression and is usually okay to share."
       },
 
       {
-        id: "mild-unknown-download",
-        icon: "📦",
-        title: "Unknown Download",
+        id: "mild-school",
+        text:
+          "I attend Lakeview Elementary School.",
         context:
-          "A file appears from someone the player does not know.",
-        type: "Download",
-        badge: "Suspicious",
-        message:
-          "awesome_game_hack.exe",
-        source:
-          "Unknown website",
-        extra:
-          "Promises cheats and unlimited rewards",
-        action: "delete",
+          "This reveals where a child regularly goes.",
+        answer:
+          "private",
         explanation:
-          "Unknown executable files can contain malware. Delete the file without opening it."
+          "A school name can reveal where someone can regularly be found."
       },
 
       {
-        id: "mild-fake-account",
-        icon: "👤",
-        title: "Fake Friend Account",
+        id: "mild-favorite-subject",
+        text:
+          "Science is my favorite subject.",
         context:
-          "An account copies a friend’s picture and starts messaging.",
-        type: "Social Account",
-        badge: "Impostor",
-        message:
-          "This is my new account. Send me your password.",
-        source:
-          "Brand-new copied account",
-        extra:
-          "Requests login information",
-        action: "report",
+          "This describes a broad school preference.",
+        answer:
+          "safe",
         explanation:
-          "The account is impersonating someone and requesting a password. Block and report it."
+          "A favorite subject is broad self-expression and does not name the actual school."
       },
 
       {
-        id: "mild-private-photo-threat",
-        icon: "📱",
-        title: "Photo Threat",
+        id: "mild-phone-number",
+        text:
+          "My phone number is 313-555-0184.",
         context:
-          "Someone threatens to post an embarrassing picture.",
-        type: "Direct Message",
-        badge: "Serious",
-        message:
-          "Send me money or I will post this photo everywhere.",
-        source:
-          "Unknown account",
-        extra:
-          "Threatens blackmail",
-        action: "adult",
+          "This allows strangers to contact someone directly.",
+        answer:
+          "private",
         explanation:
-          "Blackmail should never be handled alone. Save evidence, stop responding, and tell a trusted adult immediately."
+          "A phone number is identifying contact information and belongs in the safe."
+      },
+
+      {
+        id: "mild-talent",
+        text:
+          "I am good at playing the piano.",
+        context:
+          "This describes a talent.",
+        answer:
+          "safe",
+        explanation:
+          "A general talent does not directly identify or locate someone."
+      },
+
+      {
+        id: "mild-birthday",
+        text:
+          "My birthday is October 12.",
+        context:
+          "This reveals personal identity information.",
+        answer:
+          "private",
+        explanation:
+          "An exact birthday can help strangers identify someone or guess account information."
       }
     ],
 
     spicy: [
       {
-        id: "spicy-class-link",
-        icon: "🔗",
-        title: "Class Meeting Link",
+        id: "spicy-pet-photo",
+        text:
+          "Here is a picture of my cat sleeping on the couch.",
         context:
-          "A meeting link appears before class.",
-        type: "School Link",
-        badge: "Expected",
-        message:
-          "Join today’s science review at 4:00.",
-        source:
-          "Teacher’s normal classroom page",
-        extra:
-          "Matches the schedule already posted",
-        action: "keep",
+          "The picture does not show an address, school, uniform, or location.",
+        answer:
+          "safe",
         explanation:
-          "The link appears through the normal classroom page and matches an expected event."
+          "A pet picture can usually be shared when the background does not reveal identifying information."
       },
 
       {
-        id: "spicy-phishing-email",
-        icon: "📧",
-        title: "Account Warning",
+        id: "spicy-pet-photo-tagged",
+        text:
+          "Here is my dog outside 1842 River Street.",
         context:
-          "An urgent email claims the account will close.",
-        type: "Email",
-        badge: "Suspicious",
-        message:
-          "Your account expires in 10 minutes. Sign in here now.",
-        source:
-          "security-team928@unknown.test",
-        extra:
-          "Link address does not match the real service",
-        action: "delete",
+          "The caption includes a specific street address.",
+        answer:
+          "private",
         explanation:
-          "The urgent deadline and mismatched sender are phishing clues. Delete the message and visit the service directly."
+          "The pet is harmless, but the exact address makes the full post private."
       },
 
       {
-        id: "spicy-harassing-group",
-        icon: "💬",
-        title: "Harassing Group Chat",
+        id: "spicy-team-interest",
+        text:
+          "Basketball is my favorite sport.",
         context:
-          "A group repeatedly targets one student.",
-        type: "Group Chat",
-        badge: "Harassment",
-        message:
-          "Post another embarrassing picture of them.",
-        source:
-          "Classmate group",
-        extra:
-          "Repeated harmful posts and ridicule",
-        action: "report",
+          "This names an interest but not a specific team.",
+        answer:
+          "safe",
         explanation:
-          "The harmful group behavior should be reported. Save evidence and block accounts involved when possible."
+          "A favorite sport is a broad preference and is usually safe to share."
       },
 
       {
-        id: "spicy-hacked-account",
-        icon: "🔐",
-        title: "Possible Account Theft",
+        id: "spicy-team-number",
+        text:
+          "I play number 14 for the Lakeside Lightning.",
         context:
-          "The player receives a login alert from another city.",
-        type: "Security Alert",
-        badge: "Serious",
-        message:
-          "New login detected from a device you do not recognize.",
-        source:
-          "Official account security page",
-        extra:
-          "The player did not make the login",
-        action: "adult",
+          "The team name and jersey number may identify a specific player.",
+        answer:
+          "private",
         explanation:
-          "A trusted adult can help secure the account, change the password, and enable stronger protections."
+          "A team name combined with a jersey number can narrow down exactly who the child is."
       },
 
       {
-        id: "spicy-known-photo",
-        icon: "🖼️",
-        title: "Art Club Poster",
+        id: "spicy-book",
+        text:
+          "My favorite book is The Secret Garden.",
         context:
-          "A poster arrives through the club’s usual page.",
-        type: "Image",
-        badge: "Expected",
-        message:
-          "Art Club meets Wednesday in Room 210.",
-        source:
-          "Known school club page",
-        extra:
-          "No strange attachment or personal request",
-        action: "keep",
+          "This describes a reading preference.",
+        answer:
+          "safe",
         explanation:
-          "The poster comes from a known source and contains a normal club announcement."
+          "A favorite book is harmless self-expression."
       },
 
       {
-        id: "spicy-macro-document",
-        icon: "📄",
-        title: "Strange Document",
+        id: "spicy-grade",
+        text:
+          "I am in fifth grade.",
         context:
-          "A document asks the player to enable special permissions.",
-        type: "Document",
-        badge: "Suspicious",
-        message:
-          "Enable macros to view your prize certificate.",
-        source:
-          "Unknown sender",
-        extra:
-          "Unexpected file with security permissions",
-        action: "delete",
+          "This reveals an approximate age range.",
+        answer:
+          "private",
         explanation:
-          "Unexpected documents asking for macros or permissions can install malware. Delete it."
+          "A grade level is personal information and should be shared carefully rather than publicly."
       },
 
       {
-        id: "spicy-impersonator",
-        icon: "🎭",
-        title: "Teacher Impostor",
+        id: "spicy-vacation-memory",
+        text:
+          "I had fun visiting the beach last summer.",
         context:
-          "A fake teacher account asks for student information.",
-        type: "Social Account",
-        badge: "Impostor",
-        message:
-          "Send me a picture of your student ID right now.",
-        source:
-          "Brand-new account with a misspelled username",
-        extra:
-          "No connection to the school’s official page",
-        action: "report",
+          "This describes a past event with no current location.",
+        answer:
+          "safe",
         explanation:
-          "This account is impersonating a teacher and requesting private information. Block and report it."
+          "A general past vacation memory does not reveal where the person is now."
       },
 
       {
-        id: "spicy-secret-meeting",
-        icon: "🕵️",
-        title: "Secret Meeting Request",
+        id: "spicy-vacation-live",
+        text:
+          "We are at Harbor Hotel right now in room 314.",
         context:
-          "An online stranger asks the player to meet alone.",
-        type: "Direct Message",
-        badge: "Danger",
-        message:
-          "Meet me behind the mall and do not tell your parents.",
-        source:
-          "Online-only acquaintance",
-        extra:
-          "Requests secrecy and an in-person meeting",
-        action: "adult",
+          "This reveals a current and precise location.",
+        answer:
+          "private",
         explanation:
-          "A secret meeting request is a major warning sign. Do not go and tell a trusted adult immediately."
+          "A hotel name and room number reveal exactly where someone is staying."
+      },
+
+      {
+        id: "spicy-nickname",
+        text:
+          "My friends call me StarFox.",
+        context:
+          "This is a creative nickname unrelated to a real name.",
+        answer:
+          "safe",
+        explanation:
+          "A creative nickname can help protect a real identity."
+      },
+
+      {
+        id: "spicy-full-name",
+        text:
+          "My full name is Jordan Alexander Thompson.",
+        context:
+          "This reveals a complete legal name.",
+        answer:
+          "private",
+        explanation:
+          "A full name can make it easier to identify and research someone."
       }
     ],
 
     hot: [
       {
-        id: "hot-known-update",
-        icon: "⬆️",
-        title: "Official App Update",
+        id: "hot-art-post",
+        text:
+          "I finished a painting of a purple dragon!",
         context:
-          "An update appears inside the device’s normal app store.",
-        type: "Software Update",
-        badge: "Verified",
-        message:
-          "Security update available for installed app.",
-        source:
-          "Official device app store",
-        extra:
-          "Publisher and app name match the installed version",
-        action: "keep",
+          "The statement shares creativity but no identity details.",
+        answer:
+          "safe",
         explanation:
-          "An expected update through the official app store is generally safe to install."
+          "Sharing artwork or a creative achievement is usually safe when no identifying details are included."
       },
 
       {
-        id: "hot-fake-antivirus",
-        icon: "🦠",
-        title: "Fake Virus Warning",
+        id: "hot-art-location",
+        text:
+          "Come see my purple dragon painting at East Ridge School, Room 204, tomorrow at 4:00.",
         context:
-          "A pop-up claims hundreds of viruses were found.",
-        type: "Browser Pop-Up",
-        badge: "Suspicious",
-        message:
-          "347 viruses detected! Download CleanerPro immediately.",
-        source:
-          "Random advertisement",
-        extra:
-          "Uses flashing warnings and an unknown download",
-        action: "delete",
+          "The post combines a school, room number, date, and time.",
+        answer:
+          "private",
         explanation:
-          "Scareware uses fake warnings to push unsafe downloads. Close it and do not install anything."
+          "Several details combine to reveal exactly where and when the child can be found."
       },
 
       {
-        id: "hot-stalker-account",
-        icon: "📍",
-        title: "Location Harassment",
+        id: "hot-achievement",
+        text:
+          "My team won first place!",
         context:
-          "An account repeatedly comments about where the player is.",
-        type: "Social Account",
-        badge: "Harassment",
-        message:
-          "I saw you at the park again. I know when you leave school.",
-        source:
-          "Unknown follower",
-        extra:
-          "Repeated location-focused messages",
-        action: "report",
+          "The statement does not name the team, event, location, or date.",
+        answer:
+          "safe",
         explanation:
-          "The account should be blocked and reported. Save evidence and tell a trusted adult because the messages involve real-world tracking."
+          "A general achievement can be celebrated without exposing identifying information."
       },
 
       {
-        id: "hot-self-harm",
-        icon: "🆘",
-        title: "Friend in Crisis",
+        id: "hot-achievement-details",
+        text:
+          "Renaissance Robotics Team 72264 won at Central High today.",
         context:
-          "A friend sends a message saying they may hurt themselves.",
-        type: "Private Message",
-        badge: "Emergency",
-        message:
-          "I do not feel safe, but promise you will not tell anyone.",
-        source:
-          "Known friend",
-        extra:
-          "Immediate safety concern",
-        action: "adult",
+          "The team, school, event location, and current date are revealed.",
+        answer:
+          "private",
         explanation:
-          "Safety is more important than keeping this secret. Tell a trusted adult immediately."
+          "The combined details can identify the group, school, and recent location."
       },
 
       {
-        id: "hot-school-backup",
-        icon: "💾",
-        title: "Verified Backup File",
+        id: "hot-weekend-hobby",
+        text:
+          "I like riding my bike on weekends.",
         context:
-          "A backup appears from a project the player created.",
-        type: "Cloud File",
-        badge: "Verified",
-        message:
-          "Robotics_Project_Backup_v3.zip",
-        source:
-          "Player’s normal school cloud folder",
-        extra:
-          "Created during the player’s own backup process",
-        action: "keep",
+          "This is a broad hobby without a route or schedule.",
+        answer:
+          "safe",
         explanation:
-          "The file is expected, came from the normal cloud folder, and matches the player’s own project."
+          "A general hobby is usually safe when it does not include a precise routine."
       },
 
       {
-        id: "hot-remote-control",
-        icon: "🖥️",
-        title: "Remote Access Tool",
+        id: "hot-bike-routine",
+        text:
+          "Every Saturday at 9:00, I ride alone from my house to Oak Park.",
         context:
-          "Someone claiming to be support sends a program.",
-        type: "Download",
-        badge: "Danger",
-        message:
-          "Install this so I can control your screen and fix everything.",
-        source:
-          "Unverified support account",
-        extra:
-          "Requests full remote access",
-        action: "delete",
+          "This reveals a repeating schedule and route.",
+        answer:
+          "private",
         explanation:
-          "Unknown people should never be given remote control of a device. Delete the program and use official support."
+          "A predictable time and route can allow someone to locate or follow the child."
       },
 
       {
-        id: "hot-cloned-account",
-        icon: "👥",
-        title: "Cloned Family Account",
+        id: "hot-general-food",
+        text:
+          "Pizza is my favorite food.",
         context:
-          "An account copies a family member’s photos and requests money.",
-        type: "Social Account",
-        badge: "Impostor",
-        message:
-          "I need gift cards urgently. Do not call my old number.",
-        source:
-          "Nearly identical copied profile",
-        extra:
-          "Requests secrecy and payment",
-        action: "report",
+          "This is a broad preference.",
+        answer:
+          "safe",
         explanation:
-          "The cloned account is impersonating a family member. Block and report it, then verify through a known contact method."
+          "A favorite food does not identify or locate someone."
       },
 
       {
-        id: "hot-private-data-leak",
-        icon: "📋",
-        title: "Private Information Leak",
+        id: "hot-lunch-location",
+        text:
+          "I eat lunch every weekday at 12:15 beside the west entrance.",
         context:
-          "A screenshot containing passwords and an address is posted publicly.",
-        type: "Public Post",
-        badge: "Emergency",
-        message:
-          "Screenshot shows a password note and home address.",
-        source:
-          "Player’s own public account",
-        extra:
-          "Sensitive information is already visible",
-        action: "adult",
+          "This reveals a repeating daily location and time.",
+        answer:
+          "private",
         explanation:
-          "The post should be removed immediately, passwords changed, and a trusted adult should help secure the affected accounts."
+          "A regular schedule and precise meeting place should be protected."
+      },
+
+      {
+        id: "hot-game-preference",
+        text:
+          "I like building games and puzzle games.",
+        context:
+          "This describes broad entertainment interests.",
+        answer:
+          "safe",
+        explanation:
+          "General game preferences are harmless self-expression."
+      },
+
+      {
+        id: "hot-security-code",
+        text:
+          "The code that just came to my phone is 482991.",
+        context:
+          "This is a one-time account verification code.",
+        answer:
+          "private",
+        explanation:
+          "Verification codes can give someone access to an account and must remain secret."
       }
     ]
   };
@@ -504,7 +409,7 @@
   let activeItems =
     [];
 
-  let currentQuestionIndex =
+  let currentItemIndex =
     0;
 
   let correctAnswers =
@@ -513,8 +418,11 @@
   let answerLocked =
     false;
 
+  let draggingActive =
+    false;
+
   /* =====================================================
-     HELPERS
+     ELEMENT HELPERS
   ===================================================== */
 
   function byId(id) {
@@ -533,7 +441,7 @@
 
   function getCurrentItem() {
     return activeItems[
-      currentQuestionIndex
+      currentItemIndex
     ];
   }
 
@@ -581,6 +489,68 @@
     );
   }
 
+  /* =====================================================
+     IMAGE HELPERS
+  ===================================================== */
+
+  function openContainer(imageId) {
+    const image =
+      byId(imageId);
+
+    if (!image) {
+      return;
+    }
+
+    const openSource =
+      image.dataset.openSrc;
+
+    if (openSource) {
+      image.src =
+        openSource;
+    }
+  }
+
+  function closeContainer(imageId) {
+    const image =
+      byId(imageId);
+
+    if (!image) {
+      return;
+    }
+
+    const closedSource =
+      image.dataset.closedSrc;
+
+    if (closedSource) {
+      image.src =
+        closedSource;
+    }
+  }
+
+  function closeAllContainers() {
+    closeContainer(
+      "backpackImage"
+    );
+
+    closeContainer(
+      "safeImage"
+    );
+
+    byId("shareZone")
+      ?.classList.remove(
+        "drag-over"
+      );
+
+    byId("protectZone")
+      ?.classList.remove(
+        "drag-over"
+      );
+  }
+
+  /* =====================================================
+     HINT PANEL
+  ===================================================== */
+
   function closeHint() {
     byId("backpackHintPanel")
       ?.classList.add(
@@ -594,61 +564,14 @@
       );
   }
 
-  function hideReaction() {
-    const reaction =
-      byId("memeReaction");
-
-    reaction?.classList.add(
-      "hidden"
-    );
-
-    reaction?.classList.remove(
-      "show-reaction",
-      "correct-reaction",
-      "wrong-reaction"
-    );
-  }
-
-  /* =====================================================
-     HEAT SELECTION
-  ===================================================== */
-
-  document
-    .querySelectorAll(".heat-choice")
-    .forEach((button) => {
-      button.addEventListener(
-        "click",
-        () => {
-          selectedHeat =
-            button.dataset.heat ||
-            "mild";
-
-          document
-            .querySelectorAll(
-              ".heat-choice"
-            )
-            .forEach(
-              (heatButton) => {
-                heatButton.classList.toggle(
-                  "selected",
-                  heatButton === button
-                );
-              }
-            );
-        }
-      );
-    });
-
-  /* =====================================================
-     HINT PANEL
-  ===================================================== */
-
   byId("openBackpackHint")
     ?.addEventListener(
       "click",
       () => {
         const panel =
-          byId("backpackHintPanel");
+          byId(
+            "backpackHintPanel"
+          );
 
         const isOpening =
           panel?.classList.contains(
@@ -676,6 +599,38 @@
     );
 
   /* =====================================================
+     HEAT SELECTION
+  ===================================================== */
+
+  document
+    .querySelectorAll(
+      ".heat-choice"
+    )
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        () => {
+          selectedHeat =
+            button.dataset.heat ||
+            "mild";
+
+          document
+            .querySelectorAll(
+              ".heat-choice"
+            )
+            .forEach(
+              (heatButton) => {
+                heatButton.classList.toggle(
+                  "selected",
+                  heatButton === button
+                );
+              }
+            );
+        }
+      );
+    });
+
+  /* =====================================================
      START GAME
   ===================================================== */
 
@@ -687,13 +642,16 @@
         ] ||
         itemsByHeat.mild;
 
-      currentQuestionIndex =
+      currentItemIndex =
         0;
 
       correctAnswers =
         0;
 
       answerLocked =
+        false;
+
+      draggingActive =
         false;
 
       arcade.startRound({
@@ -744,10 +702,26 @@
     }
   }
 
-  const startButton =
-    byId("startGame");
+  function connectStartButton() {
+    const startButton =
+      byId("startGame");
 
-  if (startButton) {
+    if (!startButton) {
+      console.error(
+        "Backpack Rescue start button #startGame was not found."
+      );
+
+      return;
+    }
+
+    if (
+      startButton.dataset
+        .backpackRescueConnected ===
+      "true"
+    ) {
+      return;
+    }
+
     startButton.dataset
       .backpackRescueConnected =
       "true";
@@ -756,9 +730,9 @@
       "click",
       startGame
     );
-  } else {
-    console.error(
-      "Backpack Rescue start button was not found."
+
+    console.log(
+      "Backpack Rescue start button connected."
     );
   }
 
@@ -778,67 +752,78 @@
     answerLocked =
       false;
 
+    draggingActive =
+      false;
+
     closeHint();
+    closeAllContainers();
     hideReaction();
 
     setText(
       "questionNumber",
-      currentQuestionIndex + 1
+      currentItemIndex + 1
     );
 
     setText(
-      "itemIcon",
-      item.icon
+      "sortItemText",
+      item.text
     );
 
     setText(
-      "itemTitle",
-      item.title
-    );
-
-    setText(
-      "itemContext",
+      "sortItemContext",
       item.context
-    );
-
-    setText(
-      "itemType",
-      item.type
-    );
-
-    setText(
-      "riskBadge",
-      item.badge
-    );
-
-    setText(
-      "itemMessage",
-      `“${item.message}”`
-    );
-
-    setText(
-      "itemSource",
-      item.source
-    );
-
-    setText(
-      "itemExtraDetail",
-      item.extra
     );
 
     const progress =
       (
-        currentQuestionIndex /
+        currentItemIndex /
         activeItems.length
       ) * 100;
 
     const progressFill =
-      byId("questionProgressFill");
+      byId(
+        "questionProgressFill"
+      );
 
     if (progressFill) {
       progressFill.style.width =
         `${progress}%`;
     }
+
+    const dragCard =
+      byId("dragItemCard");
+
+    if (dragCard) {
+      dragCard.draggable =
+        true;
+
+      dragCard.setAttribute(
+        "aria-disabled",
+        "false"
+      );
+
+      dragCard.classList.remove(
+        "dragging",
+        "sorted-correct",
+        "sorted-wrong"
+      );
+    }
+
+    document
+      .querySelectorAll(
+        ".backpack-drop-zone"
+      )
+      .forEach((zone) => {
+        zone.disabled =
+          false;
+
+        zone.classList.remove(
+          "correct-zone",
+          "wrong-zone",
+          "reveal-correct-zone",
+          "drag-over"
+        );
+      });
 
     byId("answerFeedback")
       ?.classList.add(
@@ -850,29 +835,216 @@
         "hidden"
       );
 
-    document
-      .querySelectorAll(
-        ".backpack-answer-choice"
-      )
-      .forEach((button) => {
-        button.disabled =
-          false;
-
-        button.classList.remove(
-          "correct-answer",
-          "wrong-answer",
-          "reveal-correct-answer"
-        );
-      });
-
     updateLiveStats();
   }
 
   /* =====================================================
-     ANSWERS
+     DROP-ZONE EVENTS
   ===================================================== */
 
-  function answerQuestion(button) {
+  function prepareDropZone({
+    zone,
+    imageId
+  }) {
+    if (!zone) {
+      return;
+    }
+
+    zone.addEventListener(
+      "dragenter",
+      (event) => {
+        event.preventDefault();
+
+        if (
+          answerLocked ||
+          !draggingActive
+        ) {
+          return;
+        }
+
+        zone.classList.add(
+          "drag-over"
+        );
+
+        openContainer(
+          imageId
+        );
+      }
+    );
+
+    zone.addEventListener(
+      "dragover",
+      (event) => {
+        event.preventDefault();
+
+        if (
+          answerLocked ||
+          !draggingActive
+        ) {
+          return;
+        }
+
+        if (
+          event.dataTransfer
+        ) {
+          event.dataTransfer.dropEffect =
+            "move";
+        }
+
+        zone.classList.add(
+          "drag-over"
+        );
+
+        openContainer(
+          imageId
+        );
+      }
+    );
+
+    zone.addEventListener(
+      "dragleave",
+      (event) => {
+        const nextTarget =
+          event.relatedTarget;
+
+        if (
+          nextTarget &&
+          zone.contains(
+            nextTarget
+          )
+        ) {
+          return;
+        }
+
+        zone.classList.remove(
+          "drag-over"
+        );
+
+        closeContainer(
+          imageId
+        );
+      }
+    );
+
+    zone.addEventListener(
+      "drop",
+      (event) => {
+        event.preventDefault();
+
+        const selectedAnswer =
+          zone.dataset.answer;
+
+        handleAnswer(
+          selectedAnswer,
+          zone
+        );
+
+        closeAllContainers();
+      }
+    );
+
+    zone.addEventListener(
+      "click",
+      () => {
+        if (answerLocked) {
+          return;
+        }
+
+        const selectedAnswer =
+          zone.dataset.answer;
+
+        openContainer(
+          imageId
+        );
+
+        handleAnswer(
+          selectedAnswer,
+          zone
+        );
+
+        window.setTimeout(
+          closeAllContainers,
+          400
+        );
+      }
+    );
+  }
+
+  prepareDropZone({
+    zone:
+      byId("shareZone"),
+
+    imageId:
+      "backpackImage"
+  });
+
+  prepareDropZone({
+    zone:
+      byId("protectZone"),
+
+    imageId:
+      "safeImage"
+  });
+
+  /* =====================================================
+     DRAG CARD EVENTS
+  ===================================================== */
+
+  const dragCard =
+    byId("dragItemCard");
+
+  dragCard?.addEventListener(
+    "dragstart",
+    (event) => {
+      if (answerLocked) {
+        event.preventDefault();
+        return;
+      }
+
+      draggingActive =
+        true;
+
+      dragCard.classList.add(
+        "dragging"
+      );
+
+      if (
+        event.dataTransfer
+      ) {
+        event.dataTransfer.effectAllowed =
+          "move";
+
+        event.dataTransfer.setData(
+          "text/plain",
+          getCurrentItem()?.id ||
+          "backpack-item"
+        );
+      }
+    }
+  );
+
+  dragCard?.addEventListener(
+    "dragend",
+    () => {
+      draggingActive =
+        false;
+
+      dragCard.classList.remove(
+        "dragging"
+      );
+
+      closeAllContainers();
+    }
+  );
+
+  /* =====================================================
+     ANSWER HANDLING
+  ===================================================== */
+
+  function handleAnswer(
+    selectedAnswer,
+    selectedZone
+  ) {
     if (answerLocked) {
       return;
     }
@@ -887,12 +1059,12 @@
     answerLocked =
       true;
 
-    const selectedAction =
-      button.dataset.action;
+    draggingActive =
+      false;
 
     const correct =
-      selectedAction ===
-      item.action;
+      selectedAnswer ===
+      item.answer;
 
     const scoreResult =
       arcade.answerQuestion({
@@ -906,62 +1078,80 @@
       correctAnswers += 1;
     }
 
+    const dragItem =
+      byId("dragItemCard");
+
+    if (dragItem) {
+      dragItem.draggable =
+        false;
+
+      dragItem.setAttribute(
+        "aria-disabled",
+        "true"
+      );
+
+      dragItem.classList.add(
+        correct
+          ? "sorted-correct"
+          : "sorted-wrong"
+      );
+    }
+
     document
       .querySelectorAll(
-        ".backpack-answer-choice"
+        ".backpack-drop-zone"
       )
-      .forEach(
-        (answerButton) => {
-          answerButton.disabled =
-            true;
+      .forEach((zone) => {
+        zone.disabled =
+          true;
 
-          const action =
-            answerButton.dataset.action;
+        const zoneAnswer =
+          zone.dataset.answer;
 
-          if (
-            action === item.action
-          ) {
-            answerButton.classList.add(
-              correct
-                ? "correct-answer"
-                : "reveal-correct-answer"
-            );
-          }
-
-          if (
-            answerButton === button &&
-            !correct
-          ) {
-            answerButton.classList.add(
-              "wrong-answer"
-            );
-          }
+        if (
+          zoneAnswer ===
+          item.answer
+        ) {
+          zone.classList.add(
+            correct
+              ? "correct-zone"
+              : "reveal-correct-zone"
+          );
         }
-      );
+
+        if (
+          zone === selectedZone &&
+          !correct
+        ) {
+          zone.classList.add(
+            "wrong-zone"
+          );
+        }
+      });
 
     if (correct) {
       setText(
         "feedbackTitle",
-        "Backpack protected!"
+        "Great sorting!"
       );
 
       setText(
         "feedbackText",
-        `${actionNames[
-          item.action
-        ]} is the best first action. ${item.explanation}`
+        `${destinationNames[
+          item.answer
+        ]} is correct. ${item.explanation}`
       );
     } else {
       setText(
         "feedbackTitle",
-        "Review the rescue action."
+        "That belongs somewhere else."
       );
 
       setText(
         "feedbackText",
-        `The best first action is ${
-          actionNames[
-            item.action
+        `The correct destination is ${
+          destinationNames[
+            item.answer
           ]
         }. ${item.explanation}`
       );
@@ -982,7 +1172,7 @@
 
     if (nextButton) {
       nextButton.textContent =
-        currentQuestionIndex ===
+        currentItemIndex ===
         activeItems.length - 1
           ? "See Results"
           : "Next Item";
@@ -996,36 +1186,38 @@
       correct,
       points:
         scoreResult.pointsEarned,
-      correctAction:
-        actionNames[item.action]
+      correctDestination:
+        destinationNames[
+          item.answer
+        ]
     });
 
     updateLiveStats();
   }
 
-  document
-    .querySelectorAll(
-      ".backpack-answer-choice"
-    )
-    .forEach((button) => {
-      button.addEventListener(
-        "click",
-        () => {
-          answerQuestion(
-            button
-          );
-        }
-      );
-    });
-
   /* =====================================================
      MEME REACTION
   ===================================================== */
 
+  function hideReaction() {
+    const reaction =
+      byId("memeReaction");
+
+    reaction?.classList.add(
+      "hidden"
+    );
+
+    reaction?.classList.remove(
+      "show-reaction",
+      "correct-reaction",
+      "wrong-reaction"
+    );
+  }
+
   function showReaction({
     correct,
     points,
-    correctAction
+    correctDestination
   }) {
     const reaction =
       byId("memeReaction");
@@ -1058,11 +1250,11 @@
         "../../assets/mascot/congrats.png";
 
       image.alt =
-        "Meme celebrates a successful digital rescue";
+        "Meme celebrates a correct Backpack Rescue answer";
 
       setText(
         "memeReactionTitle",
-        "Rescue complete!"
+        "Perfect placement!"
       );
 
       setText(
@@ -1074,22 +1266,22 @@
         "../../assets/mascot/wrong.png";
 
       image.alt =
-        "Meme encourages the player to review the rescue action";
+        "Meme helps explain the correct Backpack Rescue answer";
 
       setText(
         "memeReactionTitle",
-        "Choose the safest first step."
+        "Protect the right details."
       );
 
       setText(
         "memeReactionMessage",
-        `The best action is ${correctAction}.`
+        `This belongs in the ${correctDestination}.`
       );
     }
   }
 
   /* =====================================================
-     NEXT QUESTION
+     NEXT ITEM
   ===================================================== */
 
   function nextQuestion() {
@@ -1097,10 +1289,10 @@
       return;
     }
 
-    currentQuestionIndex += 1;
+    currentItemIndex += 1;
 
     if (
-      currentQuestionIndex >=
+      currentItemIndex >=
       activeItems.length
     ) {
       finishGame();
@@ -1141,7 +1333,9 @@
      RESULTS
   ===================================================== */
 
-  function starsToText(starCount) {
+  function starsToText(
+    starCount
+  ) {
     const stars =
       Math.max(
         0,
@@ -1158,11 +1352,14 @@
   }
 
   function finishGame() {
-    hideReaction();
     closeHint();
+    closeAllContainers();
+    hideReaction();
 
     const progressFill =
-      byId("questionProgressFill");
+      byId(
+        "questionProgressFill"
+      );
 
     if (progressFill) {
       progressFill.style.width =
@@ -1210,23 +1407,23 @@
     );
 
     let message =
-      "Keep practicing when to keep, delete, report, or get help with digital items.";
+      "Keep practicing which information can go in the backpack and which information belongs in the safe.";
 
     if (
       result.accuracy === 100
     ) {
       message =
-        "Perfect rescue! You protected the digital backpack in every situation.";
+        "Perfect rescue! You protected every private detail and correctly recognized every safe piece of self-expression.";
     } else if (
       result.accuracy >= 75
     ) {
       message =
-        "Excellent rescue work! You chose the safest response for almost every item.";
+        "Excellent sorting! You understand the difference between safe sharing and information that needs protection.";
     } else if (
       result.accuracy >= 50
     ) {
       message =
-        "Good effort. Remember: suspicious files get deleted, harmful accounts get reported, and serious danger needs a trusted adult.";
+        "Good effort. Remember that names, locations, schools, schedules, passwords, and account codes belong in the safe.";
     }
 
     setText(
@@ -1245,6 +1442,7 @@
     ?.addEventListener(
       "click",
       () => {
+        closeAllContainers();
         hideReaction();
         closeHint();
 
@@ -1254,9 +1452,28 @@
       }
     );
 
+  /* =====================================================
+     INITIALIZATION
+  ===================================================== */
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+    document.addEventListener(
+      "DOMContentLoaded",
+      connectStartButton,
+      {
+        once: true
+      }
+    );
+  } else {
+    connectStartButton();
+  }
+
   updateGlobalPoints();
 
   console.log(
-    "Backpack Rescue loaded successfully."
+    "Backpack Rescue drag-and-drop game loaded successfully."
   );
 })();
