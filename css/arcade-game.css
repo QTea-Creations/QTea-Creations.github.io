@@ -3325,3 +3325,17 @@ a {
         font-size: 0.72rem;
     }
 }
+
+.arcade-site-header .logo {
+    display: flex;
+    align-items: center;
+}
+
+.arcade-site-header .logo img {
+    width: 170px;
+    height: auto;
+    max-height: 58px;
+
+    display: block;
+    object-fit: contain;
+}
