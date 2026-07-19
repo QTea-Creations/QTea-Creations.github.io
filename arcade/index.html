@@ -1,737 +1,894 @@
-"use strict";
-
-/* =========================================================
-   SAFETII NET — CYBER ARCADE
-   SHARED SCORE SYSTEM
-
-   Heat Levels:
-   - Mild: 10 points
-   - Spicy: 20 points
-   - Hot: 30 points
-
-   Arcade rules:
-   - Correct first answer earns points.
-   - Incorrect answers earn zero points.
-   - Questions cannot award points twice in one round.
-   - Global points are awarded only for improvement
-     over the player's previous best score.
-========================================================= */
-
-(() => {
-  const STORAGE_KEY =
-    "safetiiArcadeProgressV1";
-
-  const GLOBAL_POINTS_KEY =
-    "safetiiPoints";
-
-  const HEAT_LEVELS = {
-    mild: {
-      id: "mild",
-      name: "Mild",
-      icon: "🌶️",
-      pointsPerCorrect: 10
-    },
-
-    spicy: {
-      id: "spicy",
-      name: "Spicy",
-      icon: "🌶️🌶️",
-      pointsPerCorrect: 20
-    },
-
-    hot: {
-      id: "hot",
-      name: "Hot",
-      icon: "🌶️🌶️🌶️",
-      pointsPerCorrect: 30
-    }
-  };
-
-  const activeRound = {
-    gameId: "",
-    gameName: "",
-    heatLevel: "mild",
-
-    questionCount: 0,
-    answeredCount: 0,
-    correctCount: 0,
-    incorrectCount: 0,
-
-    score: 0,
-    maximumScore: 0,
-
-    answeredQuestionIds:
-      new Set(),
-
-    startedAt: null,
-    finished: false
-  };
-
-  /* =====================================================
-     BASIC HELPERS
-  ===================================================== */
-
-  function safeNumber(
-    value,
-    fallback = 0
-  ) {
-    const number =
-      Number(value);
-
-    return Number.isFinite(number)
-      ? number
-      : fallback;
-  }
-
-  function createDefaultProgress() {
-    return {
-      version: 1,
-      games: {}
-    };
-  }
-
-  function readProgress() {
-    try {
-      const stored =
-        JSON.parse(
-          localStorage.getItem(
-            STORAGE_KEY
-          ) || "null"
-        );
-
-      if (
-        !stored ||
-        typeof stored !== "object"
-      ) {
-        return createDefaultProgress();
-      }
-
-      return {
-        ...createDefaultProgress(),
-        ...stored,
-
-        games:
-          stored.games &&
-          typeof stored.games ===
-            "object"
-            ? stored.games
-            : {}
-      };
-    } catch (error) {
-      console.error(
-        "Could not read Cyber Arcade progress:",
-        error
-      );
-
-      return createDefaultProgress();
-    }
-  }
-
-  function saveProgress(
-    progress
-  ) {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(progress)
-    );
-  }
-
-  function getHeatLevel(
-    heatLevel
-  ) {
-    return (
-      HEAT_LEVELS[
-        heatLevel
-      ] ||
-      HEAT_LEVELS.mild
-    );
-  }
-
-  function getGlobalPoints() {
-    return safeNumber(
-      localStorage.getItem(
-        GLOBAL_POINTS_KEY
-      ),
-      0
-    );
-  }
-
-  function addGlobalPoints(
-    amount
-  ) {
-    const safeAmount =
-      Math.max(
-        0,
-        safeNumber(amount)
-      );
-
-    if (safeAmount === 0) {
-      return getGlobalPoints();
-    }
-
-    const newTotal =
-      getGlobalPoints() +
-      safeAmount;
-
-    localStorage.setItem(
-      GLOBAL_POINTS_KEY,
-      String(newTotal)
-    );
-
-    document.dispatchEvent(
-      new CustomEvent(
-        "safetiiPointsChanged",
-        {
-          detail: {
-            amountAdded:
-              safeAmount,
-
-            totalPoints:
-              newTotal,
-
-            source:
-              "cyber-arcade"
-          }
-        }
-      )
-    );
-
-    return newTotal;
-  }
-
-  function calculateStars(
-    correctCount,
-    questionCount
-  ) {
-    if (questionCount <= 0) {
-      return 0;
-    }
-
-    const accuracy =
-      correctCount /
-      questionCount;
-
-    if (accuracy === 1) {
-      return 3;
-    }
-
-    if (accuracy >= 0.75) {
-      return 2;
-    }
-
-    if (accuracy >= 0.5) {
-      return 1;
-    }
-
-    return 0;
-  }
-
-  /* =====================================================
-     START A ROUND
-  ===================================================== */
-
-  function startRound({
-    gameId,
-    gameName,
-    heatLevel = "mild",
-    questionCount
-  }) {
-    if (
-      !gameId ||
-      typeof gameId !==
-        "string"
-    ) {
-      throw new Error(
-        "Cyber Arcade requires a valid gameId."
-      );
-    }
-
-    const safeQuestionCount =
-      Math.max(
-        1,
-        Math.floor(
-          safeNumber(
-            questionCount,
-            1
-          )
-        )
-      );
-
-    const heat =
-      getHeatLevel(
-        heatLevel
-      );
-
-    activeRound.gameId =
-      gameId;
-
-    activeRound.gameName =
-      gameName ||
-      gameId;
-
-    activeRound.heatLevel =
-      heat.id;
-
-    activeRound.questionCount =
-      safeQuestionCount;
-
-    activeRound.answeredCount =
-      0;
-
-    activeRound.correctCount =
-      0;
-
-    activeRound.incorrectCount =
-      0;
-
-    activeRound.score =
-      0;
-
-    activeRound.maximumScore =
-      safeQuestionCount *
-      heat.pointsPerCorrect;
-
-    activeRound.answeredQuestionIds =
-      new Set();
-
-    activeRound.startedAt =
-      Date.now();
-
-    activeRound.finished =
-      false;
-
-    document.dispatchEvent(
-      new CustomEvent(
-        "arcadeRoundStarted",
-        {
-          detail:
-            getCurrentRound()
-        }
-      )
-    );
-
-    return getCurrentRound();
-  }
-
-  /* =====================================================
-     SCORE AN ANSWER
-  ===================================================== */
-
-  function answerQuestion({
-    questionId,
-    correct
-  }) {
-    if (
-      !activeRound.gameId
-    ) {
-      throw new Error(
-        "Start the arcade round before scoring an answer."
-      );
-    }
-
-    if (
-      activeRound.finished
-    ) {
-      return {
-        accepted: false,
-        reason:
-          "round-finished",
-        pointsEarned: 0,
-        round:
-          getCurrentRound()
-      };
-    }
-
-    const safeQuestionId =
-      String(
-        questionId || ""
-      ).trim();
-
-    if (!safeQuestionId) {
-      throw new Error(
-        "Every arcade question needs a unique questionId."
-      );
-    }
-
-    if (
-      activeRound
-        .answeredQuestionIds
-        .has(
-          safeQuestionId
-        )
-    ) {
-      return {
-        accepted: false,
-        reason:
-          "already-answered",
-        pointsEarned: 0,
-        round:
-          getCurrentRound()
-      };
-    }
-
-    activeRound
-      .answeredQuestionIds
-      .add(
-        safeQuestionId
-      );
-
-    activeRound.answeredCount +=
-      1;
-
-    const heat =
-      getHeatLevel(
-        activeRound.heatLevel
-      );
-
-    let pointsEarned =
-      0;
-
-    if (correct === true) {
-      activeRound.correctCount +=
-        1;
-
-      pointsEarned =
-        heat.pointsPerCorrect;
-
-      activeRound.score +=
-        pointsEarned;
-    } else {
-      activeRound.incorrectCount +=
-        1;
-    }
-
-    const result = {
-      accepted: true,
-      correct:
-        correct === true,
-
-      pointsEarned,
-      round:
-        getCurrentRound()
-    };
-
-    document.dispatchEvent(
-      new CustomEvent(
-        "arcadeQuestionAnswered",
-        {
-          detail: result
-        }
-      )
-    );
-
-    return result;
-  }
-
-  /* =====================================================
-     FINISH A ROUND
-  ===================================================== */
-
-  function finishRound() {
-    if (
-      !activeRound.gameId
-    ) {
-      throw new Error(
-        "No Cyber Arcade round is active."
-      );
-    }
-
-    if (
-      activeRound.finished
-    ) {
-      return getLastResult();
-    }
-
-    activeRound.finished =
-      true;
-
-    const progress =
-      readProgress();
-
-    const existingGame =
-      progress.games[
-        activeRound.gameId
-      ] || {};
-
-    const previousBest =
-      safeNumber(
-        existingGame.bestScore,
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Cyber Arcade | Safetii Net
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/arcade.css"
+  >
+</head>
+
+<body class="arcade-page">
+
+  <header class="arcade-topbar">
+    <a
+      class="arcade-brand"
+      href="../index.html"
+      aria-label="Return to Safetii Net home"
+    >
+      <span class="arcade-brand-icon">
+        🛡️
+      </span>
+
+      <span>
+        Safetii Net
+      </span>
+    </a>
+
+    <nav class="arcade-nav">
+      <a href="../index.html">
+        Home
+      </a>
+
+      <a href="../missions.html">
+        Missions
+      </a>
+
+      <a
+        class="active"
+        href="index.html"
+      >
+        Cyber Arcade
+      </a>
+
+      <a href="../about.html">
+        About
+      </a>
+    </nav>
+
+    <div class="arcade-points-pill">
+      ⭐
+      <span id="arcadeTotalPoints">
         0
-      );
+      </span>
+      Points
+    </div>
+  </header>
 
-    const scoreImprovement =
-      Math.max(
-        0,
-        activeRound.score -
-          previousBest
-      );
 
-    const stars =
-      calculateStars(
-        activeRound.correctCount,
-        activeRound.questionCount
-      );
+  <main class="arcade-main">
 
-    const accuracy =
-      activeRound.questionCount >
-      0
-        ? Math.round(
-            (
-              activeRound.correctCount /
-              activeRound.questionCount
-            ) * 100
-          )
-        : 0;
+    <!-- HERO -->
+    <section class="arcade-hero">
+      <div class="arcade-hero-copy">
+        <p class="arcade-eyebrow">
+          Welcome to the
+        </p>
 
-    const perfectRound =
-      activeRound.correctCount ===
-        activeRound.questionCount &&
-      activeRound.questionCount >
-        0;
+        <h1>
+          Cyber Arcade
+        </h1>
 
-    const completedAt =
-      new Date()
-        .toISOString();
+        <p>
+          Replay your favorite mission games, sharpen your
+          cybersecurity skills, and compete for higher scores.
+        </p>
 
-    const result = {
-      gameId:
-        activeRound.gameId,
+        <div class="arcade-hero-actions">
+          <button
+            class="arcade-primary-button"
+            id="playFeaturedGame"
+            type="button"
+          >
+            Play Featured Game
+          </button>
 
-      gameName:
-        activeRound.gameName,
+          <button
+            class="arcade-secondary-button"
+            id="viewAllGames"
+            type="button"
+          >
+            View All Games
+          </button>
+        </div>
+      </div>
 
-      heatLevel:
-        activeRound.heatLevel,
+      <div class="arcade-hero-visual">
+        <div class="arcade-machine">
+          <div class="arcade-machine-screen">
+            <span>
+              🎮
+            </span>
 
-      score:
-        activeRound.score,
+            <strong>
+              Ready Player?
+            </strong>
 
-      maximumScore:
-        activeRound.maximumScore,
+            <small>
+              Choose your heat level
+            </small>
+          </div>
 
-      correctCount:
-        activeRound.correctCount,
+          <div class="arcade-machine-controls">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      incorrectCount:
-        activeRound.incorrectCount,
 
-      questionCount:
-        activeRound.questionCount,
+    <!-- PLAYER STATS -->
+    <section
+      class="arcade-stats"
+      aria-label="Cyber Arcade player statistics"
+    >
+      <article>
+        <span>
+          🎯
+        </span>
 
-      accuracy,
-      stars,
-      perfectRound,
-
-      previousBest,
-      newBest:
-        Math.max(
-          previousBest,
-          activeRound.score
-        ),
-
-      globalPointsEarned:
-        scoreImprovement,
-
-      completedAt
-    };
-
-    progress.games[
-      activeRound.gameId
-    ] = {
-      gameId:
-        activeRound.gameId,
-
-      gameName:
-        activeRound.gameName,
-
-      heatLevel:
-        activeRound.heatLevel,
-
-      plays:
-        safeNumber(
-          existingGame.plays,
-          0
-        ) + 1,
-
-      bestScore:
-        result.newBest,
-
-      bestAccuracy:
-        Math.max(
-          safeNumber(
-            existingGame
-              .bestAccuracy,
+        <div>
+          <strong id="arcadeGamesPlayed">
             0
-          ),
-          accuracy
-        ),
+          </strong>
 
-      bestStars:
-        Math.max(
-          safeNumber(
-            existingGame
-              .bestStars,
+          <small>
+            Games Played
+          </small>
+        </div>
+      </article>
+
+      <article>
+        <span>
+          🏆
+        </span>
+
+        <div>
+          <strong id="arcadePerfectRounds">
             0
-          ),
-          stars
-        ),
+          </strong>
 
-      perfectRounds:
-        safeNumber(
-          existingGame
-            .perfectRounds,
-          0
-        ) +
-        (
-          perfectRound
-            ? 1
-            : 0
-        ),
+          <small>
+            Perfect Rounds
+          </small>
+        </div>
+      </article>
 
-      lastScore:
-        activeRound.score,
+      <article>
+        <span>
+          ⭐
+        </span>
 
-      lastAccuracy:
-        accuracy,
+        <div>
+          <strong id="arcadeStarsEarned">
+            0
+          </strong>
 
-      lastPlayedAt:
-        completedAt,
+          <small>
+            Best Stars
+          </small>
+        </div>
+      </article>
 
-      completed:
-        true
-    };
+      <article>
+        <span>
+          🔥
+        </span>
 
-    progress.lastPlayedGame =
-      activeRound.gameId;
+        <div>
+          <strong id="arcadeGamesCompleted">
+            0
+          </strong>
 
-    progress.lastPlayedAt =
-      completedAt;
+          <small>
+            Games Completed
+          </small>
+        </div>
+      </article>
+    </section>
 
-    progress.lastResult =
-      result;
 
-    saveProgress(
-      progress
-    );
+    <!-- HEAT LEVEL GUIDE -->
+    <section class="heat-guide">
+      <div class="section-heading">
+        <div>
+          <p class="arcade-eyebrow">
+            Choose your challenge
+          </p>
 
-    if (
-      scoreImprovement > 0
-    ) {
-      addGlobalPoints(
-        scoreImprovement
-      );
-    }
+          <h2>
+            Heat Levels
+          </h2>
+        </div>
 
-    document.dispatchEvent(
-      new CustomEvent(
-        "arcadeRoundFinished",
-        {
-          detail: result
-        }
-      )
-    );
+        <p>
+          Hotter games award more points for every correct answer.
+        </p>
+      </div>
 
-    return result;
-  }
+      <div class="heat-level-cards">
+        <article class="heat-card mild-card">
+          <span class="heat-peppers">
+            🌶️
+          </span>
 
-  /* =====================================================
-     READ RESULTS AND PROGRESS
-  ===================================================== */
+          <div>
+            <h3>
+              Mild
+            </h3>
 
-  function getCurrentRound() {
-    return {
-      gameId:
-        activeRound.gameId,
+            <p>
+              A friendly warm-up with straightforward questions.
+            </p>
 
-      gameName:
-        activeRound.gameName,
+            <strong>
+              10 points per correct answer
+            </strong>
+          </div>
+        </article>
 
-      heatLevel:
-        activeRound.heatLevel,
+        <article class="heat-card spicy-card">
+          <span class="heat-peppers">
+            🌶️🌶️
+          </span>
 
-      questionCount:
-        activeRound.questionCount,
+          <div>
+            <h3>
+              Spicy
+            </h3>
 
-      answeredCount:
-        activeRound.answeredCount,
+            <p>
+              More clues, closer choices, and trickier situations.
+            </p>
 
-      correctCount:
-        activeRound.correctCount,
+            <strong>
+              20 points per correct answer
+            </strong>
+          </div>
+        </article>
 
-      incorrectCount:
-        activeRound.incorrectCount,
+        <article class="heat-card hot-card">
+          <span class="heat-peppers">
+            🌶️🌶️🌶️
+          </span>
 
-      score:
-        activeRound.score,
+          <div>
+            <h3>
+              Hot
+            </h3>
 
-      maximumScore:
-        activeRound.maximumScore,
+            <p>
+              The most challenging version for experienced players.
+            </p>
 
-      startedAt:
-        activeRound.startedAt,
+            <strong>
+              30 points per correct answer
+            </strong>
+          </div>
+        </article>
+      </div>
+    </section>
 
-      finished:
-        activeRound.finished
-    };
-  }
 
-  function getGameProgress(
-    gameId
-  ) {
-    const progress =
-      readProgress();
+    <!-- FILTERS -->
+    <section
+      class="arcade-browser"
+      id="arcadeGames"
+    >
+      <div class="section-heading arcade-games-heading">
+        <div>
+          <p class="arcade-eyebrow">
+            Pick a game
+          </p>
 
-    return (
-      progress.games[
-        gameId
-      ] || null
-    );
-  }
+          <h2>
+            Arcade Games
+          </h2>
+        </div>
 
-  function getAllProgress() {
-    return readProgress();
-  }
+        <div class="arcade-search-wrapper">
+          <label
+            class="sr-only"
+            for="arcadeSearch"
+          >
+            Search arcade games
+          </label>
 
-  function getLastResult() {
-    return (
-      readProgress()
-        .lastResult || null
-    );
-  }
+          <input
+            id="arcadeSearch"
+            type="search"
+            placeholder="Search games..."
+            autocomplete="off"
+          >
+        </div>
+      </div>
 
-  function resetArcadeProgress() {
-    localStorage.removeItem(
-      STORAGE_KEY
-    );
+      <div
+        class="arcade-filters"
+        aria-label="Filter arcade games"
+      >
+        <button
+          class="arcade-filter active"
+          type="button"
+          data-filter="all"
+        >
+          All Games
+        </button>
 
-    document.dispatchEvent(
-      new CustomEvent(
-        "arcadeProgressReset"
-      )
-    );
-  }
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="identity"
+        >
+          Identity
+        </button>
 
-  /* =====================================================
-     PUBLIC ARCADE API
-  ===================================================== */
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="passwords"
+        >
+          Passwords
+        </button>
 
-  window.SafetiiArcade = {
-    HEAT_LEVELS,
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="phishing"
+        >
+          Phishing
+        </button>
 
-    startRound,
-    answerQuestion,
-    finishRound,
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="footprint"
+        >
+          Digital Footprint
+        </button>
 
-    getCurrentRound,
-    getGameProgress,
-    getAllProgress,
-    getLastResult,
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="response"
+        >
+          Cyber Response
+        </button>
 
-    getGlobalPoints,
-    resetArcadeProgress
-  };
+        <button
+          class="arcade-filter"
+          type="button"
+          data-filter="original"
+        >
+          Arcade Originals
+        </button>
+      </div>
 
-  console.log(
-    "Safetii Net Cyber Arcade score system loaded."
-  );
-})();
+
+      <!-- GAME GRID -->
+      <div
+        class="arcade-game-grid"
+        id="arcadeGameGrid"
+      >
+
+        <!-- PIECES OF ME -->
+        <article
+          class="arcade-game-card featured-game"
+          data-category="identity"
+          data-game-id="pieces-of-me"
+          data-game-name="Pieces of Me"
+        >
+          <div class="game-card-art pieces-art">
+            <span>
+              🧩
+            </span>
+
+            <div class="game-card-badge">
+              Featured
+            </div>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat mild">
+                🌶️ Mild
+              </span>
+            </div>
+
+            <h3>
+              Pieces of Me
+            </h3>
+
+            <p>
+              Sort identity clues into self-expression, personal,
+              private, and secret information.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/pieces-of-me.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- TRUST CIRCLE -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="trust-circle"
+          data-game-name="Trust Circle"
+        >
+          <div class="game-card-art trust-art">
+            <span>
+              🤝
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat mild">
+                🌶️ Mild
+              </span>
+            </div>
+
+            <h3>
+              Trust Circle
+            </h3>
+
+            <p>
+              Decide who belongs in your trusted, known, and unknown
+              circles.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/trust-circle.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- CLUE COLLECTOR -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="clue-collector"
+          data-game-name="Clue Collector"
+        >
+          <div class="game-card-art clue-art">
+            <span>
+              🔎
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat spicy">
+                🌶️🌶️ Spicy
+              </span>
+            </div>
+
+            <h3>
+              Clue Collector
+            </h3>
+
+            <p>
+              Investigate profiles and uncover details that reveal
+              more than expected.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/clue-collector.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- IMPOSTOR ALERT -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="impostor-alert"
+          data-game-name="Impostor Alert"
+        >
+          <div class="game-card-art impostor-art">
+            <span>
+              🚨
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat spicy">
+                🌶️🌶️ Spicy
+              </span>
+            </div>
+
+            <h3>
+              Impostor Alert
+            </h3>
+
+            <p>
+              Choose the safest actions when someone copies an online
+              identity.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/impostor-alert.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- USERNAME LAB -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="username-lab"
+          data-game-name="Safe Username Lab"
+        >
+          <div class="game-card-art username-art">
+            <span>
+              🎮
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat spicy">
+                🌶️🌶️ Spicy
+              </span>
+            </div>
+
+            <h3>
+              Safe Username Lab
+            </h3>
+
+            <p>
+              Scan usernames and identify clues that expose private
+              information.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/username-lab.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- BACKPACK RESCUE -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="backpack-rescue"
+          data-game-name="Backpack Rescue"
+        >
+          <div class="game-card-art backpack-art">
+            <img
+              src="../assets/images/Backback.png"
+              alt=""
+            >
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat hot">
+                🌶️🌶️🌶️ Hot
+              </span>
+            </div>
+
+            <h3>
+              Backpack Rescue
+            </h3>
+
+            <p>
+              Sort shareable information into the backpack and private
+              information into the safe.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/backpack-rescue.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- IDENTITY REPAIR -->
+        <article
+          class="arcade-game-card"
+          data-category="identity"
+          data-game-id="identity-repair"
+          data-game-name="Identity Repair"
+        >
+          <div class="game-card-art repair-art">
+            <span>
+              🛠️
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Identity
+              </span>
+
+              <span class="game-heat hot">
+                🌶️🌶️🌶️ Hot
+              </span>
+            </div>
+
+            <h3>
+              Identity Repair
+            </h3>
+
+            <p>
+              Repair unsafe profiles and build safer usernames from
+              protected information.
+            </p>
+
+            <div class="game-stats">
+              <span>
+                Best:
+                <strong data-best-score>
+                  —
+                </strong>
+              </span>
+
+              <span>
+                Stars:
+                <strong data-best-stars>
+                  ☆☆☆
+                </strong>
+              </span>
+            </div>
+
+            <a
+              class="play-game-button"
+              href="games/identity-repair.html"
+            >
+              Play Game
+            </a>
+          </div>
+        </article>
+
+
+        <!-- COMING SOON -->
+        <article
+          class="arcade-game-card coming-soon-card"
+          data-category="passwords"
+          data-game-name="Password Power-Up"
+        >
+          <div class="game-card-art coming-art">
+            <span>
+              🔐
+            </span>
+          </div>
+
+          <div class="game-card-content">
+            <div class="game-card-topline">
+              <span class="game-category">
+                Passwords
+              </span>
+
+              <span class="coming-badge">
+                Coming Soon
+              </span>
+            </div>
+
+            <h3>
+              Password Power-Up
+            </h3>
+
+            <p>
+              Build strong passwords and defend accounts from common
+              attacks.
+            </p>
+
+            <button
+              class="play-game-button disabled"
+              type="button"
+              disabled
+            >
+              Coming Soon
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <p
+        class="no-games-message hidden"
+        id="noArcadeGames"
+      >
+        No games match that filter yet.
+      </p>
+    </section>
+
+  </main>
+
+
+  <footer class="arcade-footer">
+    <p>
+      Safetii Net Cyber Arcade
+    </p>
+
+    <a href="../index.html">
+      Return to Headquarters
+    </a>
+  </footer>
+
+
+  <script src="../js/arcade/arcade-score.js"></script>
+  <script src="../js/arcade/arcade-home.js"></script>
+</body>
+</html>
