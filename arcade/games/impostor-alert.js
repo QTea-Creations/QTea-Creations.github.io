@@ -1,9 +1,8 @@
-
 "use strict";
 
 /* =========================================================
    SAFETII NET — CYBER ARCADE
-   IMPOSTOR ALERT
+   IMPOSTOR ALERT: DIGITAL DETECTIVE EDITION
 ========================================================= */
 
 (() => {
@@ -18,534 +17,735 @@
     return;
   }
 
-  const heatNames = {
-    mild: "Mild",
-    spicy: "Spicy",
-    hot: "Hot"
-  };
+  /* =====================================================
+     HEAT SETTINGS
+  ===================================================== */
 
-  const verdictNames = {
-    real: "Likely Real",
-    suspicious: "Suspicious",
-    impostor: "Impostor"
+  const heatSettings = {
+    mild: {
+      label: "Mild",
+      difficulty: "Rookie",
+      roundSeconds: 105,
+      cluePoints: 10,
+      caseBonus: 30,
+      evidenceNeeded: 3,
+      startingBadges: 4,
+      wrongClickPenalty: 3,
+      casesPerRound: 5
+    },
+
+    spicy: {
+      label: "Spicy",
+      difficulty: "Agent",
+      roundSeconds: 85,
+      cluePoints: 20,
+      caseBonus: 60,
+      evidenceNeeded: 4,
+      startingBadges: 3,
+      wrongClickPenalty: 5,
+      casesPerRound: 5
+    },
+
+    hot: {
+      label: "Hot",
+      difficulty: "Elite",
+      roundSeconds: 70,
+      cluePoints: 30,
+      caseBonus: 90,
+      evidenceNeeded: 5,
+      startingBadges: 3,
+      wrongClickPenalty: 7,
+      casesPerRound: 5
+    }
   };
 
   /* =====================================================
-     CASE BANKS
+     CASE FILES
+
+     Every clickable element uses one of these clue IDs:
+
+     profile-url
+     avatar
+     username
+     verification
+     handle
+     bio
+     menu
+     account-age
+     followers
+     following
+     posts
+     message
+     link
+     pressure
+     mutuals
+     joined
+     location
   ===================================================== */
 
-  const casesByHeat = {
-    mild: [
-      {
-        id: "mild-coach-real",
-        avatar: "🏀",
-        displayName: "Coach Daniels",
-        username: "@CoachDaniels",
-        verified: false,
-        accountAge: "3 years",
-        followers: "412",
-        mutuals: "18",
-        message:
-          "Practice has moved to 5:00 today. Please check the team calendar.",
-        profileDetails:
-          "Same account used for previous team announcements",
-        requestDetails:
-          "No link, password, payment, or private meeting requested",
-        verdict: "real",
-        explanation:
-          "The established account, mutual connections, familiar communication pattern, and ordinary team update make this account likely real."
-      },
+  const caseFiles = [
+    {
+      id: "free-game-credit",
+      title: "The Free Credit Giveaway",
+      username: "GameMaster_Offical",
+      handle: "@free_gem_staff",
+      avatar: "🎮",
+      verification: "✓",
+      profileUrl:
+        "gamer-rewardz.example/profile",
+      bio:
+        "Official reward manager. I give free game credits to lucky players.",
+      accountAge: "1 day",
+      followers: "2",
+      following: "984",
+      posts: "0",
+      messageSender:
+        "GameMaster_Offical",
+      message:
+        "Congratulations! You won 10,000 free game credits. Send me the six-digit code that just appeared on your phone.",
+      link:
+        "free-gemz-now.example/claim",
+      pressure:
+        "Hurry! Your prize disappears in five minutes!",
+      mutuals:
+        "No mutual friends",
+      joined:
+        "Joined today",
+      location:
+        "Location hidden",
+      clues: {
+        "profile-url": {
+          label: "Look-alike website",
+          explanation:
+            "The website is not the real game company’s official domain."
+        },
 
-      {
-        id: "mild-free-prize",
-        avatar: "🎁",
-        displayName: "Game Prize Center",
-        username: "@FREE_GEMS_NOW_928",
-        verified: false,
-        accountAge: "Created today",
-        followers: "3",
-        mutuals: "0",
-        message:
-          "YOU WON 50,000 GEMS! Send your password now to claim them!",
-        profileDetails:
-          "No posts and a generic prize image",
-        requestDetails:
-          "Requests the player’s password immediately",
-        verdict: "impostor",
-        explanation:
-          "Real games do not need a password to deliver a prize. The brand-new account, pressure, and password request clearly reveal a scam."
-      },
+        username: {
+          label: "Misspelled username",
+          explanation:
+            "The word “Official” is misspelled as “Offical,” which is a common impersonation trick."
+        },
 
-      {
-        id: "mild-friend-new-account",
-        avatar: "👧",
-        displayName: "Maya Thompson",
-        username: "@MayaThompsonNEW",
-        verified: false,
-        accountAge: "1 hour",
-        followers: "2",
-        mutuals: "0",
-        message:
-          "Hey! This is my new account. What is your home address again?",
-        profileDetails:
-          "Uses Maya’s picture but has no posts",
-        requestDetails:
-          "Requests a private home address",
-        verdict: "suspicious",
-        explanation:
-          "The account may or may not belong to Maya. Verify through Maya’s known phone number or old account before responding."
-      },
+        verification: {
+          label: "Fake verification badge",
+          explanation:
+            "A symbol typed into a profile does not prove that the account is verified."
+        },
 
-      {
-        id: "mild-school-real",
-        avatar: "🏫",
-        displayName: "Roosevelt Academy",
-        username: "@RooseveltAcademy",
-        verified: true,
-        accountAge: "6 years",
-        followers: "8,420",
-        mutuals: "36",
-        message:
-          "School is closed tomorrow because of severe weather.",
-        profileDetails:
-          "Verified account linked from the official school website",
-        requestDetails:
-          "No personal information requested",
-        verdict: "real",
-        explanation:
-          "The verification, long account history, official website connection, and normal announcement make this likely authentic."
-      },
+        "account-age": {
+          label: "Brand-new account",
+          explanation:
+            "The account was created only one day ago."
+        },
 
-      {
-        id: "mild-fake-parent",
-        avatar: "👩",
-        displayName: "Mom",
-        username: "@YourMomEmergency",
-        verified: false,
-        accountAge: "10 minutes",
-        followers: "0",
-        mutuals: "0",
-        message:
-          "I lost my phone. Send me the six-digit code you just received.",
-        profileDetails:
-          "No profile history or family connections",
-        requestDetails:
-          "Requests a verification code",
-        verdict: "impostor",
-        explanation:
-          "Verification codes should never be shared. Contact the parent using a known number or ask another trusted adult."
-      },
+        followers: {
+          label: "Almost no followers",
+          explanation:
+            "An official reward account would probably have more than two followers."
+        },
 
-      {
-        id: "mild-artist-real",
-        avatar: "🎨",
-        displayName: "Creative Kids Club",
-        username: "@CreativeKidsClub",
-        verified: false,
-        accountAge: "4 years",
-        followers: "2,104",
-        mutuals: "11",
-        message:
-          "Saturday’s public art activity begins at noon.",
-        profileDetails:
-          "Regular posts from the same community organization",
-        requestDetails:
-          "Directs families to its normal public event page",
-        verdict: "real",
-        explanation:
-          "The established history, consistent organization posts, and ordinary public event notice support that this account is real."
-      },
+        following: {
+          label: "Suspicious following count",
+          explanation:
+            "The account follows hundreds of people while almost nobody follows it."
+        },
 
-      {
-        id: "mild-celebrity-message",
-        avatar: "🌟",
-        displayName: "Taylor Famous",
-        username: "@TaylorFamous_OfficialWinner",
-        verified: false,
-        accountAge: "2 days",
-        followers: "12",
-        mutuals: "0",
-        message:
-          "You are my biggest fan! Buy a gift card and send me the number.",
-        profileDetails:
-          "Copied celebrity photograph and no verification",
-        requestDetails:
-          "Requests gift-card payment",
-        verdict: "impostor",
-        explanation:
-          "A celebrity would not privately demand gift cards. The copied image, tiny account, and payment request are clear warning signs."
-      },
+        posts: {
+          label: "No public history",
+          explanation:
+            "The supposed official account has no posts or public activity."
+        },
 
-      {
-        id: "mild-cousin-link",
-        avatar: "👦",
-        displayName: "Cousin Jay",
-        username: "@CousinJayBackup",
-        verified: false,
-        accountAge: "Yesterday",
-        followers: "5",
-        mutuals: "1",
-        message:
-          "Is this you in this video? Click fast before it gets removed.",
-        profileDetails:
-          "Slightly different username from Jay’s normal account",
-        requestDetails:
-          "Includes a shortened unfamiliar link",
-        verdict: "suspicious",
-        explanation:
-          "This may be a hacked or copied account. Do not open the link; contact Jay through a trusted method first."
+        message: {
+          label: "Requests a private code",
+          explanation:
+            "Real companies should not ask for a verification code sent to your phone."
+        },
+
+        link: {
+          label: "Suspicious prize link",
+          explanation:
+            "The strange link is designed to look exciting but does not belong to the real company."
+        },
+
+        pressure: {
+          label: "Urgent pressure",
+          explanation:
+            "Scammers create urgency so people act before checking the facts."
+        },
+
+        mutuals: {
+          label: "No shared connections",
+          explanation:
+            "There are no trusted mutual friends connecting this account to the player."
+        },
+
+        joined: {
+          label: "Joined today",
+          explanation:
+            "A brand-new profile claiming to be an official company account is suspicious."
+        }
       }
-    ],
+    },
 
-    spicy: [
-      {
-        id: "spicy-teacher-copy",
-        avatar: "👩‍🏫",
-        displayName: "Ms. Robinson",
-        username: "@MsRoblnson",
-        verified: false,
-        accountAge: "3 days",
-        followers: "19",
-        mutuals: "2",
-        message:
-          "I need your student login and password to correct your grade.",
-        profileDetails:
-          "The username uses a lowercase L instead of the letter i",
-        requestDetails:
-          "Requests school login credentials",
-        verdict: "impostor",
-        explanation:
-          "Teachers should not request passwords. The misspelled username and credential request show this is an impostor."
-      },
+    {
+      id: "fake-friend",
+      title: "The New Friend Account",
+      username: "Maya_J_Backup2",
+      handle: "@maya_new_private",
+      avatar: "👧🏽",
+      verification: "",
+      profileUrl:
+        "social.example/maya_new_private",
+      bio:
+        "My old account got hacked. Add this one instead.",
+      accountAge: "3 hours",
+      followers: "4",
+      following: "126",
+      posts: "1",
+      messageSender:
+        "Maya_J_Backup2",
+      message:
+        "Hey! It is really me. What is your home address again? I want to send you something.",
+      link:
+        "No link included",
+      pressure:
+        "Do not ask Maya at school. Her phone is broken.",
+      mutuals:
+        "1 mutual friend",
+      joined:
+        "Joined 3 hours ago",
+      location:
+        "Detroit, Michigan",
+      clues: {
+        avatar: {
+          label: "Copied-looking photo",
+          explanation:
+            "A familiar profile photo can be copied from someone else’s real account."
+        },
 
-      {
-        id: "spicy-friend-hacked",
-        avatar: "🛹",
-        displayName: "Noah",
-        username: "@NoahSkates",
-        verified: false,
-        accountAge: "2 years",
-        followers: "340",
-        mutuals: "23",
-        message:
-          "I am trapped and need you to buy three gift cards. Do not call me.",
-        profileDetails:
-          "Real-looking established account",
-        requestDetails:
-          "Unusual money request and asks the recipient not to verify",
-        verdict: "suspicious",
-        explanation:
-          "The account may be Noah’s real account but could be hacked. The message behavior is suspicious, so contact Noah another way."
-      },
+        handle: {
+          label: "Unfamiliar handle",
+          explanation:
+            "The new username does not match the friend’s known account."
+        },
 
-      {
-        id: "spicy-brand-support",
-        avatar: "🎮",
-        displayName: "Galaxy Builders Support",
-        username: "@GalaxyBuildersHelp",
-        verified: true,
-        accountAge: "5 years",
-        followers: "182K",
-        mutuals: "0",
-        message:
-          "We received your support request. Continue through the help ticket you opened.",
-        profileDetails:
-          "Verified account linked from the official game website",
-        requestDetails:
-          "Does not request passwords or verification codes",
-        verdict: "real",
-        explanation:
-          "The verified account, official link, established history, and connection to a support request the player initiated support authenticity."
-      },
+        bio: {
+          label: "Backup-account story",
+          explanation:
+            "Impostors often claim that an old account was hacked to explain a new profile."
+        },
 
-      {
-        id: "spicy-team-manager",
-        avatar: "⚽",
-        displayName: "Lakeside Team Manager",
-        username: "@LakesideTeamMgr",
-        verified: false,
-        accountAge: "18 months",
-        followers: "164",
-        mutuals: "26",
-        message:
-          "The bus leaves at 7:30. Confirm through the team app.",
-        profileDetails:
-          "Recognized by players and linked to the official team page",
-        requestDetails:
-          "Uses the normal team application",
-        verdict: "real",
-        explanation:
-          "Known mutual connections, an established history, and use of the normal team app make the message likely real."
-      },
+        "account-age": {
+          label: "Account only hours old",
+          explanation:
+            "The account was created just a few hours ago."
+        },
 
-      {
-        id: "spicy-charity-copy",
-        avatar: "❤️",
-        displayName: "Helping Hands Charity",
-        username: "@HelpingHandCharity",
-        verified: false,
-        accountAge: "1 week",
-        followers: "41",
-        mutuals: "0",
-        message:
-          "Donate in the next ten minutes or your account will be reported.",
-        profileDetails:
-          "Name resembles a real charity but one letter is missing",
-        requestDetails:
-          "Uses threats and an unfamiliar payment page",
-        verdict: "impostor",
-        explanation:
-          "The copied name, threat, deadline, and strange payment request show that this is pretending to be a charity."
-      },
+        followers: {
+          label: "Very few followers",
+          explanation:
+            "The supposed friend’s new account has almost no trusted connections."
+        },
 
-      {
-        id: "spicy-principal",
-        avatar: "🏫",
-        displayName: "Principal Lewis",
-        username: "@PrincipalLewisOfficial",
-        verified: false,
-        accountAge: "1 day",
-        followers: "8",
-        mutuals: "0",
-        message:
-          "Send me a photo of your student ID immediately.",
-        profileDetails:
-          "No connection to the school’s official account",
-        requestDetails:
-          "Requests an identification document through direct message",
-        verdict: "impostor",
-        explanation:
-          "A principal would use official school systems, not a brand-new unconnected account requesting an ID photograph."
-      },
+        posts: {
+          label: "Almost no account history",
+          explanation:
+            "One post provides very little proof that this is really the friend."
+        },
 
-      {
-        id: "spicy-sibling",
-        avatar: "👧",
-        displayName: "Ava",
-        username: "@AvaDanceStars",
-        verified: false,
-        accountAge: "3 years",
-        followers: "560",
-        mutuals: "32",
-        message:
-          "Can you send me the homework photo from today?",
-        profileDetails:
-          "Normal account with familiar posts and shared friends",
-        requestDetails:
-          "Ordinary request with no secret or sensitive information",
-        verdict: "real",
-        explanation:
-          "The established account, familiar history, mutual friends, and ordinary request make it likely real."
-      },
+        message: {
+          label: "Requests a home address",
+          explanation:
+            "A home address is private information and should not be sent without verification."
+        },
 
-      {
-        id: "spicy-contest",
-        avatar: "🏆",
-        displayName: "Youth Robotics Awards",
-        username: "@YouthRobotlcsAwards",
-        verified: false,
-        accountAge: "2 days",
-        followers: "14",
-        mutuals: "0",
-        message:
-          "You won! Pay a $75 processing fee before midnight.",
-        profileDetails:
-          "Uses a lowercase L in place of the letter i",
-        requestDetails:
-          "Requests urgent payment for an unexpected prize",
-        verdict: "impostor",
-        explanation:
-          "The misspelled account, unexpected prize, deadline, and processing fee are classic impersonation and prize-scam clues."
+        pressure: {
+          label: "Tells you not to verify",
+          explanation:
+            "The account specifically discourages checking with the real person."
+        },
+
+        joined: {
+          label: "Recently joined",
+          explanation:
+            "The account appeared only a few hours ago."
+        },
+
+        mutuals: {
+          label: "Almost no mutual friends",
+          explanation:
+            "A real friend’s replacement account would often connect with more known people."
+        }
       }
-    ],
+    },
 
-    hot: [
-      {
-        id: "hot-real-account-hacked",
-        avatar: "🤖",
-        displayName: "Cam Builds Bots",
-        username: "@CamBuildsBots",
-        verified: false,
-        accountAge: "4 years",
-        followers: "2,310",
-        mutuals: "27",
-        message:
-          "Vote for me by logging in through this page. Send me the code afterward.",
-        profileDetails:
-          "The account history is real, but the message is unlike Cam",
-        requestDetails:
-          "External login page and verification-code request",
-        verdict: "suspicious",
-        explanation:
-          "A real account can be hacked. The account may belong to Cam, but the strange login and code request require verification elsewhere."
-      },
+    {
+      id: "creator-manager",
+      title: "The Celebrity Manager",
+      username: "StarNova_Manager",
+      handle: "@official_starnova_team",
+      avatar: "⭐",
+      verification: "✓",
+      profileUrl:
+        "star-nova-fans.example/contact",
+      bio:
+        "Private manager for StarNova. Recruiting young creators for a secret project.",
+      accountAge: "2 weeks",
+      followers: "37",
+      following: "2,405",
+      posts: "3",
+      messageSender:
+        "StarNova_Manager",
+      message:
+        "StarNova selected you for a private video project. Send your full name, age, school, and a private photo.",
+      link:
+        "star-nova-casting.example/apply",
+      pressure:
+        "Do not tell your parents yet. This opportunity must stay secret.",
+      mutuals:
+        "No mutual friends",
+      joined:
+        "Joined two weeks ago",
+      location:
+        "Hollywood",
+      clues: {
+        "profile-url": {
+          label: "Unofficial fan website",
+          explanation:
+            "The profile is not hosted on the celebrity’s official website."
+        },
 
-      {
-        id: "hot-bank-copy",
-        avatar: "🏦",
-        displayName: "Metro Community Bank",
-        username: "@MetroCommunityBank_Security",
-        verified: false,
-        accountAge: "6 hours",
-        followers: "9",
-        mutuals: "0",
-        message:
-          "Your family account will close in 15 minutes. Confirm the PIN now.",
-        profileDetails:
-          "Professional logo copied from the real bank",
-        requestDetails:
-          "Requests a bank PIN through direct message",
-        verdict: "impostor",
-        explanation:
-          "Banks do not request PINs through social media. The copied logo, new account, threat, and deadline reveal the impersonation."
-      },
+        verification: {
+          label: "Unproven verification mark",
+          explanation:
+            "A check mark inside the profile design does not prove authenticity."
+        },
 
-      {
-        id: "hot-counselor-real",
-        avatar: "🧑‍💼",
-        displayName: "Renaissance Counseling Office",
-        username: "@RenaissanceCounseling",
-        verified: true,
-        accountAge: "7 years",
-        followers: "3,204",
-        mutuals: "44",
-        message:
-          "Appointments are available through the secure student portal.",
-        profileDetails:
-          "Linked from the school website and follows district policy",
-        requestDetails:
-          "Directs students to the normal secure portal",
-        verdict: "real",
-        explanation:
-          "The official verification, long history, school link, and secure known portal make this account likely authentic."
-      },
+        bio: {
+          label: "Secret recruiting claim",
+          explanation:
+            "Legitimate opportunities should not require children to keep the project secret."
+        },
 
-      {
-        id: "hot-parent-deepfake",
-        avatar: "👨",
-        displayName: "Dad",
-        username: "@DadEmergencyNewPhone",
-        verified: false,
-        accountAge: "20 minutes",
-        followers: "0",
-        mutuals: "0",
-        message:
-          "Listen to this voice message. I need money now, and you cannot tell Mom.",
-        profileDetails:
-          "The voice resembles Dad but the account is unknown",
-        requestDetails:
-          "Requests secrecy and emergency payment",
-        verdict: "impostor",
-        explanation:
-          "Voices can be copied with AI. The new account, secrecy, and urgent money request require verification through a known number."
-      },
+        followers: {
+          label: "Tiny audience",
+          explanation:
+            "A real celebrity management account would likely have more established followers."
+        },
 
-      {
-        id: "hot-influencer-manager",
-        avatar: "📸",
-        displayName: "Star Talent Management",
-        username: "@StarTalentManagement",
-        verified: false,
-        accountAge: "2 years",
-        followers: "21K",
-        mutuals: "1",
-        message:
-          "We can make you famous. Send private photos and your home address.",
-        profileDetails:
-          "Large follower count but copied posts and disabled comments",
-        requestDetails:
-          "Requests private images and home location",
-        verdict: "impostor",
-        explanation:
-          "Follower counts can be purchased. Legitimate agencies do not request private photos and home addresses from children through direct messages."
-      },
+        following: {
+          label: "Mass-following strangers",
+          explanation:
+            "The account follows thousands of people while very few follow it."
+        },
 
-      {
-        id: "hot-friend-cloned",
-        avatar: "🎨",
-        displayName: "Maya",
-        username: "@MayaArtist_",
-        verified: false,
-        accountAge: "1 month",
-        followers: "88",
-        mutuals: "14",
-        message:
-          "What was the name of your first pet? I forgot.",
-        profileDetails:
-          "Copies Maya’s photos, but her real username has no underscore",
-        requestDetails:
-          "Requests an answer often used for account recovery",
-        verdict: "impostor",
-        explanation:
-          "The nearly identical username and security-question request indicate a cloned account."
-      },
+        posts: {
+          label: "Little public history",
+          explanation:
+            "The account has only a few posts despite claiming to represent a celebrity."
+        },
 
-      {
-        id: "hot-support-real-looking",
-        avatar: "💻",
-        displayName: "Safetii Net Support",
-        username: "@SafetiiNetSupport",
-        verified: false,
-        accountAge: "3 years",
-        followers: "5,900",
-        mutuals: "0",
-        message:
-          "We detected a problem. Install this remote-control program so we can inspect your computer.",
-        profileDetails:
-          "Looks polished but is not linked from the official site",
-        requestDetails:
-          "Requests remote access to the device",
-        verdict: "suspicious",
-        explanation:
-          "Professional appearance is not proof. Remote-access requests are dangerous and must be verified through the official website or a trusted adult."
-      },
+        message: {
+          label: "Requests identifying details",
+          explanation:
+            "The message asks for a name, age, school, and private photo."
+        },
 
-      {
-        id: "hot-event-organizer",
-        avatar: "🎟️",
-        displayName: "City STEM Expo",
-        username: "@CitySTEMExpo",
-        verified: true,
-        accountAge: "8 years",
-        followers: "31K",
-        mutuals: "17",
-        message:
-          "Schedule updates are posted on our official registration page.",
-        profileDetails:
-          "Verified and linked from the city government website",
-        requestDetails:
-          "No passwords, codes, private photos, or payment requested",
-        verdict: "real",
-        explanation:
-          "Verification, official government linking, account history, and normal event communication support that this is authentic."
+        link: {
+          label: "Unknown casting site",
+          explanation:
+            "The application link is not connected to a verified official organization."
+        },
+
+        pressure: {
+          label: "Demands secrecy",
+          explanation:
+            "A safe adult or organization should never tell a child to hide contact from trusted adults."
+        },
+
+        mutuals: {
+          label: "No trusted connection",
+          explanation:
+            "No mutual friends or trusted adults connect the user to the account."
+        }
       }
-    ]
-  };
+    },
+
+    {
+      id: "tech-support",
+      title: "The Emergency Tech Agent",
+      username: "SafetiiSupport_Service",
+      handle: "@account_security_team",
+      avatar: "🛠️",
+      verification: "✓",
+      profileUrl:
+        "safetii-security-help.example",
+      bio:
+        "24-hour account protection and emergency password recovery.",
+      accountAge: "5 days",
+      followers: "11",
+      following: "612",
+      posts: "2",
+      messageSender:
+        "SafetiiSupport_Service",
+      message:
+        "Your account will be deleted because of suspicious activity. Reply with your password so we can protect it.",
+      link:
+        "secure-account-reset.example/login",
+      pressure:
+        "Respond in ten minutes or permanently lose your account.",
+      mutuals:
+        "No mutual friends",
+      joined:
+        "Joined five days ago",
+      location:
+        "Support Center",
+      clues: {
+        "profile-url": {
+          label: "Fake support domain",
+          explanation:
+            "The address is not the legitimate Safetii Net website."
+        },
+
+        username: {
+          label: "Unofficial support name",
+          explanation:
+            "The account uses a generic support-style name instead of an established official profile."
+        },
+
+        verification: {
+          label: "Fake check mark",
+          explanation:
+            "The check symbol can be copied and does not verify the account."
+        },
+
+        bio: {
+          label: "Unverified security claim",
+          explanation:
+            "Anyone can write that they provide emergency account protection."
+        },
+
+        "account-age": {
+          label: "Recently created support account",
+          explanation:
+            "A major platform’s official support account would not normally be only five days old."
+        },
+
+        followers: {
+          label: "Very few followers",
+          explanation:
+            "An official platform support account would usually have an established audience."
+        },
+
+        message: {
+          label: "Requests a password",
+          explanation:
+            "Real support staff should never ask users to send their password."
+        },
+
+        link: {
+          label: "Fake reset link",
+          explanation:
+            "The login page is not on the platform’s real website."
+        },
+
+        pressure: {
+          label: "Threatens account deletion",
+          explanation:
+            "The message uses fear and a short deadline to force a rushed response."
+        },
+
+        joined: {
+          label: "Joined recently",
+          explanation:
+            "The profile has existed for only a few days."
+        }
+      }
+    },
+
+    {
+      id: "coach-scout",
+      title: "The Sports Scout",
+      username: "National_Scouting_Pro",
+      handle: "@elite_youth_scout",
+      avatar: "🏀",
+      verification: "",
+      profileUrl:
+        "youth-scouting-pro.example",
+      bio:
+        "National scout helping young athletes reach the next level.",
+      accountAge: "1 month",
+      followers: "52",
+      following: "3,120",
+      posts: "6",
+      messageSender:
+        "National_Scouting_Pro",
+      message:
+        "I saw your highlights. Send your school, practice schedule, home address, and a photo of your student ID.",
+      link:
+        "elite-athlete-form.example",
+      pressure:
+        "Complete the form tonight before another player takes your spot.",
+      mutuals:
+        "No coaches in common",
+      joined:
+        "Joined last month",
+      location:
+        "United States",
+      clues: {
+        "profile-url": {
+          label: "Unknown scouting website",
+          explanation:
+            "The website is not connected to a recognized sports organization."
+        },
+
+        bio: {
+          label: "Vague professional claim",
+          explanation:
+            "The account claims to be a national scout but provides no team or organization."
+        },
+
+        followers: {
+          label: "Small following",
+          explanation:
+            "The profile has little evidence of an established professional reputation."
+        },
+
+        following: {
+          label: "Targets thousands of users",
+          explanation:
+            "The account follows thousands of people, which may mean it sends the same message widely."
+        },
+
+        posts: {
+          label: "Limited public work",
+          explanation:
+            "Only a few posts support the account’s major professional claim."
+        },
+
+        message: {
+          label: "Requests dangerous personal details",
+          explanation:
+            "A school, schedule, home address, and student ID are highly sensitive."
+        },
+
+        link: {
+          label: "Unverified application form",
+          explanation:
+            "The form does not belong to a recognized school, league, or sports organization."
+        },
+
+        pressure: {
+          label: "False deadline",
+          explanation:
+            "The account pressures the athlete to act before speaking with a parent or coach."
+        },
+
+        mutuals: {
+          label: "No trusted sports connections",
+          explanation:
+            "No known coaches or organizations connect the player to this scout."
+        },
+
+        location: {
+          label: "Meaningless location",
+          explanation:
+            "Listing only an entire country provides no way to verify the claimed organization."
+        }
+      }
+    },
+
+    {
+      id: "contest-winner",
+      title: "The Contest Winner Message",
+      username: "PrizeCenter2026",
+      handle: "@official_winner_department",
+      avatar: "🎁",
+      verification: "★",
+      profileUrl:
+        "prize-center-winners.example",
+      bio:
+        "Awarding phones, tablets, and cash prizes every day.",
+      accountAge: "8 days",
+      followers: "18",
+      following: "1,806",
+      posts: "4",
+      messageSender:
+        "PrizeCenter2026",
+      message:
+        "You were randomly selected to receive a new phone. Pay a small delivery fee using a gift card.",
+      link:
+        "claim-my-phone.example/payment",
+      pressure:
+        "Send the gift card number now. Only one phone remains.",
+      mutuals:
+        "No mutual friends",
+      joined:
+        "Joined eight days ago",
+      location:
+        "Worldwide",
+      clues: {
+        "profile-url": {
+          label: "Unrecognized prize site",
+          explanation:
+            "The website does not belong to a familiar store or verified contest sponsor."
+        },
+
+        username: {
+          label: "Generic prize name",
+          explanation:
+            "The account name does not identify a real company or organization."
+        },
+
+        verification: {
+          label: "Decorative fake badge",
+          explanation:
+            "A star symbol is not official account verification."
+        },
+
+        bio: {
+          label: "Too-good-to-be-true prizes",
+          explanation:
+            "The account promises expensive prizes every day without explaining a real contest."
+        },
+
+        "account-age": {
+          label: "New prize account",
+          explanation:
+            "The account is only a few days old."
+        },
+
+        followers: {
+          label: "Few followers",
+          explanation:
+            "A major giveaway account would normally have a larger established audience."
+        },
+
+        following: {
+          label: "Mass-following behavior",
+          explanation:
+            "The account follows many people to find potential targets."
+        },
+
+        message: {
+          label: "Requests gift-card payment",
+          explanation:
+            "Legitimate contests do not require winners to pay with gift cards."
+        },
+
+        link: {
+          label: "Suspicious payment page",
+          explanation:
+            "The payment link is not connected to a verified business."
+        },
+
+        pressure: {
+          label: "Scarcity pressure",
+          explanation:
+            "The account claims only one prize remains to rush the target."
+        },
+
+        mutuals: {
+          label: "No shared connection",
+          explanation:
+            "Nobody the user knows appears connected to the prize account."
+        },
+
+        location: {
+          label: "Unverifiable location",
+          explanation:
+            "The word “Worldwide” does not identify a real business location."
+        }
+      }
+    }
+  ];
+
+  /* =====================================================
+     GAME STATE
+  ===================================================== */
 
   let selectedHeat =
     "mild";
 
-  let activeCases =
+  let settings =
+    heatSettings.mild;
+
+  let roundCases =
     [];
 
   let currentCaseIndex =
     0;
 
-  let correctAnswers =
+  let currentCase =
+    null;
+
+  let timeRemaining =
     0;
 
-  let answerLocked =
+  let score =
+    0;
+
+  let badges =
+    3;
+
+  let casesSolved =
+    0;
+
+  let foundClueIds =
+    new Set();
+
+  let cluesFoundTotal =
+    0;
+
+  let correctClicks =
+    0;
+
+  let wrongClicks =
+    0;
+
+  let clueStreak =
+    0;
+
+  let bestStreak =
+    0;
+
+  let caseStartingScore =
+    0;
+
+  let scanUses =
+    1;
+
+  let hintUses =
+    2;
+
+  let mistakesTowardBadgeLoss =
+    0;
+
+  let gameRunning =
     false;
 
+  let caseLocked =
+    false;
+
+  let timerInterval =
+    null;
+
+  let feedbackTimeout =
+    null;
+
   /* =====================================================
-     HELPERS
+     BASIC HELPERS
   ===================================================== */
 
   function byId(id) {
     return document.getElementById(id);
   }
 
-  function setText(id, value) {
+  function setText(
+    id,
+    value
+  ) {
     const element =
       byId(id);
 
@@ -555,26 +755,31 @@
     }
   }
 
-  function getCurrentCase() {
-    return activeCases[
-      currentCaseIndex
-    ];
-  }
+  function shuffle(items) {
+    const copy =
+      [...items];
 
-  function getPointValue() {
-    const fallback = {
-      mild: 10,
-      spicy: 20,
-      hot: 30
-    };
+    for (
+      let index = copy.length - 1;
+      index > 0;
+      index -= 1
+    ) {
+      const randomIndex =
+        Math.floor(
+          Math.random() *
+          (index + 1)
+        );
 
-    return (
-      arcade.HEAT_LEVELS?.[
-        selectedHeat
-      ]?.pointsPerCorrect ||
-      fallback[selectedHeat] ||
-      10
-    );
+      [
+        copy[index],
+        copy[randomIndex]
+      ] = [
+        copy[randomIndex],
+        copy[index]
+      ];
+    }
+
+    return copy;
   }
 
   function showScreen(screenId) {
@@ -601,36 +806,117 @@
   function updateGlobalPoints() {
     setText(
       "globalPoints",
-      arcade.getGlobalPoints()
+      Number(
+        arcade.getGlobalPoints?.() ||
+        0
+      )
     );
   }
 
-  function closeHint() {
-    byId("impostorHintPanel")
-      ?.classList.add(
-        "hidden"
-      );
+  function getCurrentEvidenceNeeded() {
+    const availableClues =
+      Object.keys(
+        currentCase?.clues ||
+        {}
+      ).length;
 
-    byId("openImpostorHint")
-      ?.setAttribute(
-        "aria-expanded",
-        "false"
-      );
+    return Math.min(
+      settings.evidenceNeeded,
+      availableClues
+    );
   }
 
-  function hideReaction() {
-    const reaction =
-      byId("memeReaction");
+  function getFoundEvidenceCount() {
+    return foundClueIds.size;
+  }
 
-    reaction?.classList.add(
-      "hidden"
+  function getCaseProgressPercent() {
+    const needed =
+      getCurrentEvidenceNeeded();
+
+    if (needed <= 0) {
+      return 0;
+    }
+
+    return Math.min(
+      100,
+      (
+        getFoundEvidenceCount() /
+        needed
+      ) * 100
+    );
+  }
+
+  function setMeme(
+    title,
+    message,
+    imageName = "thinking"
+  ) {
+    setText(
+      "memeDetectiveTitle",
+      title
     );
 
-    reaction?.classList.remove(
-      "show-reaction",
-      "correct-reaction",
-      "wrong-reaction"
+    setText(
+      "memeDetectiveMessage",
+      message
     );
+
+    const image =
+      byId(
+        "memeDetectiveImage"
+      );
+
+    if (image) {
+      image.src =
+        `../../assets/mascot/${imageName}.png`;
+    }
+  }
+
+  function setElementText(
+    elementId,
+    value
+  ) {
+    const element =
+      byId(elementId);
+
+    if (element) {
+      element.textContent =
+        value;
+    }
+  }
+
+  function setStatValue(
+    elementId,
+    strongValue,
+    smallValue
+  ) {
+    const element =
+      byId(elementId);
+
+    if (!element) {
+      return;
+    }
+
+    const strong =
+      element.querySelector(
+        "strong"
+      );
+
+    const small =
+      element.querySelector(
+        "small"
+      );
+
+    if (strong) {
+      strong.textContent =
+        strongValue;
+    }
+
+    if (small) {
+      small.textContent =
+        smallValue;
+    }
   }
 
   /* =====================================================
@@ -638,7 +924,9 @@
   ===================================================== */
 
   document
-    .querySelectorAll(".heat-choice")
+    .querySelectorAll(
+      ".heat-choice"
+    )
     .forEach((button) => {
       button.addEventListener(
         "click",
@@ -664,526 +952,1271 @@
     });
 
   /* =====================================================
-     HINT PANEL
-  ===================================================== */
-
-  byId("openImpostorHint")
-    ?.addEventListener(
-      "click",
-      () => {
-        const panel =
-          byId("impostorHintPanel");
-
-        const isOpening =
-          panel?.classList.contains(
-            "hidden"
-          );
-
-        panel?.classList.toggle(
-          "hidden"
-        );
-
-        byId("openImpostorHint")
-          ?.setAttribute(
-            "aria-expanded",
-            isOpening
-              ? "true"
-              : "false"
-          );
-      }
-    );
-
-  byId("closeImpostorHint")
-    ?.addEventListener(
-      "click",
-      closeHint
-    );
-
-  /* =====================================================
-     START GAME
+     START ROUND
   ===================================================== */
 
   function startGame() {
-    try {
-      activeCases =
-        casesByHeat[
-          selectedHeat
-        ] ||
-        casesByHeat.mild;
+    settings =
+      heatSettings[
+        selectedHeat
+      ] ||
+      heatSettings.mild;
 
-      currentCaseIndex =
-        0;
-
-      correctAnswers =
-        0;
-
-      answerLocked =
-        false;
-
-      arcade.startRound({
-        gameId:
-          `impostor-alert-${selectedHeat}`,
-
-        gameName:
-          `Impostor Alert ${
-            heatNames[selectedHeat]
-          }`,
-
-        heatLevel:
-          selectedHeat,
-
-        questionCount:
-          activeCases.length
-      });
-
-      setText(
-        "questionTotal",
-        activeCases.length
+    roundCases =
+      shuffle(
+        caseFiles
+      ).slice(
+        0,
+        settings.casesPerRound
       );
 
-      setText(
-        "currentHeat",
-        heatNames[selectedHeat]
-      );
+    currentCaseIndex =
+      0;
 
-      setText(
-        "questionPointValue",
-        getPointValue()
-      );
+    currentCase =
+      null;
 
-      showScreen(
-        "playScreen"
-      );
+    timeRemaining =
+      settings.roundSeconds;
 
-      loadCase();
-    } catch (error) {
-      console.error(
-        "Impostor Alert could not start:",
-        error
-      );
+    score =
+      0;
 
-      alert(
-        `Impostor Alert could not start: ${error.message}`
-      );
-    }
-  }
+    badges =
+      settings.startingBadges;
 
-  const startButton =
-    byId("startGame");
+    casesSolved =
+      0;
 
-  if (startButton) {
-    startButton.dataset
-      .impostorAlertConnected =
-      "true";
+    foundClueIds =
+      new Set();
 
-    startButton.addEventListener(
-      "click",
-      startGame
-    );
-  } else {
-    console.error(
-      "Impostor Alert start button was not found."
-    );
-  }
+    cluesFoundTotal =
+      0;
 
-  /* =====================================================
-     LOAD CASE
-  ===================================================== */
+    correctClicks =
+      0;
 
-  function loadCase() {
-    const currentCase =
-      getCurrentCase();
+    wrongClicks =
+      0;
 
-    if (!currentCase) {
-      finishGame();
-      return;
-    }
+    clueStreak =
+      0;
 
-    answerLocked =
-      false;
+    bestStreak =
+      0;
 
-    closeHint();
-    hideReaction();
+    caseStartingScore =
+      0;
 
-    setText(
-      "questionNumber",
-      currentCaseIndex + 1
-    );
+    scanUses =
+      1;
 
-    setText(
-      "profileAvatar",
-      currentCase.avatar
-    );
+    hintUses =
+      2;
 
-    setText(
-      "displayName",
-      currentCase.displayName
-    );
+    mistakesTowardBadgeLoss =
+      0;
 
-    setText(
-      "username",
-      currentCase.username
-    );
-
-    setText(
-      "accountAge",
-      currentCase.accountAge
-    );
-
-    setText(
-      "followerCount",
-      currentCase.followers
-    );
-
-    setText(
-      "mutualCount",
-      currentCase.mutuals
-    );
-
-    setText(
-      "messageText",
-      `“${currentCase.message}”`
-    );
-
-    setText(
-      "profileDetails",
-      currentCase.profileDetails
-    );
-
-    setText(
-      "requestDetails",
-      currentCase.requestDetails
-    );
-
-    byId("verificationBadge")
-      ?.classList.toggle(
-        "hidden",
-        !currentCase.verified
-      );
-
-    const progress =
-      (
-        currentCaseIndex /
-        activeCases.length
-      ) * 100;
-
-    const progressFill =
-      byId("questionProgressFill");
-
-    if (progressFill) {
-      progressFill.style.width =
-        `${progress}%`;
-    }
-
-    byId("answerFeedback")
-      ?.classList.add(
-        "hidden"
-      );
-
-    byId("nextQuestion")
-      ?.classList.add(
-        "hidden"
-      );
-
-    document
-      .querySelectorAll(
-        ".impostor-answer-choice"
-      )
-      .forEach((button) => {
-        button.disabled =
-          false;
-
-        button.classList.remove(
-          "correct-answer",
-          "wrong-answer",
-          "reveal-correct-answer"
-        );
-      });
-
-    updateLiveStats();
-  }
-
-  /* =====================================================
-     ANSWERS
-  ===================================================== */
-
-  function answerCase(button) {
-    if (answerLocked) {
-      return;
-    }
-
-    const currentCase =
-      getCurrentCase();
-
-    if (!currentCase) {
-      return;
-    }
-
-    answerLocked =
+    gameRunning =
       true;
 
-    const selectedVerdict =
-      button.dataset.verdict;
+    caseLocked =
+      false;
 
-    const correct =
-      selectedVerdict ===
-      currentCase.verdict;
+    arcade.startRound({
+      gameId:
+        `impostor-alert-${selectedHeat}`,
 
-    const scoreResult =
-      arcade.answerQuestion({
-        questionId:
-          currentCase.id,
+      gameName:
+        `Impostor Alert ${settings.label}`,
 
-        correct
-      });
+      heatLevel:
+        selectedHeat,
 
-    if (correct) {
-      correctAnswers += 1;
-    }
-
-    document
-      .querySelectorAll(
-        ".impostor-answer-choice"
-      )
-      .forEach(
-        (answerButton) => {
-          answerButton.disabled =
-            true;
-
-          const verdict =
-            answerButton.dataset.verdict;
-
-          if (
-            verdict ===
-            currentCase.verdict
-          ) {
-            answerButton.classList.add(
-              correct
-                ? "correct-answer"
-                : "reveal-correct-answer"
-            );
-          }
-
-          if (
-            answerButton === button &&
-            !correct
-          ) {
-            answerButton.classList.add(
-              "wrong-answer"
-            );
-          }
-        }
-      );
-
-    if (correct) {
-      setText(
-        "feedbackTitle",
-        "Case solved!"
-      );
-
-      setText(
-        "feedbackText",
-        `${verdictNames[
-          currentCase.verdict
-        ]} is correct. ${currentCase.explanation}`
-      );
-    } else {
-      setText(
-        "feedbackTitle",
-        "Review the evidence."
-      );
-
-      setText(
-        "feedbackText",
-        `The best verdict is ${
-          verdictNames[
-            currentCase.verdict
-          ]
-        }. ${currentCase.explanation}`
-      );
-    }
+      questionCount:
+        settings.casesPerRound
+    });
 
     setText(
-      "pointsEarnedThisQuestion",
-      scoreResult.pointsEarned
+      "currentHeat",
+      settings.label
     );
 
-    byId("answerFeedback")
+    setText(
+      "caseTotal",
+      settings.casesPerRound
+    );
+
+    setText(
+      "scanPowerCount",
+      "1 available"
+    );
+
+    setText(
+      "hintPowerCount",
+      "2 available"
+    );
+
+    byId("scanPowerButton")
+      ?.removeAttribute(
+        "disabled"
+      );
+
+    byId("hintPowerButton")
+      ?.removeAttribute(
+        "disabled"
+      );
+
+    byId("timeRemaining")
       ?.classList.remove(
-        "hidden"
+        "danger-time"
       );
 
-    const nextButton =
-      byId("nextQuestion");
-
-    if (nextButton) {
-      nextButton.textContent =
-        currentCaseIndex ===
-        activeCases.length - 1
-          ? "See Results"
-          : "Next Case";
-
-      nextButton.classList.remove(
-        "hidden"
-      );
-    }
-
-    showReaction({
-      correct,
-      points:
-        scoreResult.pointsEarned,
-      correctVerdict:
-        verdictNames[
-          currentCase.verdict
-        ]
-    });
-
-    updateLiveStats();
-  }
-
-  document
-    .querySelectorAll(
-      ".impostor-answer-choice"
-    )
-    .forEach((button) => {
-      button.addEventListener(
-        "click",
-        () => {
-          answerCase(button);
-        }
-      );
-    });
-
-  /* =====================================================
-     MEME REACTION
-  ===================================================== */
-
-  function showReaction({
-    correct,
-    points,
-    correctVerdict
-  }) {
-    const reaction =
-      byId("memeReaction");
-
-    const image =
-      byId("memeReactionImage");
-
-    if (!reaction || !image) {
-      return;
-    }
-
-    reaction.classList.remove(
-      "hidden",
-      "show-reaction",
-      "correct-reaction",
-      "wrong-reaction"
+    showScreen(
+      "playScreen"
     );
 
-    void reaction.offsetWidth;
+    updateHud();
 
-    reaction.classList.add(
-      "show-reaction",
-      correct
-        ? "correct-reaction"
-        : "wrong-reaction"
-    );
-
-    if (correct) {
-      image.src =
-        "../../assets/mascot/congrats.png";
-
-      image.alt =
-        "Meme celebrates a solved impostor case";
-
-      setText(
-        "memeReactionTitle",
-        "Excellent detective work!"
-      );
-
-      setText(
-        "memeReactionMessage",
-        `You earned ${points} points.`
-      );
-    } else {
-      image.src =
-        "../../assets/mascot/wrong.png";
-
-      image.alt =
-        "Meme encourages the player to review the account";
-
-      setText(
-        "memeReactionTitle",
-        "Look at every clue."
-      );
-
-      setText(
-        "memeReactionMessage",
-        `The best verdict is ${correctVerdict}.`
-      );
-    }
-  }
-
-  /* =====================================================
-     NEXT CASE
-  ===================================================== */
-
-  function nextCase() {
-    if (!answerLocked) {
-      return;
-    }
-
-    currentCaseIndex += 1;
-
-    if (
-      currentCaseIndex >=
-      activeCases.length
-    ) {
-      finishGame();
-      return;
-    }
+    startTimer();
 
     loadCase();
   }
 
-  byId("nextQuestion")
+  function connectStartButton() {
+    const button =
+      byId("startGame");
+
+    if (!button) {
+      console.error(
+        "Impostor Alert start button #startGame was not found."
+      );
+
+      return;
+    }
+
+    if (
+      button.dataset
+        .impostorConnected ===
+      "true"
+    ) {
+      return;
+    }
+
+    button.dataset
+      .impostorConnected =
+      "true";
+
+    button.addEventListener(
+      "click",
+      startGame
+    );
+
+    console.log(
+      "Impostor Alert start button connected."
+    );
+  }
+
+  /* =====================================================
+     TIMER
+  ===================================================== */
+
+  function startTimer() {
+    clearInterval(
+      timerInterval
+    );
+
+    timerInterval =
+      window.setInterval(
+        () => {
+          if (
+            !gameRunning ||
+            caseLocked
+          ) {
+            return;
+          }
+
+          timeRemaining -= 1;
+
+          if (
+            timeRemaining <= 10
+          ) {
+            byId("timeRemaining")
+              ?.classList.add(
+                "danger-time"
+              );
+          }
+
+          updateHud();
+
+          if (
+            timeRemaining <= 0
+          ) {
+            endGame("time");
+          }
+        },
+        1000
+      );
+  }
+
+  function removeTime(seconds) {
+    timeRemaining =
+      Math.max(
+        0,
+        timeRemaining - seconds
+      );
+
+    updateHud();
+
+    if (
+      timeRemaining <= 0
+    ) {
+      endGame("time");
+    }
+  }
+
+  /* =====================================================
+     CASE RENDERING
+  ===================================================== */
+
+  function loadCase() {
+    if (
+      !gameRunning
+    ) {
+      return;
+    }
+
+    if (
+      currentCaseIndex >=
+      roundCases.length
+    ) {
+      endGame("complete");
+      return;
+    }
+
+    currentCase =
+      roundCases[
+        currentCaseIndex
+      ];
+
+    foundClueIds =
+      new Set();
+
+    caseLocked =
+      false;
+
+    caseStartingScore =
+      score;
+
+    clearTimeout(
+      feedbackTimeout
+    );
+
+    byId("caseFeedback")
+      ?.classList.add(
+        "hidden"
+      );
+
+    byId("nextCaseButton")
+      ?.classList.add(
+        "hidden"
+      );
+
+    document
+      .querySelectorAll(
+        ".clue-surface"
+      )
+      .forEach((element) => {
+        element.classList.remove(
+          "found-clue",
+          "wrong-clue",
+          "scanner-clue",
+          "hint-clue"
+        );
+
+        element.removeAttribute(
+          "disabled"
+        );
+
+        element.setAttribute(
+          "aria-pressed",
+          "false"
+        );
+      });
+
+    setText(
+      "caseNumber",
+      currentCaseIndex + 1
+    );
+
+    setText(
+      "caseTitle",
+      currentCase.title
+    );
+
+    setText(
+      "caseDifficulty",
+      settings.difficulty
+    );
+
+    setText(
+      "caseInstructions",
+      `Find at least ${getCurrentEvidenceNeeded()} suspicious clues, then sound the Impostor Alert.`
+    );
+
+    setElementText(
+      "profileUrl",
+      currentCase.profileUrl
+    );
+
+    setElementText(
+      "profileAvatar",
+      currentCase.avatar
+    );
+
+    setElementText(
+      "profileUsername",
+      currentCase.username
+    );
+
+    setElementText(
+      "verificationBadge",
+      currentCase.verification ||
+      "○"
+    );
+
+    setElementText(
+      "profileHandle",
+      currentCase.handle
+    );
+
+    setElementText(
+      "profileBio",
+      currentCase.bio
+    );
+
+    setStatValue(
+      "accountAge",
+      currentCase.accountAge,
+      "Account age"
+    );
+
+    setStatValue(
+      "followerCount",
+      currentCase.followers,
+      "Followers"
+    );
+
+    setStatValue(
+      "followingCount",
+      currentCase.following,
+      "Following"
+    );
+
+    setStatValue(
+      "postCount",
+      currentCase.posts,
+      "Posts"
+    );
+
+    setText(
+      "messageSender",
+      currentCase.messageSender
+    );
+
+    setElementText(
+      "suspectMessage",
+      currentCase.message
+    );
+
+    setElementText(
+      "suspectLink",
+      currentCase.link
+    );
+
+    setElementText(
+      "pressureMessage",
+      currentCase.pressure
+    );
+
+    setStatValue(
+      "mutualFriends",
+      "Mutual friends",
+      currentCase.mutuals
+    );
+
+    setStatValue(
+      "joinedDate",
+      "Joined",
+      currentCase.joined
+    );
+
+    setStatValue(
+      "profileLocation",
+      "Location",
+      currentCase.location
+    );
+
+    setText(
+      "evidenceNeeded",
+      getCurrentEvidenceNeeded()
+    );
+
+    setText(
+      "evidenceFound",
+      0
+    );
+
+    const evidenceFill =
+      byId("evidenceFill");
+
+    if (evidenceFill) {
+      evidenceFill.style.width =
+        "0%";
+    }
+
+    const list =
+      byId("evidenceChipList");
+
+    if (list) {
+      list.innerHTML = `
+        <span class="empty-evidence-message">
+          No clues collected yet
+        </span>
+      `;
+    }
+
+    lockAlertButton();
+
+    setMeme(
+      "Search carefully!",
+      "Click details that could reveal an impostor.",
+      "thinking"
+    );
+
+    updateHud();
+  }
+
+  /* =====================================================
+     CLUE INTERACTION
+  ===================================================== */
+
+  function handleClueSelection(
+    element
+  ) {
+    if (
+      !gameRunning ||
+      caseLocked ||
+      !currentCase
+    ) {
+      return;
+    }
+
+    const clueId =
+      element.dataset.clueId;
+
+    if (!clueId) {
+      return;
+    }
+
+    if (
+      foundClueIds.has(
+        clueId
+      )
+    ) {
+      showCaseFeedback({
+        type: "neutral",
+        icon: "📌",
+        title: "Already collected",
+        message:
+          "That clue is already in your evidence file.",
+        points: 0
+      });
+
+      return;
+    }
+
+    const clue =
+      currentCase.clues[
+        clueId
+      ];
+
+    if (clue) {
+      collectCorrectClue(
+        element,
+        clueId,
+        clue
+      );
+    } else {
+      handleWrongClick(
+        element
+      );
+    }
+  }
+
+  function collectCorrectClue(
+    element,
+    clueId,
+    clue
+  ) {
+    foundClueIds.add(
+      clueId
+    );
+
+    correctClicks += 1;
+
+    cluesFoundTotal += 1;
+
+    clueStreak += 1;
+
+    bestStreak =
+      Math.max(
+        bestStreak,
+        clueStreak
+      );
+
+    const streakMultiplier =
+      Math.min(
+        4,
+        Math.max(
+          1,
+          clueStreak
+        )
+      );
+
+    const earnedPoints =
+      settings.cluePoints *
+      streakMultiplier;
+
+    score +=
+      earnedPoints;
+
+    element.classList.remove(
+      "wrong-clue",
+      "scanner-clue",
+      "hint-clue"
+    );
+
+    element.classList.add(
+      "found-clue"
+    );
+
+    element.setAttribute(
+      "aria-pressed",
+      "true"
+    );
+
+    addEvidenceChip(
+      clue.label
+    );
+
+    showCaseFeedback({
+      type: "correct",
+      icon: "🔎",
+      title:
+        clueStreak >= 3
+          ? `${clueStreak}x Evidence Streak!`
+          : "Evidence collected!",
+
+      message:
+        clue.explanation,
+
+      points:
+        earnedPoints
+    });
+
+    setMeme(
+      clueStreak >= 4
+        ? "Sharp detective work!"
+        : "Great clue!",
+
+      `${clue.label} added to the evidence file.`,
+
+      "congrats"
+    );
+
+    updateEvidenceMeter();
+    updateHud();
+
+    if (
+      getFoundEvidenceCount() >=
+      getCurrentEvidenceNeeded()
+    ) {
+      unlockAlertButton();
+    }
+  }
+
+  function handleWrongClick(
+    element
+  ) {
+    wrongClicks += 1;
+
+    clueStreak =
+      0;
+
+    mistakesTowardBadgeLoss += 1;
+
+    element.classList.remove(
+      "scanner-clue",
+      "hint-clue"
+    );
+
+    element.classList.add(
+      "wrong-clue"
+    );
+
+    window.setTimeout(
+      () => {
+        element.classList.remove(
+          "wrong-clue"
+        );
+      },
+      650
+    );
+
+    removeTime(
+      settings.wrongClickPenalty
+    );
+
+    let badgeMessage =
+      `${settings.wrongClickPenalty} seconds lost.`;
+
+    if (
+      mistakesTowardBadgeLoss >= 2
+    ) {
+      mistakesTowardBadgeLoss =
+        0;
+
+      badges -= 1;
+
+      badgeMessage =
+        `A detective badge was lost, and ${settings.wrongClickPenalty} seconds were removed.`;
+    }
+
+    showCaseFeedback({
+      type: "wrong",
+      icon: "❌",
+      title: "That is not evidence",
+      message:
+        `Look for unusual behavior, requests, links, account history, or pressure. ${badgeMessage}`,
+      points: 0
+    });
+
+    setMeme(
+      "Search more carefully!",
+      "Not every profile detail is suspicious.",
+      "wrong"
+    );
+
+    updateHud();
+
+    if (
+      badges <= 0
+    ) {
+      window.setTimeout(
+        () => {
+          endGame("badges");
+        },
+        550
+      );
+    }
+  }
+
+  function addEvidenceChip(
+    label
+  ) {
+    const list =
+      byId("evidenceChipList");
+
+    if (!list) {
+      return;
+    }
+
+    list
+      .querySelector(
+        ".empty-evidence-message"
+      )
+      ?.remove();
+
+    const chip =
+      document.createElement(
+        "span"
+      );
+
+    chip.className =
+      "evidence-chip";
+
+    chip.textContent =
+      `✓ ${label}`;
+
+    list.appendChild(
+      chip
+    );
+  }
+
+  function updateEvidenceMeter() {
+    setText(
+      "evidenceFound",
+      getFoundEvidenceCount()
+    );
+
+    setText(
+      "evidenceNeeded",
+      getCurrentEvidenceNeeded()
+    );
+
+    const fill =
+      byId("evidenceFill");
+
+    if (fill) {
+      fill.style.width =
+        `${getCaseProgressPercent()}%`;
+    }
+  }
+
+  /* =====================================================
+     CONNECT ALL CLUE SURFACES
+  ===================================================== */
+
+  function connectClueSurfaces() {
+    document
+      .querySelectorAll(
+        ".clue-surface"
+      )
+      .forEach((element) => {
+        if (
+          element.dataset
+            .clueConnected ===
+          "true"
+        ) {
+          return;
+        }
+
+        element.dataset
+          .clueConnected =
+          "true";
+
+        element.addEventListener(
+          "click",
+          () => {
+            handleClueSelection(
+              element
+            );
+          }
+        );
+
+        element.addEventListener(
+          "keydown",
+          (event) => {
+            if (
+              event.key === "Enter" ||
+              event.key === " "
+            ) {
+              event.preventDefault();
+
+              handleClueSelection(
+                element
+              );
+            }
+          }
+        );
+      });
+  }
+
+  /* =====================================================
+     ALERT BUTTON
+  ===================================================== */
+
+  function lockAlertButton() {
+    const button =
+      byId(
+        "impostorAlertButton"
+      );
+
+    if (!button) {
+      return;
+    }
+
+    button.disabled =
+      true;
+
+    button.classList.add(
+      "locked-alert"
+    );
+
+    button.classList.remove(
+      "ready-alert"
+    );
+
+    setText(
+      "alertButtonMessage",
+      "Collect more evidence"
+    );
+  }
+
+  function unlockAlertButton() {
+    const button =
+      byId(
+        "impostorAlertButton"
+      );
+
+    if (!button) {
+      return;
+    }
+
+    button.disabled =
+      false;
+
+    button.classList.remove(
+      "locked-alert"
+    );
+
+    button.classList.add(
+      "ready-alert"
+    );
+
+    setText(
+      "alertButtonMessage",
+      "Evidence ready — solve the case!"
+    );
+
+    setMeme(
+      "Evidence ready!",
+      "Sound the Impostor Alert to expose the fake account.",
+      "congrats"
+    );
+  }
+
+  function solveCurrentCase() {
+    if (
+      !gameRunning ||
+      caseLocked ||
+      !currentCase
+    ) {
+      return;
+    }
+
+    if (
+      getFoundEvidenceCount() <
+      getCurrentEvidenceNeeded()
+    ) {
+      return;
+    }
+
+    caseLocked =
+      true;
+
+    casesSolved += 1;
+
+    const evidenceBonus =
+      getFoundEvidenceCount() *
+      settings.cluePoints;
+
+    const timeBonus =
+      Math.min(
+        100,
+        timeRemaining
+      );
+
+    const casePoints =
+      settings.caseBonus +
+      evidenceBonus +
+      timeBonus;
+
+    score +=
+      casePoints;
+
+    arcade.answerQuestion({
+      questionId:
+        currentCase.id,
+
+      correct: true
+    });
+
+    document
+      .querySelectorAll(
+        ".clue-surface"
+      )
+      .forEach((element) => {
+        element.setAttribute(
+          "disabled",
+          "disabled"
+        );
+      });
+
+    setText(
+      "caseSolvedHeading",
+      "Impostor Exposed!"
+    );
+
+    setText(
+      "caseSolvedExplanation",
+      `You collected enough evidence to expose ${currentCase.username}. Never trust a profile because of a photo, name, badge, or exciting promise alone.`
+    );
+
+    setText(
+      "casePointsEarned",
+      `+${casePoints}`
+    );
+
+    byId("caseSolvedOverlay")
+      ?.classList.remove(
+        "hidden"
+      );
+
+    updateHud();
+  }
+
+  byId("impostorAlertButton")
     ?.addEventListener(
       "click",
-      nextCase
+      solveCurrentCase
+    );
+
+  byId("continueAfterSolved")
+    ?.addEventListener(
+      "click",
+      () => {
+        byId("caseSolvedOverlay")
+          ?.classList.add(
+            "hidden"
+          );
+
+        currentCaseIndex += 1;
+
+        if (
+          currentCaseIndex >=
+          roundCases.length
+        ) {
+          endGame("complete");
+          return;
+        }
+
+        loadCase();
+      }
     );
 
   /* =====================================================
-     LIVE STATS
+     EVIDENCE SCANNER
   ===================================================== */
 
-  function updateLiveStats() {
-    const round =
-      arcade.getCurrentRound();
+  function getUnfoundClueElements() {
+    const results =
+      [];
+
+    Object.keys(
+      currentCase?.clues ||
+      {}
+    ).forEach((clueId) => {
+      if (
+        foundClueIds.has(
+          clueId
+        )
+      ) {
+        return;
+      }
+
+      const element =
+        document.querySelector(
+          `[data-clue-id="${clueId}"]`
+        );
+
+      if (element) {
+        results.push(
+          element
+        );
+      }
+    });
+
+    return results;
+  }
+
+  byId("scanPowerButton")
+    ?.addEventListener(
+      "click",
+      () => {
+        if (
+          !gameRunning ||
+          caseLocked ||
+          scanUses <= 0 ||
+          !currentCase
+        ) {
+          return;
+        }
+
+        scanUses -= 1;
+
+        setText(
+          "scanPowerCount",
+          "0 available"
+        );
+
+        byId("scanPowerButton")
+          ?.setAttribute(
+            "disabled",
+            "disabled"
+          );
+
+        const unfound =
+          shuffle(
+            getUnfoundClueElements()
+          ).slice(
+            0,
+            3
+          );
+
+        unfound.forEach(
+          (element) => {
+            element.classList.add(
+              "scanner-clue"
+            );
+
+            window.setTimeout(
+              () => {
+                element.classList.remove(
+                  "scanner-clue"
+                );
+              },
+              2400
+            );
+          }
+        );
+
+        setMeme(
+          "Scanner activated!",
+          "Three suspicious areas are glowing. Inspect them quickly!",
+          "thinking"
+        );
+      }
+    );
+
+  /* =====================================================
+     MEME HINT
+  ===================================================== */
+
+  byId("hintPowerButton")
+    ?.addEventListener(
+      "click",
+      () => {
+        if (
+          !gameRunning ||
+          caseLocked ||
+          hintUses <= 0 ||
+          !currentCase
+        ) {
+          return;
+        }
+
+        const available =
+          getUnfoundClueElements();
+
+        if (
+          available.length === 0
+        ) {
+          setMeme(
+            "You found every clue!",
+            "Sound the Impostor Alert.",
+            "congrats"
+          );
+
+          return;
+        }
+
+        hintUses -= 1;
+
+        setText(
+          "hintPowerCount",
+          `${hintUses} available`
+        );
+
+        if (
+          hintUses <= 0
+        ) {
+          byId("hintPowerButton")
+            ?.setAttribute(
+              "disabled",
+              "disabled"
+            );
+        }
+
+        const element =
+          shuffle(
+            available
+          )[0];
+
+        const clueId =
+          element.dataset.clueId;
+
+        const clue =
+          currentCase.clues[
+            clueId
+          ];
+
+        element.classList.add(
+          "hint-clue"
+        );
+
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+        setMeme(
+          "Meme Hint",
+          `Look closely for: ${clue.label}.`,
+          "thinking"
+        );
+
+        window.setTimeout(
+          () => {
+            element.classList.remove(
+              "hint-clue"
+            );
+          },
+          2200
+        );
+      }
+    );
+
+  /* =====================================================
+     FEEDBACK
+  ===================================================== */
+
+  function showCaseFeedback({
+    type,
+    icon,
+    title,
+    message,
+    points
+  }) {
+    const feedback =
+      byId("caseFeedback");
+
+    if (!feedback) {
+      return;
+    }
+
+    clearTimeout(
+      feedbackTimeout
+    );
+
+    feedback.classList.remove(
+      "hidden",
+      "correct-feedback",
+      "wrong-feedback",
+      "neutral-feedback"
+    );
+
+    const className =
+      type === "correct"
+        ? "correct-feedback"
+        : type === "wrong"
+          ? "wrong-feedback"
+          : "neutral-feedback";
+
+    feedback.classList.add(
+      className
+    );
+
+    setText(
+      "caseFeedbackIcon",
+      icon
+    );
+
+    setText(
+      "caseFeedbackTitle",
+      title
+    );
+
+    setText(
+      "caseFeedbackMessage",
+      message
+    );
+
+    setText(
+      "caseFeedbackPoints",
+      `+${points}`
+    );
+
+    feedbackTimeout =
+      window.setTimeout(
+        () => {
+          feedback.classList.add(
+            "hidden"
+          );
+        },
+        3200
+      );
+  }
+
+  /* =====================================================
+     HUD
+  ===================================================== */
+
+  function updateHud() {
+    setText(
+      "timeRemaining",
+      timeRemaining
+    );
 
     setText(
       "currentScore",
-      round.score || 0
+      score
     );
 
     setText(
-      "correctCount",
-      correctAnswers
+      "clueStreak",
+      `x${clueStreak}`
     );
+
+    setText(
+      "livesDisplay",
+      badges > 0
+        ? "🛡️".repeat(
+            badges
+          )
+        : "💥"
+    );
+
+    setText(
+      "casesSolved",
+      casesSolved
+    );
+
+    const progress =
+      settings.casesPerRound > 0
+        ? (
+            casesSolved /
+            settings.casesPerRound
+          ) * 100
+        : 0;
+
+    const progressFill =
+      byId("caseProgressFill");
+
+    if (progressFill) {
+      progressFill.style.width =
+        `${Math.min(
+          100,
+          progress
+        )}%`;
+    }
 
     updateGlobalPoints();
   }
 
   /* =====================================================
-     RESULTS
+     END GAME
   ===================================================== */
 
-  function starsToText(starCount) {
+  function makeStars(count) {
     const stars =
       Math.max(
         0,
         Math.min(
           3,
-          Number(starCount) || 0
+          Number(count) || 0
         )
       );
 
@@ -1193,94 +2226,303 @@
     );
   }
 
-  function finishGame() {
-    hideReaction();
-    closeHint();
+  function endGame(reason) {
+    if (
+      !gameRunning
+    ) {
+      return;
+    }
 
-    const result =
-      arcade.finishRound();
+    gameRunning =
+      false;
+
+    caseLocked =
+      true;
+
+    clearInterval(
+      timerInterval
+    );
+
+    clearTimeout(
+      feedbackTimeout
+    );
+
+    byId("caseSolvedOverlay")
+      ?.classList.add(
+        "hidden"
+      );
+
+    const totalClicks =
+      correctClicks +
+      wrongClicks;
+
+    const accuracy =
+      totalClicks > 0
+        ? Math.round(
+            (
+              correctClicks /
+              totalClicks
+            ) * 100
+          )
+        : 0;
+
+    let arcadeResult = {};
+
+    try {
+      arcadeResult =
+        arcade.finishRound() ||
+        {};
+    } catch (error) {
+      console.error(
+        "Could not finish Impostor Alert round:",
+        error
+      );
+    }
+
+    const bestScoreKey =
+      `impostorAlertBest-${selectedHeat}`;
+
+    const previousBest =
+      Number(
+        localStorage.getItem(
+          bestScoreKey
+        ) || 0
+      );
+
+    const newBest =
+      Math.max(
+        previousBest,
+        score
+      );
+
+    localStorage.setItem(
+      bestScoreKey,
+      String(newBest)
+    );
+
+    let starCount =
+      1;
+
+    if (
+      casesSolved ===
+        settings.casesPerRound &&
+      accuracy >= 90
+    ) {
+      starCount =
+        3;
+    } else if (
+      casesSolved >= 3 &&
+      accuracy >= 65
+    ) {
+      starCount =
+        2;
+    }
+
+    let rank =
+      "Rookie Investigator";
+
+    if (
+      casesSolved ===
+        settings.casesPerRound &&
+      accuracy >= 90 &&
+      bestStreak >= 4
+    ) {
+      rank =
+        "Elite Impostor Hunter";
+    } else if (
+      casesSolved >= 4 &&
+      accuracy >= 75
+    ) {
+      rank =
+        "Senior Digital Detective";
+    } else if (
+      casesSolved >= 3
+    ) {
+      rank =
+        "Cyber Investigation Agent";
+    }
+
+    let heading =
+      "Investigation Complete";
+
+    let message =
+      "Keep checking account history, usernames, links, requests, and pressure before trusting unfamiliar profiles.";
+
+    if (
+      reason === "badges"
+    ) {
+      heading =
+        "Investigation Interrupted";
+
+      message =
+        "Too many harmless details were marked as evidence. Slow down and focus on suspicious behavior.";
+    } else if (
+      reason === "time"
+    ) {
+      heading =
+        "The Trail Went Cold";
+
+      message =
+        "Time expired. Search the next round for strange links, urgent demands, private-information requests, and unverified accounts.";
+    } else if (
+      casesSolved ===
+        settings.casesPerRound &&
+      accuracy >= 90
+    ) {
+      heading =
+        "Master Detective!";
+      
+      message =
+        "You exposed every impostor and collected evidence with excellent accuracy.";
+    } else if (
+      casesSolved ===
+        settings.casesPerRound
+    ) {
+      heading =
+        "All Impostors Exposed!";
+
+      message =
+        "Every case was solved. Play again to improve your accuracy and evidence streak.";
+    }
 
     setText(
-      "finalScore",
-      result.score
+      "resultHeading",
+      heading
     );
 
     setText(
-      "maximumScore",
-      result.maximumScore
+      "detectiveRank",
+      rank
+    );
+
+    setText(
+      "finalScore",
+      score
+    );
+
+    setText(
+      "finalCasesSolved",
+      `${casesSolved}/${settings.casesPerRound}`
+    );
+
+    setText(
+      "finalCluesFound",
+      cluesFoundTotal
     );
 
     setText(
       "finalAccuracy",
-      `${result.accuracy}%`
+      `${accuracy}%`
     );
 
     setText(
-      "finalCorrect",
-      `${correctAnswers}/${activeCases.length}`
+      "finalBestStreak",
+      `x${bestStreak}`
     );
 
     setText(
       "bestScore",
-      result.newBest
+      newBest
     );
 
     setText(
       "globalPointsEarned",
-      `+${result.globalPointsEarned}`
+      `+${
+        Number(
+          arcadeResult
+            .globalPointsEarned ||
+          0
+        )
+      }`
     );
 
     setText(
       "finalStars",
-      starsToText(result.stars)
+      makeStars(
+        starCount
+      )
     );
-
-    let message =
-      "Keep checking usernames, account history, message behavior, links, and requests.";
-
-    if (
-      result.accuracy === 100
-    ) {
-      message =
-        "Perfect investigation! You identified every real account, suspicious account, and impostor.";
-    } else if (
-      result.accuracy >= 75
-    ) {
-      message =
-        "Excellent detective work! You noticed most of the important account and message clues.";
-    } else if (
-      result.accuracy >= 50
-    ) {
-      message =
-        "Good effort. Remember that even a real account can be hacked, so unusual behavior should always be verified.";
-    }
 
     setText(
       "resultMessage",
       message
     );
 
+    const resultImage =
+      byId("resultMemeImage");
+
+    if (resultImage) {
+      resultImage.src =
+        casesSolved >= 3
+          ? "../../assets/mascot/congrats.png"
+          : "../../assets/mascot/thinking.png";
+    }
+
     updateGlobalPoints();
+
     showScreen(
       "resultScreen"
     );
   }
 
+  /* =====================================================
+     PLAY AGAIN
+  ===================================================== */
+
   byId("playAgain")
     ?.addEventListener(
       "click",
       () => {
-        hideReaction();
-        closeHint();
+        clearInterval(
+          timerInterval
+        );
+
+        clearTimeout(
+          feedbackTimeout
+        );
+
+        byId("caseSolvedOverlay")
+          ?.classList.add(
+            "hidden"
+          );
+
+        byId("timeRemaining")
+          ?.classList.remove(
+            "danger-time"
+          );
+
         showScreen(
           "introScreen"
         );
       }
     );
 
-  updateGlobalPoints();
+  /* =====================================================
+     INITIALIZATION
+  ===================================================== */
 
-  console.log(
-    "Impostor Alert loaded successfully."
-  );
+  function initializeGame() {
+    connectStartButton();
+    connectClueSurfaces();
+    updateGlobalPoints();
+
+    console.log(
+      "Impostor Alert detective engine loaded successfully."
+    );
+  }
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeGame,
+      {
+        once: true
+      }
+    );
+  } else {
+    initializeGame();
+  }
 })();
