@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Pieces of Me | Cyber Arcade
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/arcade-game.css"
+  >
+</head>
+
+<body class="arcade-game-page">
+
+  <header class="game-topbar">
+    <a
+      class="game-back-link"
+      href="../index.html"
+    >
+      ← Cyber Arcade
+    </a>
+
+    <div class="game-topbar-title">
+      <span>
+        🧩
+      </span>
+
+      <strong>
+        Pieces of Me
+      </strong>
+    </div>
+
+    <div class="game-points-pill">
+      ⭐
+      <span id="globalPoints">
+        0
+      </span>
+      Points
+    </div>
+  </header>
+
+
+  <main class="game-shell">
+
+    <!-- INTRO -->
+    <section
+      class="game-screen"
+      id="introScreen"
+    >
+      <div class="game-intro-card">
+        <div class="game-intro-icon">
+          🧩
+        </div>
+
+        <p class="game-eyebrow">
+          Identity Arcade
+        </p>
+
+        <h1>
+          Pieces of Me
+        </h1>
+
+        <p class="game-intro-description">
+          Sort each clue into the correct identity category.
+          Correct first answers earn points. Wrong answers earn
+          zero points for that question.
+        </p>
+
+        <div class="game-rules">
+          <article>
+            <span>
+              🎯
+            </span>
+
+            <div>
+              <strong>
+                First Try Counts
+              </strong>
+
+              <p>
+                You only earn points when your first answer is correct.
+              </p>
+            </div>
+          </article>
+
+          <article>
+            <span>
+              ⭐
+            </span>
+
+            <div>
+              <strong>
+                Beat Your Best
+              </strong>
+
+              <p>
+                Improve your best score to earn more global points.
+              </p>
+            </div>
+          </article>
+
+          <article>
+            <span>
+              🔥
+            </span>
+
+            <div>
+              <strong>
+                Choose Your Heat
+              </strong>
+
+              <p>
+                Hotter levels are worth more points per correct answer.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="heat-selection">
+          <p class="heat-selection-title">
+            Choose a Heat Level
+          </p>
+
+          <div class="heat-choice-grid">
+
+            <button
+              class="heat-choice selected"
+              type="button"
+              data-heat="mild"
+            >
+              <span class="heat-choice-icon">
+                🌶️
+              </span>
+
+              <strong>
+                Mild
+              </strong>
+
+              <small>
+                10 points each
+              </small>
+            </button>
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="spicy"
+            >
+              <span class="heat-choice-icon">
+                🌶️🌶️
+              </span>
+
+              <strong>
+                Spicy
+              </strong>
+
+              <small>
+                20 points each
+              </small>
+            </button>
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="hot"
+            >
+              <span class="heat-choice-icon">
+                🌶️🌶️🌶️
+              </span>
+
+              <strong>
+                Hot
+              </strong>
+
+              <small>
+                30 points each
+              </small>
+            </button>
+
+          </div>
+        </div>
+
+        <button
+          class="game-primary-button"
+          id="startGame"
+          type="button"
+        >
+          Start Game
+        </button>
+      </div>
+    </section>
+
+
+    <!-- GAME -->
+    <section
+      class="game-screen hidden"
+      id="playScreen"
+    >
+      <div class="play-layout">
+
+        <aside class="game-sidebar">
+          <div class="sidebar-game-icon">
+            🧩
+          </div>
+
+          <p class="game-eyebrow">
+            Pieces of Me
+          </p>
+
+          <h2>
+            Sort the clue
+          </h2>
+
+          <p>
+            Choose the category that best protects the person’s
+            identity.
+          </p>
+
+          <div class="live-stat">
+            <span>
+              Score
+            </span>
+
+            <strong id="currentScore">
+              0
+            </strong>
+          </div>
+
+          <div class="live-stat">
+            <span>
+              Correct
+            </span>
+
+            <strong id="correctCount">
+              0
+            </strong>
+          </div>
+
+          <div class="live-stat">
+            <span>
+              Heat
+            </span>
+
+            <strong id="currentHeat">
+              Mild
+            </strong>
+          </div>
+
+          <a
+            class="sidebar-exit-link"
+            href="../index.html"
+          >
+            Exit Game
+          </a>
+        </aside>
+
+
+        <section class="question-stage">
+
+          <div class="question-progress-row">
+            <div>
+              Question
+              <strong id="questionNumber">
+                1
+              </strong>
+              of
+              <strong id="questionTotal">
+                8
+              </strong>
+            </div>
+
+            <div class="question-score-value">
+              +
+              <span id="questionPointValue">
+                10
+              </span>
+              possible
+            </div>
+          </div>
+
+          <div class="progress-track">
+            <div
+              class="progress-fill"
+              id="questionProgressFill"
+            ></div>
+          </div>
+
+          <article class="identity-profile-card">
+            <div class="profile-avatar">
+              🦸🏽
+            </div>
+
+            <div>
+              <p class="game-eyebrow">
+                Hero Profile
+              </p>
+
+              <h2>
+                Meet Jordan
+              </h2>
+
+              <p>
+                Help Jordan decide what kind of identity information
+                is being shared.
+              </p>
+            </div>
+          </article>
+
+          <article class="question-card">
+            <p class="question-label">
+              Where does this belong?
+            </p>
+
+            <h2 id="questionText">
+              Jordan loves drawing comic-book heroes.
+            </h2>
+          </article>
+
+          <div
+            class="answer-grid"
+            id="answerGrid"
+          >
+            <button
+              class="answer-choice"
+              type="button"
+              data-category="expression"
+            >
+              <span>
+                🎨
+              </span>
+
+              <strong>
+                Safe Self-Expression
+              </strong>
+
+              <small>
+                Interests, talents, and broad preferences
+              </small>
+            </button>
+
+            <button
+              class="answer-choice"
+              type="button"
+              data-category="personal"
+            >
+              <span>
+                👤
+              </span>
+
+              <strong>
+                Personal Information
+              </strong>
+
+              <small>
+                General details to share carefully
+              </small>
+            </button>
+
+            <button
+              class="answer-choice"
+              type="button"
+              data-category="private"
+            >
+              <span>
+                🔒
+              </span>
+
+              <strong>
+                Private Information
+              </strong>
+
+              <small>
+                Details that can identify or locate someone
+              </small>
+            </button>
+
+            <button
+              class="answer-choice"
+              type="button"
+              data-category="secret"
+            >
+              <span>
+                🔑
+              </span>
+
+              <strong>
+                Secret Account Information
+              </strong>
+
+              <small>
+                Passwords, PINs, and login codes
+              </small>
+            </button>
+          </div>
+
+          <div
+            class="answer-feedback hidden"
+            id="answerFeedback"
+            aria-live="polite"
+          >
+            <strong id="feedbackTitle"></strong>
+
+            <p id="feedbackText"></p>
+
+            <div class="question-points-result">
+              Points earned:
+              <strong id="pointsEarnedThisQuestion">
+                0
+              </strong>
+            </div>
+          </div>
+
+          <button
+            class="game-primary-button hidden"
+            id="nextQuestion"
+            type="button"
+          >
+            Next Question
+          </button>
+
+        </section>
+
+      </div>
+    </section>
+
+
+    <!-- RESULTS -->
+    <section
+      class="game-screen hidden"
+      id="resultScreen"
+    >
+      <div class="result-card">
+
+        <div class="result-icon">
+          🏆
+        </div>
+
+        <p class="game-eyebrow">
+          Round Complete
+        </p>
+
+        <h1>
+          Final Score
+        </h1>
+
+        <div class="final-score">
+          <strong id="finalScore">
+            0
+          </strong>
+
+          <span>
+            /
+            <span id="maximumScore">
+              80
+            </span>
+          </span>
+        </div>
+
+        <div
+          class="final-stars"
+          id="finalStars"
+          aria-label="Stars earned"
+        >
+          ☆☆☆
+        </div>
+
+        <div class="result-stat-grid">
+
+          <article>
+            <span>
+              Accuracy
+            </span>
+
+            <strong id="finalAccuracy">
+              0%
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Correct
+            </span>
+
+            <strong id="finalCorrect">
+              0/8
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Best Score
+            </span>
+
+            <strong id="bestScore">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Global Points Earned
+            </span>
+
+            <strong id="globalPointsEarned">
+              +0
+            </strong>
+          </article>
+
+        </div>
+
+        <p
+          class="result-message"
+          id="resultMessage"
+        ></p>
+
+        <div class="result-actions">
+          <button
+            class="game-primary-button"
+            id="playAgain"
+            type="button"
+          >
+            Play Again
+          </button>
+
+          <a
+            class="game-secondary-link"
+            href="../index.html"
+          >
+            Return to Cyber Arcade
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <script src="../../js/arcade/arcade-score.js"></script>
+
+  <script src="../../js/arcade/games/pieces-of-me.js"></script>
+</body>
+</html>
