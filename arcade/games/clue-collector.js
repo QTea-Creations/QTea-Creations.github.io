@@ -1266,13 +1266,13 @@
     ];
   }
 
-  function getAllProfileClues(profile) {
-    return [
-      ...(profile.extraClues || []),
-      ...(profile.mediaClues || []),
-      ...(profile.captionParts || [])
-    ];
-  }
+function getAllProfileClues(profile) {
+  return [
+    ...(profile.extraClues || []),
+    ...(profile.mediaClues || []),
+    ...(profile.captionParts || [])
+  ];
+}
 
   function getClue(profile, clueId) {
     return getAllProfileClues(
