@@ -2,200 +2,384 @@
 
 /* =========================================================
    SAFETII NET — UNIVERSAL DEBUGGER
-
-   Supports:
-   - Main website
-   - Identity Island
-   - Cyber Arcade
-   - Individual arcade games
-
-   DEVELOPMENT TOOL ONLY
+   Replace the entire js/safetii-debug.js file with this.
 ========================================================= */
 
 (() => {
-  const DEBUG_PREFIX =
-    "[Safetii Debug]";
+  if (window.SafetiiDebug?.loaded) {
+    return;
+  }
 
-  const pagePath =
-    window.location.pathname;
+  const debugState = {
+    loaded: true,
+    problems: [],
+    warnings: [],
+    successes: [],
+    runtimeErrors: [],
+    clickHistory: [],
+    lastReport: "",
+    panel: null,
+    reportArea: null
+  };
 
-  const isIdentityPage =
-    pagePath.includes(
-      "/missions/identity"
-    );
-
-  const isArcadeHome =
-    pagePath.endsWith(
-      "/arcade/"
-    ) ||
-    pagePath.endsWith(
-      "/arcade/index.html"
-    );
-
-  const isArcadeGame =
-    pagePath.includes(
-      "/arcade/games/"
-    );
-
-  const isClueCollector =
-    pagePath.includes(
-      "clue-collector"
-    );
-
-  const problems = [];
-  const warnings = [];
-  const passes = [];
+  window.SafetiiDebug = debugState;
 
   /* =====================================================
-     CONSOLE OUTPUT
+     BASIC HELPERS
   ===================================================== */
 
-  function pass(message) {
-    passes.push(message);
+  function addProblem(message, details = "") {
+    debugState.problems.push({
+      message,
+      details
+    });
+  }
 
-    console.log(
-      `%c✔ ${DEBUG_PREFIX} ${message}`,
-      [
-        "color: #168a52",
-        "font-weight: 800"
-      ].join(";")
+  function addWarning(message, details = "") {
+    debugState.warnings.push({
+      message,
+      details
+    });
+  }
+
+  function addSuccess(message, details = "") {
+    debugState.successes.push({
+      message,
+      details
+    });
+  }
+
+  function elementExists(id) {
+    return Boolean(
+      document.getElementById(id)
     );
   }
 
-  function warn(message) {
-    warnings.push(message);
+  function getElement(id) {
+    return document.getElementById(id);
+  }
 
-    console.warn(
-      `⚠ ${DEBUG_PREFIX} ${message}`
+  function getScriptUrls() {
+    return Array.from(
+      document.scripts
+    )
+      .map((script) => script.src)
+      .filter(Boolean);
+  }
+
+  function getStylesheetUrls() {
+    return Array.from(
+      document.querySelectorAll(
+        'link[rel="stylesheet"]'
+      )
+    )
+      .map((link) => link.href)
+      .filter(Boolean);
+  }
+
+  function isVisible(element) {
+    if (!element) {
+      return false;
+    }
+
+    const style =
+      window.getComputedStyle(element);
+
+    const rectangle =
+      element.getBoundingClientRect();
+
+    return (
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      Number(style.opacity) !== 0 &&
+      rectangle.width > 0 &&
+      rectangle.height > 0
     );
   }
 
-  function fail(message) {
-    problems.push(message);
+  function cleanUrl(url) {
+    try {
+      const parsed =
+        new URL(url);
 
-    console.error(
-      `✖ ${DEBUG_PREFIX} ${message}`
-    );
+      return (
+        parsed.pathname +
+        parsed.search
+      );
+    } catch {
+      return String(url);
+    }
+  }
+
+  function formatError(error) {
+    if (!error) {
+      return "Unknown error";
+    }
+
+    if (
+      typeof error === "string"
+    ) {
+      return error;
+    }
+
+    return [
+      error.name,
+      error.message,
+      error.stack
+    ]
+      .filter(Boolean)
+      .join("\n");
   }
 
   /* =====================================================
-     CATCH ERRORS BEFORE OTHER SCRIPTS FINISH
+     RUNTIME ERROR CAPTURE
   ===================================================== */
 
   window.addEventListener(
     "error",
     (event) => {
-      const filename =
-        event.filename ||
-        "unknown file";
+      const message =
+        event.message ||
+        "Unknown JavaScript error";
 
-      const line =
-        event.lineno ||
-        "?";
+      const location = [
+        event.filename,
+        event.lineno
+          ? `line ${event.lineno}`
+          : "",
+        event.colno
+          ? `column ${event.colno}`
+          : ""
+      ]
+        .filter(Boolean)
+        .join(" — ");
 
-      const column =
-        event.colno ||
-        "?";
+      debugState.runtimeErrors.push({
+        type: "JavaScript error",
+        message,
+        location,
+        stack:
+          event.error?.stack || ""
+      });
 
-      fail(
-        `${event.message} — ${filename}:${line}:${column}`
-      );
-
-      showDebuggerPanel();
+      renderReport();
     }
   );
 
   window.addEventListener(
     "unhandledrejection",
     (event) => {
-      const reason =
-        event.reason?.message ||
-        String(
-          event.reason ||
-          "Unknown promise error"
-        );
+      debugState.runtimeErrors.push({
+        type:
+          "Unhandled promise rejection",
 
-      fail(
-        `Unhandled promise error: ${reason}`
-      );
+        message:
+          formatError(event.reason),
 
-      showDebuggerPanel();
+        location: "",
+        stack:
+          event.reason?.stack || ""
+      });
+
+      renderReport();
     }
   );
 
+  /*
+    Detect missing scripts, stylesheets, images,
+    and other resources.
+  */
+  window.addEventListener(
+    "error",
+    (event) => {
+      const target =
+        event.target;
+
+      if (
+        !target ||
+        target === window
+      ) {
+        return;
+      }
+
+      const tagName =
+        target.tagName?.toLowerCase();
+
+      let resourceUrl = "";
+
+      if (
+        tagName === "script" ||
+        tagName === "img"
+      ) {
+        resourceUrl =
+          target.src || "";
+      }
+
+      if (
+        tagName === "link"
+      ) {
+        resourceUrl =
+          target.href || "";
+      }
+
+      if (!resourceUrl) {
+        return;
+      }
+
+      debugState.runtimeErrors.push({
+        type:
+          "Resource failed to load",
+
+        message:
+          `${tagName} could not be loaded`,
+
+        location:
+          cleanUrl(resourceUrl),
+
+        stack: ""
+      });
+
+      renderReport();
+    },
+    true
+  );
+
   /* =====================================================
-     HELPERS
+     CLICK TRACKING
   ===================================================== */
 
-  function byId(id) {
-    return document.getElementById(
-      id
-    );
-  }
+  document.addEventListener(
+    "click",
+    (event) => {
+      const clickable =
+        event.target.closest(
+          "button, a, [role='button']"
+        );
 
-  function getFileName(url) {
-    try {
-      return new URL(
-        url,
-        window.location.href
-      ).pathname
-        .split("/")
-        .pop();
-    } catch {
-      return url;
+      if (!clickable) {
+        return;
+      }
+
+      const description =
+        clickable.id
+          ? `#${clickable.id}`
+          : clickable.className
+            ? `.${String(
+                clickable.className
+              )
+                .trim()
+                .replace(/\s+/g, ".")}`
+            : clickable.tagName;
+
+      debugState.clickHistory.unshift({
+        description,
+        text:
+          clickable.textContent
+            ?.trim()
+            .replace(/\s+/g, " ")
+            .slice(0, 80) || "",
+
+        disabled:
+          Boolean(clickable.disabled),
+
+        time:
+          new Date()
+            .toLocaleTimeString()
+      });
+
+      debugState.clickHistory =
+        debugState.clickHistory.slice(
+          0,
+          10
+        );
+
+      if (
+        clickable.id === "startGame"
+      ) {
+        window.setTimeout(
+          () => {
+            runAllChecks();
+          },
+          150
+        );
+      }
+    },
+    true
+  );
+
+  /* =====================================================
+     GENERAL DOCUMENT CHECKS
+  ===================================================== */
+
+  function checkDocumentStructure() {
+    if (!document.doctype) {
+      addWarning(
+        "The page is missing <!DOCTYPE html>."
+      );
+    } else {
+      addSuccess(
+        "DOCTYPE is present."
+      );
     }
-  }
 
-  function checkElement(id) {
-    const element =
-      byId(id);
+    if (!document.head) {
+      addProblem(
+        "The page does not have a valid <head> element."
+      );
+    }
 
-    if (element) {
-      pass(
-        `Element #${id} exists.`
+    if (!document.body) {
+      addProblem(
+        "The page does not have a valid <body> element."
+      );
+    }
+
+    const titles =
+      document.querySelectorAll(
+        "title"
       );
 
-      return true;
+    if (titles.length === 0) {
+      addWarning(
+        "The page has no <title>."
+      );
     }
 
-    fail(
-      `Missing element #${id}.`
-    );
+    if (titles.length > 1) {
+      addProblem(
+        `The page has ${titles.length} <title> elements.`
+      );
+    }
 
-    return false;
-  }
-
-  function checkGlobal(
-    name,
-    expectedType
-  ) {
-    const value =
-      window[name];
+    const viewportTags =
+      document.querySelectorAll(
+        'meta[name="viewport"]'
+      );
 
     if (
-      typeof value ===
-      expectedType
+      viewportTags.length > 1
     ) {
-      pass(
-        `window.${name} is available.`
+      addProblem(
+        `The page has ${viewportTags.length} viewport tags.`
       );
-
-      return true;
     }
 
-    fail(
-      `window.${name} is missing or is not a ${expectedType}.`
-    );
+    const headElements =
+      document.querySelectorAll(
+        "head"
+      );
 
-    return false;
+    if (
+      headElements.length > 1
+    ) {
+      addProblem(
+        `The page has ${headElements.length} <head> elements.`
+      );
+    }
   }
 
-  /* =====================================================
-     DUPLICATE IDS
-  ===================================================== */
-
   function checkDuplicateIds() {
-    const counts =
+    const idCounts =
       new Map();
 
     document
@@ -208,300 +392,476 @@
           return;
         }
 
-        counts.set(
-          id,
-          (counts.get(id) || 0) + 1
-        );
+        if (
+          !idCounts.has(id)
+        ) {
+          idCounts.set(
+            id,
+            []
+          );
+        }
+
+        idCounts
+          .get(id)
+          .push(element);
       });
 
-    const duplicates =
-      Array.from(
-        counts.entries()
-      ).filter(
-        ([, count]) =>
-          count > 1
-      );
+    let duplicateFound =
+      false;
 
-    if (
-      duplicates.length === 0
-    ) {
-      pass(
-        "No duplicate HTML IDs found."
-      );
-
-      return;
-    }
-
-    duplicates.forEach(
-      ([id, count]) => {
-        fail(
-          `Duplicate ID #${id} appears ${count} times.`
-        );
-      }
-    );
-  }
-
-  /* =====================================================
-     SCRIPT PATH CHECKER
-  ===================================================== */
-
-  function checkScripts() {
-    const scripts =
-      Array.from(
-        document.scripts
-      );
-
-    scripts.forEach(
-      (script) => {
-        if (!script.src) {
+    idCounts.forEach(
+      (elements, id) => {
+        if (
+          elements.length <= 1
+        ) {
           return;
         }
 
-        const source =
-          script.getAttribute(
-            "src"
+        duplicateFound = true;
+
+        const descriptions =
+          elements.map(
+            (element, index) => {
+              const parent =
+                element.parentElement;
+
+              return [
+                `${index + 1}.`,
+                `<${element.tagName.toLowerCase()}>`,
+                parent
+                  ? `inside <${parent.tagName.toLowerCase()} class="${parent.className || ""}">`
+                  : ""
+              ]
+                .filter(Boolean)
+                .join(" ");
+            }
           );
 
-        if (
-          source.includes("././")
-        ) {
-          fail(
-            `Suspicious script path: ${source}. Replace ././ with the correct ../ or ../../ path.`
-          );
-        }
-
-        pass(
-          `Script included: ${getFileName(script.src)}`
+        addProblem(
+          `Duplicate ID #${id} appears ${elements.length} times.`,
+          descriptions.join("\n")
         );
       }
     );
+
+    if (!duplicateFound) {
+      addSuccess(
+        "No duplicate IDs detected."
+      );
+    }
   }
 
-  /* =====================================================
-     STYLESHEET PATH CHECKER
-  ===================================================== */
-
-  function checkStylesheets() {
-    document
-      .querySelectorAll(
-        'link[rel="stylesheet"]'
-      )
-      .forEach((link) => {
-        const href =
-          link.getAttribute(
-            "href"
-          ) || "";
-
-        if (
-          href.includes("././")
-        ) {
-          fail(
-            `Suspicious stylesheet path: ${href}.`
-          );
-        }
-      });
-  }
-
-  /* =====================================================
-     IMAGE CHECKER
-  ===================================================== */
-
-  function checkImages() {
+  function checkBrokenLinksAndImages() {
     document
       .querySelectorAll("img")
       .forEach((image) => {
         if (
           image.complete &&
-          image.naturalWidth > 0
+          image.naturalWidth === 0
         ) {
-          return;
+          addProblem(
+            "An image failed to load.",
+            cleanUrl(image.src)
+          );
         }
-
-        image.addEventListener(
-          "error",
-          () => {
-            fail(
-              `Image failed to load: ${image.getAttribute("src")}`
-            );
-
-            showDebuggerPanel();
-          },
-          {
-            once: true
-          }
-        );
       });
-  }
 
-  /* =====================================================
-     LINK CHECKER
-  ===================================================== */
-
-  function checkArcadeLinks() {
     document
-      .querySelectorAll("a")
+      .querySelectorAll("a[href]")
       .forEach((link) => {
-        const text =
-          link.textContent
-            .trim()
-            .toLowerCase();
-
         const href =
-          link.getAttribute(
-            "href"
-          ) || "";
+          link.getAttribute("href");
 
         if (
-          text.includes(
-            "cyber arcade"
-          ) &&
-          (
-            href === "#arcade" ||
-            href.endsWith(
-              "index.html#arcade"
-            )
-          )
+          !href ||
+          href === "#"
         ) {
-          warn(
-            `Cyber Arcade link still points to the homepage section: ${href}`
+          addWarning(
+            "A link has an empty or placeholder destination.",
+            link.textContent
+              ?.trim() || href
           );
         }
       });
   }
 
   /* =====================================================
-     BUTTON CLICK TEST
+     SCRIPT CHECKS
   ===================================================== */
 
-  function monitorButton(
-    id,
-    label
-  ) {
-    const button =
-      byId(id);
+  function checkScriptOrder() {
+    const scripts =
+      getScriptUrls();
 
-    if (!button) {
-      fail(
-        `${label} button #${id} is missing.`
+    const scoreIndex =
+      scripts.findIndex(
+        (url) =>
+          url.includes(
+            "/arcade/arcade-score.js"
+          )
+      );
+
+    const clueIndex =
+      scripts.findIndex(
+        (url) =>
+          url.includes(
+            "/arcade/games/clue-collector.js"
+          )
+      );
+
+    const piecesIndex =
+      scripts.findIndex(
+        (url) =>
+          url.includes(
+            "/arcade/games/pieces-of-me.js"
+          )
+      );
+
+    if (
+      clueIndex !== -1 &&
+      scoreIndex === -1
+    ) {
+      addProblem(
+        "Clue Collector is loaded without arcade-score.js."
+      );
+    }
+
+    if (
+      clueIndex !== -1 &&
+      scoreIndex > clueIndex
+    ) {
+      addProblem(
+        "arcade-score.js is loaded after clue-collector.js.",
+        "The scoring script must appear first."
+      );
+    }
+
+    if (
+      clueIndex !== -1 &&
+      piecesIndex !== -1
+    ) {
+      addProblem(
+        "Both Clue Collector and Pieces of Me scripts are loaded on the same page."
+      );
+    }
+
+    if (
+      document.title.includes(
+        "Clue Collector"
+      ) &&
+      clueIndex === -1
+    ) {
+      addProblem(
+        "This is the Clue Collector page, but clue-collector.js is not loaded."
+      );
+    }
+
+    if (
+      document.title.includes(
+        "Pieces of Me"
+      ) &&
+      piecesIndex === -1
+    ) {
+      addProblem(
+        "This is the Pieces of Me page, but pieces-of-me.js is not loaded."
+      );
+    }
+
+    if (
+      scoreIndex !== -1
+    ) {
+      addSuccess(
+        "arcade-score.js is included."
+      );
+    }
+
+    if (
+      clueIndex !== -1
+    ) {
+      addSuccess(
+        "clue-collector.js is included."
+      );
+    }
+
+    if (
+      piecesIndex !== -1
+    ) {
+      addSuccess(
+        "pieces-of-me.js is included."
+      );
+    }
+  }
+
+  async function checkLocalScriptSyntax() {
+    const scripts =
+      getScriptUrls();
+
+    const sameOriginScripts =
+      scripts.filter((url) => {
+        try {
+          return (
+            new URL(url).origin ===
+            window.location.origin
+          );
+        } catch {
+          return false;
+        }
+      });
+
+    for (
+      const scriptUrl of
+      sameOriginScripts
+    ) {
+      try {
+        const response =
+          await fetch(
+            scriptUrl,
+            {
+              cache: "no-store"
+            }
+          );
+
+        if (!response.ok) {
+          addProblem(
+            "A JavaScript file could not be downloaded.",
+            `${cleanUrl(
+              scriptUrl
+            )} returned HTTP ${response.status}`
+          );
+
+          continue;
+        }
+
+        const source =
+          await response.text();
+
+        try {
+          /*
+            This checks JavaScript syntax without
+            running the downloaded code.
+          */
+          new Function(source);
+
+          addSuccess(
+            `JavaScript syntax passed: ${cleanUrl(
+              scriptUrl
+            )}`
+          );
+        } catch (error) {
+          addProblem(
+            `JavaScript syntax error in ${cleanUrl(
+              scriptUrl
+            )}`,
+            formatError(error)
+          );
+        }
+      } catch (error) {
+        addWarning(
+          `Could not inspect ${cleanUrl(
+            scriptUrl
+          )}`,
+          formatError(error)
+        );
+      }
+    }
+  }
+
+  function checkArcadeSystem() {
+    const arcade =
+      window.SafetiiArcade;
+
+    if (!arcade) {
+      addProblem(
+        "window.SafetiiArcade is missing.",
+        "arcade-score.js may not have loaded or may have stopped because of an error."
       );
 
       return;
     }
 
-    pass(
-      `${label} button #${id} exists.`
+    addSuccess(
+      "window.SafetiiArcade is available."
     );
 
-    button.addEventListener(
-      "click",
-      () => {
-        console.log(
-          `%c🖱 ${DEBUG_PREFIX} ${label} was clicked.`,
-          "color: #6d38db; font-weight: 900"
-        );
-      },
-      {
-        capture: true
+    const requiredFunctions = [
+      "startRound",
+      "answerQuestion",
+      "finishRound",
+      "getCurrentRound",
+      "getGlobalPoints"
+    ];
+
+    requiredFunctions.forEach(
+      (functionName) => {
+        if (
+          typeof arcade[
+            functionName
+          ] !== "function"
+        ) {
+          addProblem(
+            `SafetiiArcade.${functionName} is missing or is not a function.`
+          );
+        } else {
+          addSuccess(
+            `SafetiiArcade.${functionName} is available.`
+          );
+        }
       }
     );
-  }
-
-  /* =====================================================
-     IDENTITY ISLAND CHECKS
-  ===================================================== */
-
-  function checkIdentityIsland() {
-    pass(
-      "Running Identity Island checks."
-    );
-
-    checkGlobal(
-      "IdentityGame",
-      "object"
-    );
-
-    [
-      "missionAlert",
-      "exploreZone",
-      "piecesOfMeZone",
-      "trustCircleZone",
-      "clueCollectorZone",
-      "impostorZone",
-      "usernameZone",
-      "practiceZone",
-      "identityCardZone",
-      "testIntroZone",
-      "testZone"
-    ].forEach(
-      checkElement
-    );
-
-    monitorButton(
-      "acceptMission",
-      "Accept Mission"
-    );
-  }
-
-  /* =====================================================
-     ARCADE HOME CHECKS
-  ===================================================== */
-
-  function checkArcadeHome() {
-    pass(
-      "Running Cyber Arcade homepage checks."
-    );
-
-    checkGlobal(
-      "SafetiiArcade",
-      "object"
-    );
-
-    const gameLinks =
-      document.querySelectorAll(
-        'a[href*="/games/"], a[href*="games/"]'
-      );
 
     if (
-      gameLinks.length > 0
+      arcade.HEAT_LEVELS
     ) {
-      pass(
-        `${gameLinks.length} arcade game link(s) found.`
+      addSuccess(
+        "SafetiiArcade.HEAT_LEVELS is available."
       );
     } else {
-      warn(
-        "No arcade game links were found."
+      addWarning(
+        "SafetiiArcade.HEAT_LEVELS is not exposed.",
+        "The game can still work if it uses fallback point values."
       );
     }
   }
 
   /* =====================================================
-     GENERAL ARCADE GAME CHECKS
+     START BUTTON CHECKS
   ===================================================== */
 
-  function checkArcadeGame() {
-    pass(
-      "Running arcade game checks."
+  function checkStartButton() {
+    const startButton =
+      getElement("startGame");
+
+    if (!startButton) {
+      addProblem(
+        "The #startGame button was not found."
+      );
+
+      return;
+    }
+
+    addSuccess(
+      "The #startGame button exists."
     );
 
-    checkGlobal(
-      "SafetiiArcade",
-      "object"
-    );
+    if (
+      startButton.disabled
+    ) {
+      addProblem(
+        "The Start Game button is disabled."
+      );
+    }
 
-    [
+    if (
+      !isVisible(startButton)
+    ) {
+      addProblem(
+        "The Start Game button exists but is not visible."
+      );
+    } else {
+      addSuccess(
+        "The Start Game button is visible."
+      );
+    }
+
+    if (
+      startButton.dataset
+        .clueCollectorConnected ===
+      "true"
+    ) {
+      addSuccess(
+        "The Clue Collector start handler is connected."
+      );
+    } else if (
+      document.title.includes(
+        "Clue Collector"
+      )
+    ) {
+      addProblem(
+        "The Clue Collector start handler is not connected.",
+        "The clue-collector.js file probably stopped before connectStartButton() finished."
+      );
+    }
+
+    const lastStartClick =
+      debugState.clickHistory.find(
+        (click) =>
+          click.description ===
+          "#startGame"
+      );
+
+    if (lastStartClick) {
+      addSuccess(
+        `The debugger detected a click on #startGame at ${lastStartClick.time}.`
+      );
+    } else {
+      addWarning(
+        "The debugger has not detected a click on #startGame during this page visit."
+      );
+    }
+  }
+
+  /* =====================================================
+     SCREEN CHECKS
+  ===================================================== */
+
+  function checkGameScreens() {
+    const screenIds = [
       "introScreen",
       "playScreen",
-      "resultScreen",
-      "startGame",
-      "globalPoints"
-    ].forEach(
-      checkElement
-    );
+      "resultScreen"
+    ];
 
-    monitorButton(
-      "startGame",
-      "Start Game"
-    );
+    const existingScreens =
+      screenIds.filter(
+        elementExists
+      );
+
+    if (
+      existingScreens.length === 0
+    ) {
+      return;
+    }
+
+    screenIds.forEach((id) => {
+      if (!elementExists(id)) {
+        addProblem(
+          `Game screen #${id} is missing.`
+        );
+      }
+    });
+
+    const visibleScreens =
+      existingScreens.filter(
+        (id) =>
+          isVisible(
+            getElement(id)
+          )
+      );
+
+    if (
+      visibleScreens.length > 1
+    ) {
+      addProblem(
+        "More than one game screen is visible.",
+        visibleScreens.join(", ")
+      );
+    }
+
+    if (
+      visibleScreens.length === 0
+    ) {
+      addProblem(
+        "No game screen is visible."
+      );
+    }
+
+    if (
+      visibleScreens.length === 1
+    ) {
+      addSuccess(
+        `Visible game screen: #${visibleScreens[0]}`
+      );
+    }
   }
 
   /* =====================================================
@@ -509,15 +869,27 @@
   ===================================================== */
 
   function checkClueCollector() {
-    pass(
-      "Running Clue Collector checks."
+    const isClueCollector =
+      document.title.includes(
+        "Clue Collector"
+      ) ||
+      elementExists(
+        "dynamicSocialStage"
+      );
+
+    if (!isClueCollector) {
+      return;
+    }
+
+    addSuccess(
+      "Clue Collector page detected."
     );
 
-    const requiredElements = [
-      "startGame",
+    const requiredIds = [
       "introScreen",
       "playScreen",
       "resultScreen",
+      "startGame",
       "dynamicSocialStage",
       "checkAnswers",
       "clearSelections",
@@ -525,122 +897,143 @@
       "profileNumber",
       "profileTotal",
       "currentScore",
+      "profilesSolved",
       "currentHeat",
+      "questionPointValue",
       "clueFeedbackPanel",
-      "clueExplanationPopup"
+      "memeReaction",
+      "globalPoints"
     ];
 
-    requiredElements.forEach(
-      checkElement
-    );
+    requiredIds.forEach((id) => {
+      if (!elementExists(id)) {
+        addProblem(
+          `Clue Collector is missing #${id}.`
+        );
+      } else {
+        addSuccess(
+          `Clue Collector found #${id}.`
+        );
+      }
+    });
 
-    const scoreScript =
-      Array.from(
-        document.scripts
-      ).find(
-        (script) =>
-          script.src.includes(
-            "arcade-score.js"
+    const wrongScript =
+      getScriptUrls().some(
+        (url) =>
+          url.includes(
+            "pieces-of-me.js"
           )
       );
 
-    const clueScript =
-      Array.from(
-        document.scripts
-      ).find(
-        (script) =>
-          script.src.includes(
+    if (wrongScript) {
+      addProblem(
+        "The Clue Collector page is loading pieces-of-me.js."
+      );
+    }
+
+    const stage =
+      getElement(
+        "dynamicSocialStage"
+      );
+
+    const playScreen =
+      getElement(
+        "playScreen"
+      );
+
+    if (
+      playScreen &&
+      isVisible(playScreen)
+    ) {
+      if (
+        !stage?.children.length
+      ) {
+        addProblem(
+          "The play screen is visible, but no social-media profile was rendered.",
+          "loadProfile() or renderProfile() may have failed."
+        );
+      } else {
+        addSuccess(
+          "A social-media profile is rendered."
+        );
+      }
+    }
+  }
+
+  /* =====================================================
+     PIECES OF ME CHECKS
+  ===================================================== */
+
+  function checkPiecesOfMe() {
+    const isPieces =
+      document.title.includes(
+        "Pieces of Me"
+      );
+
+    if (!isPieces) {
+      return;
+    }
+
+    addSuccess(
+      "Pieces of Me page detected."
+    );
+
+    const requiredIds = [
+      "introScreen",
+      "playScreen",
+      "resultScreen",
+      "startGame",
+      "questionText",
+      "answerGrid",
+      "nextQuestion",
+      "currentScore",
+      "correctCount",
+      "globalPoints"
+    ];
+
+    requiredIds.forEach((id) => {
+      if (!elementExists(id)) {
+        addProblem(
+          `Pieces of Me is missing #${id}.`
+        );
+      }
+    });
+
+    const wrongScript =
+      getScriptUrls().some(
+        (url) =>
+          url.includes(
             "clue-collector.js"
           )
       );
 
-    if (scoreScript) {
-      pass(
-        "arcade-score.js is included."
-      );
-    } else {
-      fail(
-        "arcade-score.js is not included."
-      );
-    }
-
-    if (clueScript) {
-      pass(
-        "clue-collector.js is included."
-      );
-    } else {
-      fail(
-        "clue-collector.js is not included."
-      );
-    }
-
-    if (
-      window.SafetiiArcade
-    ) {
-      const requiredFunctions = [
-        "startRound",
-        "answerQuestion",
-        "finishRound",
-        "getCurrentRound",
-        "getGlobalPoints"
-      ];
-
-      requiredFunctions.forEach(
-        (functionName) => {
-          if (
-            typeof window
-              .SafetiiArcade[
-                functionName
-              ] === "function"
-          ) {
-            pass(
-              `SafetiiArcade.${functionName}() exists.`
-            );
-          } else {
-            fail(
-              `SafetiiArcade.${functionName}() is missing.`
-            );
-          }
-        }
-      );
-    }
-
-    const startButton =
-      byId("startGame");
-
-    if (startButton) {
-      window.setTimeout(
-        () => {
-          const intro =
-            byId("introScreen");
-
-          const play =
-            byId("playScreen");
-
-          if (
-            !intro ||
-            !play
-          ) {
-            return;
-          }
-
-          console.log(
-            `${DEBUG_PREFIX} Start button ready for manual testing.`
-          );
-        },
-        500
+    if (wrongScript) {
+      addProblem(
+        "The Pieces of Me page is loading clue-collector.js."
       );
     }
   }
 
   /* =====================================================
-     VISUAL DEBUG PANEL
+     PANEL
   ===================================================== */
 
-  function createDebuggerPanel() {
+  function createPanel() {
     if (
-      byId("safetiiDebuggerPanel")
+      document.getElementById(
+        "safetiiDebugPanel"
+      )
     ) {
+      debugState.panel =
+        document.getElementById(
+          "safetiiDebugPanel"
+        );
+
+      debugState.reportArea =
+        document.getElementById(
+          "safetiiDebugReport"
+        );
+
       return;
     }
 
@@ -650,187 +1043,561 @@
       );
 
     panel.id =
-      "safetiiDebuggerPanel";
+      "safetiiDebugPanel";
 
     panel.innerHTML = `
-      <button
-        id="safetiiDebuggerToggle"
-        type="button"
-        aria-expanded="true"
-      >
-        🛠 Debugger
-      </button>
+      <div class="safetii-debug-header">
+        <div>
+          <strong>
+            🛠 Safetii Debugger
+          </strong>
 
-      <div id="safetiiDebuggerContent">
-        <strong>
-          Safetii Net Debugger
-        </strong>
-
-        <p id="safetiiDebuggerSummary">
-          Checking page…
-        </p>
-
-        <div id="safetiiDebuggerProblems"></div>
+          <small id="safetiiDebugSummary">
+            Preparing report…
+          </small>
+        </div>
 
         <button
-          id="safetiiRunChecks"
+          id="safetiiDebugMinimize"
           type="button"
+          aria-label="Minimize debugger"
         >
-          Run Checks Again
+          −
         </button>
+      </div>
+
+      <div
+        class="safetii-debug-content"
+        id="safetiiDebugContent"
+      >
+        <div class="safetii-debug-actions">
+          <button
+            id="safetiiDebugRun"
+            type="button"
+          >
+            Run Checks Again
+          </button>
+
+          <button
+            id="safetiiDebugCopy"
+            type="button"
+          >
+            Copy Full Report
+          </button>
+        </div>
+
+        <pre id="safetiiDebugReport"></pre>
       </div>
     `;
 
-    Object.assign(
-      panel.style,
-      {
-        position: "fixed",
-        left: "14px",
-        bottom: "14px",
-        zIndex: "99999",
-        width: "min(390px, calc(100vw - 28px))",
-        padding: "12px",
-        background: "rgba(22, 29, 52, 0.97)",
-        color: "white",
-        border: "3px solid #7d43ff",
-        borderRadius: "16px",
-        boxShadow: "0 14px 36px rgba(0,0,0,.3)",
-        fontFamily: "Arial, sans-serif",
-        fontSize: "13px"
+    const style =
+      document.createElement(
+        "style"
+      );
+
+    style.textContent = `
+      #safetiiDebugPanel {
+        position: fixed;
+        right: 16px;
+        bottom: 16px;
+        z-index: 2147483647;
+
+        width: min(470px, calc(100vw - 32px));
+        max-height: 75vh;
+
+        overflow: hidden;
+
+        background: #111827;
+        color: #f9fafb;
+
+        border: 2px solid #7c3aed;
+        border-radius: 18px;
+
+        box-shadow:
+          0 18px 50px
+          rgba(0, 0, 0, 0.38);
+
+        font-family:
+          Consolas,
+          Monaco,
+          monospace;
+
+        font-size: 12px;
+        text-align: left;
       }
+
+      .safetii-debug-header {
+        padding: 12px 14px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+
+        background:
+          linear-gradient(
+            135deg,
+            #6d28d9,
+            #2563eb
+          );
+      }
+
+      .safetii-debug-header strong {
+        display: block;
+        font-size: 14px;
+      }
+
+      .safetii-debug-header small {
+        display: block;
+        margin-top: 3px;
+      }
+
+      .safetii-debug-header button {
+        width: 34px;
+        height: 34px;
+
+        border: 0;
+        border-radius: 9px;
+
+        background:
+          rgba(255, 255, 255, 0.18);
+        color: white;
+
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .safetii-debug-content {
+        max-height: calc(75vh - 62px);
+        overflow: auto;
+      }
+
+      .safetii-debug-actions {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+
+        padding: 10px;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+
+        background: #111827;
+      }
+
+      .safetii-debug-actions button {
+        padding: 9px 10px;
+
+        border: 0;
+        border-radius: 9px;
+
+        font: inherit;
+        font-weight: 700;
+
+        cursor: pointer;
+      }
+
+      #safetiiDebugRun {
+        background: #22c55e;
+        color: #052e16;
+      }
+
+      #safetiiDebugCopy {
+        background: #facc15;
+        color: #422006;
+      }
+
+      #safetiiDebugReport {
+        margin: 0;
+        padding: 12px 14px 18px;
+
+        color: #e5e7eb;
+
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+
+        line-height: 1.55;
+      }
+
+      #safetiiDebugPanel.minimized
+      .safetii-debug-content {
+        display: none;
+      }
+    `;
+
+    document.head.appendChild(
+      style
     );
 
     document.body.appendChild(
       panel
     );
 
-    byId("safetiiDebuggerToggle")
+    debugState.panel =
+      panel;
+
+    debugState.reportArea =
+      document.getElementById(
+        "safetiiDebugReport"
+      );
+
+    document
+      .getElementById(
+        "safetiiDebugRun"
+      )
       ?.addEventListener(
         "click",
-        () => {
-          const content =
-            byId(
-              "safetiiDebuggerContent"
+        runAllChecks
+      );
+
+    document
+      .getElementById(
+        "safetiiDebugCopy"
+      )
+      ?.addEventListener(
+        "click",
+        async () => {
+          try {
+            await navigator.clipboard
+              .writeText(
+                debugState.lastReport
+              );
+
+            const button =
+              document.getElementById(
+                "safetiiDebugCopy"
+              );
+
+            if (button) {
+              const oldText =
+                button.textContent;
+
+              button.textContent =
+                "Copied!";
+
+              window.setTimeout(
+                () => {
+                  button.textContent =
+                    oldText;
+                },
+                1200
+              );
+            }
+          } catch {
+            window.prompt(
+              "Copy this report:",
+              debugState.lastReport
             );
-
-          const hidden =
-            content?.hidden;
-
-          if (content) {
-            content.hidden =
-              !hidden;
           }
         }
       );
 
-    byId("safetiiRunChecks")
+    document
+      .getElementById(
+        "safetiiDebugMinimize"
+      )
       ?.addEventListener(
         "click",
-        runChecks
+        () => {
+          panel.classList.toggle(
+            "minimized"
+          );
+
+          const button =
+            document.getElementById(
+              "safetiiDebugMinimize"
+            );
+
+          if (button) {
+            button.textContent =
+              panel.classList.contains(
+                "minimized"
+              )
+                ? "+"
+                : "−";
+          }
+        }
       );
   }
 
-  function showDebuggerPanel() {
-    createDebuggerPanel();
+  /* =====================================================
+     REPORT RENDERING
+  ===================================================== */
 
-    const summary =
-      byId(
-        "safetiiDebuggerSummary"
+  function renderReport() {
+    if (
+      !debugState.reportArea
+    ) {
+      return;
+    }
+
+    const lines = [];
+
+    lines.push(
+      "SAFETII NET DEBUG REPORT"
+    );
+
+    lines.push(
+      `Page: ${window.location.href}`
+    );
+
+    lines.push(
+      `Title: ${document.title || "(none)"}`
+    );
+
+    lines.push(
+      `Time: ${new Date().toLocaleString()}`
+    );
+
+    lines.push("");
+
+    lines.push(
+      `${debugState.problems.length} problem(s), ${debugState.warnings.length} warning(s)`
+    );
+
+    lines.push("");
+
+    if (
+      debugState.runtimeErrors.length
+    ) {
+      lines.push(
+        "RUNTIME ERRORS"
       );
 
-    const problemArea =
-      byId(
-        "safetiiDebuggerProblems"
+      debugState.runtimeErrors
+        .forEach(
+          (error, index) => {
+            lines.push(
+              `✖ ${index + 1}. ${error.type}: ${error.message}`
+            );
+
+            if (
+              error.location
+            ) {
+              lines.push(
+                `   Location: ${error.location}`
+              );
+            }
+
+            if (
+              error.stack
+            ) {
+              lines.push(
+                `   ${error.stack}`
+              );
+            }
+          }
+        );
+
+      lines.push("");
+    }
+
+    if (
+      debugState.problems.length
+    ) {
+      lines.push(
+        "PROBLEMS"
+      );
+
+      debugState.problems
+        .forEach(
+          (problem, index) => {
+            lines.push(
+              `✖ ${index + 1}. ${problem.message}`
+            );
+
+            if (
+              problem.details
+            ) {
+              lines.push(
+                `   ${problem.details.replaceAll(
+                  "\n",
+                  "\n   "
+                )}`
+              );
+            }
+          }
+        );
+
+      lines.push("");
+    }
+
+    if (
+      debugState.warnings.length
+    ) {
+      lines.push(
+        "WARNINGS"
+      );
+
+      debugState.warnings
+        .forEach(
+          (warning, index) => {
+            lines.push(
+              `⚠ ${index + 1}. ${warning.message}`
+            );
+
+            if (
+              warning.details
+            ) {
+              lines.push(
+                `   ${warning.details.replaceAll(
+                  "\n",
+                  "\n   "
+                )}`
+              );
+            }
+          }
+        );
+
+      lines.push("");
+    }
+
+    if (
+      debugState.successes.length
+    ) {
+      lines.push(
+        "PASSED CHECKS"
+      );
+
+      debugState.successes
+        .forEach(
+          (success) => {
+            lines.push(
+              `✓ ${success.message}`
+            );
+          }
+        );
+
+      lines.push("");
+    }
+
+    lines.push(
+      "LOADED JAVASCRIPT"
+    );
+
+    getScriptUrls()
+      .forEach((url) => {
+        lines.push(
+          `• ${cleanUrl(url)}`
+        );
+      });
+
+    lines.push("");
+
+    lines.push(
+      "LOADED STYLESHEETS"
+    );
+
+    getStylesheetUrls()
+      .forEach((url) => {
+        lines.push(
+          `• ${cleanUrl(url)}`
+        );
+      });
+
+    if (
+      debugState.clickHistory.length
+    ) {
+      lines.push("");
+      lines.push(
+        "RECENT CLICKS"
+      );
+
+      debugState.clickHistory
+        .forEach((click) => {
+          lines.push(
+            `• ${click.time} — ${click.description} — "${click.text}"${
+              click.disabled
+                ? " — DISABLED"
+                : ""
+            }`
+          );
+        });
+    }
+
+    const report =
+      lines.join("\n");
+
+    debugState.lastReport =
+      report;
+
+    debugState.reportArea.textContent =
+      report;
+
+    const summary =
+      document.getElementById(
+        "safetiiDebugSummary"
       );
 
     if (summary) {
       summary.textContent =
-        problems.length > 0
-          ? `${problems.length} problem(s), ${warnings.length} warning(s)`
-          : `No detected errors. ${warnings.length} warning(s).`;
-    }
-
-    if (problemArea) {
-      const problemHtml =
-        problems
-          .slice(-8)
-          .map(
-            (problem) =>
-              `<p style="color:#ff9fbd;margin:7px 0;">✖ ${problem}</p>`
-          )
-          .join("");
-
-      const warningHtml =
-        warnings
-          .slice(-5)
-          .map(
-            (warning) =>
-              `<p style="color:#ffe782;margin:7px 0;">⚠ ${warning}</p>`
-          )
-          .join("");
-
-      problemArea.innerHTML =
-        problemHtml +
-        warningHtml ||
-        '<p style="color:#85f0b7;">✔ No problems detected.</p>';
+        `${debugState.problems.length} problem(s), ${debugState.warnings.length} warning(s)`;
     }
   }
 
   /* =====================================================
-     RUN ALL CHECKS
+     MASTER CHECK
   ===================================================== */
 
-  function runChecks() {
-    problems.length = 0;
-    warnings.length = 0;
-    passes.length = 0;
+  async function runAllChecks() {
+    debugState.problems = [];
+    debugState.warnings = [];
+    debugState.successes = [];
 
-    console.group(
-      `${DEBUG_PREFIX} Page Report`
-    );
-
-    console.log(
-      "Page:",
-      window.location.href
-    );
-
+    checkDocumentStructure();
     checkDuplicateIds();
-    checkScripts();
-    checkStylesheets();
-    checkImages();
-    checkArcadeLinks();
+    checkBrokenLinksAndImages();
+    checkScriptOrder();
+    checkArcadeSystem();
+    checkStartButton();
+    checkGameScreens();
+    checkClueCollector();
+    checkPiecesOfMe();
 
-    if (isIdentityPage) {
-      checkIdentityIsland();
-    }
+    renderReport();
 
-    if (isArcadeHome) {
-      checkArcadeHome();
-    }
+    await checkLocalScriptSyntax();
 
-    if (isArcadeGame) {
-      checkArcadeGame();
-    }
+    renderReport();
 
-    if (isClueCollector) {
-      checkClueCollector();
-    }
-
-    console.groupEnd();
-
-    showDebuggerPanel();
+    return debugState.lastReport;
   }
 
+  window.SafetiiDebug.run =
+    runAllChecks;
+
+  window.SafetiiDebug.copyReport =
+    async () => {
+      await navigator.clipboard
+        .writeText(
+          debugState.lastReport
+        );
+    };
+
   /* =====================================================
-     START AFTER HTML LOADS
+     INITIALIZE
   ===================================================== */
 
   function initializeDebugger() {
-    createDebuggerPanel();
+    createPanel();
 
     window.setTimeout(
-      runChecks,
-      250
+      runAllChecks,
+      350
+    );
+
+    window.addEventListener(
+      "load",
+      () => {
+        window.setTimeout(
+          runAllChecks,
+          500
+        );
+      },
+      {
+        once: true
+      }
     );
   }
 
