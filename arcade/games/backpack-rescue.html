@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Backpack Rescue | Cyber Arcade
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css?v=10"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/arcade-game.css?v=10"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/backpack-rescue.css?v=1"
+  >
+
+  <script src="../../js/safetii-debug.js?v=10"></script>
+</head>
+
+<body class="arcade-game-page">
+
+  <header class="site-header arcade-site-header">
+
+    <a
+      href="../../index.html"
+      class="logo"
+    >
+      <img
+        src="../../assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+    </a>
+
+    <nav class="arcade-main-nav">
+
+      <a href="../../dashboard.html">
+        Hero Headquarters
+      </a>
+
+      <a href="../../index.html#missions">
+        Missions
+      </a>
+
+      <a
+        href="../index.html"
+        class="active-nav-link"
+        aria-current="page"
+      >
+        Cyber Arcade
+      </a>
+
+      <a href="../../parents.html">
+        Parents
+      </a>
+
+      <a href="../../teachers.html">
+        Teachers
+      </a>
+
+    </nav>
+
+    <div class="game-points-pill arcade-navbar-points">
+      ⭐
+
+      <span id="globalPoints">
+        0
+      </span>
+
+      Points
+    </div>
+
+  </header>
+
+
+  <main class="game-shell">
+
+    <!-- INTRO SCREEN -->
+
+    <section
+      class="game-screen"
+      id="introScreen"
+    >
+      <div class="game-intro-card">
+
+        <div class="game-intro-icon">
+          🎒
+        </div>
+
+        <p class="game-eyebrow">
+          Digital Emergency Challenge
+        </p>
+
+        <h1>
+          Backpack Rescue
+        </h1>
+
+        <p class="game-intro-description">
+          Your digital backpack is filling up with messages,
+          files, account alerts, links, and online problems.
+          Choose the safest action before danger gets packed inside.
+        </p>
+
+
+        <section class="game-instruction-panel">
+
+          <div class="instruction-heading">
+
+            <span aria-hidden="true">
+              🛡️
+            </span>
+
+            <div>
+
+              <p class="game-eyebrow">
+                Rescue Briefing
+              </p>
+
+              <h2>
+                Choose the Best Safety Action
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="backpack-action-guide">
+
+            <article>
+
+              <span>
+                ✅
+              </span>
+
+              <div>
+
+                <h3>
+                  Keep It
+                </h3>
+
+                <p>
+                  The item appears safe, expected, and appropriate
+                  to keep or use.
+                </p>
+
+                <small>
+                  Example: A school file sent through the normal portal.
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span>
+                🗑️
+              </span>
+
+              <div>
+
+                <h3>
+                  Delete It
+                </h3>
+
+                <p>
+                  Remove suspicious messages, unknown files,
+                  unsafe downloads, or scam links.
+                </p>
+
+                <small>
+                  Example: A fake prize message with a strange link.
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span>
+                🚫
+              </span>
+
+              <div>
+
+                <h3>
+                  Block and Report
+                </h3>
+
+                <p>
+                  Stop contact with accounts that threaten,
+                  harass, impersonate, or repeatedly target someone.
+                </p>
+
+                <small>
+                  Example: A stranger sending repeated harmful messages.
+                </small>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span>
+                👨‍👩‍👧
+              </span>
+
+              <div>
+
+                <h3>
+                  Tell a Trusted Adult
+                </h3>
+
+                <p>
+                  Get help when there are threats, bullying,
+                  account theft, emergencies, or confusing situations.
+                </p>
+
+                <small>
+                  Example: Someone threatens to share a private photo.
+                </small>
+
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <div class="instruction-rule">
+
+            <span aria-hidden="true">
+              🎯
+            </span>
+
+            <p>
+              Some situations need more than one action. Choose the
+              most important first step shown in the answer choices.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <div class="game-rules">
+
+          <article>
+
+            <span>
+              ⚡
+            </span>
+
+            <div>
+
+              <strong>
+                Rescue Quickly
+              </strong>
+
+              <p>
+                Study the situation and choose the safest response.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              ⭐
+            </span>
+
+            <div>
+
+              <strong>
+                First Choice Counts
+              </strong>
+
+              <p>
+                Only a correct first answer earns points.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              🔥
+            </span>
+
+            <div>
+
+              <strong>
+                Increase the Danger
+              </strong>
+
+              <p>
+                Hot rounds combine several warning signs.
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
+
+        <div class="heat-selection">
+
+          <p class="heat-selection-title">
+            Choose a Heat Level
+          </p>
+
+          <div class="heat-choice-grid">
+
+            <button
+              class="heat-choice selected"
+              type="button"
+              data-heat="mild"
+            >
+              <span class="heat-choice-icon">
+                🌶️
+              </span>
+
+              <strong>
+                Mild
+              </strong>
+
+              <small>
+                Clear safety decisions
+              </small>
+
+              <span class="heat-point-label">
+                10 points each
+              </span>
+            </button>
+
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="spicy"
+            >
+              <span class="heat-choice-icon">
+                🌶️🌶️
+              </span>
+
+              <strong>
+                Spicy
+              </strong>
+
+              <small>
+                Messages, files, and account risks
+              </small>
+
+              <span class="heat-point-label">
+                20 points each
+              </span>
+            </button>
+
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="hot"
+            >
+              <span class="heat-choice-icon">
+                🌶️🌶️🌶️
+              </span>
+
+              <strong>
+                Hot
+              </strong>
+
+              <small>
+                Tricky digital emergencies
+              </small>
+
+              <span class="heat-point-label">
+                30 points each
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="game-primary-button"
+          id="startGame"
+          type="button"
+        >
+          Begin the Rescue
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- PLAY SCREEN -->
+
+    <section
+      class="game-screen hidden"
+      id="playScreen"
+    >
+      <div class="play-layout">
+
+        <aside class="game-sidebar">
+
+          <div class="sidebar-game-icon">
+            🎒
+          </div>
+
+          <p class="game-eyebrow">
+            Backpack Rescue
+          </p>
+
+          <h2>
+            Protect the backpack
+          </h2>
+
+          <p>
+            Choose the safest action for each digital item.
+          </p>
+
+
+          <div class="live-stat">
+
+            <span>
+              Score
+            </span>
+
+            <strong id="currentScore">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="live-stat">
+
+            <span>
+              Rescued
+            </span>
+
+            <strong id="correctCount">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="live-stat">
+
+            <span>
+              Heat
+            </span>
+
+            <strong id="currentHeat">
+              Mild
+            </strong>
+
+          </div>
+
+
+          <button
+            class="sidebar-hint-button"
+            id="openBackpackHint"
+            type="button"
+            aria-expanded="false"
+            aria-controls="backpackHintPanel"
+          >
+            💡 Rescue Guide
+          </button>
+
+
+          <a
+            class="sidebar-exit-link"
+            href="../index.html"
+          >
+            Exit Game
+          </a>
+
+        </aside>
+
+
+        <section class="question-stage">
+
+          <div class="question-progress-row">
+
+            <div>
+              Item
+
+              <strong id="questionNumber">
+                1
+              </strong>
+
+              of
+
+              <strong id="questionTotal">
+                8
+              </strong>
+            </div>
+
+
+            <div class="question-tools">
+
+              <div class="question-score-value">
+                +
+
+                <span id="questionPointValue">
+                  10
+                </span>
+
+                possible
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="progress-track">
+
+            <div
+              class="progress-fill"
+              id="questionProgressFill"
+            ></div>
+
+          </div>
+
+
+          <!-- HINT PANEL -->
+
+          <aside
+            class="category-hint-panel hidden"
+            id="backpackHintPanel"
+            aria-label="Digital rescue guide"
+          >
+
+            <div class="category-hint-header">
+
+              <div>
+
+                <p class="game-eyebrow">
+                  Quick Reference
+                </p>
+
+                <h3>
+                  What action should come first?
+                </h3>
+
+              </div>
+
+
+              <button
+                class="close-hint-button"
+                id="closeBackpackHint"
+                type="button"
+                aria-label="Close rescue guide"
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            <div class="social-risk-guide">
+
+              <span>
+                ✅ Expected and verified → Keep it
+              </span>
+
+              <span>
+                🗑️ Strange link or unknown file → Delete it
+              </span>
+
+              <span>
+                🚫 Harassment or fake account → Block and report
+              </span>
+
+              <span>
+                👨‍👩‍👧 Threat or emergency → Tell a trusted adult
+              </span>
+
+              <span>
+                🔑 Password request → Never send it
+              </span>
+
+              <span>
+                💵 Prize or payment demand → Stop and verify
+              </span>
+
+              <span>
+                📸 Private-image threat → Save evidence and get help
+              </span>
+
+              <span>
+                📱 Hacked account → Tell an adult and secure it
+              </span>
+
+            </div>
+
+
+            <p class="hint-penalty-note">
+              Opening the guide does not remove points.
+            </p>
+
+          </aside>
+
+
+          <!-- BACKPACK DISPLAY -->
+
+          <article class="backpack-rescue-stage">
+
+            <div class="digital-backpack">
+
+              <span class="backpack-handle"></span>
+
+              <div class="backpack-main">
+
+                <span class="backpack-logo">
+                  SN
+                </span>
+
+                <div
+                  class="backpack-item-icon"
+                  id="itemIcon"
+                  aria-hidden="true"
+                >
+                  📩
+                </div>
+
+              </div>
+
+              <div class="backpack-pocket"></div>
+
+            </div>
+
+
+            <div class="backpack-item-details">
+
+              <p class="game-eyebrow">
+                New Digital Item
+              </p>
+
+              <h2 id="itemTitle">
+                Message Received
+              </h2>
+
+              <p id="itemContext">
+                A new message appeared in the digital backpack.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- ITEM CARD -->
+
+          <article class="backpack-message-card">
+
+            <div class="backpack-message-header">
+
+              <span id="itemType">
+                Direct Message
+              </span>
+
+              <span
+                class="backpack-risk-badge"
+                id="riskBadge"
+              >
+                Needs Review
+              </span>
+
+            </div>
+
+
+            <blockquote id="itemMessage">
+              “Click this link to receive free game coins.”
+            </blockquote>
+
+
+            <div class="backpack-detail-grid">
+
+              <article>
+
+                <span>
+                  Sender or Source
+                </span>
+
+                <strong id="itemSource">
+                  Unknown account
+                </strong>
+
+              </article>
+
+
+              <article>
+
+                <span>
+                  Extra Detail
+                </span>
+
+                <strong id="itemExtraDetail">
+                  Includes an unfamiliar link
+                </strong>
+
+              </article>
+
+            </div>
+
+          </article>
+
+
+          <p class="backpack-question-prompt">
+            What should the hero do first?
+          </p>
+
+
+          <!-- ACTION CHOICES -->
+
+          <div
+            class="backpack-answer-grid"
+            id="answerGrid"
+          >
+
+            <button
+              class="backpack-answer-choice keep-choice"
+              type="button"
+              data-action="keep"
+            >
+
+              <span>
+                ✅
+              </span>
+
+              <strong>
+                Keep It
+              </strong>
+
+              <small>
+                The item appears safe and expected
+              </small>
+
+            </button>
+
+
+            <button
+              class="backpack-answer-choice delete-choice"
+              type="button"
+              data-action="delete"
+            >
+
+              <span>
+                🗑️
+              </span>
+
+              <strong>
+                Delete It
+              </strong>
+
+              <small>
+                Remove the suspicious item without opening it
+              </small>
+
+            </button>
+
+
+            <button
+              class="backpack-answer-choice report-choice"
+              type="button"
+              data-action="report"
+            >
+
+              <span>
+                🚫
+              </span>
+
+              <strong>
+                Block and Report
+              </strong>
+
+              <small>
+                Stop the account and report its behavior
+              </small>
+
+            </button>
+
+
+            <button
+              class="backpack-answer-choice adult-choice"
+              type="button"
+              data-action="adult"
+            >
+
+              <span>
+                👨‍👩‍👧
+              </span>
+
+              <strong>
+                Tell a Trusted Adult
+              </strong>
+
+              <small>
+                Get help with a dangerous or serious situation
+              </small>
+
+            </button>
+
+          </div>
+
+
+          <!-- FEEDBACK -->
+
+          <div
+            class="answer-feedback hidden"
+            id="answerFeedback"
+            aria-live="polite"
+          >
+
+            <strong id="feedbackTitle">
+              Rescue result
+            </strong>
+
+            <p id="feedbackText"></p>
+
+            <div class="question-points-result">
+
+              Points earned:
+
+              <strong id="pointsEarnedThisQuestion">
+                0
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- MEME REACTION -->
+
+          <aside
+            class="arcade-meme-reaction hidden"
+            id="memeReaction"
+            aria-live="polite"
+          >
+
+            <img
+              id="memeReactionImage"
+              src="../../assets/mascot/congrats.png"
+              alt="Meme reacts to the rescue choice"
+            >
+
+            <div class="arcade-meme-speech">
+
+              <strong id="memeReactionTitle">
+                Backpack protected!
+              </strong>
+
+              <p id="memeReactionMessage">
+                You chose the safest action.
+              </p>
+
+            </div>
+
+          </aside>
+
+
+          <button
+            class="game-primary-button hidden"
+            id="nextQuestion"
+            type="button"
+          >
+            Next Item
+          </button>
+
+        </section>
+      </div>
+    </section>
+
+
+    <!-- RESULTS SCREEN -->
+
+    <section
+      class="game-screen hidden"
+      id="resultScreen"
+    >
+      <div class="result-card">
+
+        <div class="result-meme-celebration">
+
+          <img
+            id="resultMemeImage"
+            src="../../assets/mascot/congrats.png"
+            alt="Meme celebrates the completed Backpack Rescue round"
+          >
+
+          <div class="result-icon">
+            🎒
+          </div>
+
+        </div>
+
+
+        <p class="game-eyebrow">
+          Rescue Complete
+        </p>
+
+        <h1>
+          Final Score
+        </h1>
+
+
+        <div class="final-score">
+
+          <strong id="finalScore">
+            0
+          </strong>
+
+          <span>
+            /
+
+            <span id="maximumScore">
+              80
+            </span>
+          </span>
+
+        </div>
+
+
+        <div
+          class="final-stars"
+          id="finalStars"
+          aria-label="Stars earned"
+        >
+          ☆☆☆
+        </div>
+
+
+        <div class="result-stat-grid">
+
+          <article>
+
+            <span>
+              Accuracy
+            </span>
+
+            <strong id="finalAccuracy">
+              0%
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Items Rescued
+            </span>
+
+            <strong id="finalCorrect">
+              0/8
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Best Score
+            </span>
+
+            <strong id="bestScore">
+              0
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Global Points Earned
+            </span>
+
+            <strong id="globalPointsEarned">
+              +0
+            </strong>
+
+          </article>
+
+        </div>
+
+
+        <p
+          class="result-message"
+          id="resultMessage"
+        ></p>
+
+
+        <div class="result-actions">
+
+          <button
+            class="game-primary-button"
+            id="playAgain"
+            type="button"
+          >
+            Play Again
+          </button>
+
+
+          <a
+            class="game-secondary-link"
+            href="../index.html"
+          >
+            Return to Cyber Arcade
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <script src="../../js/arcade/arcade-score.js?v=10"></script>
+
+  <script src="backpack-rescue.js?v=1"></script>
+
+</body>
+</html>
