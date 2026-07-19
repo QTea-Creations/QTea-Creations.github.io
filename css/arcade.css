@@ -1037,3 +1037,111 @@ input {
         flex-direction: column;
     }
 }
+
+
+/* =========================================================
+   BACKPACK RESCUE CARD HOVER
+========================================================= */
+
+.backpack-card-image {
+  position: relative;
+
+  width: min(220px, 85%);
+  height: 190px;
+
+  margin: 0 auto;
+}
+
+.backpack-card-image img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  pointer-events: none;
+
+  transition:
+    opacity 180ms ease,
+    transform 240ms ease,
+    filter 240ms ease;
+}
+
+
+/* Closed backpack shows normally */
+
+.backpack-card-closed {
+  opacity: 1;
+
+  transform:
+    scale(1)
+    translateY(0);
+}
+
+
+/* Open backpack stays hidden normally */
+
+.backpack-card-open {
+  opacity: 0;
+
+  transform:
+    scale(0.9)
+    translateY(8px);
+}
+
+
+/* Hide closed backpack when the card is hovered */
+
+.arcade-game-card:hover .backpack-card-closed,
+.arcade-game-card:focus-within .backpack-card-closed {
+  opacity: 0;
+
+  transform:
+    scale(0.94)
+    translateY(5px);
+}
+
+
+/* Reveal open backpack when the card is hovered */
+
+.arcade-game-card:hover .backpack-card-open,
+.arcade-game-card:focus-within .backpack-card-open {
+  opacity: 1;
+
+  transform:
+    scale(1.08)
+    translateY(-4px);
+
+  filter:
+    drop-shadow(
+      0 15px 18px
+      rgba(39, 48, 94, 0.22)
+    );
+
+  animation:
+    backpackOpenBounce
+    420ms ease;
+}
+
+
+@keyframes backpackOpenBounce {
+  0% {
+    transform:
+      scale(0.9)
+      translateY(8px);
+  }
+
+  65% {
+    transform:
+      scale(1.13)
+      translateY(-7px);
+  }
+
+  100% {
+    transform:
+      scale(1.08)
+      translateY(-4px);
+  }
+}
