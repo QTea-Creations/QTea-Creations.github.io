@@ -59,9 +59,11 @@
 
     <div class="game-points-pill">
       ⭐
+
       <span id="globalPoints">
         0
       </span>
+
       Points
     </div>
   </header>
@@ -69,12 +71,16 @@
 
   <main class="game-shell">
 
-    <!-- INTRO SCREEN -->
+    <!-- =================================================
+         INTRO SCREEN
+    ================================================== -->
+
     <section
       class="game-screen"
       id="introScreen"
     >
       <div class="game-intro-card">
+
         <div class="game-intro-icon">
           🔎
         </div>
@@ -88,49 +94,73 @@
         </h1>
 
         <p class="game-intro-description">
-          Investigate social media posts and click every detail
-          that could identify, locate, contact, or endanger the
-          person who posted it.
+          Investigate realistic social media posts and find every
+          detail that could identify, locate, contact, or endanger
+          the person who posted it.
         </p>
 
+
         <section class="clue-instruction-panel">
-          <h2>
-            How to Play
-          </h2>
+
+          <div class="instruction-heading">
+            <span aria-hidden="true">
+              🕵️
+            </span>
+
+            <div>
+              <p class="game-eyebrow">
+                Investigator Briefing
+              </p>
+
+              <h2>
+                How to Play
+              </h2>
+            </div>
+          </div>
+
 
           <div class="clue-instruction-grid">
+
             <article>
-              <span>1</span>
+              <span>
+                1
+              </span>
 
               <div>
                 <strong>
-                  Study the post
+                  Study the entire post
                 </strong>
 
                 <p>
-                  Check the caption, username, location, image,
-                  comments, and background details.
+                  Check the username, caption, picture, video,
+                  background, location, comments, and account details.
                 </p>
               </div>
             </article>
 
+
             <article>
-              <span>2</span>
+              <span>
+                2
+              </span>
 
               <div>
                 <strong>
-                  Select every clue
+                  Select suspicious details
                 </strong>
 
                 <p>
-                  Click anything you think reveals too much.
-                  Some choices are risky and some are harmless.
+                  Click every highlighted part that you think reveals
+                  too much. Some choices are risky and some are harmless.
                 </p>
               </div>
             </article>
 
+
             <article>
-              <span>3</span>
+              <span>
+                3
+              </span>
 
               <div>
                 <strong>
@@ -138,35 +168,79 @@
                 </strong>
 
                 <p>
-                  Correct selections turn green. Incorrect
-                  selections turn red. Missed clues are revealed.
+                  Correct choices turn green. Harmless details selected
+                  by mistake turn red. Missed risks turn orange.
                 </p>
               </div>
             </article>
 
+
             <article>
-              <span>!</span>
+              <span>
+                !
+              </span>
 
               <div>
                 <strong>
-                  Investigate the feedback
+                  Investigate every result
                 </strong>
 
                 <p>
-                  After checking, click any marked clue to learn
-                  why it was safe or risky.
+                  After checking, click any marked clue to learn why
+                  that detail was safe or risky.
                 </p>
               </div>
             </article>
+
           </div>
+
+
+          <div class="platform-preview-row">
+            <span class="platform-preview-chip">
+              📸 Instagram-style
+            </span>
+
+            <span class="platform-preview-chip">
+              🎵 TikTok-style
+            </span>
+
+            <span class="platform-preview-chip">
+              ▶️ YouTube-style
+            </span>
+
+            <span class="platform-preview-chip">
+              👻 Snapchat-style
+            </span>
+
+            <span class="platform-preview-chip">
+              🎮 Discord-style
+            </span>
+          </div>
+
+
+          <div class="instruction-rule">
+            <span aria-hidden="true">
+              🎯
+            </span>
+
+            <p>
+              Arcade profiles are separate from the Identity Island
+              mission. Every arcade scenario uses new characters,
+              usernames, captions, and clues.
+            </p>
+          </div>
+
         </section>
 
+
         <div class="heat-selection">
+
           <p class="heat-selection-title">
             Choose a Heat Level
           </p>
 
           <div class="heat-choice-grid">
+
             <button
               class="heat-choice selected"
               type="button"
@@ -176,12 +250,19 @@
                 🌶️
               </span>
 
-              <strong>Mild</strong>
+              <strong>
+                Mild
+              </strong>
 
               <small>
-                10 points per round
+                Clear text clues
               </small>
+
+              <span class="heat-point-label">
+                10 points per profile
+              </span>
             </button>
+
 
             <button
               class="heat-choice"
@@ -192,12 +273,19 @@
                 🌶️🌶️
               </span>
 
-              <strong>Spicy</strong>
+              <strong>
+                Spicy
+              </strong>
 
               <small>
-                20 points per round
+                Text and visual clues
               </small>
+
+              <span class="heat-point-label">
+                20 points per profile
+              </span>
             </button>
+
 
             <button
               class="heat-choice"
@@ -208,14 +296,22 @@
                 🌶️🌶️🌶️
               </span>
 
-              <strong>Hot</strong>
+              <strong>
+                Hot
+              </strong>
 
               <small>
-                30 points per round
+                Clues that combine
               </small>
+
+              <span class="heat-point-label">
+                30 points per profile
+              </span>
             </button>
+
           </div>
         </div>
+
 
         <button
           class="game-primary-button"
@@ -224,11 +320,15 @@
         >
           Start Investigation
         </button>
+
       </div>
     </section>
 
 
-    <!-- PLAY SCREEN -->
+    <!-- =================================================
+         PLAY SCREEN
+    ================================================== -->
+
     <section
       class="game-screen hidden"
       id="playScreen"
@@ -236,6 +336,7 @@
       <div class="play-layout">
 
         <aside class="game-sidebar">
+
           <div class="sidebar-game-icon">
             🔎
           </div>
@@ -249,40 +350,53 @@
           </h2>
 
           <p>
-            Click every part of the post that reveals too much.
+            Click every highlighted detail that reveals too much.
           </p>
 
+
           <div class="live-stat">
-            <span>Score</span>
+            <span>
+              Score
+            </span>
 
             <strong id="currentScore">
               0
             </strong>
           </div>
 
+
           <div class="live-stat">
-            <span>Profiles Solved</span>
+            <span>
+              Profiles Solved
+            </span>
 
             <strong id="profilesSolved">
               0
             </strong>
           </div>
 
+
           <div class="live-stat">
-            <span>Heat</span>
+            <span>
+              Heat
+            </span>
 
             <strong id="currentHeat">
               Mild
             </strong>
           </div>
 
+
           <button
             class="sidebar-hint-button"
             id="openClueHint"
             type="button"
+            aria-expanded="false"
+            aria-controls="clueHintPanel"
           >
-            💡 What should I watch for?
+            💡 Investigator Guide
           </button>
+
 
           <a
             class="sidebar-exit-link"
@@ -290,31 +404,51 @@
           >
             Exit Game
           </a>
+
         </aside>
 
 
         <section class="question-stage">
 
           <div class="question-progress-row">
+
             <div>
               Profile
+
               <strong id="profileNumber">
                 1
               </strong>
+
               of
+
               <strong id="profileTotal">
                 5
               </strong>
             </div>
 
-            <div class="question-score-value">
-              +
-              <span id="questionPointValue">
-                10
-              </span>
-              possible
+
+            <div class="question-tools">
+
+              <div
+                class="platform-round-badge"
+                id="platformRoundBadge"
+              >
+                Instagram-style
+              </div>
+
+              <div class="question-score-value">
+                +
+
+                <span id="questionPointValue">
+                  10
+                </span>
+
+                possible
+              </div>
+
             </div>
           </div>
+
 
           <div class="progress-track">
             <div
@@ -324,19 +458,22 @@
           </div>
 
 
-          <!-- QUICK HINT -->
+          <!-- INVESTIGATOR GUIDE -->
+
           <aside
             class="category-hint-panel hidden"
             id="clueHintPanel"
+            aria-label="Social media clue guide"
           >
             <div class="category-hint-header">
+
               <div>
                 <p class="game-eyebrow">
-                  Investigator Guide
+                  Quick Reference
                 </p>
 
                 <h3>
-                  Watch for these clues
+                  What should I watch for?
                 </h3>
               </div>
 
@@ -344,192 +481,102 @@
                 class="close-hint-button"
                 id="closeClueHint"
                 type="button"
+                aria-label="Close investigator guide"
               >
                 ×
               </button>
+
             </div>
 
+
             <div class="social-risk-guide">
-              <span>🏫 School or team names</span>
-              <span>📍 Locations and addresses</span>
-              <span>🕒 Schedules and routines</span>
-              <span>🎂 Age and birthdays</span>
-              <span>📱 Phone or contact information</span>
-              <span>📸 Background signs and reflections</span>
+
+              <span>
+                🏫 School and team names
+              </span>
+
+              <span>
+                📍 Locations and addresses
+              </span>
+
+              <span>
+                🕒 Schedules and routines
+              </span>
+
+              <span>
+                🎂 Ages and birthdays
+              </span>
+
+              <span>
+                📱 Phone and contact details
+              </span>
+
+              <span>
+                🔑 Passwords and login codes
+              </span>
+
+              <span>
+                📸 Signs, uniforms, and reflections
+              </span>
+
+              <span>
+                🏠 House numbers and landmarks
+              </span>
+
             </div>
+
+
+            <p class="hint-penalty-note">
+              Opening the guide does not remove points.
+            </p>
           </aside>
 
 
+          <!-- ROUND HEADING -->
+
           <div class="social-investigation-heading">
+
             <p class="game-eyebrow">
               Social Media Investigation
             </p>
 
             <h2 id="platformHeading">
-              Mia posted this on Instagram.
+              Investigate this post.
             </h2>
 
-            <p>
-              Click every highlighted part that could reveal too much.
+            <p id="roundInstruction">
+              Click every highlighted detail that could reveal too much.
             </p>
+
           </div>
 
 
-          <!-- SOCIAL POST -->
-          <article
-            class="social-post-card instagram-card"
-            id="socialPostCard"
+          <!-- DYNAMIC SOCIAL POST -->
+
+          <section
+            class="dynamic-social-stage"
+            id="dynamicSocialStage"
+            aria-live="polite"
           >
-            <header class="social-post-header">
-              <div class="social-avatar">
-                ⚽
-              </div>
-
-              <div class="social-account-info">
-                <button
-                  class="post-hotspot"
-                  type="button"
-                  data-clue-id="username"
-                >
-                  <strong id="socialUsername">
-                    @MiaWestview11
-                  </strong>
-                </button>
-
-                <button
-                  class="post-hotspot location-hotspot"
-                  type="button"
-                  data-clue-id="location"
-                >
-                  📍 Westview Academy
-                </button>
-              </div>
-
-              <span class="social-menu">
-                •••
-              </span>
-            </header>
+            <!--
+              JavaScript will build the Instagram-, TikTok-,
+              YouTube-, Snapchat-, or Discord-style post here.
+            -->
+          </section>
 
 
-            <div class="social-post-image">
-              <div class="soccer-scene">
-                <span class="soccer-player">
-                  ⚽
-                </span>
-
-                <button
-                  class="visual-hotspot school-logo-hotspot"
-                  type="button"
-                  data-clue-id="school-logo"
-                  aria-label="School logo on uniform"
-                >
-                  WVA
-                </button>
-
-                <button
-                  class="visual-hotspot clock-hotspot"
-                  type="button"
-                  data-clue-id="practice-time"
-                  aria-label="Practice schedule sign"
-                >
-                  TUE 5:30
-                </button>
-
-                <button
-                  class="visual-hotspot harmless-ball-hotspot"
-                  type="button"
-                  data-clue-id="soccer-ball"
-                  aria-label="Soccer ball"
-                >
-                  ⚽
-                </button>
-              </div>
-            </div>
-
-
-            <div class="social-action-row">
-              <button
-                class="post-hotspot icon-hotspot"
-                type="button"
-                data-clue-id="like-button"
-                aria-label="Like button"
-              >
-                ♡
-              </button>
-
-              <span>💬</span>
-              <span>➤</span>
-              <span class="save-icon">▢</span>
-            </div>
-
-
-            <div class="social-post-body">
-              <p class="likes-line">
-                126 likes
-              </p>
-
-              <p class="social-caption">
-                <button
-                  class="post-hotspot"
-                  type="button"
-                  data-clue-id="caption-name"
-                >
-                  <strong>
-                    @MiaWestview11
-                  </strong>
-                </button>
-
-                Great practice today!
-
-                <button
-                  class="post-hotspot"
-                  type="button"
-                  data-clue-id="schedule"
-                >
-                  We meet every Tuesday at 5:30
-                </button>
-
-                <button
-                  class="post-hotspot"
-                  type="button"
-                  data-clue-id="meeting-place"
-                >
-                  beside the blue gym.
-                </button>
-
-                <button
-                  class="post-hotspot"
-                  type="button"
-                  data-clue-id="favorite-sport"
-                >
-                  Soccer is my favorite! ⚽
-                </button>
-              </p>
-
-              <p class="social-comment">
-                <button
-                  class="post-hotspot"
-                  type="button"
-                  data-clue-id="friend-comment"
-                >
-                  @KaylaB: See you there next week!
-                </button>
-              </p>
-
-              <p class="social-time">
-                2 minutes ago
-              </p>
-            </div>
-          </article>
-
+          <!-- SELECTION CONTROLS -->
 
           <div class="clue-selection-panel">
+
             <p>
               Selected clues:
+
               <strong id="selectedClueCount">
                 0
               </strong>
             </p>
+
 
             <button
               class="game-primary-button"
@@ -539,6 +586,7 @@
               Check Answers
             </button>
 
+
             <button
               class="clear-selection-button"
               id="clearSelections"
@@ -546,8 +594,49 @@
             >
               Clear Selections
             </button>
+
           </div>
 
+
+          <!-- REVIEW LEGEND -->
+
+          <div
+            class="clue-review-legend hidden"
+            id="clueReviewLegend"
+          >
+            <div>
+              <span class="legend-dot correct-dot"></span>
+
+              <strong>
+                Green
+              </strong>
+
+              Correctly selected risk
+            </div>
+
+            <div>
+              <span class="legend-dot incorrect-dot"></span>
+
+              <strong>
+                Red
+              </strong>
+
+              Harmless detail selected by mistake
+            </div>
+
+            <div>
+              <span class="legend-dot missed-dot"></span>
+
+              <strong>
+                Orange
+              </strong>
+
+              Risky clue that was missed
+            </div>
+          </div>
+
+
+          <!-- ROUND FEEDBACK -->
 
           <div
             class="clue-feedback-panel hidden"
@@ -564,6 +653,7 @@
 
             <div class="question-points-result">
               Points earned:
+
               <strong id="pointsEarnedThisRound">
                 0
               </strong>
@@ -571,19 +661,55 @@
           </div>
 
 
+          <!-- MEME REACTION -->
+
+          <aside
+            class="arcade-meme-reaction hidden"
+            id="memeReaction"
+            aria-live="polite"
+          >
+            <img
+              id="memeReactionImage"
+              src="../../assets/mascot/congrats.png"
+              alt="Meme reacts to the investigation"
+            >
+
+            <div class="arcade-meme-speech">
+
+              <strong id="memeReactionTitle">
+                Great investigation!
+              </strong>
+
+              <p id="memeReactionMessage">
+                Click the marked clues to review them.
+              </p>
+
+            </div>
+          </aside>
+
+
+          <!-- CLUE EXPLANATION POPUP -->
+
           <aside
             class="clue-explanation-popup hidden"
             id="clueExplanationPopup"
+            role="dialog"
+            aria-modal="false"
+            aria-labelledby="clueExplanationTitle"
           >
             <button
               class="close-explanation-button"
               id="closeClueExplanation"
               type="button"
+              aria-label="Close clue explanation"
             >
               ×
             </button>
 
-            <div class="explanation-alert-icon">
+            <div
+              class="explanation-alert-icon"
+              id="explanationAlertIcon"
+            >
               !
             </div>
 
@@ -592,10 +718,17 @@
             </p>
 
             <h3 id="clueExplanationTitle">
-              School name
+              Clue name
             </h3>
 
             <p id="clueExplanationText"></p>
+
+            <div
+              class="explanation-classification"
+              id="explanationClassification"
+            >
+              Risky detail
+            </div>
           </aside>
 
 
@@ -612,15 +745,30 @@
     </section>
 
 
-    <!-- RESULT SCREEN -->
+    <!-- =================================================
+         RESULTS SCREEN
+    ================================================== -->
+
     <section
       class="game-screen hidden"
       id="resultScreen"
     >
       <div class="result-card">
-        <div class="result-icon">
-          🕵️
+
+        <div class="result-meme-celebration">
+
+          <img
+            id="resultMemeImage"
+            src="../../assets/mascot/congrats.png"
+            alt="Meme celebrates the completed investigation"
+          >
+
+          <div class="result-icon">
+            🕵️
+          </div>
+
         </div>
+
 
         <p class="game-eyebrow">
           Investigation Complete
@@ -630,66 +778,89 @@
           Final Score
         </h1>
 
+
         <div class="final-score">
+
           <strong id="finalScore">
             0
           </strong>
 
           <span>
             /
+
             <span id="maximumScore">
               50
             </span>
           </span>
+
         </div>
+
 
         <div
           class="final-stars"
           id="finalStars"
+          aria-label="Stars earned"
         >
           ☆☆☆
         </div>
 
+
         <div class="result-stat-grid">
+
           <article>
-            <span>Accuracy</span>
+            <span>
+              Accuracy
+            </span>
 
             <strong id="finalAccuracy">
               0%
             </strong>
           </article>
 
+
           <article>
-            <span>Profiles Correct</span>
+            <span>
+              Profiles Solved
+            </span>
 
             <strong id="finalCorrect">
               0/5
             </strong>
           </article>
 
+
           <article>
-            <span>Best Score</span>
+            <span>
+              Best Score
+            </span>
 
             <strong id="bestScore">
               0
             </strong>
           </article>
 
+
           <article>
-            <span>Global Points Earned</span>
+            <span>
+              Global Points Earned
+            </span>
 
             <strong id="globalPointsEarned">
               +0
             </strong>
           </article>
+
         </div>
+
 
         <p
           class="result-message"
           id="resultMessage"
         ></p>
 
+
         <div class="result-actions">
+
           <button
             class="game-primary-button"
             id="playAgain"
@@ -704,7 +875,9 @@
           >
             Return to Cyber Arcade
           </a>
+
         </div>
+
       </div>
     </section>
 
