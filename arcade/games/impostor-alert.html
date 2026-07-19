@@ -8,9 +8,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Impostor Alert | Cyber Arcade
-  </title>
+  <title>Impostor Alert | Cyber Arcade</title>
 
   <link
     rel="preconnect"
@@ -30,23 +28,27 @@
 
   <link
     rel="stylesheet"
-    href="../../css/style.css?v=8"
+    href="../../css/style.css?v=21"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/arcade-game.css?v=8"
+    href="../../css/arcade-game.css?v=21"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/impostor-alert.css?v=1"
+    href="../../css/impostor-alert.css?v=21"
   >
 
-  <script src="../../js/safetii-debug.js?v=8"></script>
+  <script src="../../js/safetii-debug.js?v=21"></script>
 </head>
 
 <body class="arcade-game-page">
+
+  <!-- ================================================
+       NAVIGATION
+  ================================================= -->
 
   <header class="site-header arcade-site-header">
 
@@ -101,41 +103,114 @@
   </header>
 
 
-  <main class="game-shell">
+  <main class="impostor-page-shell">
 
-    <!-- INTRO SCREEN -->
+    <!-- ================================================
+         INTRO SCREEN
+    ================================================= -->
 
     <section
-      class="game-screen"
+      class="impostor-screen"
       id="introScreen"
     >
-      <div class="game-intro-card">
 
-        <div class="game-intro-icon">
-          🚨
+      <div class="impostor-intro-card">
+
+        <div class="impostor-intro-icon">
+          🕵️
         </div>
 
         <p class="game-eyebrow">
-          Identity Detective Challenge
+          Digital Detective Challenge
         </p>
 
         <h1>
           Impostor Alert
         </h1>
 
-        <p class="game-intro-description">
-          Examine messages, profiles, usernames, requests, and account
-          details. Decide whether each person appears trustworthy,
-          suspicious, or clearly pretending to be someone else.
+        <p class="impostor-intro-copy">
+          Suspicious profiles are appearing across Safetii City.
+          Search each case file, collect the warning signs, and expose
+          the impostor before time runs out.
         </p>
 
 
-        <section class="game-instruction-panel">
+        <!-- GAME PREVIEW -->
 
-          <div class="instruction-heading">
+        <section class="case-preview">
 
-            <span aria-hidden="true">
-              🕵️
+          <div class="preview-browser">
+
+            <div class="preview-browser-bar">
+
+              <span></span>
+              <span></span>
+              <span></span>
+
+              <div>
+                social.example/profile
+              </div>
+
+            </div>
+
+
+            <div class="preview-profile">
+
+              <div class="preview-avatar">
+                🎮
+              </div>
+
+              <div>
+
+                <strong>
+                  GameMaster_Offical
+                </strong>
+
+                <span>
+                  New account · 1 follower
+                </span>
+
+              </div>
+
+
+              <div class="preview-fake-badge">
+                ✓
+              </div>
+
+            </div>
+
+
+            <div class="preview-message">
+
+              <p>
+                You won free game credits! Send me the code that
+                just appeared on your phone.
+              </p>
+
+              <span class="preview-suspicious-link">
+                free-gems-now.example
+              </span>
+
+            </div>
+
+
+            <div class="preview-magnifier">
+              🔍
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- HOW TO PLAY -->
+
+        <section class="detective-briefing">
+
+          <div class="detective-briefing-heading">
+
+            <span>
+              📁
             </span>
 
             <div>
@@ -145,161 +220,111 @@
               </p>
 
               <h2>
-                Look Beyond the Display Name
+                Crack Every Case
               </h2>
 
             </div>
-          </div>
-
-
-          <div class="impostor-warning-grid">
-
-            <article>
-              <span>
-                👤
-              </span>
-
-              <div>
-                <h3>
-                  Check the Account
-                </h3>
-
-                <p>
-                  Inspect the username, account age, followers,
-                  profile picture, spelling, and verification status.
-                </p>
-              </div>
-            </article>
-
-
-            <article>
-              <span>
-                💬
-              </span>
-
-              <div>
-                <h3>
-                  Read the Message
-                </h3>
-
-                <p>
-                  Watch for pressure, secrecy, unusual requests,
-                  threats, prizes, login requests, and strange links.
-                </p>
-              </div>
-            </article>
-
-
-            <article>
-              <span>
-                🔍
-              </span>
-
-              <div>
-                <h3>
-                  Verify Another Way
-                </h3>
-
-                <p>
-                  Contact the real person through a phone number,
-                  account, or conversation you already trust.
-                </p>
-              </div>
-            </article>
-
-
-            <article>
-              <span>
-                🛑
-              </span>
-
-              <div>
-                <h3>
-                  Stop Before Responding
-                </h3>
-
-                <p>
-                  Do not send passwords, money, codes, photographs,
-                  addresses, or personal information.
-                </p>
-              </div>
-            </article>
 
           </div>
 
 
-          <div class="instruction-rule">
+          <div class="detective-rule-grid">
 
-            <span aria-hidden="true">
-              🎯
-            </span>
+            <article>
 
-            <p>
-              A familiar name or picture does not prove that an
-              account belongs to the real person.
-            </p>
+              <span class="rule-number">
+                1
+              </span>
+
+              <div>
+
+                <h3>
+                  Search the Profile
+                </h3>
+
+                <p>
+                  Click suspicious details inside the profile,
+                  messages, links, and account information.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span class="rule-number">
+                2
+              </span>
+
+              <div>
+
+                <h3>
+                  Build Evidence
+                </h3>
+
+                <p>
+                  Correct clues fill the Evidence Meter. Random
+                  clicks cost time and break your investigation streak.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span class="rule-number">
+                3
+              </span>
+
+              <div>
+
+                <h3>
+                  Sound the Alert
+                </h3>
+
+                <p>
+                  Once you have enough evidence, press the giant
+                  Impostor Alert button to solve the case.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span class="rule-number">
+                4
+              </span>
+
+              <div>
+
+                <h3>
+                  Beat the Clock
+                </h3>
+
+                <p>
+                  Solve every case before your investigation time
+                  or detective badges run out.
+                </p>
+
+              </div>
+
+            </article>
 
           </div>
 
         </section>
 
 
-        <div class="game-rules">
+        <!-- HEAT LEVELS -->
 
-          <article>
-            <span>
-              🧠
-            </span>
-
-            <div>
-              <strong>
-                Study Every Clue
-              </strong>
-
-              <p>
-                Small account details can expose an impostor.
-              </p>
-            </div>
-          </article>
-
-
-          <article>
-            <span>
-              ⭐
-            </span>
-
-            <div>
-              <strong>
-                First Choice Counts
-              </strong>
-
-              <p>
-                Correct first answers earn arcade points.
-              </p>
-            </div>
-          </article>
-
-
-          <article>
-            <span>
-              🔥
-            </span>
-
-            <div>
-              <strong>
-                Increase the Difficulty
-              </strong>
-
-              <p>
-                Hot rounds contain more convincing impostors.
-              </p>
-            </div>
-          </article>
-
-        </div>
-
-
-        <div class="heat-selection">
+        <section class="impostor-heat-section">
 
           <p class="heat-selection-title">
             Choose a Heat Level
@@ -312,6 +337,7 @@
               type="button"
               data-heat="mild"
             >
+
               <span class="heat-choice-icon">
                 🌶️
               </span>
@@ -321,12 +347,13 @@
               </strong>
 
               <small>
-                Clear warning signs
+                Obvious clues and extra investigation time
               </small>
 
               <span class="heat-point-label">
-                10 points each
+                10 points per clue
               </span>
+
             </button>
 
 
@@ -335,6 +362,7 @@
               type="button"
               data-heat="spicy"
             >
+
               <span class="heat-choice-icon">
                 🌶️🌶️
               </span>
@@ -344,12 +372,13 @@
               </strong>
 
               <small>
-                More convincing accounts
+                More decoys and less investigation time
               </small>
 
               <span class="heat-point-label">
-                20 points each
+                20 points per clue
               </span>
+
             </button>
 
 
@@ -358,6 +387,7 @@
               type="button"
               data-heat="hot"
             >
+
               <span class="heat-choice-icon">
                 🌶️🌶️🌶️
               </span>
@@ -367,524 +397,844 @@
               </strong>
 
               <small>
-                Tricky combined clues
+                Subtle clues, clever impostors, and fast cases
               </small>
 
               <span class="heat-point-label">
-                30 points each
+                30 points per clue
               </span>
+
             </button>
 
           </div>
+
+        </section>
+
+
+        <button
+          class="game-primary-button impostor-start-button"
+          id="startGame"
+          type="button"
+        >
+          Open the First Case
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================================
+         PLAY SCREEN
+    ================================================= -->
+
+    <section
+      class="impostor-screen hidden"
+      id="playScreen"
+    >
+
+      <!-- HUD -->
+
+      <section class="detective-hud">
+
+        <div class="hud-case-title">
+
+          <span>
+            🕵️
+          </span>
+
+          <div>
+
+            <p class="game-eyebrow">
+              Active Investigation
+            </p>
+
+            <strong id="currentHeat">
+              Mild
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="detective-hud-stat">
+
+          <span>
+            ⏱️ Time
+          </span>
+
+          <strong id="timeRemaining">
+            60
+          </strong>
+
+        </div>
+
+
+        <div class="detective-hud-stat">
+
+          <span>
+            ⭐ Score
+          </span>
+
+          <strong id="currentScore">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="detective-hud-stat">
+
+          <span>
+            🔥 Streak
+          </span>
+
+          <strong id="clueStreak">
+            x0
+          </strong>
+
+        </div>
+
+
+        <div class="detective-hud-stat">
+
+          <span>
+            🛡️ Badges
+          </span>
+
+          <strong id="livesDisplay">
+            🛡️🛡️🛡️
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- CASE PROGRESS -->
+
+      <section class="case-progress-bar">
+
+        <div>
+
+          Case
+
+          <strong id="caseNumber">
+            1
+          </strong>
+
+          of
+
+          <strong id="caseTotal">
+            5
+          </strong>
+
+        </div>
+
+
+        <div class="progress-track">
+
+          <div
+            class="progress-fill"
+            id="caseProgressFill"
+          ></div>
+
+        </div>
+
+
+        <div>
+
+          Cases solved:
+
+          <strong id="casesSolved">
+            0
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- INVESTIGATION AREA -->
+
+      <section class="investigation-layout">
+
+        <!-- DETECTIVE SIDEBAR -->
+
+        <aside class="detective-sidebar">
+
+          <img
+            id="memeDetectiveImage"
+            src="../../assets/mascot/thinking.png"
+            alt="Meme assists with the investigation"
+          >
+
+          <div class="detective-speech">
+
+            <strong id="memeDetectiveTitle">
+              Search carefully!
+            </strong>
+
+            <p id="memeDetectiveMessage">
+              Click details that could reveal an impostor.
+            </p>
+
+          </div>
+
+
+          <section class="evidence-panel">
+
+            <div class="evidence-heading">
+
+              <span>
+                🔎 Evidence
+              </span>
+
+              <strong>
+                <span id="evidenceFound">
+                  0
+                </span>
+
+                /
+
+                <span id="evidenceNeeded">
+                  3
+                </span>
+              </strong>
+
+            </div>
+
+
+            <div class="evidence-track">
+
+              <div
+                class="evidence-fill"
+                id="evidenceFill"
+              ></div>
+
+            </div>
+
+
+            <div
+              class="evidence-chip-list"
+              id="evidenceChipList"
+            >
+              <span class="empty-evidence-message">
+                No clues collected yet
+              </span>
+            </div>
+
+          </section>
+
+
+          <button
+            class="detective-power-button"
+            id="scanPowerButton"
+            type="button"
+          >
+
+            <span>
+              📡
+            </span>
+
+            <div>
+
+              <strong>
+                Evidence Scanner
+              </strong>
+
+              <small id="scanPowerCount">
+                1 available
+              </small>
+
+            </div>
+
+          </button>
+
+
+          <button
+            class="detective-power-button"
+            id="hintPowerButton"
+            type="button"
+          >
+
+            <span>
+              💡
+            </span>
+
+            <div>
+
+              <strong>
+                Meme Hint
+              </strong>
+
+              <small id="hintPowerCount">
+                2 available
+              </small>
+
+            </div>
+
+          </button>
+
+
+          <button
+            class="impostor-alert-button locked-alert"
+            id="impostorAlertButton"
+            type="button"
+            disabled
+          >
+
+            <span>
+              🚨
+            </span>
+
+            <strong>
+              IMPOSTOR ALERT!
+            </strong>
+
+            <small id="alertButtonMessage">
+              Collect more evidence
+            </small>
+
+          </button>
+
+        </aside>
+
+
+        <!-- CASE FILE -->
+
+        <section class="case-file-stage">
+
+          <header class="case-file-heading">
+
+            <div>
+
+              <p class="game-eyebrow">
+                Case File
+              </p>
+
+              <h1 id="caseTitle">
+                Loading suspect...
+              </h1>
+
+            </div>
+
+
+            <div class="case-difficulty-pill">
+
+              <span>
+                Difficulty
+              </span>
+
+              <strong id="caseDifficulty">
+                Rookie
+              </strong>
+
+            </div>
+
+          </header>
+
+
+          <p
+            class="case-instructions"
+            id="caseInstructions"
+          >
+            Search the profile and click every suspicious clue.
+          </p>
+
+
+          <!-- FAKE SOCIAL PROFILE -->
+
+          <article
+            class="suspect-browser"
+            id="suspectBrowser"
+            aria-label="Interactive suspect profile"
+          >
+
+            <div class="suspect-browser-bar">
+
+              <div class="browser-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+
+
+              <div
+                class="suspect-address-bar clue-surface"
+                id="profileUrl"
+                data-clue-id="profile-url"
+                tabindex="0"
+                role="button"
+              >
+                social.example/profile
+              </div>
+
+
+              <span class="browser-lock">
+                🔒
+              </span>
+
+            </div>
+
+
+            <section class="suspect-profile-header">
+
+              <button
+                class="suspect-avatar clue-surface"
+                id="profileAvatar"
+                data-clue-id="avatar"
+                type="button"
+                aria-label="Inspect profile picture"
+              >
+                🎮
+              </button>
+
+
+              <div class="suspect-profile-identity">
+
+                <div class="suspect-name-row">
+
+                  <button
+                    class="profile-text-clue clue-surface"
+                    id="profileUsername"
+                    data-clue-id="username"
+                    type="button"
+                  >
+                    Loading username...
+                  </button>
+
+
+                  <button
+                    class="verification-clue clue-surface"
+                    id="verificationBadge"
+                    data-clue-id="verification"
+                    type="button"
+                    aria-label="Inspect verification badge"
+                  >
+                    ✓
+                  </button>
+
+                </div>
+
+
+                <button
+                  class="profile-handle clue-surface"
+                  id="profileHandle"
+                  data-clue-id="handle"
+                  type="button"
+                >
+                  @loading
+                </button>
+
+
+                <button
+                  class="profile-bio clue-surface"
+                  id="profileBio"
+                  data-clue-id="bio"
+                  type="button"
+                >
+                  Loading profile biography...
+                </button>
+
+              </div>
+
+
+              <button
+                class="profile-menu-clue clue-surface"
+                id="profileMenu"
+                data-clue-id="menu"
+                type="button"
+                aria-label="Inspect profile menu"
+              >
+                •••
+              </button>
+
+            </section>
+
+
+            <section class="profile-stat-grid">
+
+              <button
+                class="profile-stat clue-surface"
+                id="accountAge"
+                data-clue-id="account-age"
+                type="button"
+              >
+
+                <strong>
+                  1 day
+                </strong>
+
+                <span>
+                  Account age
+                </span>
+
+              </button>
+
+
+              <button
+                class="profile-stat clue-surface"
+                id="followerCount"
+                data-clue-id="followers"
+                type="button"
+              >
+
+                <strong>
+                  1
+                </strong>
+
+                <span>
+                  Followers
+                </span>
+
+              </button>
+
+
+              <button
+                class="profile-stat clue-surface"
+                id="followingCount"
+                data-clue-id="following"
+                type="button"
+              >
+
+                <strong>
+                  984
+                </strong>
+
+                <span>
+                  Following
+                </span>
+
+              </button>
+
+
+              <button
+                class="profile-stat clue-surface"
+                id="postCount"
+                data-clue-id="posts"
+                type="button"
+              >
+
+                <strong>
+                  0
+                </strong>
+
+                <span>
+                  Posts
+                </span>
+
+              </button>
+
+            </section>
+
+
+            <!-- MESSAGE THREAD -->
+
+            <section class="suspect-message-panel">
+
+              <header>
+
+                <span>
+                  Direct Message
+                </span>
+
+                <strong id="messageSender">
+                  Unknown account
+                </strong>
+
+              </header>
+
+
+              <div class="message-thread">
+
+                <button
+                  class="message-bubble suspect-message clue-surface"
+                  id="suspectMessage"
+                  data-clue-id="message"
+                  type="button"
+                >
+                  Loading suspicious message...
+                </button>
+
+
+                <button
+                  class="message-bubble link-message clue-surface"
+                  id="suspectLink"
+                  data-clue-id="link"
+                  type="button"
+                >
+                  suspicious-link.example
+                </button>
+
+
+                <button
+                  class="message-bubble pressure-message clue-surface"
+                  id="pressureMessage"
+                  data-clue-id="pressure"
+                  type="button"
+                >
+                  Loading follow-up message...
+                </button>
+
+              </div>
+
+            </section>
+
+
+            <!-- PROFILE FOOTER DETAILS -->
+
+            <section class="profile-detail-grid">
+
+              <button
+                class="profile-detail clue-surface"
+                id="mutualFriends"
+                data-clue-id="mutuals"
+                type="button"
+              >
+                <span>
+                  👥
+                </span>
+
+                <div>
+
+                  <strong>
+                    Mutual friends
+                  </strong>
+
+                  <small>
+                    Loading...
+                  </small>
+
+                </div>
+
+              </button>
+
+
+              <button
+                class="profile-detail clue-surface"
+                id="joinedDate"
+                data-clue-id="joined"
+                type="button"
+              >
+                <span>
+                  📅
+                </span>
+
+                <div>
+
+                  <strong>
+                    Joined
+                  </strong>
+
+                  <small>
+                    Loading...
+                  </small>
+
+                </div>
+
+              </button>
+
+
+              <button
+                class="profile-detail clue-surface"
+                id="profileLocation"
+                data-clue-id="location"
+                type="button"
+              >
+                <span>
+                  📍
+                </span>
+
+                <div>
+
+                  <strong>
+                    Location
+                  </strong>
+
+                  <small>
+                    Loading...
+                  </small>
+
+                </div>
+
+              </button>
+
+            </section>
+
+          </article>
+
+
+          <!-- CASE FEEDBACK -->
+
+          <section
+            class="case-feedback hidden"
+            id="caseFeedback"
+            aria-live="polite"
+          >
+
+            <span
+              class="case-feedback-icon"
+              id="caseFeedbackIcon"
+            >
+              🔎
+            </span>
+
+            <div>
+
+              <strong id="caseFeedbackTitle">
+                Evidence collected
+              </strong>
+
+              <p id="caseFeedbackMessage">
+                You found a suspicious clue.
+              </p>
+
+            </div>
+
+
+            <div class="case-feedback-points">
+
+              <strong id="caseFeedbackPoints">
+                +10
+              </strong>
+
+              <span>
+                points
+              </span>
+
+            </div>
+
+          </section>
+
+
+          <button
+            class="game-primary-button hidden"
+            id="nextCaseButton"
+            type="button"
+          >
+            Open Next Case
+          </button>
+
+        </section>
+
+      </section>
+
+    </section>
+
+
+    <!-- ================================================
+         CASE SOLVED OVERLAY
+    ================================================= -->
+
+    <section
+      class="case-solved-overlay hidden"
+      id="caseSolvedOverlay"
+      aria-live="polite"
+    >
+
+      <div class="case-solved-card">
+
+        <span class="case-solved-siren">
+          🚨
+        </span>
+
+        <p class="game-eyebrow">
+          Case Solved
+        </p>
+
+        <h2 id="caseSolvedHeading">
+          Impostor Exposed!
+        </h2>
+
+        <p id="caseSolvedExplanation">
+          The collected clues reveal a fake account.
+        </p>
+
+
+        <div class="solved-case-score">
+
+          <span>
+            Case points
+          </span>
+
+          <strong id="casePointsEarned">
+            +0
+          </strong>
+
         </div>
 
 
         <button
           class="game-primary-button"
-          id="startGame"
+          id="continueAfterSolved"
           type="button"
         >
-          Begin Investigation
+          Continue Investigation
         </button>
 
       </div>
+
     </section>
 
 
-    <!-- PLAY SCREEN -->
+    <!-- ================================================
+         RESULTS SCREEN
+    ================================================= -->
 
     <section
-      class="game-screen hidden"
-      id="playScreen"
-    >
-      <div class="play-layout">
-
-        <aside class="game-sidebar">
-
-          <div class="sidebar-game-icon">
-            🚨
-          </div>
-
-          <p class="game-eyebrow">
-            Impostor Alert
-          </p>
-
-          <h2>
-            Inspect the account
-          </h2>
-
-          <p>
-            Decide whether the account is real, suspicious,
-            or an obvious impostor.
-          </p>
-
-
-          <div class="live-stat">
-            <span>
-              Score
-            </span>
-
-            <strong id="currentScore">
-              0
-            </strong>
-          </div>
-
-
-          <div class="live-stat">
-            <span>
-              Correct
-            </span>
-
-            <strong id="correctCount">
-              0
-            </strong>
-          </div>
-
-
-          <div class="live-stat">
-            <span>
-              Heat
-            </span>
-
-            <strong id="currentHeat">
-              Mild
-            </strong>
-          </div>
-
-
-          <button
-            class="sidebar-hint-button"
-            id="openImpostorHint"
-            type="button"
-            aria-expanded="false"
-            aria-controls="impostorHintPanel"
-          >
-            💡 Detective Guide
-          </button>
-
-
-          <a
-            class="sidebar-exit-link"
-            href="../index.html"
-          >
-            Exit Game
-          </a>
-
-        </aside>
-
-
-        <section class="question-stage">
-
-          <div class="question-progress-row">
-
-            <div>
-              Case
-
-              <strong id="questionNumber">
-                1
-              </strong>
-
-              of
-
-              <strong id="questionTotal">
-                8
-              </strong>
-            </div>
-
-
-            <div class="question-tools">
-
-              <div class="question-score-value">
-                +
-
-                <span id="questionPointValue">
-                  10
-                </span>
-
-                possible
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="progress-track">
-            <div
-              class="progress-fill"
-              id="questionProgressFill"
-            ></div>
-          </div>
-
-
-          <aside
-            class="category-hint-panel hidden"
-            id="impostorHintPanel"
-            aria-label="Impostor warning-sign guide"
-          >
-
-            <div class="category-hint-header">
-
-              <div>
-                <p class="game-eyebrow">
-                  Quick Reference
-                </p>
-
-                <h3>
-                  What should I inspect?
-                </h3>
-              </div>
-
-
-              <button
-                class="close-hint-button"
-                id="closeImpostorHint"
-                type="button"
-                aria-label="Close detective guide"
-              >
-                ×
-              </button>
-
-            </div>
-
-
-            <div class="social-risk-guide">
-
-              <span>
-                🔤 Misspelled usernames
-              </span>
-
-              <span>
-                🆕 Brand-new accounts
-              </span>
-
-              <span>
-                👥 Unusual follower counts
-              </span>
-
-              <span>
-                🔗 Strange links
-              </span>
-
-              <span>
-                🔑 Requests for passwords or codes
-              </span>
-
-              <span>
-                💵 Requests for money or gift cards
-              </span>
-
-              <span>
-                🤫 Requests for secrecy
-              </span>
-
-              <span>
-                ⏱️ Pressure to act immediately
-              </span>
-
-            </div>
-
-
-            <p class="hint-penalty-note">
-              Opening the guide does not remove points.
-            </p>
-
-          </aside>
-
-
-          <article class="impostor-case-card">
-
-            <div class="impostor-case-heading">
-
-              <div
-                class="impostor-profile-avatar"
-                id="profileAvatar"
-                aria-hidden="true"
-              >
-                👤
-              </div>
-
-              <div class="impostor-profile-copy">
-
-                <div class="impostor-name-row">
-
-                  <h2 id="displayName">
-                    Coach Daniels
-                  </h2>
-
-                  <span
-                    class="verification-badge hidden"
-                    id="verificationBadge"
-                  >
-                    ✓
-                  </span>
-
-                </div>
-
-                <p id="username">
-                  @CoachDaniels
-                </p>
-
-              </div>
-
-            </div>
-
-
-            <div class="impostor-account-stats">
-
-              <article>
-                <span>
-                  Account age
-                </span>
-
-                <strong id="accountAge">
-                  2 years
-                </strong>
-              </article>
-
-
-              <article>
-                <span>
-                  Followers
-                </span>
-
-                <strong id="followerCount">
-                  326
-                </strong>
-              </article>
-
-
-              <article>
-                <span>
-                  Mutual connections
-                </span>
-
-                <strong id="mutualCount">
-                  4
-                </strong>
-              </article>
-
-            </div>
-
-
-            <div class="impostor-message-box">
-
-              <p class="game-eyebrow">
-                Message Received
-              </p>
-
-              <blockquote id="messageText">
-                Practice has moved to 5:00 today.
-              </blockquote>
-
-            </div>
-
-
-            <div class="impostor-extra-details">
-
-              <p>
-                <strong>
-                  Profile details:
-                </strong>
-
-                <span id="profileDetails">
-                  Team coach account
-                </span>
-              </p>
-
-
-              <p>
-                <strong>
-                  Link or request:
-                </strong>
-
-                <span id="requestDetails">
-                  No link included
-                </span>
-              </p>
-
-            </div>
-
-          </article>
-
-
-          <p class="impostor-question-prompt">
-            What is your verdict?
-          </p>
-
-
-          <div
-            class="impostor-answer-grid"
-            id="answerGrid"
-          >
-
-            <button
-              class="impostor-answer-choice real-choice"
-              type="button"
-              data-verdict="real"
-            >
-              <span>
-                ✅
-              </span>
-
-              <strong>
-                Likely Real
-              </strong>
-
-              <small>
-                The account appears consistent and trustworthy
-              </small>
-            </button>
-
-
-            <button
-              class="impostor-answer-choice suspicious-choice"
-              type="button"
-              data-verdict="suspicious"
-            >
-              <span>
-                ⚠️
-              </span>
-
-              <strong>
-                Suspicious
-              </strong>
-
-              <small>
-                Pause and verify before responding
-              </small>
-            </button>
-
-
-            <button
-              class="impostor-answer-choice fake-choice"
-              type="button"
-              data-verdict="impostor"
-            >
-              <span>
-                🚨
-              </span>
-
-              <strong>
-                Impostor
-              </strong>
-
-              <small>
-                Clear signs show this account is pretending
-              </small>
-            </button>
-
-          </div>
-
-
-          <div
-            class="answer-feedback hidden"
-            id="answerFeedback"
-            aria-live="polite"
-          >
-
-            <strong id="feedbackTitle">
-              Detective result
-            </strong>
-
-            <p id="feedbackText"></p>
-
-            <div class="question-points-result">
-              Points earned:
-
-              <strong id="pointsEarnedThisQuestion">
-                0
-              </strong>
-            </div>
-
-          </div>
-
-
-          <aside
-            class="arcade-meme-reaction hidden"
-            id="memeReaction"
-            aria-live="polite"
-          >
-
-            <img
-              id="memeReactionImage"
-              src="../../assets/mascot/congrats.png"
-              alt="Meme reacts to the detective answer"
-            >
-
-            <div class="arcade-meme-speech">
-
-              <strong id="memeReactionTitle">
-                Case solved!
-              </strong>
-
-              <p id="memeReactionMessage">
-                You noticed the warning signs.
-              </p>
-
-            </div>
-
-          </aside>
-
-
-          <button
-            class="game-primary-button hidden"
-            id="nextQuestion"
-            type="button"
-          >
-            Next Case
-          </button>
-
-        </section>
-      </div>
-    </section>
-
-
-    <!-- RESULTS SCREEN -->
-
-    <section
-      class="game-screen hidden"
+      class="impostor-screen hidden"
       id="resultScreen"
     >
-      <div class="result-card">
 
-        <div class="result-meme-celebration">
+      <div class="impostor-result-card">
+
+        <div class="detective-results-heading">
 
           <img
             id="resultMemeImage"
             src="../../assets/mascot/congrats.png"
-            alt="Meme celebrates the completed Impostor Alert round"
+            alt="Meme celebrates the completed investigation"
           >
 
-          <div class="result-icon">
-            🚨
+          <div>
+
+            <p class="game-eyebrow">
+              Investigation Complete
+            </p>
+
+            <h1 id="resultHeading">
+              Digital Detective!
+            </h1>
+
           </div>
 
         </div>
 
 
-        <p class="game-eyebrow">
-          Investigation Complete
-        </p>
+        <div class="detective-rank-card">
 
-        <h1>
-          Final Score
-        </h1>
+          <span>
+            Detective Rank
+          </span>
+
+          <strong id="detectiveRank">
+            Rookie Investigator
+          </strong>
+
+        </div>
 
 
-        <div class="final-score">
+        <div class="impostor-final-score">
+
+          <span>
+            Final Score
+          </span>
 
           <strong id="finalScore">
             0
           </strong>
-
-          <span>
-            /
-
-            <span id="maximumScore">
-              80
-            </span>
-          </span>
 
         </div>
 
@@ -898,9 +1248,36 @@
         </div>
 
 
-        <div class="result-stat-grid">
+        <div class="impostor-result-grid">
 
           <article>
+
+            <span>
+              Cases Solved
+            </span>
+
+            <strong id="finalCasesSolved">
+              0/5
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Clues Found
+            </span>
+
+            <strong id="finalCluesFound">
+              0
+            </strong>
+
+          </article>
+
+
+          <article>
+
             <span>
               Accuracy
             </span>
@@ -908,21 +1285,25 @@
             <strong id="finalAccuracy">
               0%
             </strong>
+
           </article>
 
 
           <article>
+
             <span>
-              Correct
+              Best Streak
             </span>
 
-            <strong id="finalCorrect">
-              0/8
+            <strong id="finalBestStreak">
+              x0
             </strong>
+
           </article>
 
 
           <article>
+
             <span>
               Best Score
             </span>
@@ -930,10 +1311,12 @@
             <strong id="bestScore">
               0
             </strong>
+
           </article>
 
 
           <article>
+
             <span>
               Global Points Earned
             </span>
@@ -941,6 +1324,7 @@
             <strong id="globalPointsEarned">
               +0
             </strong>
+
           </article>
 
         </div>
@@ -949,7 +1333,10 @@
         <p
           class="result-message"
           id="resultMessage"
-        ></p>
+        >
+          Keep investigating usernames, messages, links, and account
+          behavior before trusting an unfamiliar profile.
+        </p>
 
 
         <div class="result-actions">
@@ -959,7 +1346,7 @@
             id="playAgain"
             type="button"
           >
-            Play Again
+            Investigate Again
           </button>
 
 
@@ -973,14 +1360,19 @@
         </div>
 
       </div>
+
     </section>
 
   </main>
 
 
-  <script src="../../js/arcade/arcade-score.js?v=8"></script>
+  <!-- ================================================
+       SCRIPTS
+  ================================================= -->
 
-  <script src="impostor-alert.js?v=1"></script>
+  <script src="../../js/arcade/arcade-score.js?v=21"></script>
+
+  <script src="impostor-alert.js?v=21"></script>
 
 </body>
 </html>
