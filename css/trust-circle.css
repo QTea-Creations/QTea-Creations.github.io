@@ -1,0 +1,274 @@
+/* =========================================================
+   SAFETII NET — TRUST CIRCLE
+========================================================= */
+
+.trust-situation-card {
+  margin-top: 26px;
+  padding: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f5f1ff,
+      #eefcff
+    );
+
+  border: 3px solid #ddd4ff;
+  border-radius: 26px;
+
+  box-shadow:
+    0 14px 30px
+    rgba(49, 58, 102, 0.08);
+}
+
+.trust-character-avatar {
+  width: 88px;
+  height: 88px;
+  flex: 0 0 auto;
+
+  display: grid;
+  place-items: center;
+
+  background: #ffffff;
+
+  border: 3px solid #cabaff;
+  border-radius: 24px;
+
+  font-size: 2.8rem;
+
+  box-shadow:
+    0 12px 24px
+    rgba(63, 54, 119, 0.12);
+}
+
+.trust-situation-copy {
+  flex: 1;
+}
+
+.trust-situation-copy h2 {
+  margin: 4px 0 8px;
+
+  color: #172448;
+
+  font-size: clamp(
+    1.3rem,
+    2vw,
+    1.8rem
+  );
+}
+
+.trust-situation-copy p:last-child {
+  margin: 0;
+
+  color: #66738a;
+
+  line-height: 1.6;
+}
+
+.trust-information-card {
+  margin-top: 22px;
+  padding: 30px;
+
+  background: #ffffff;
+
+  border: 3px solid #dce3f5;
+  border-radius: 26px;
+
+  text-align: center;
+
+  box-shadow:
+    0 16px 32px
+    rgba(49, 58, 102, 0.09);
+}
+
+.trust-information-card .question-label {
+  margin: 0;
+
+  color: #7d43ff;
+
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.trust-information-card blockquote {
+  max-width: 760px;
+  margin: 18px auto 0;
+
+  color: #172448;
+
+  font-size: clamp(
+    1.25rem,
+    2.2vw,
+    1.9rem
+  );
+
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.trust-audience-grid {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.trust-audience-choice {
+  min-height: 175px;
+  padding: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+
+  background: #ffffff;
+  color: #172448;
+
+  border: 3px solid #dce3f5;
+  border-radius: 24px;
+
+  font-family: inherit;
+  text-align: center;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 22px
+    rgba(49, 58, 102, 0.06);
+
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.trust-audience-choice:hover:not(:disabled) {
+  transform: translateY(-5px);
+
+  border-color: #7d43ff;
+
+  box-shadow:
+    0 16px 30px
+    rgba(62, 53, 120, 0.14);
+}
+
+.trust-audience-choice:focus-visible {
+  outline: 4px solid
+    rgba(125, 67, 255, 0.22);
+
+  outline-offset: 3px;
+}
+
+.trust-audience-choice:disabled {
+  cursor: default;
+}
+
+.trust-audience-icon {
+  display: block;
+
+  font-size: 2.7rem;
+}
+
+.trust-audience-choice strong {
+  display: block;
+
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.trust-audience-choice small {
+  display: block;
+
+  color: #758097;
+
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.anyone-choice {
+  border-color: #9edbd5;
+}
+
+.friends-choice {
+  border-color: #cbbcff;
+}
+
+.adults-choice {
+  border-color: #f2c27e;
+}
+
+.private-choice {
+  border-color: #aab4ca;
+}
+
+.trust-audience-choice.correct-answer,
+.trust-audience-choice.reveal-correct-answer {
+  background: #e9fff3;
+
+  border-color: #31bf76;
+
+  box-shadow:
+    0 0 0 5px
+    rgba(49, 191, 118, 0.13);
+}
+
+.trust-audience-choice.wrong-answer {
+  background: #fff0f3;
+
+  border-color: #ee5576;
+
+  box-shadow:
+    0 0 0 5px
+    rgba(238, 85, 118, 0.12);
+}
+
+.trust-audience-choice.reveal-correct-answer {
+  animation:
+    trustCorrectPulse
+    650ms ease;
+}
+
+@keyframes trustCorrectPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.025);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 760px) {
+  .trust-audience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-situation-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .trust-information-card {
+    padding: 22px;
+  }
+
+  .trust-audience-choice {
+    min-height: 150px;
+  }
+}
