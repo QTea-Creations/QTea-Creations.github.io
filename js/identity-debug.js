@@ -121,13 +121,47 @@
       return;
     }
 
-    duplicateIds.forEach(
-      ([id, count]) => {
-        fail(
-          `Duplicate ID #${id} appears ${count} times.`
-        );
-      }
+duplicates.forEach(
+  ([id, count]) => {
+    const matchingElements =
+      Array.from(
+        document.querySelectorAll(
+          `[id="${CSS.escape(id)}"]`
+        )
+      );
+
+    const locations =
+      matchingElements
+        .map(
+          (element, index) => {
+            const description = [
+              `${index + 1}.`,
+              `<${element.tagName.toLowerCase()}>`,
+              element.className
+                ? `class="${element.className}"`
+                : "",
+              element.getAttribute("href")
+                ? `href="${element.getAttribute("href")}"`
+                : ""
+            ]
+              .filter(Boolean)
+              .join(" ");
+
+            console.error(
+              `${DEBUG_PREFIX} Duplicate #${id}:`,
+              element
+            );
+
+            return description;
+          }
+        )
+        .join(" | ");
+
+    fail(
+      `Duplicate ID #${id} appears ${count} times: ${locations}`
     );
+  }
+);
   }
 
   function checkExpectedScripts() {
