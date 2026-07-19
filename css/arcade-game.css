@@ -3177,3 +3177,151 @@ a {
         transition: none;
     }
 }
+
+/* =========================================================
+   ARCADE GAME NAVIGATION
+========================================================= */
+
+.arcade-site-header {
+    min-height: 82px;
+    padding: 10px clamp(18px, 4vw, 58px);
+
+    display: grid;
+    grid-template-columns:
+        auto 1fr auto;
+
+    align-items: center;
+    gap: 24px;
+
+    background:
+        rgba(255, 255, 255, 0.97);
+
+    border-bottom:
+        3px solid
+        rgba(125, 67, 255, 0.14);
+
+    box-shadow:
+        0 7px 20px
+        rgba(42, 45, 88, 0.08);
+
+    position: relative;
+    z-index: 100;
+}
+
+.arcade-site-header .logo {
+    display: flex;
+    align-items: center;
+}
+
+.arcade-site-header .logo img {
+    display: block;
+
+    width: auto;
+    max-width: 180px;
+    height: 54px;
+
+    object-fit: contain;
+}
+
+.arcade-main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(12px, 2vw, 26px);
+}
+
+.arcade-main-nav a {
+    position: relative;
+
+    padding: 10px 2px;
+
+    color: var(--game-navy);
+
+    font-size: 0.84rem;
+    font-weight: 800;
+    text-decoration: none;
+
+    transition:
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+.arcade-main-nav a:hover {
+    color: var(--game-purple);
+
+    transform: translateY(-2px);
+}
+
+.arcade-main-nav .active-nav-link {
+    color: var(--game-purple);
+}
+
+.arcade-main-nav .active-nav-link::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2px;
+
+    height: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--game-purple),
+            var(--game-cyan)
+        );
+
+    border-radius: 999px;
+}
+
+.arcade-navbar-points {
+    white-space: nowrap;
+}
+
+@media (max-width: 930px) {
+    .arcade-site-header {
+        grid-template-columns:
+            auto auto;
+
+        justify-content: space-between;
+    }
+
+    .arcade-main-nav {
+        grid-column: 1 / -1;
+
+        order: 3;
+
+        padding-top: 4px;
+    }
+}
+
+@media (max-width: 620px) {
+    .arcade-site-header .logo img {
+        max-width: 135px;
+        height: 46px;
+    }
+
+    .arcade-main-nav {
+        justify-content: flex-start;
+
+        overflow-x: auto;
+        flex-wrap: nowrap;
+
+        padding-bottom: 7px;
+    }
+
+    .arcade-main-nav a {
+        flex: 0 0 auto;
+
+        font-size: 0.75rem;
+    }
+
+    .arcade-navbar-points {
+        padding: 7px 10px;
+
+        font-size: 0.72rem;
+    }
+}
