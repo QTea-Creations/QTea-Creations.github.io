@@ -2,7 +2,7 @@
 
 /* =========================================================
    SAFETII NET — CYBER ARCADE
-   USERNAME LAB: MIXER EDITION
+   USERNAME LAB: CREATIVE FACTORY EDITION
 ========================================================= */
 
 (() => {
@@ -25,407 +25,409 @@
     mild: {
       label: "Mild",
       basePoints: 10,
-      roundSeconds: 100,
-      travelSeconds: 12,
-      spawnDelay: 650,
-      startingLives: 4,
-      usernameGoal: 5,
-      ingredientsNeeded: 3
+      roundSeconds: 120,
+      rerolls: 12,
+      challenges: 5,
+      contaminationChance: 0.13,
+      spinDuration: 850
     },
 
     spicy: {
       label: "Spicy",
       basePoints: 20,
-      roundSeconds: 85,
-      travelSeconds: 9,
-      spawnDelay: 525,
-      startingLives: 3,
-      usernameGoal: 5,
-      ingredientsNeeded: 3
+      roundSeconds: 100,
+      rerolls: 10,
+      challenges: 5,
+      contaminationChance: 0.22,
+      spinDuration: 1000
     },
 
     hot: {
       label: "Hot",
       basePoints: 30,
-      roundSeconds: 70,
-      travelSeconds: 7,
-      spawnDelay: 425,
-      startingLives: 3,
-      usernameGoal: 5,
-      ingredientsNeeded: 4
+      roundSeconds: 85,
+      rerolls: 8,
+      challenges: 5,
+      contaminationChance: 0.32,
+      spinDuration: 1150
     }
   };
 
   /* =====================================================
-     INGREDIENT BANKS
+     SAFE WORD BANKS
   ===================================================== */
 
-  const safeIngredients = [
-    {
-      id: "safe-purple",
-      text: "Purple",
-      category: "Color",
-      explanation:
-        "A favorite color is broad self-expression."
-    },
+  const wordBanks = {
+    style: [
+      "Cosmic",
+      "Neon",
+      "Purple",
+      "Silver",
+      "Electric",
+      "Mystic",
+      "Golden",
+      "Shadow",
+      "Pixel",
+      "Turbo",
+      "Glowing",
+      "Frosty",
+      "Sunny",
+      "Epic",
+      "Super",
+      "Mega"
+    ],
 
-    {
-      id: "safe-blue",
-      text: "Blue",
-      category: "Color",
-      explanation:
-        "A color does not reveal a real identity."
-    },
+    creature: [
+      "Dragon",
+      "Panda",
+      "Falcon",
+      "Dolphin",
+      "Tiger",
+      "Phoenix",
+      "Wolf",
+      "Otter",
+      "Raven",
+      "Gecko",
+      "Penguin",
+      "Fox",
+      "Koala",
+      "Lynx",
+      "Robot",
+      "Unicorn"
+    ],
 
-    {
-      id: "safe-silver",
-      text: "Silver",
-      category: "Color",
-      explanation:
-        "A creative color word is safe for a username."
-    },
+    power: [
+      "Spark",
+      "Blaze",
+      "Zoom",
+      "Dash",
+      "Storm",
+      "Quest",
+      "Pulse",
+      "Shield",
+      "Nova",
+      "Comet",
+      "Bolt",
+      "Glow",
+      "Force",
+      "Beam",
+      "Whirl",
+      "Wave"
+    ],
 
-    {
-      id: "safe-cosmic",
-      text: "Cosmic",
-      category: "Imaginary word",
-      explanation:
-        "An imaginative word helps create a username without exposing personal details."
-    },
+    space: [
+      "Cosmic",
+      "Nova",
+      "Comet",
+      "Orbit",
+      "Galaxy",
+      "Lunar",
+      "Meteor",
+      "Astro",
+      "Rocket",
+      "Saturn",
+      "Nebula",
+      "Star"
+    ],
 
-    {
-      id: "safe-shadow",
-      text: "Shadow",
-      category: "Imaginary word",
-      explanation:
-        "A fictional or descriptive word is generally safe."
-    },
+    hero: [
+      "Hero",
+      "Guardian",
+      "Ranger",
+      "Defender",
+      "Captain",
+      "Legend",
+      "Champion",
+      "Protector",
+      "Knight",
+      "Scout",
+      "Agent",
+      "Avenger"
+    ],
 
-    {
-      id: "safe-neon",
-      text: "Neon",
-      category: "Style",
-      explanation:
-        "A style word adds creativity without revealing identity."
-    },
+    silly: [
+      "Wobble",
+      "Noodle",
+      "Pickle",
+      "Giggle",
+      "Bouncy",
+      "Sneezy",
+      "Banana",
+      "Jelly",
+      "Wacky",
+      "Marshmallow",
+      "Cupcake",
+      "Bubble"
+    ],
 
-    {
-      id: "safe-dragon",
-      text: "Dragon",
-      category: "Creature",
-      explanation:
-        "A fantasy creature is a strong, safe username ingredient."
-    },
+    hobby: [
+      "Gamer",
+      "Artist",
+      "Builder",
+      "Coder",
+      "Dancer",
+      "Reader",
+      "Maker",
+      "Inventor",
+      "Painter",
+      "Dreamer",
+      "Explorer",
+      "Designer"
+    ],
 
-    {
-      id: "safe-dolphin",
-      text: "Dolphin",
-      category: "Animal",
-      explanation:
-        "A favorite animal is usually safe to include."
-    },
+    nature: [
+      "River",
+      "Cloud",
+      "Meadow",
+      "Forest",
+      "Ocean",
+      "Sunset",
+      "Moon",
+      "Breeze",
+      "Rain",
+      "Flower",
+      "Mountain",
+      "Leaf"
+    ]
+  };
 
-    {
-      id: "safe-panda",
-      text: "Panda",
-      category: "Animal",
-      explanation:
-        "An animal word does not identify the user."
-    },
+  /* =====================================================
+     IDENTITY CONTAMINATION BANK
+  ===================================================== */
 
+  const contaminatedWords = [
     {
-      id: "safe-falcon",
-      text: "Falcon",
-      category: "Animal",
-      explanation:
-        "A broad animal choice is safe."
-    },
-
-    {
-      id: "safe-robot",
-      text: "Robot",
-      category: "Interest",
-      explanation:
-        "A general interest can be used without revealing who someone is."
-    },
-
-    {
-      id: "safe-gamer",
-      text: "Gamer",
-      category: "Hobby",
-      explanation:
-        "A broad hobby word is normally safe."
-    },
-
-    {
-      id: "safe-artist",
-      text: "Artist",
-      category: "Hobby",
-      explanation:
-        "A general creative interest is safe."
-    },
-
-    {
-      id: "safe-builder",
-      text: "Builder",
-      category: "Hobby",
-      explanation:
-        "A broad talent or hobby protects real identity."
-    },
-
-    {
-      id: "safe-spark",
-      text: "Spark",
-      category: "Power",
-      explanation:
-        "A fictional power word makes a username more creative."
-    },
-
-    {
-      id: "safe-blaze",
-      text: "Blaze",
-      category: "Power",
-      explanation:
-        "A dramatic fictional word is safe."
-    },
-
-    {
-      id: "safe-zoom",
-      text: "Zoom",
-      category: "Power",
-      explanation:
-        "An action word adds personality without exposing private details."
-    },
-
-    {
-      id: "safe-nova",
-      text: "Nova",
-      category: "Space",
-      explanation:
-        "A space-themed word is creative and non-identifying."
-    },
-
-    {
-      id: "safe-comet",
-      text: "Comet",
-      category: "Space",
-      explanation:
-        "A space word is safe for a username."
-    },
-
-    {
-      id: "safe-orbit",
-      text: "Orbit",
-      category: "Space",
-      explanation:
-        "A general science or space word protects identity."
-    },
-
-    {
-      id: "safe-pixel",
-      text: "Pixel",
-      category: "Technology",
-      explanation:
-        "A technology word is safe when it does not include personal information."
-    },
-
-    {
-      id: "safe-glitch",
-      text: "Glitch",
-      category: "Technology",
-      explanation:
-        "A fictional technology word is safe."
-    },
-
-    {
-      id: "safe-quest",
-      text: "Quest",
-      category: "Adventure",
-      explanation:
-        "An adventure word adds creativity."
-    },
-
-    {
-      id: "safe-ranger",
-      text: "Ranger",
-      category: "Adventure",
-      explanation:
-        "A fictional role is safe for a username."
-    },
-
-    {
-      id: "safe-whiz",
-      text: "Whiz",
-      category: "Talent",
-      explanation:
-        "A playful talent word does not identify the person."
-    }
-  ];
-
-  const dangerousIngredients = [
-    {
-      id: "danger-maya",
       text: "Maya",
-      category: "Real first name",
-      explanation:
-        "A real first name can help strangers identify the account owner."
+      category: "Real name",
+      reason:
+        "A real first name can help strangers identify you."
     },
 
     {
-      id: "danger-johnson",
       text: "Johnson",
       category: "Real last name",
-      explanation:
-        "A real last name may expose family identity."
+      reason:
+        "A real last name may reveal your family identity."
     },
 
     {
-      id: "danger-maya-johnson",
-      text: "MayaJohnson",
-      category: "Full-name clue",
-      explanation:
-        "A first and last name can reveal exactly who owns the account."
-    },
-
-    {
-      id: "danger-2014",
       text: "2014",
       category: "Birth year",
-      explanation:
-        "A birth year may reveal the user's age."
+      reason:
+        "A birth year may reveal your age."
     },
 
     {
-      id: "danger-october12",
       text: "October12",
       category: "Birthday",
-      explanation:
-        "An exact birthday is personal identifying information."
+      reason:
+        "An exact birthday is private identifying information."
     },
 
     {
-      id: "danger-age10",
       text: "Age10",
       category: "Exact age",
-      explanation:
+      reason:
         "An exact age reveals personal information."
     },
 
     {
-      id: "danger-lakeview",
-      text: "LakeviewElementary",
+      text: "LakeviewSchool",
       category: "School name",
-      explanation:
+      reason:
         "A school name can reveal where a child can be found."
     },
 
     {
-      id: "danger-room204",
-      text: "Room204",
-      category: "School location",
-      explanation:
-        "A room number can reveal a precise location."
-    },
-
-    {
-      id: "danger-detroit",
       text: "Detroit",
-      category: "City",
-      explanation:
+      category: "Real city",
+      reason:
         "A real city narrows down where someone lives."
     },
 
     {
-      id: "danger-riverstreet",
       text: "RiverStreet",
       category: "Street name",
-      explanation:
-        "A street name can reveal where someone lives."
+      reason:
+        "A street name may reveal where someone lives."
     },
 
     {
-      id: "danger-1842",
-      text: "1842",
-      category: "Address number",
-      explanation:
-        "An address number can become dangerous when combined with other clues."
-    },
-
-    {
-      id: "danger-313",
-      text: "313",
-      category: "Phone area code",
-      explanation:
-        "An area code can reveal a general location."
-    },
-
-    {
-      id: "danger-phone",
-      text: "5550184",
+      text: "3135550184",
       category: "Phone number",
-      explanation:
+      reason:
         "A phone number allows strangers to contact someone."
     },
 
     {
-      id: "danger-password",
       text: "DragonHero42",
       category: "Password",
-      explanation:
-        "A password should never be used as a public username ingredient."
+      reason:
+        "A password should never appear in a public username."
     },
 
     {
-      id: "danger-code",
-      text: "482991",
+      text: "Code482991",
       category: "Verification code",
-      explanation:
-        "A verification code can give someone access to an account."
+      reason:
+        "Verification codes can give someone access to an account."
     },
 
     {
-      id: "danger-studentid",
-      text: "StudentID72264",
-      category: "Identification number",
-      explanation:
-        "Student identification details should remain private."
-    },
-
-    {
-      id: "danger-jersey14",
-      text: "Lakeside14",
-      category: "Team and jersey clue",
-      explanation:
-        "A team name and jersey number may identify a specific player."
-    },
-
-    {
-      id: "danger-saturday9",
-      text: "Saturday9AM",
-      category: "Repeating schedule",
-      explanation:
-        "A regular schedule can reveal when someone will be at a location."
-    },
-
-    {
-      id: "danger-oakpark",
-      text: "OakPark",
-      category: "Frequent location",
-      explanation:
-        "A real location may reveal where someone spends time."
-    },
-
-    {
-      id: "danger-grade5",
       text: "FifthGrade",
       category: "Grade level",
-      explanation:
+      reason:
         "A grade level can reveal an approximate age."
+    },
+
+    {
+      text: "Room204",
+      category: "Exact location",
+      reason:
+        "A room number may reveal a precise location."
+    },
+
+    {
+      text: "Lakeside14",
+      category: "Team identity",
+      reason:
+        "A team name and jersey number may identify a specific child."
     }
   ];
 
   /* =====================================================
-     STATE
+     CREATIVE CHALLENGES
+  ===================================================== */
+
+  const challenges = [
+    {
+      id: "space",
+      icon: "🚀",
+      title: "Space Explorer",
+      description:
+        "Build a username using at least one space-themed word.",
+      requiredCategories: ["space"],
+      bonusText:
+        "Space mission complete!"
+    },
+
+    {
+      id: "animal",
+      icon: "🐾",
+      title: "Animal Adventure",
+      description:
+        "Build a username containing a safe animal or creature.",
+      requiredCategories: ["creature"],
+      bonusText:
+        "Animal mission complete!"
+    },
+
+    {
+      id: "hero",
+      icon: "🦸",
+      title: "Cyber Hero",
+      description:
+        "Build a username containing a heroic word.",
+      requiredCategories: ["hero"],
+      bonusText:
+        "Hero mission complete!"
+    },
+
+    {
+      id: "silly",
+      icon: "🤪",
+      title: "Silly Username",
+      description:
+        "Build a funny username using at least one silly word.",
+      requiredCategories: ["silly"],
+      bonusText:
+        "Silly mission complete!"
+    },
+
+    {
+      id: "nature",
+      icon: "🌿",
+      title: "Nature Creator",
+      description:
+        "Build a username containing a nature word.",
+      requiredCategories: ["nature"],
+      bonusText:
+        "Nature mission complete!"
+    },
+
+    {
+      id: "three-types",
+      icon: "🌈",
+      title: "Variety Builder",
+      description:
+        "Use three different safe word categories.",
+      uniqueCategoriesRequired: 3,
+      bonusText:
+        "Variety mission complete!"
+    },
+
+    {
+      id: "no-numbers",
+      icon: "🔤",
+      title: "Word Power",
+      description:
+        "Build a safe username using only words and no numbers.",
+      disallowNumbers: true,
+      bonusText:
+        "Word-only mission complete!"
+    },
+
+    {
+      id: "tech",
+      icon: "💻",
+      title: "Tech Creator",
+      description:
+        "Build a username using a technology or hobby word.",
+      requiredCategories: ["hobby", "style"],
+      matchAnyRequiredCategory: true,
+      bonusText:
+        "Tech mission complete!"
+    }
+  ];
+
+  /* =====================================================
+     WHEEL DEFINITIONS
+  ===================================================== */
+
+  const wheelDefinitions = [
+    {
+      element: "wheelOne",
+      word: "wheelOneWord",
+      category: "wheelOneCategory",
+      warning: "wheelOneWarning",
+      lockButton: "wheelOneLock",
+      rerollButton: "wheelOneReroll",
+      defaultCategory: "style"
+    },
+
+    {
+      element: "wheelTwo",
+      word: "wheelTwoWord",
+      category: "wheelTwoCategory",
+      warning: "wheelTwoWarning",
+      lockButton: "wheelTwoLock",
+      rerollButton: "wheelTwoReroll",
+      defaultCategory: "creature"
+    },
+
+    {
+      element: "wheelThree",
+      word: "wheelThreeWord",
+      category: "wheelThreeCategory",
+      warning: "wheelThreeWarning",
+      lockButton: "wheelThreeLock",
+      rerollButton: "wheelThreeReroll",
+      defaultCategory: "power"
+    }
+  ];
+
+  /* =====================================================
+     GAME STATE
   ===================================================== */
 
   let selectedHeat =
@@ -434,19 +436,31 @@
   let settings =
     heatSettings.mild;
 
-  let ingredientQueue =
+  let roundChallenges =
     [];
 
-  let activeIngredient =
+  let currentChallengeIndex =
+    0;
+
+  let currentChallenge =
     null;
 
-  let activeIngredientCard =
-    null;
-
-  let selectedIngredients =
+  let wheels =
     [];
 
   let score =
+    0;
+
+  let timeRemaining =
+    90;
+
+  let rerollsRemaining =
+    8;
+
+  let usernamesBuilt =
+    0;
+
+  let contaminantsRemoved =
     0;
 
   let combo =
@@ -455,59 +469,35 @@
   let bestCombo =
     0;
 
-  let lives =
-    3;
-
-  let timeRemaining =
-    75;
-
-  let usernamesBuilt =
+  let bestCreativityScore =
     0;
 
-  let safeIngredientsAccepted =
+  let correctScans =
     0;
 
-  let dangerousIngredientsEjected =
+  let failedScans =
     0;
 
-  let correctActions =
-    0;
-
-  let wrongActions =
-    0;
-
-  let ingredientScannerUses =
+  let decontaminateUses =
     2;
 
-  let purifyUses =
-    1;
+  let hintUses =
+    2;
 
   let gameRunning =
     false;
 
-  let actionLocked =
+  let machineSpinning =
     false;
 
-  let ingredientSelected =
+  let challengeLocked =
     false;
 
   let timerInterval =
     null;
 
-  let animationFrame =
-    null;
-
-  let spawnTimeout =
-    null;
-
   let feedbackTimeout =
     null;
-
-  let ingredientStartTime =
-    0;
-
-  let ingredientTravelDuration =
-    10000;
 
   /* =====================================================
      HELPERS
@@ -557,6 +547,26 @@
     return copy;
   }
 
+  function randomItem(items) {
+    return items[
+      Math.floor(
+        Math.random() *
+        items.length
+      )
+    ];
+  }
+
+  function titleCase(value) {
+    return String(value)
+      .split("-")
+      .map(
+        (part) =>
+          part.charAt(0).toUpperCase() +
+          part.slice(1)
+      )
+      .join(" ");
+  }
+
   function showScreen(screenId) {
     [
       "introScreen",
@@ -588,106 +598,6 @@
     );
   }
 
-  function makeIngredientQueue() {
-    const queue = [];
-
-    const safeCount =
-      settings.usernameGoal *
-      settings.ingredientsNeeded +
-      8;
-
-    const dangerCount =
-      Math.ceil(
-        safeCount * 0.7
-      );
-
-    for (
-      let index = 0;
-      index < safeCount;
-      index += 1
-    ) {
-      const ingredient =
-        safeIngredients[
-          Math.floor(
-            Math.random() *
-            safeIngredients.length
-          )
-        ];
-
-      queue.push({
-        ...ingredient,
-        instanceId:
-          `${ingredient.id}-${index}-safe`,
-        safe: true
-      });
-    }
-
-    for (
-      let index = 0;
-      index < dangerCount;
-      index += 1
-    ) {
-      const ingredient =
-        dangerousIngredients[
-          Math.floor(
-            Math.random() *
-            dangerousIngredients.length
-          )
-        ];
-
-      queue.push({
-        ...ingredient,
-        instanceId:
-          `${ingredient.id}-${index}-danger`,
-        safe: false
-      });
-    }
-
-    return shuffle(queue);
-  }
-
-  function getCurrentUsername() {
-    return selectedIngredients
-      .map(
-        (ingredient) =>
-          ingredient.text
-      )
-      .join("");
-  }
-
-  function getCreativityPercent() {
-    const required =
-      settings.ingredientsNeeded;
-
-    return Math.min(
-      100,
-      (
-        selectedIngredients.length /
-        required
-      ) * 100
-    );
-  }
-
-  function getComboMultiplier() {
-    if (combo >= 8) {
-      return 5;
-    }
-
-    if (combo >= 6) {
-      return 4;
-    }
-
-    if (combo >= 4) {
-      return 3;
-    }
-
-    if (combo >= 2) {
-      return 2;
-    }
-
-    return 1;
-  }
-
   function setMeme(
     title,
     message,
@@ -710,6 +620,34 @@
       image.src =
         `../../assets/mascot/${imageName}.png`;
     }
+  }
+
+  function getCurrentUsername() {
+    return wheels
+      .map(
+        (wheel) =>
+          wheel.word.text
+      )
+      .join("");
+  }
+
+  function getContaminatedWheels() {
+    return wheels.filter(
+      (wheel) =>
+        wheel.word.contaminated
+    );
+  }
+
+  function getSafeCategories() {
+    return wheels
+      .filter(
+        (wheel) =>
+          !wheel.word.contaminated
+      )
+      .map(
+        (wheel) =>
+          wheel.word.category
+      );
   }
 
   /* =====================================================
@@ -745,20 +683,176 @@
     });
 
   /* =====================================================
+     CREATE WORD
+  ===================================================== */
+
+  function createSafeWord(category) {
+    const bank =
+      wordBanks[category] ||
+      wordBanks.style;
+
+    return {
+      text:
+        randomItem(bank),
+      category,
+      contaminated: false,
+      reason: ""
+    };
+  }
+
+  function createContaminatedWord() {
+    const item =
+      randomItem(
+        contaminatedWords
+      );
+
+    return {
+      text:
+        item.text,
+      category:
+        item.category,
+      contaminated: true,
+      reason:
+        item.reason
+    };
+  }
+
+  function chooseCategoryForWheel(
+    wheelIndex
+  ) {
+    const baseCategories = [
+      ["style", "space", "nature", "silly"],
+      ["creature", "hero", "hobby", "nature"],
+      ["power", "space", "hero", "silly"]
+    ];
+
+    const challengeCategory =
+      currentChallenge
+        ?.requiredCategories?.[0];
+
+    if (
+      challengeCategory &&
+      Math.random() < 0.44
+    ) {
+      return challengeCategory;
+    }
+
+    return randomItem(
+      baseCategories[
+        wheelIndex
+      ] ||
+      ["style", "creature", "power"]
+    );
+  }
+
+  function generateWheelWord(
+    wheelIndex,
+    forceSafe = false
+  ) {
+    const shouldContaminate =
+      !forceSafe &&
+      Math.random() <
+        settings.contaminationChance;
+
+    if (shouldContaminate) {
+      return createContaminatedWord();
+    }
+
+    return createSafeWord(
+      chooseCategoryForWheel(
+        wheelIndex
+      )
+    );
+  }
+
+  /* =====================================================
+     INITIALIZE WHEELS
+  ===================================================== */
+
+  function initializeWheels() {
+    wheels =
+      wheelDefinitions.map(
+        (definition, index) => ({
+          ...definition,
+          index,
+          locked: false,
+          word:
+            createSafeWord(
+              definition.defaultCategory
+            )
+        })
+      );
+
+    renderAllWheels();
+  }
+
+  function renderAllWheels() {
+    wheels.forEach(
+      renderWheel
+    );
+
+    updateUsernameDisplay();
+  }
+
+  function renderWheel(wheel) {
+    setText(
+      wheel.word,
+      wheel.word.text
+    );
+
+    setText(
+      wheel.category,
+      wheel.word.contaminated
+        ? wheel.word.category
+        : titleCase(
+            wheel.word.category
+          )
+    );
+
+    const warning =
+      byId(wheel.warning);
+
+    warning?.classList.toggle(
+      "hidden",
+      !wheel.word.contaminated
+    );
+
+    const wheelElement =
+      byId(wheel.element);
+
+    wheelElement?.classList.toggle(
+      "contaminated-wheel",
+      wheel.word.contaminated
+    );
+
+    wheelElement?.classList.toggle(
+      "locked-wheel",
+      wheel.locked
+    );
+
+    const lockButton =
+      byId(wheel.lockButton);
+
+    if (lockButton) {
+      lockButton.textContent =
+        wheel.locked
+          ? "🔒 Locked"
+          : "🔓 Lock";
+
+      lockButton.classList.toggle(
+        "active-lock",
+        wheel.locked
+      );
+    }
+  }
+
+  /* =====================================================
      START GAME
   ===================================================== */
 
   function startGame() {
     clearInterval(
       timerInterval
-    );
-
-    cancelAnimationFrame(
-      animationFrame
-    );
-
-    clearTimeout(
-      spawnTimeout
     );
 
     clearTimeout(
@@ -771,19 +865,33 @@
       ] ||
       heatSettings.mild;
 
-    ingredientQueue =
-      makeIngredientQueue();
+    roundChallenges =
+      shuffle(
+        challenges
+      ).slice(
+        0,
+        settings.challenges
+      );
 
-    activeIngredient =
+    currentChallengeIndex =
+      0;
+
+    currentChallenge =
       null;
-
-    activeIngredientCard =
-      null;
-
-    selectedIngredients =
-      [];
 
     score =
+      0;
+
+    timeRemaining =
+      settings.roundSeconds;
+
+    rerollsRemaining =
+      settings.rerolls;
+
+    usernamesBuilt =
+      0;
+
+    contaminantsRemoved =
       0;
 
     combo =
@@ -792,40 +900,28 @@
     bestCombo =
       0;
 
-    lives =
-      settings.startingLives;
-
-    timeRemaining =
-      settings.roundSeconds;
-
-    usernamesBuilt =
+    bestCreativityScore =
       0;
 
-    safeIngredientsAccepted =
+    correctScans =
       0;
 
-    dangerousIngredientsEjected =
+    failedScans =
       0;
 
-    correctActions =
-      0;
-
-    wrongActions =
-      0;
-
-    ingredientScannerUses =
+    decontaminateUses =
       2;
 
-    purifyUses =
-      1;
+    hintUses =
+      2;
 
     gameRunning =
       true;
 
-    actionLocked =
+    machineSpinning =
       false;
 
-    ingredientSelected =
+    challengeLocked =
       false;
 
     arcade.startRound({
@@ -839,7 +935,7 @@
         selectedHeat,
 
       questionCount:
-        settings.usernameGoal
+        settings.challenges
     });
 
     setText(
@@ -848,31 +944,26 @@
     );
 
     setText(
-      "usernameGoal",
-      settings.usernameGoal
+      "challengeTotal",
+      settings.challenges
     );
 
     setText(
-      "recipeGoal",
-      `Add ${settings.ingredientsNeeded} safe ingredients`
-    );
-
-    setText(
-      "ingredientScannerCount",
+      "decontaminateCount",
       "2 available"
     );
 
     setText(
-      "purifyCount",
-      "1 available"
+      "memeHintCount",
+      "2 available"
     );
 
-    byId("ingredientScannerButton")
+    byId("decontaminateButton")
       ?.removeAttribute(
         "disabled"
       );
 
-    byId("purifyButton")
+    byId("memeHintButton")
       ?.removeAttribute(
         "disabled"
       );
@@ -882,27 +973,26 @@
         "danger-time"
       );
 
-    resetMixer();
+    initializeWheels();
 
     showScreen(
       "playScreen"
     );
 
-    updateHud();
+    loadChallenge();
 
-    setMeme(
-      "Lab ready!",
-      "Catch each ingredient and decide whether to mix or eject it.",
-      "thinking"
-    );
+    updateHud();
 
     startTimer();
 
-    spawnTimeout =
-      window.setTimeout(
-        spawnNextIngredient,
-        600
-      );
+    window.setTimeout(
+      () => {
+        spinAllWheels({
+          chargeReroll: false
+        });
+      },
+      450
+    );
   }
 
   function connectStartButton() {
@@ -919,23 +1009,19 @@
 
     if (
       button.dataset
-        .usernameLabConnected ===
+        .usernameFactoryConnected ===
       "true"
     ) {
       return;
     }
 
     button.dataset
-      .usernameLabConnected =
+      .usernameFactoryConnected =
       "true";
 
     button.addEventListener(
       "click",
       startGame
-    );
-
-    console.log(
-      "Username Lab start button connected."
     );
   }
 
@@ -951,7 +1037,11 @@
     timerInterval =
       window.setInterval(
         () => {
-          if (!gameRunning) {
+          if (
+            !gameRunning ||
+            machineSpinning ||
+            challengeLocked
+          ) {
             return;
           }
 
@@ -978,602 +1068,785 @@
       );
   }
 
-  function removeTime(seconds) {
-    timeRemaining =
-      Math.max(
-        0,
-        timeRemaining - seconds
-      );
-
-    updateHud();
-
-    if (
-      timeRemaining <= 0
-    ) {
-      endGame("time");
-    }
-  }
-
   /* =====================================================
-     INGREDIENT SPAWNING
+     LOAD CHALLENGE
   ===================================================== */
 
-  function spawnNextIngredient() {
+  function loadChallenge() {
     if (
-      !gameRunning ||
-      actionLocked ||
-      activeIngredientCard
+      currentChallengeIndex >=
+      roundChallenges.length
     ) {
+      endGame("complete");
       return;
     }
 
-    if (
-      ingredientQueue.length === 0
-    ) {
-      ingredientQueue =
-        makeIngredientQueue();
-    }
+    currentChallenge =
+      roundChallenges[
+        currentChallengeIndex
+      ];
 
-    activeIngredient =
-      ingredientQueue.shift();
-
-    if (!activeIngredient) {
-      return;
-    }
-
-    ingredientSelected =
+    challengeLocked =
       false;
 
-    const layer =
-      byId("ingredientLayer");
-
-    if (!layer) {
-      endGame("error");
-      return;
-    }
-
-    layer.innerHTML = "";
-
-    const card =
-      document.createElement(
-        "article"
-      );
-
-    card.className =
-      "moving-ingredient-card";
-
-    card.id =
-      "activeIngredientCard";
-
-    card.draggable =
-      true;
-
-    card.tabIndex =
-      0;
-
-    card.setAttribute(
-      "role",
-      "button"
-    );
-
-    card.setAttribute(
-      "aria-label",
-      `${activeIngredient.text}. Select this ingredient, then add it to the mixer or eject it.`
-    );
-
-    card.innerHTML = `
-      <span class="ingredient-card-icon">
-        ${getIngredientIcon(
-          activeIngredient.category
-        )}
-      </span>
-
-      <div>
-        <strong>
-          ${escapeHtml(
-            activeIngredient.text
-          )}
-        </strong>
-
-        <small>
-          Inspect me!
-        </small>
-      </div>
-    `;
-
-    layer.appendChild(
-      card
-    );
-
-    activeIngredientCard =
-      card;
-
     setText(
-      "activeIngredientText",
-      activeIngredient.text
+      "challengeNumber",
+      currentChallengeIndex + 1
     );
 
     setText(
-      "activeIngredientCategory",
-      "Unknown"
+      "challengeIcon",
+      currentChallenge.icon
     );
 
-    card.addEventListener(
-      "dragstart",
-      handleIngredientDragStart
+    setText(
+      "challengeTitle",
+      currentChallenge.title
     );
 
-    card.addEventListener(
-      "dragend",
-      handleIngredientDragEnd
+    setText(
+      "challengeDescription",
+      currentChallenge.description
     );
 
-    card.addEventListener(
-      "click",
-      () => {
-        selectIngredientCard();
-      }
+    setText(
+      "factoryStatus",
+      "Ready"
     );
 
-    card.addEventListener(
-      "keydown",
-      (event) => {
-        if (
-          event.key === "Enter" ||
-          event.key === " "
-        ) {
-          event.preventDefault();
-
-          selectIngredientCard();
-        }
-      }
+    setText(
+      "inspectionStatus",
+      "Scanner Ready"
     );
 
-    ingredientStartTime =
-      performance.now();
+    setText(
+      "inspectionMessage",
+      "Spin, lock, and inspect your creation"
+    );
 
-    ingredientTravelDuration =
-      settings.travelSeconds *
-      1000;
+    setText(
+      "inspectionIcon",
+      "🛡️"
+    );
 
-    animateIngredient();
-  }
-
-  function escapeHtml(value) {
-    const temporary =
-      document.createElement(
-        "div"
+    byId("usernameFeedback")
+      ?.classList.add(
+        "hidden"
       );
 
-    temporary.textContent =
-      String(value);
+    unlockAllWheels();
 
-    return temporary.innerHTML;
-  }
-
-  function getIngredientIcon(category) {
-    const lower =
-      String(category).toLowerCase();
-
-    if (
-      lower.includes("color")
-    ) {
-      return "🎨";
-    }
-
-    if (
-      lower.includes("animal") ||
-      lower.includes("creature")
-    ) {
-      return "🐾";
-    }
-
-    if (
-      lower.includes("space")
-    ) {
-      return "🚀";
-    }
-
-    if (
-      lower.includes("technology")
-    ) {
-      return "💻";
-    }
-
-    if (
-      lower.includes("hobby") ||
-      lower.includes("talent") ||
-      lower.includes("interest")
-    ) {
-      return "⭐";
-    }
-
-    if (
-      lower.includes("name") ||
-      lower.includes("birthday") ||
-      lower.includes("age")
-    ) {
-      return "🪪";
-    }
-
-    if (
-      lower.includes("school") ||
-      lower.includes("grade")
-    ) {
-      return "🏫";
-    }
-
-    if (
-      lower.includes("location") ||
-      lower.includes("city") ||
-      lower.includes("street") ||
-      lower.includes("address")
-    ) {
-      return "📍";
-    }
-
-    if (
-      lower.includes("password") ||
-      lower.includes("code")
-    ) {
-      return "🔑";
-    }
-
-    return "🧩";
-  }
-
-  function animateIngredient() {
-    cancelAnimationFrame(
-      animationFrame
-    );
-
-    function frame(now) {
-      if (
-        !gameRunning ||
-        !activeIngredientCard ||
-        actionLocked
-      ) {
-        return;
-      }
-
-      const elapsed =
-        now -
-        ingredientStartTime;
-
-      const progress =
-        Math.min(
-          1,
-          elapsed /
-          ingredientTravelDuration
-        );
-
-      activeIngredientCard.style.left =
-        `${progress * 77}%`;
-
-      if (
-        progress >= 1
-      ) {
-        handleMissedIngredient();
-        return;
-      }
-
-      animationFrame =
-        requestAnimationFrame(
-          frame
-        );
-    }
-
-    animationFrame =
-      requestAnimationFrame(
-        frame
-      );
-  }
-
-  function selectIngredientCard() {
-    if (
-      !gameRunning ||
-      actionLocked ||
-      !activeIngredientCard
-    ) {
-      return;
-    }
-
-    ingredientSelected =
-      !ingredientSelected;
-
-    activeIngredientCard
-      .classList.toggle(
-        "selected-ingredient-card",
-        ingredientSelected
-      );
+    updateUsernameDisplay();
 
     setMeme(
-      ingredientSelected
-        ? "Ingredient selected!"
-        : "Keep inspecting!",
-      ingredientSelected
-        ? "Now choose the Username Mixer or Identity Eject Bin."
-        : "Catch the ingredient before it reaches contamination.",
+      "New challenge!",
+      currentChallenge.description,
       "thinking"
     );
   }
 
-  function handleIngredientDragStart(
-    event
-  ) {
-    if (
-      !gameRunning ||
-      actionLocked ||
-      !activeIngredientCard
-    ) {
-      event.preventDefault();
-      return;
-    }
-
-    ingredientSelected =
-      true;
-
-    activeIngredientCard
-      .classList.add(
-        "dragging"
-      );
-
-    if (
-      event.dataTransfer
-    ) {
-      event.dataTransfer.effectAllowed =
-        "move";
-
-      event.dataTransfer.setData(
-        "text/plain",
-        activeIngredient
-          ?.instanceId ||
-        "username-ingredient"
-      );
-    }
-  }
-
-  function handleIngredientDragEnd() {
-    activeIngredientCard
-      ?.classList.remove(
-        "dragging"
-      );
-
-    closeDropZones();
-  }
-
   /* =====================================================
-     DROP ZONES
+     SPINNING
   ===================================================== */
 
-  function connectDropZone(
-    zoneId,
-    action
-  ) {
-    const zone =
-      byId(zoneId);
+  function canReroll() {
+    if (
+      !gameRunning ||
+      machineSpinning ||
+      challengeLocked
+    ) {
+      return false;
+    }
 
-    if (!zone) {
+    if (
+      rerollsRemaining <= 0
+    ) {
+      setMeme(
+        "No rerolls remaining!",
+        "Scan your current creation or use Decontaminate if needed.",
+        "thinking"
+      );
+
+      return false;
+    }
+
+    return true;
+  }
+
+  function spinAllWheels({
+    chargeReroll = true
+  } = {}) {
+    if (
+      !gameRunning ||
+      machineSpinning ||
+      challengeLocked
+    ) {
       return;
     }
 
-    zone.addEventListener(
-      "dragenter",
-      (event) => {
-        event.preventDefault();
+    const unlockedWheels =
+      wheels.filter(
+        (wheel) =>
+          !wheel.locked
+      );
 
-        if (
-          !activeIngredientCard ||
-          actionLocked
-        ) {
-          return;
-        }
+    if (
+      unlockedWheels.length === 0
+    ) {
+      setMeme(
+        "Every wheel is locked!",
+        "Unlock at least one wheel before spinning.",
+        "thinking"
+      );
 
-        zone.classList.add(
-          "drag-over"
+      return;
+    }
+
+    if (
+      chargeReroll &&
+      !canReroll()
+    ) {
+      return;
+    }
+
+    if (chargeReroll) {
+      rerollsRemaining -= 1;
+    }
+
+    machineSpinning =
+      true;
+
+    setText(
+      "factoryStatus",
+      "Spinning"
+    );
+
+    byId("usernameWheelMachine")
+      ?.classList.add(
+        "machine-spinning"
+      );
+
+    unlockedWheels.forEach(
+      (wheel, sequenceIndex) => {
+        animateWheelSpin(
+          wheel,
+          settings.spinDuration +
+          sequenceIndex * 180
         );
       }
     );
 
-    zone.addEventListener(
-      "dragover",
-      (event) => {
-        event.preventDefault();
+    const longestDuration =
+      settings.spinDuration +
+      (
+        unlockedWheels.length -
+        1
+      ) * 180;
 
-        if (
-          !activeIngredientCard ||
-          actionLocked
-        ) {
-          return;
-        }
-
-        if (
-          event.dataTransfer
-        ) {
-          event.dataTransfer.dropEffect =
-            "move";
-        }
-
-        zone.classList.add(
-          "drag-over"
-        );
-      }
-    );
-
-    zone.addEventListener(
-      "dragleave",
-      (event) => {
-        if (
-          event.relatedTarget &&
-          zone.contains(
-            event.relatedTarget
-          )
-        ) {
-          return;
-        }
-
-        zone.classList.remove(
-          "drag-over"
-        );
-      }
-    );
-
-    zone.addEventListener(
-      "drop",
-      (event) => {
-        event.preventDefault();
-
-        processIngredientAction(
-          action,
-          zone
-        );
-      }
-    );
-
-    zone.addEventListener(
-      "click",
+    window.setTimeout(
       () => {
-        if (
-          !ingredientSelected ||
-          !activeIngredientCard
-        ) {
-          setMeme(
-            "Select the ingredient first!",
-            "Click the moving ingredient, then choose its destination.",
-            "thinking"
+        machineSpinning =
+          false;
+
+        setText(
+          "factoryStatus",
+          "Ready"
+        );
+
+        byId("usernameWheelMachine")
+          ?.classList.remove(
+            "machine-spinning"
           );
 
-          return;
+        renderAllWheels();
+
+        const contaminationCount =
+          getContaminatedWheels().length;
+
+        if (
+          contaminationCount > 0
+        ) {
+          setMeme(
+            "Identity contamination detected!",
+            `${contaminationCount} wheel${
+              contaminationCount === 1
+                ? ""
+                : "s"
+            } contain personal information. Reroll or decontaminate before scanning.`,
+            "wrong"
+          );
+        } else {
+          setMeme(
+            "Interesting creation!",
+            "Check whether it completes the challenge, then scan it.",
+            "thinking"
+          );
         }
 
-        processIngredientAction(
-          action,
-          zone
-        );
-      }
+        updateHud();
+      },
+      longestDuration + 120
     );
   }
 
-  connectDropZone(
-    "mixerDropZone",
-    "mix"
-  );
+  function animateWheelSpin(
+    wheel,
+    duration
+  ) {
+    const wordElement =
+      byId(wheel.word);
 
-  connectDropZone(
-    "ejectDropZone",
-    "eject"
-  );
+    const wheelElement =
+      byId(wheel.element);
 
-  byId("sendToMixerButton")
-    ?.addEventListener(
-      "click",
-      () => {
-        if (!activeIngredientCard) {
-          return;
-        }
-
-        ingredientSelected =
-          true;
-
-        processIngredientAction(
-          "mix",
-          byId("mixerDropZone")
-        );
-      }
+    wheelElement?.classList.add(
+      "wheel-spinning"
     );
 
-  byId("sendToEjectButton")
-    ?.addEventListener(
-      "click",
+    const interval =
+      window.setInterval(
+        () => {
+          const previewWord =
+            generateWheelWord(
+              wheel.index,
+              true
+            );
+
+          if (wordElement) {
+            wordElement.textContent =
+              previewWord.text;
+          }
+        },
+        75
+      );
+
+    window.setTimeout(
       () => {
-        if (!activeIngredientCard) {
-          return;
-        }
-
-        ingredientSelected =
-          true;
-
-        processIngredientAction(
-          "eject",
-          byId("ejectDropZone")
+        clearInterval(
+          interval
         );
-      }
+
+        wheel.word =
+          generateWheelWord(
+            wheel.index
+          );
+
+        wheelElement?.classList.remove(
+          "wheel-spinning"
+        );
+
+        renderWheel(
+          wheel
+        );
+
+        updateUsernameDisplay();
+      },
+      duration
+    );
+  }
+
+  function rerollSingleWheel(
+    wheelIndex
+  ) {
+    if (!canReroll()) {
+      return;
+    }
+
+    const wheel =
+      wheels[
+        wheelIndex
+      ];
+
+    if (!wheel) {
+      return;
+    }
+
+    if (wheel.locked) {
+      setMeme(
+        "That wheel is locked!",
+        "Unlock it before rerolling.",
+        "thinking"
+      );
+
+      return;
+    }
+
+    rerollsRemaining -= 1;
+
+    machineSpinning =
+      true;
+
+    setText(
+      "factoryStatus",
+      "Rerolling"
     );
 
-  function closeDropZones() {
-    document
-      .querySelectorAll(
-        ".username-destination"
-      )
-      .forEach((zone) => {
-        zone.classList.remove(
-          "drag-over"
+    animateWheelSpin(
+      wheel,
+      settings.spinDuration
+    );
+
+    window.setTimeout(
+      () => {
+        machineSpinning =
+          false;
+
+        setText(
+          "factoryStatus",
+          "Ready"
         );
-      });
+
+        updateUsernameDisplay();
+        updateHud();
+      },
+      settings.spinDuration + 120
+    );
   }
 
   /* =====================================================
-     INGREDIENT ACTIONS
+     LOCKING
   ===================================================== */
 
-  function processIngredientAction(
-    action,
-    selectedZone
+  function toggleWheelLock(
+    wheelIndex
   ) {
     if (
-      !gameRunning ||
-      actionLocked ||
-      !activeIngredient ||
-      !activeIngredientCard
+      machineSpinning ||
+      challengeLocked
     ) {
       return;
     }
 
-    actionLocked =
-      true;
+    const wheel =
+      wheels[
+        wheelIndex
+      ];
 
-    cancelAnimationFrame(
-      animationFrame
-    );
-
-    closeDropZones();
-
-    const correct =
-      (
-        activeIngredient.safe &&
-        action === "mix"
-      ) ||
-      (
-        !activeIngredient.safe &&
-        action === "eject"
-      );
-
-    if (correct) {
-      handleCorrectIngredient(
-        action,
-        selectedZone
-      );
-    } else {
-      handleWrongIngredient(
-        action,
-        selectedZone
-      );
+    if (!wheel) {
+      return;
     }
 
-    updateHud();
+    wheel.locked =
+      !wheel.locked;
 
-    spawnTimeout =
-      window.setTimeout(
-        completeIngredient,
-        850
+    renderWheel(
+      wheel
+    );
+
+    setMeme(
+      wheel.locked
+        ? "Word locked!"
+        : "Wheel unlocked!",
+      wheel.locked
+        ? `${wheel.word.text} will stay during the next spin.`
+        : `${wheel.word.text} can now change.`,
+      "thinking"
+    );
+  }
+
+  function unlockAllWheels() {
+    wheels.forEach(
+      (wheel) => {
+        wheel.locked =
+          false;
+
+        renderWheel(
+          wheel
+        );
+      }
+    );
+  }
+
+  /* =====================================================
+     USERNAME DISPLAY AND CREATIVITY
+  ===================================================== */
+
+  function calculateCreativity() {
+    const safeWheels =
+      wheels.filter(
+        (wheel) =>
+          !wheel.word.contaminated
+      );
+
+    if (
+      safeWheels.length === 0
+    ) {
+      return 0;
+    }
+
+    const uniqueCategories =
+      new Set(
+        safeWheels.map(
+          (wheel) =>
+            wheel.word.category
+        )
+      ).size;
+
+    const uniqueWords =
+      new Set(
+        safeWheels.map(
+          (wheel) =>
+            wheel.word.text
+        )
+      ).size;
+
+    let value =
+      25;
+
+    value +=
+      uniqueCategories * 18;
+
+    value +=
+      uniqueWords * 7;
+
+    const usernameLength =
+      getCurrentUsername().length;
+
+    if (
+      usernameLength >= 12 &&
+      usernameLength <= 24
+    ) {
+      value += 10;
+    }
+
+    value -=
+      getContaminatedWheels().length *
+      35;
+
+    return Math.max(
+      0,
+      Math.min(
+        100,
+        value
+      )
+    );
+  }
+
+  function getCreativityLabel(
+    value
+  ) {
+    if (value >= 90) {
+      return "Legendary";
+    }
+
+    if (value >= 72) {
+      return "Epic";
+    }
+
+    if (value >= 48) {
+      return "Cool";
+    }
+
+    return "Common";
+  }
+
+  function updateUsernameDisplay() {
+    const username =
+      getCurrentUsername();
+
+    const creativity =
+      calculateCreativity();
+
+    const creativityLabel =
+      getCreativityLabel(
+        creativity
+      );
+
+    setText(
+      "currentUsername",
+      username
+    );
+
+    setText(
+      "creativityScore",
+      `${creativity}%`
+    );
+
+    setText(
+      "creativityLabel",
+      creativityLabel
+    );
+
+    const fill =
+      byId("creativityFill");
+
+    if (fill) {
+      fill.style.width =
+        `${creativity}%`;
+    }
+
+    bestCreativityScore =
+      Math.max(
+        bestCreativityScore,
+        creativity
       );
   }
 
-  function handleCorrectIngredient(
-    action,
-    selectedZone
-  ) {
-    correctActions += 1;
+  /* =====================================================
+     CHALLENGE CHECKING
+  ===================================================== */
+
+  function meetsChallenge() {
+    const categories =
+      getSafeCategories();
+
+    const username =
+      getCurrentUsername();
+
+    if (
+      currentChallenge
+        .disallowNumbers &&
+      /\d/.test(username)
+    ) {
+      return {
+        passed: false,
+        reason:
+          "This challenge requires a username with no numbers."
+      };
+    }
+
+    if (
+      currentChallenge
+        .uniqueCategoriesRequired
+    ) {
+      const count =
+        new Set(
+          categories
+        ).size;
+
+      if (
+        count <
+        currentChallenge
+          .uniqueCategoriesRequired
+      ) {
+        return {
+          passed: false,
+          reason:
+            `Use ${currentChallenge.uniqueCategoriesRequired} different word categories.`
+        };
+      }
+    }
+
+    if (
+      currentChallenge
+        .requiredCategories
+        ?.length
+    ) {
+      const matches =
+        currentChallenge
+          .requiredCategories
+          .filter(
+            (category) =>
+              categories.includes(
+                category
+              )
+          );
+
+      const passed =
+        currentChallenge
+          .matchAnyRequiredCategory
+          ? matches.length >= 1
+          : matches.length ===
+            currentChallenge
+              .requiredCategories
+              .length;
+
+      if (!passed) {
+        const categoryNames =
+          currentChallenge
+            .requiredCategories
+            .map(
+              titleCase
+            )
+            .join(" or ");
+
+        return {
+          passed: false,
+          reason:
+            `This creation still needs a ${categoryNames} word.`
+        };
+      }
+    }
+
+    return {
+      passed: true,
+      reason:
+        currentChallenge
+          .bonusText
+    };
+  }
+
+  /* =====================================================
+     SCANNER
+  ===================================================== */
+
+  function scanCreation() {
+    if (
+      !gameRunning ||
+      machineSpinning ||
+      challengeLocked
+    ) {
+      return;
+    }
+
+    challengeLocked =
+      true;
+
+    setText(
+      "factoryStatus",
+      "Scanning"
+    );
+
+    setText(
+      "inspectionStatus",
+      "Scanning..."
+    );
+
+    setText(
+      "inspectionMessage",
+      "Checking identity safety and challenge rules"
+    );
+
+    byId("usernameInspectionPanel")
+      ?.classList.add(
+        "inspection-running"
+      );
+
+    window.setTimeout(
+      finishScan,
+      1050
+    );
+  }
+
+  function finishScan() {
+    byId("usernameInspectionPanel")
+      ?.classList.remove(
+        "inspection-running"
+      );
+
+    const contaminated =
+      getContaminatedWheels();
+
+    if (
+      contaminated.length > 0
+    ) {
+      failedScans += 1;
+
+      combo =
+        0;
+
+      challengeLocked =
+        false;
+
+      setText(
+        "factoryStatus",
+        "Contaminated"
+      );
+
+      setText(
+        "inspectionIcon",
+        "⚠️"
+      );
+
+      setText(
+        "inspectionStatus",
+        "Identity Risk Detected"
+      );
+
+      const first =
+        contaminated[0];
+
+      setText(
+        "inspectionMessage",
+        `${first.word.text}: ${first.word.reason}`
+      );
+
+      showFeedback({
+        correct: false,
+        title:
+          "Username contaminated!",
+        message:
+          `Replace ${contaminated
+            .map(
+              (wheel) =>
+                wheel.word.text
+            )
+            .join(", ")} before scanning again.`,
+        points: 0
+      });
+
+      setMeme(
+        "Protect your identity!",
+        first.word.reason,
+        "wrong"
+      );
+
+      updateHud();
+
+      return;
+    }
+
+    const challengeResult =
+      meetsChallenge();
+
+    if (
+      !challengeResult.passed
+    ) {
+      failedScans += 1;
+
+      combo =
+        0;
+
+      challengeLocked =
+        false;
+
+      setText(
+        "factoryStatus",
+        "Challenge Incomplete"
+      );
+
+      setText(
+        "inspectionIcon",
+        "🧩"
+      );
+
+      setText(
+        "inspectionStatus",
+        "Mission Not Complete"
+      );
+
+      setText(
+        "inspectionMessage",
+        challengeResult.reason
+      );
+
+      showFeedback({
+        correct: false,
+        title:
+          "Safe, but the challenge is incomplete!",
+        message:
+          challengeResult.reason,
+        points: 0
+      });
+
+      setMeme(
+        "Almost there!",
+        challengeResult.reason,
+        "thinking"
+      );
+
+      updateHud();
+
+      return;
+    }
+
+    approveCreation();
+  }
+
+  function approveCreation() {
+    correctScans += 1;
+
+    usernamesBuilt += 1;
 
     combo += 1;
 
@@ -1583,628 +1856,104 @@
         combo
       );
 
-    const earnedPoints =
+    const creativity =
+      calculateCreativity();
+
+    const creativityLabel =
+      getCreativityLabel(
+        creativity
+      );
+
+    let creativityMultiplier =
+      1;
+
+    if (creativity >= 90) {
+      creativityMultiplier =
+        4;
+    } else if (creativity >= 72) {
+      creativityMultiplier =
+        3;
+    } else if (creativity >= 48) {
+      creativityMultiplier =
+        2;
+    }
+
+    const challengePoints =
       settings.basePoints *
-      getComboMultiplier();
+      5;
+
+    const creativityPoints =
+      settings.basePoints *
+      creativityMultiplier;
+
+    const streakPoints =
+      settings.basePoints *
+      combo;
+
+    const timePoints =
+      Math.min(
+        50,
+        timeRemaining
+      );
+
+    const totalPoints =
+      challengePoints +
+      creativityPoints +
+      streakPoints +
+      timePoints;
 
     score +=
-      earnedPoints;
-
-    selectedZone
-      ?.classList.add(
-        "correct-destination"
-      );
-
-    activeIngredientCard
-      ?.classList.add(
-        "ingredient-correct"
-      );
-
-    if (
-      action === "mix"
-    ) {
-      safeIngredientsAccepted += 1;
-
-      selectedIngredients.push(
-        activeIngredient
-      );
-
-      updateMixer();
-
-      showFeedback({
-        correct: true,
-        title:
-          combo >= 4
-            ? `${combo}x Lab Combo!`
-            : "Safe ingredient added!",
-
-        message:
-          `${activeIngredient.explanation} ${activeIngredient.text} was added to the mixer.`,
-
-        points:
-          earnedPoints
-      });
-
-      setMeme(
-        "Great ingredient!",
-        `${activeIngredient.text} keeps the username creative without revealing identity.`,
-        "congrats"
-      );
-    } else {
-      dangerousIngredientsEjected += 1;
-
-      byId("identityEjectBin")
-        ?.classList.add(
-          "eject-active"
-        );
-
-      showFeedback({
-        correct: true,
-        title:
-          combo >= 4
-            ? `${combo}x Lab Combo!`
-            : "Identity clue ejected!",
-
-        message:
-          `${activeIngredient.explanation} It was safely removed from the machine.`,
-
-        points:
-          earnedPoints
-      });
-
-      setMeme(
-        "Contamination removed!",
-        `${activeIngredient.text} could have revealed personal information.`,
-        "congrats"
-      );
-    }
-  }
-
-  function handleWrongIngredient(
-    action,
-    selectedZone
-  ) {
-    wrongActions += 1;
-
-    combo =
-      0;
-
-    lives -= 1;
-
-    selectedZone
-      ?.classList.add(
-        "wrong-destination"
-      );
-
-    activeIngredientCard
-      ?.classList.add(
-        "ingredient-wrong"
-      );
-
-    removeTime(
-      selectedHeat === "hot"
-        ? 5
-        : 3
-    );
-
-    if (
-      action === "mix"
-    ) {
-      showFeedback({
-        correct: false,
-        title:
-          "Mixer contaminated!",
-
-        message:
-          `${activeIngredient.explanation} This ingredient should have been ejected.`,
-
-        points: 0
-      });
-
-      setMeme(
-        "That reveals too much!",
-        `${activeIngredient.text} belongs in the Identity Eject Bin.`,
-        "wrong"
-      );
-    } else {
-      showFeedback({
-        correct: false,
-        title:
-          "Safe ingredient discarded!",
-
-        message:
-          `${activeIngredient.explanation} This ingredient was safe for the Username Mixer.`,
-
-        points: 0
-      });
-
-      setMeme(
-        "That ingredient was safe!",
-        `${activeIngredient.text} could have helped build a creative username.`,
-        "wrong"
-      );
-    }
-
-    if (
-      lives <= 0
-    ) {
-      spawnTimeout =
-        window.setTimeout(
-          () => {
-            endGame("lives");
-          },
-          700
-        );
-    }
-  }
-
-  function completeIngredient() {
-    document
-      .querySelectorAll(
-        ".username-destination"
-      )
-      .forEach((zone) => {
-        zone.classList.remove(
-          "correct-destination",
-          "wrong-destination"
-        );
-      });
-
-    byId("identityEjectBin")
-      ?.classList.remove(
-        "eject-active"
-      );
-
-    const layer =
-      byId("ingredientLayer");
-
-    if (layer) {
-      layer.innerHTML = "";
-    }
-
-    activeIngredient =
-      null;
-
-    activeIngredientCard =
-      null;
-
-    ingredientSelected =
-      false;
-
-    actionLocked =
-      false;
-
-    setText(
-      "activeIngredientText",
-      "Waiting for the machine..."
-    );
-
-    setText(
-      "activeIngredientCategory",
-      "Unknown"
-    );
-
-    if (
-      !gameRunning ||
-      lives <= 0
-    ) {
-      return;
-    }
-
-    spawnTimeout =
-      window.setTimeout(
-        spawnNextIngredient,
-        settings.spawnDelay
-      );
-  }
-
-  function handleMissedIngredient() {
-    if (
-      actionLocked ||
-      !activeIngredient ||
-      !gameRunning
-    ) {
-      return;
-    }
-
-    actionLocked =
-      true;
-
-    wrongActions += 1;
-
-    combo =
-      0;
-
-    lives -= 1;
-
-    activeIngredientCard
-      ?.classList.add(
-        "ingredient-missed"
-      );
-
-    byId("ingredientDangerGate")
-      ?.classList.add(
-        "contamination-hit"
-      );
-
-    showFeedback({
-      correct: false,
-      title:
-        "Ingredient reached contamination!",
-
-      message:
-        `${activeIngredient.text} was not inspected in time.`,
-
-      points: 0
-    });
-
-    setMeme(
-      "The machine needs you!",
-      "Catch the next ingredient before it reaches the Contamination Gate.",
-      "wrong"
-    );
-
-    updateHud();
-
-    spawnTimeout =
-      window.setTimeout(
-        () => {
-          byId("ingredientDangerGate")
-            ?.classList.remove(
-              "contamination-hit"
-            );
-
-          if (
-            lives <= 0
-          ) {
-            endGame("lives");
-            return;
-          }
-
-          completeIngredient();
-        },
-        800
-      );
-  }
-
-  /* =====================================================
-     MIXER
-  ===================================================== */
-
-  function updateMixer() {
-    const username =
-      getCurrentUsername();
-
-    setText(
-      "currentUsername",
-      username ||
-      "No ingredients added"
-    );
-
-    setText(
-      "mixerPreview",
-      username ||
-      "Empty"
-    );
-
-    setText(
-      "recipeProgress",
-      `${selectedIngredients.length} of ${settings.ingredientsNeeded} collected`
-    );
-
-    setText(
-      "creativityLabel",
-      getCreativityLabel()
-    );
-
-    const creativityFill =
-      byId("creativityFill");
-
-    if (creativityFill) {
-      creativityFill.style.width =
-        `${getCreativityPercent()}%`;
-    }
-
-    renderIngredientChips();
-
-    const ready =
-      selectedIngredients.length >=
-      settings.ingredientsNeeded;
-
-    const scanButton =
-      byId("scanUsernameButton");
-
-    if (scanButton) {
-      scanButton.disabled =
-        !ready;
-    }
-
-    if (ready) {
-      setText(
-        "scannerStatus",
-        "Username Ready"
-      );
-
-      setText(
-        "scannerMessage",
-        "Run the safety scan"
-      );
-
-      byId("usernameMixer")
-        ?.classList.add(
-          "mixer-ready"
-        );
-    } else {
-      setText(
-        "scannerStatus",
-        "Scanner Ready"
-      );
-
-      setText(
-        "scannerMessage",
-        "Build a username before scanning"
-      );
-
-      byId("usernameMixer")
-        ?.classList.remove(
-          "mixer-ready"
-        );
-    }
-  }
-
-  function getCreativityLabel() {
-    const count =
-      selectedIngredients.length;
-
-    if (count === 0) {
-      return "Empty";
-    }
-
-    if (
-      count <
-      settings.ingredientsNeeded
-    ) {
-      return "Building";
-    }
-
-    if (
-      count ===
-      settings.ingredientsNeeded
-    ) {
-      return "Powerful";
-    }
-
-    return "Maximum";
-  }
-
-  function renderIngredientChips() {
-    const list =
-      byId(
-        "selectedIngredientList"
-      );
-
-    if (!list) {
-      return;
-    }
-
-    list.innerHTML = "";
-
-    if (
-      selectedIngredients.length === 0
-    ) {
-      list.innerHTML = `
-        <span class="empty-mixer-message">
-          Add safe ingredients to begin
-        </span>
-      `;
-
-      return;
-    }
-
-    selectedIngredients.forEach(
-      (ingredient, index) => {
-        const chip =
-          document.createElement(
-            "button"
-          );
-
-        chip.type =
-          "button";
-
-        chip.className =
-          "selected-ingredient-chip";
-
-        chip.innerHTML = `
-          <span>
-            ${escapeHtml(
-              ingredient.text
-            )}
-          </span>
-
-          <small>
-            Remove
-          </small>
-        `;
-
-        chip.addEventListener(
-          "click",
-          () => {
-            removeMixerIngredient(
-              index
-            );
-          }
-        );
-
-        list.appendChild(
-          chip
-        );
-      }
-    );
-  }
-
-  function removeMixerIngredient(index) {
-    if (
-      !gameRunning ||
-      index < 0 ||
-      index >=
-        selectedIngredients.length
-    ) {
-      return;
-    }
-
-    selectedIngredients.splice(
-      index,
-      1
-    );
-
-    updateMixer();
-
-    setMeme(
-      "Ingredient removed.",
-      "Keep building until the recipe is complete.",
-      "thinking"
-    );
-  }
-
-  function resetMixer() {
-    selectedIngredients =
-      [];
-
-    updateMixer();
-  }
-
-  byId("clearMixerButton")
-    ?.addEventListener(
-      "click",
-      () => {
-        if (
-          selectedIngredients.length ===
-          0
-        ) {
-          return;
-        }
-
-        resetMixer();
-
-        setMeme(
-          "Mixer cleared!",
-          "Start a fresh creative username recipe.",
-          "thinking"
-        );
-      }
-    );
-
-  /* =====================================================
-     USERNAME SCANNER
-  ===================================================== */
-
-  byId("scanUsernameButton")
-    ?.addEventListener(
-      "click",
-      scanUsername
-    );
-
-  function scanUsername() {
-    if (
-      !gameRunning ||
-      selectedIngredients.length <
-        settings.ingredientsNeeded
-    ) {
-      return;
-    }
-
-    const username =
-      getCurrentUsername();
-
-    byId("usernameSafetyScanner")
-      ?.classList.add(
-        "scanner-running"
-      );
-
-    setText(
-      "scannerStatus",
-      "Scanning..."
-    );
-
-    setText(
-      "scannerMessage",
-      "Checking for identity clues"
-    );
-
-    window.setTimeout(
-      () => {
-        approveUsername(
-          username
-        );
-      },
-      900
-    );
-  }
-
-  function approveUsername(username) {
-    byId("usernameSafetyScanner")
-      ?.classList.remove(
-        "scanner-running"
-      );
-
-    usernamesBuilt += 1;
-
-    const buildBonus =
-      settings.basePoints *
-      settings.ingredientsNeeded *
-      2;
-
-    const creativityBonus =
-      new Set(
-        selectedIngredients.map(
-          (ingredient) =>
-            ingredient.category
-        )
-      ).size *
-      settings.basePoints;
-
-    const comboBonus =
-      bestCombo *
-      settings.basePoints;
-
-    const totalBuildPoints =
-      buildBonus +
-      creativityBonus +
-      comboBonus;
-
-    score +=
-      totalBuildPoints;
+      totalPoints;
 
     arcade.answerQuestion({
       questionId:
-        `username-build-${usernamesBuilt}`,
-
+        currentChallenge.id,
       correct: true
     });
 
     setText(
+      "factoryStatus",
+      "Approved"
+    );
+
+    setText(
+      "inspectionIcon",
+      "✅"
+    );
+
+    setText(
+      "inspectionStatus",
+      "Username Approved"
+    );
+
+    setText(
+      "inspectionMessage",
+      "Identity protected and challenge completed"
+    );
+
+    setText(
       "approvedUsername",
-      username
+      getCurrentUsername()
     );
 
     setText(
       "approvedUsernameMessage",
-      "This username expresses creativity without using a real name, birthday, school, address, or account secret."
+      "This creation expresses personality without revealing real-world identity details."
+    );
+
+    setText(
+      "approvedChallenge",
+      currentChallenge.title
+    );
+
+    setText(
+      "approvedCreativity",
+      creativityLabel
     );
 
     setText(
       "approvedPoints",
-      `+${totalBuildPoints}`
-    );
-
-    setText(
-      "scannerStatus",
-      "Approved!"
-    );
-
-    setText(
-      "scannerMessage",
-      "Identity protected"
+      `+${totalPoints}`
     );
 
     byId("usernameSuccessOverlay")
@@ -2212,151 +1961,194 @@
         "hidden"
       );
 
+    setMeme(
+      "Creation approved!",
+      `${getCurrentUsername()} completed the ${currentChallenge.title} challenge.`,
+      "congrats"
+    );
+
     updateHud();
   }
 
-  byId("continueBuildingButton")
-    ?.addEventListener(
-      "click",
-      () => {
-        byId("usernameSuccessOverlay")
-          ?.classList.add(
-            "hidden"
-          );
-
-        if (
-          usernamesBuilt >=
-          settings.usernameGoal
-        ) {
-          endGame("complete");
-          return;
-        }
-
-        resetMixer();
-
-        setMeme(
-          "New recipe ready!",
-          "Build another creative username without exposing identity clues.",
-          "thinking"
-        );
-      }
-    );
-
   /* =====================================================
-     POWER-UPS
+     DECONTAMINATION
   ===================================================== */
 
-  byId("ingredientScannerButton")
-    ?.addEventListener(
-      "click",
-      () => {
-        if (
-          !gameRunning ||
-          ingredientScannerUses <= 0 ||
-          !activeIngredient
-        ) {
-          return;
-        }
+  function decontaminate() {
+    if (
+      !gameRunning ||
+      machineSpinning ||
+      challengeLocked ||
+      decontaminateUses <= 0
+    ) {
+      return;
+    }
 
-        ingredientScannerUses -= 1;
+    const contaminated =
+      getContaminatedWheels();
 
-        setText(
-          "ingredientScannerCount",
-          `${ingredientScannerUses} available`
-        );
+    if (
+      contaminated.length === 0
+    ) {
+      setMeme(
+        "No contamination detected!",
+        "Save this power for a username containing private information.",
+        "thinking"
+      );
 
-        if (
-          ingredientScannerUses <= 0
-        ) {
-          byId(
-            "ingredientScannerButton"
-          )?.setAttribute(
-            "disabled",
-            "disabled"
-          );
-        }
+      return;
+    }
 
-        setText(
-          "activeIngredientCategory",
-          activeIngredient.category
-        );
+    decontaminateUses -= 1;
 
-        activeIngredientCard
-          ?.classList.add(
-            activeIngredient.safe
-              ? "scanner-safe"
-              : "scanner-danger"
-          );
+    contaminantsRemoved +=
+      contaminated.length;
 
-        setMeme(
-          "Ingredient scan complete!",
-          activeIngredient.safe
-            ? `${activeIngredient.text} appears safe for the mixer.`
-            : `${activeIngredient.text} contains an identity clue. Eject it!`,
-          "thinking"
-        );
-
-        window.setTimeout(
-          () => {
-            activeIngredientCard
-              ?.classList.remove(
-                "scanner-safe",
-                "scanner-danger"
-              );
-          },
-          2200
-        );
-      }
+    setText(
+      "decontaminateCount",
+      `${decontaminateUses} available`
     );
 
-  byId("purifyButton")
-    ?.addEventListener(
-      "click",
-      () => {
-        if (
-          !gameRunning ||
-          purifyUses <= 0
-        ) {
-          return;
-        }
-
-        purifyUses -= 1;
-
-        setText(
-          "purifyCount",
-          "0 available"
+    if (
+      decontaminateUses <= 0
+    ) {
+      byId("decontaminateButton")
+        ?.setAttribute(
+          "disabled",
+          "disabled"
         );
+    }
 
-        byId("purifyButton")
-          ?.setAttribute(
-            "disabled",
-            "disabled"
+    contaminated.forEach(
+      (wheel) => {
+        wheel.word =
+          generateWheelWord(
+            wheel.index,
+            true
           );
 
-        resetMixer();
+        renderWheel(
+          wheel
+        );
 
-        byId("usernameMixer")
+        byId(wheel.element)
           ?.classList.add(
-            "purify-active"
+            "decontaminated-wheel"
           );
 
         window.setTimeout(
           () => {
-            byId("usernameMixer")
+            byId(wheel.element)
               ?.classList.remove(
-                "purify-active"
+                "decontaminated-wheel"
               );
           },
-          900
-        );
-
-        setMeme(
-          "Mixer purified!",
-          "The recipe has been cleared without losing a life.",
-          "congrats"
+          850
         );
       }
     );
+
+    updateUsernameDisplay();
+
+    setText(
+      "factoryStatus",
+      "Purified"
+    );
+
+    setMeme(
+      "Identity clues removed!",
+      "The contaminated wheels were replaced with safe creative words.",
+      "congrats"
+    );
+
+    updateHud();
+  }
+
+  /* =====================================================
+     MEME HINT
+  ===================================================== */
+
+  function useMemeHint() {
+    if (
+      !gameRunning ||
+      machineSpinning ||
+      challengeLocked ||
+      hintUses <= 0
+    ) {
+      return;
+    }
+
+    hintUses -= 1;
+
+    setText(
+      "memeHintCount",
+      `${hintUses} available`
+    );
+
+    if (
+      hintUses <= 0
+    ) {
+      byId("memeHintButton")
+        ?.setAttribute(
+          "disabled",
+          "disabled"
+        );
+    }
+
+    const contaminated =
+      getContaminatedWheels();
+
+    if (
+      contaminated.length > 0
+    ) {
+      const wheel =
+        contaminated[0];
+
+      byId(wheel.element)
+        ?.classList.add(
+          "hint-wheel"
+        );
+
+      setMeme(
+        "Meme Hint",
+        `${wheel.word.text} is a ${wheel.word.category.toLowerCase()} and may reveal real identity.`,
+        "thinking"
+      );
+
+      window.setTimeout(
+        () => {
+          byId(wheel.element)
+            ?.classList.remove(
+              "hint-wheel"
+            );
+        },
+        2100
+      );
+
+      return;
+    }
+
+    const challengeResult =
+      meetsChallenge();
+
+    if (
+      !challengeResult.passed
+    ) {
+      setMeme(
+        "Meme Hint",
+        challengeResult.reason,
+        "thinking"
+      );
+
+      return;
+    }
+
+    setMeme(
+      "Meme Hint",
+      "Your creation looks safe and completes the challenge. Scan it!",
+      "congrats"
+    );
+  }
 
   /* =====================================================
      FEEDBACK
@@ -2420,7 +2212,7 @@
             "hidden"
           );
         },
-        2900
+        3400
       );
   }
 
@@ -2445,15 +2237,8 @@
     );
 
     setText(
-      "bestComboLive",
-      `x${bestCombo}`
-    );
-
-    setText(
-      "livesDisplay",
-      lives > 0
-        ? "❤️".repeat(lives)
-        : "💔"
+      "rerollsRemaining",
+      rerollsRemaining
     );
 
     setText(
@@ -2461,22 +2246,20 @@
       usernamesBuilt
     );
 
-    const percentage =
+    const progress =
       (
         usernamesBuilt /
-        settings.usernameGoal
+        settings.challenges
       ) * 100;
 
-    const progressFill =
-      byId(
-        "usernameProgressFill"
-      );
+    const fill =
+      byId("usernameProgressFill");
 
-    if (progressFill) {
-      progressFill.style.width =
+    if (fill) {
+      fill.style.width =
         `${Math.min(
           100,
-          percentage
+          progress
         )}%`;
     }
 
@@ -2484,7 +2267,7 @@
   }
 
   /* =====================================================
-     END GAME
+     RESULTS
   ===================================================== */
 
   function makeStars(count) {
@@ -2511,16 +2294,14 @@
     gameRunning =
       false;
 
+    machineSpinning =
+      false;
+
+    challengeLocked =
+      true;
+
     clearInterval(
       timerInterval
-    );
-
-    cancelAnimationFrame(
-      animationFrame
-    );
-
-    clearTimeout(
-      spawnTimeout
     );
 
     clearTimeout(
@@ -2532,16 +2313,16 @@
         "hidden"
       );
 
-    const totalActions =
-      correctActions +
-      wrongActions;
+    const totalScans =
+      correctScans +
+      failedScans;
 
     const accuracy =
-      totalActions > 0
+      totalScans > 0
         ? Math.round(
             (
-              correctActions /
-              totalActions
+              correctScans /
+              totalScans
             ) * 100
           )
         : 0;
@@ -2560,7 +2341,7 @@
     }
 
     const bestScoreKey =
-      `usernameLabBest-${selectedHeat}`;
+      `usernameFactoryBest-${selectedHeat}`;
 
     const previousBest =
       Number(
@@ -2580,89 +2361,80 @@
       String(newBest)
     );
 
-    let starCount =
+    let stars =
       1;
 
     if (
-      usernamesBuilt >=
-        settings.usernameGoal &&
-      accuracy >= 90
+      usernamesBuilt ===
+        settings.challenges &&
+      accuracy >= 85
     ) {
-      starCount =
+      stars =
         3;
     } else if (
-      usernamesBuilt >= 3 &&
-      accuracy >= 65
+      usernamesBuilt >= 3
     ) {
-      starCount =
+      stars =
         2;
     }
 
     let rank =
-      "Junior Username Builder";
+      "Creative Username Builder";
 
     if (
-      usernamesBuilt >=
-        settings.usernameGoal &&
+      usernamesBuilt ===
+        settings.challenges &&
       accuracy >= 90 &&
-      bestCombo >= 6
+      bestCreativityScore >= 90
     ) {
       rank =
-        "Master Identity Inventor";
+        "Legendary Identity Inventor";
     } else if (
       usernamesBuilt >= 4 &&
-      accuracy >= 75
+      bestCreativityScore >= 72
     ) {
       rank =
-        "Senior Username Scientist";
+        "Epic Username Engineer";
     } else if (
       usernamesBuilt >= 3
     ) {
       rank =
-        "Cyber Identity Engineer";
+        "Cyber Creativity Scientist";
     }
 
     let heading =
-      "Laboratory Complete";
+      "Factory Shift Complete";
 
     let message =
-      "Creative usernames should avoid real names, birthdays, school names, locations, schedules, passwords, and contact information.";
+      "A strong username can express your interests without using your real name, birthday, school, location, password, or contact details.";
 
     if (
-      reason === "lives"
-    ) {
-      heading =
-        "The Lab Was Contaminated";
-
-      message =
-        "Too many ingredients were placed in the wrong destination. Inspect each clue carefully before mixing or ejecting it.";
-    } else if (
       reason === "time"
     ) {
       heading =
-        "Laboratory Time Expired";
+        "Factory Time Expired";
 
       message =
-        "The machine shut down, but your completed usernames were saved. Try again and sort the ingredients faster.";
+        "Your completed creations were saved. Try again and use locks and rerolls more quickly.";
     } else if (
-      usernamesBuilt >=
-        settings.usernameGoal &&
+      usernamesBuilt ===
+        settings.challenges &&
       accuracy >= 90
     ) {
       heading =
-        "Master Username Inventor!";
+        "Legendary Username Inventor!";
 
       message =
-        "You built creative usernames while protecting every important identity clue.";
+        "You completed every challenge while protecting identity information.";
     } else if (
-      usernamesBuilt >=
-      settings.usernameGoal
+      usernamesBuilt ===
+      settings.challenges
     ) {
       heading =
-        "Username Mission Complete!";
+        "Every Challenge Complete!";
 
       message =
-        "You completed every recipe. Play again to improve your accuracy and build a longer lab combo.";
+        "You built five safe usernames. Play again to reach Legendary creativity.";
     }
 
     setText(
@@ -2681,23 +2453,25 @@
     );
 
     setText(
+      "finalChallengesCompleted",
+      `${usernamesBuilt}/${settings.challenges}`
+    );
+
+    setText(
       "finalUsernamesBuilt",
-      `${usernamesBuilt}/${settings.usernameGoal}`
+      usernamesBuilt
     );
 
     setText(
-      "finalSafeIngredients",
-      safeIngredientsAccepted
+      "finalContaminantsRemoved",
+      contaminantsRemoved
     );
 
     setText(
-      "finalDangersEjected",
-      dangerousIngredientsEjected
-    );
-
-    setText(
-      "finalAccuracy",
-      `${accuracy}%`
+      "finalBestCreativity",
+      getCreativityLabel(
+        bestCreativityScore
+      )
     );
 
     setText(
@@ -2724,7 +2498,7 @@
     setText(
       "finalStars",
       makeStars(
-        starCount
+        stars
       )
     );
 
@@ -2751,8 +2525,101 @@
   }
 
   /* =====================================================
-     PLAY AGAIN
+     BUTTON CONNECTIONS
   ===================================================== */
+
+  byId("spinAllButton")
+    ?.addEventListener(
+      "click",
+      () => {
+        spinAllWheels({
+          chargeReroll: true
+        });
+      }
+    );
+
+  byId("unlockAllButton")
+    ?.addEventListener(
+      "click",
+      () => {
+        unlockAllWheels();
+
+        setMeme(
+          "All wheels unlocked!",
+          "Your next spin can change every word.",
+          "thinking"
+        );
+      }
+    );
+
+  byId("inspectUsernameButton")
+    ?.addEventListener(
+      "click",
+      scanCreation
+    );
+
+  byId("decontaminateButton")
+    ?.addEventListener(
+      "click",
+      decontaminate
+    );
+
+  byId("memeHintButton")
+    ?.addEventListener(
+      "click",
+      useMemeHint
+    );
+
+  wheelDefinitions.forEach(
+    (definition, index) => {
+      byId(definition.lockButton)
+        ?.addEventListener(
+          "click",
+          () => {
+            toggleWheelLock(
+              index
+            );
+          }
+        );
+
+      byId(definition.rerollButton)
+        ?.addEventListener(
+          "click",
+          () => {
+            rerollSingleWheel(
+              index
+            );
+          }
+        );
+    }
+  );
+
+  byId("continueBuildingButton")
+    ?.addEventListener(
+      "click",
+      () => {
+        byId("usernameSuccessOverlay")
+          ?.classList.add(
+            "hidden"
+          );
+
+        currentChallengeIndex += 1;
+
+        if (
+          currentChallengeIndex >=
+          roundChallenges.length
+        ) {
+          endGame("complete");
+          return;
+        }
+
+        loadChallenge();
+
+        spinAllWheels({
+          chargeReroll: false
+        });
+      }
+    );
 
   byId("playAgain")
     ?.addEventListener(
@@ -2760,14 +2627,6 @@
       () => {
         clearInterval(
           timerInterval
-        );
-
-        cancelAnimationFrame(
-          animationFrame
-        );
-
-        clearTimeout(
-          spawnTimeout
         );
 
         clearTimeout(
@@ -2778,9 +2637,6 @@
           ?.classList.add(
             "hidden"
           );
-
-        byId("ingredientLayer")
-          ?.replaceChildren();
 
         byId("timeRemaining")
           ?.classList.remove(
@@ -2802,7 +2658,7 @@
     updateGlobalPoints();
 
     console.log(
-      "Username Lab machine engine loaded successfully."
+      "Username Lab creative factory engine loaded successfully."
     );
   }
 
