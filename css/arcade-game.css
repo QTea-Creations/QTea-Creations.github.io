@@ -1533,3 +1533,577 @@ a {
         flex-direction: column;
     }
 }
+
+/* =========================================================
+   CLUE COLLECTOR — SOCIAL MEDIA EDITION
+========================================================= */
+
+.clue-instruction-panel {
+    margin: 30px 0;
+    padding: 24px;
+
+    background: #f7f5ff;
+
+    border: 4px solid var(--game-border);
+    border-radius: 26px;
+
+    text-align: left;
+}
+
+.clue-instruction-panel h2 {
+    margin: 0 0 18px;
+
+    text-align: center;
+}
+
+.clue-instruction-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+.clue-instruction-grid article {
+    padding: 16px;
+
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: start;
+    gap: 12px;
+
+    background: white;
+
+    border: 3px solid var(--game-border);
+    border-radius: 18px;
+}
+
+.clue-instruction-grid article > span {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    background: #eee9ff;
+    color: var(--game-purple);
+
+    border-radius: 13px;
+
+    font-weight: 900;
+}
+
+.clue-instruction-grid strong {
+    display: block;
+}
+
+.clue-instruction-grid p {
+    margin: 5px 0 0;
+
+    color: #677389;
+
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.sidebar-hint-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 11px;
+
+    background: #fff5ba;
+    color: var(--game-navy);
+
+    border: 2px solid #ffe06a;
+    border-radius: 14px;
+
+    font-size: 0.76rem;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.social-risk-guide {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+}
+
+.social-risk-guide span {
+    padding: 11px;
+
+    background: white;
+
+    border: 2px solid #e7def7;
+    border-radius: 13px;
+
+    color: #58657b;
+
+    font-size: 0.74rem;
+    font-weight: 800;
+}
+
+.social-investigation-heading {
+    margin-bottom: 20px;
+}
+
+.social-investigation-heading h2 {
+    margin: 0;
+}
+
+.social-investigation-heading > p:last-child {
+    margin: 6px 0 0;
+
+    color: #647087;
+}
+
+.social-post-card {
+    max-width: 720px;
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    background: white;
+
+    border: 4px solid #dcd8e8;
+    border-radius: 25px;
+
+    box-shadow:
+        0 18px 35px
+        rgba(42, 47, 91, 0.13);
+}
+
+.social-post-header {
+    padding: 15px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.social-avatar {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffdf67,
+            #ff69a8
+        );
+
+    border-radius: 50%;
+
+    font-size: 1.45rem;
+}
+
+.social-account-info {
+    flex: 1;
+}
+
+.social-account-info strong {
+    display: block;
+}
+
+.location-hotspot {
+    margin-top: 3px;
+
+    color: #667187;
+
+    font-size: 0.72rem;
+}
+
+.social-menu {
+    color: #6f7888;
+
+    font-weight: 900;
+}
+
+.social-post-image {
+    min-height: 390px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #a9e7ff,
+            #d9f4ff 48%,
+            #70c775 48%,
+            #4dad64
+        );
+}
+
+.soccer-scene {
+    position: relative;
+
+    min-height: 390px;
+
+    display: grid;
+    place-items: center;
+
+    overflow: hidden;
+}
+
+.soccer-player {
+    font-size: 7rem;
+}
+
+.visual-hotspot {
+    position: absolute;
+
+    background: rgba(255, 255, 255, 0.92);
+    color: #1d2946;
+
+    border: 3px solid transparent;
+    border-radius: 10px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.school-logo-hotspot {
+    top: 42%;
+    left: 43%;
+
+    padding: 8px;
+}
+
+.clock-hotspot {
+    right: 8%;
+    bottom: 15%;
+
+    padding: 9px 12px;
+}
+
+.harmless-ball-hotspot {
+    left: 15%;
+    bottom: 12%;
+
+    padding: 8px;
+
+    font-size: 1.7rem;
+}
+
+.social-action-row {
+    padding: 13px 15px 7px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    font-size: 1.4rem;
+}
+
+.save-icon {
+    margin-left: auto;
+}
+
+.social-post-body {
+    padding: 0 15px 18px;
+}
+
+.likes-line {
+    margin: 4px 0;
+
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+.social-caption,
+.social-comment {
+    margin: 8px 0;
+
+    color: #29344d;
+
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+.social-time {
+    margin: 8px 0 0;
+
+    color: #8992a2;
+
+    font-size: 0.68rem;
+    text-transform: uppercase;
+}
+
+.post-hotspot {
+    display: inline;
+
+    padding: 2px 4px;
+
+    background: transparent;
+    color: inherit;
+
+    border: 2px solid transparent;
+    border-radius: 7px;
+
+    font: inherit;
+
+    cursor: pointer;
+
+    transition:
+        background 150ms ease,
+        border-color 150ms ease,
+        transform 150ms ease;
+}
+
+.post-hotspot:hover,
+.visual-hotspot:hover {
+    background: #fff6c7;
+
+    border-color: #ffd73f;
+}
+
+.post-hotspot.selected-clue,
+.visual-hotspot.selected-clue {
+    background: #fff2a8;
+
+    border-color: #ffce25;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(255, 206, 37, 0.2);
+}
+
+.post-hotspot.correct-clue,
+.visual-hotspot.correct-clue {
+    background: #dffbeb;
+
+    border-color: #31c276;
+
+    color: #17643e;
+}
+
+.post-hotspot.incorrect-clue,
+.visual-hotspot.incorrect-clue {
+    background: #ffe5ed;
+
+    border-color: #ef527f;
+
+    color: #9c2047;
+}
+
+.post-hotspot.missed-clue,
+.visual-hotspot.missed-clue {
+    background: #fff0b6;
+
+    border-color: #ff9f2d;
+
+    animation:
+        missedCluePulse
+        850ms
+        ease-in-out
+        infinite;
+}
+
+.post-hotspot.review-ready::after,
+.visual-hotspot.review-ready::after {
+    content: "!";
+
+    position: absolute;
+    top: -11px;
+    right: -11px;
+
+    width: 24px;
+    height: 24px;
+
+    display: grid;
+    place-items: center;
+
+    background: #ffca28;
+    color: #1d2946;
+
+    border: 2px solid white;
+    border-radius: 50%;
+
+    font-size: 0.75rem;
+    font-weight: 900;
+
+    box-shadow:
+        0 4px 9px
+        rgba(43, 45, 81, 0.22);
+}
+
+.post-hotspot.review-ready,
+.visual-hotspot.review-ready {
+    position: relative;
+}
+
+.clue-selection-panel {
+    max-width: 720px;
+    margin: 20px auto 0;
+    padding: 18px;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    background: #f7f5ff;
+
+    border: 3px solid var(--game-border);
+    border-radius: 19px;
+}
+
+.clue-selection-panel p {
+    margin: 0 auto 0 0;
+
+    font-weight: 800;
+}
+
+.clear-selection-button {
+    min-height: 50px;
+    padding: 10px 17px;
+
+    background: white;
+    color: var(--game-purple);
+
+    border: 3px solid var(--game-purple);
+    border-radius: 15px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.clue-feedback-panel {
+    max-width: 720px;
+    margin: 18px auto 0;
+    padding: 19px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    background: #ecfff5;
+
+    border: 3px solid var(--game-green);
+    border-radius: 19px;
+}
+
+.clue-feedback-panel p {
+    margin: 5px 0 0;
+
+    color: #5d687e;
+
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.clue-explanation-popup {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 600;
+
+    width: min(380px, calc(100vw - 30px));
+    padding: 24px;
+
+    background: white;
+
+    border: 4px solid #ffca28;
+    border-radius: 24px;
+
+    box-shadow:
+        0 22px 50px
+        rgba(37, 40, 78, 0.28);
+}
+
+.close-explanation-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 36px;
+    height: 36px;
+
+    background: #f1edff;
+    color: var(--game-navy);
+
+    border: 0;
+    border-radius: 10px;
+
+    font-size: 1.1rem;
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+.explanation-alert-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 13px;
+
+    display: grid;
+    place-items: center;
+
+    background: #ffca28;
+    color: #1d2946;
+
+    border-radius: 17px;
+
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.clue-explanation-popup h3 {
+    margin: 0 0 8px;
+}
+
+.clue-explanation-popup > p:last-child {
+    margin: 0;
+
+    color: #5f6b80;
+
+    line-height: 1.6;
+}
+
+#nextProfile {
+    display: block;
+    margin: 20px auto 0;
+}
+
+@keyframes missedCluePulse {
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 0
+            rgba(255, 159, 45, 0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 7px
+            rgba(255, 159, 45, 0.25);
+    }
+}
+
+@media (max-width: 720px) {
+    .clue-instruction-grid,
+    .social-risk-guide {
+        grid-template-columns: 1fr;
+    }
+
+    .social-post-image,
+    .soccer-scene {
+        min-height: 300px;
+    }
+
+    .clue-feedback-panel {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .clue-explanation-popup {
+        right: 10px;
+        bottom: 10px;
+    }
+}
