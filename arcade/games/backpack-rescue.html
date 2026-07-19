@@ -30,20 +30,20 @@
 
   <link
     rel="stylesheet"
-    href="../../css/style.css?v=11"
+    href="../../css/style.css?v=20"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/arcade-game.css?v=11"
+    href="../../css/arcade-game.css?v=20"
   >
 
   <link
     rel="stylesheet"
-    href="../../css/backpack-rescue.css?v=2"
+    href="../../css/backpack-rescue.css?v=20"
   >
 
-  <script src="../../js/safetii-debug.js?v=11"></script>
+  <script src="../../js/safetii-debug.js?v=20"></script>
 </head>
 
 <body class="arcade-game-page">
@@ -105,92 +105,86 @@
   </header>
 
 
-  <main class="game-shell">
+  <main class="rescue-page-shell">
 
     <!-- =================================================
          INTRO SCREEN
     ================================================== -->
 
     <section
-      class="game-screen"
+      class="rescue-screen"
       id="introScreen"
     >
-      <div class="game-intro-card">
 
-        <div class="game-intro-icon">
+      <div class="rescue-intro-card">
+
+        <div class="rescue-intro-badge">
           🎒
         </div>
 
         <p class="game-eyebrow">
-          Identity Sorting Challenge
+          Cyber Arcade Rescue Mission
         </p>
 
         <h1>
           Backpack Rescue
         </h1>
 
-        <p class="game-intro-description">
-          Sort each piece of information into the correct place.
-          Put information that is usually okay to share inside the
-          backpack. Put private information inside the safe.
+        <p class="rescue-intro-copy">
+          Information blocks are racing toward the Danger Zone!
+          Grab each block and sort it into the Backpack or Safe
+          before time runs out.
         </p>
 
 
-        <!-- HOW TO PLAY -->
+        <!-- VISUAL GAME PREVIEW -->
 
-        <section class="game-instruction-panel">
+        <section class="rescue-preview">
 
-          <div class="instruction-heading">
+          <div class="preview-conveyor">
 
-            <span aria-hidden="true">
-              🛡️
-            </span>
+            <div class="preview-track-lines"></div>
 
-            <div>
+            <article class="preview-info-block">
+              Favorite animal
+            </article>
 
-              <p class="game-eyebrow">
-                Rescue Briefing
-              </p>
+            <article class="preview-info-block second-preview-block">
+              Home address
+            </article>
 
-              <h2>
-                Backpack or Safe?
-              </h2>
-
+            <div class="preview-danger-zone">
+              ⚠️ Danger
             </div>
 
           </div>
 
 
-          <div class="backpack-instruction-grid">
+          <div class="preview-destinations">
 
-            <article class="backpack-instruction-card">
+            <article>
 
               <img
-                src="../../assets/images/Backback"
+                src="../../assets/images/openBackpack.png"
                 alt="Closed Safetii Net backpack"
               >
 
               <div>
 
-                <h3>
-                  Backpack — Share Zone
-                </h3>
+                <strong>
+                  Backpack
+                </strong>
 
-                <p>
-                  Place broad interests, harmless preferences,
-                  hobbies, talents, and safe self-expression here.
-                </p>
-
-                <small>
-                  Examples: favorite animal, hobby, favorite color
-                </small>
+                <span>
+                  Usually okay to share
+                </span>
 
               </div>
 
             </article>
 
 
-            <article class="backpack-instruction-card">
+            <article>
 
               <img
                 src="../../assets/images/Safe.png"
@@ -199,18 +193,13 @@
 
               <div>
 
-                <h3>
-                  Safe — Protect Zone
-                </h3>
+                <strong>
+                  Safe
+                </strong>
 
-                <p>
-                  Place information that could identify, locate,
-                  contact, or give access to someone here.
-                </p>
-
-                <small>
-                  Examples: password, address, school, live location
-                </small>
+                <span>
+                  Protect private information
+                </span>
 
               </div>
 
@@ -218,96 +207,131 @@
 
           </div>
 
+        </section>
 
-          <div class="instruction-rule">
 
-            <span aria-hidden="true">
-              🎯
+        <!-- HOW TO PLAY -->
+
+        <section class="rescue-briefing">
+
+          <div class="rescue-briefing-heading">
+
+            <span>
+              🛡️
             </span>
 
-            <p>
-              Drag the information card over the correct container.
-              The backpack or safe will open when it is ready to
-              receive the card.
-            </p>
+            <div>
+
+              <p class="game-eyebrow">
+                Meme’s Rescue Briefing
+              </p>
+
+              <h2>
+                How to Play
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="rescue-rule-grid">
+
+            <article>
+
+              <span class="rule-number">
+                1
+              </span>
+
+              <div>
+
+                <h3>
+                  Catch the Information
+                </h3>
+
+                <p>
+                  Information blocks travel across the conveyor.
+                  Grab them before they reach the Danger Zone.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span class="rule-number">
+                2
+              </span>
+
+              <div>
+
+                <h3>
+                  Sort It Quickly
+                </h3>
+
+                <p>
+                  Drag safe self-expression into the Backpack.
+                  Drag identifying or private details into the Safe.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span class="rule-number">
+                3
+              </span>
+
+              <div>
+
+                <h3>
+                  Build a Combo
+                </h3>
+
+                <p>
+                  Correct drops in a row increase your combo
+                  multiplier and earn bonus points.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article>
+
+              <span class="rule-number">
+                4
+              </span>
+
+              <div>
+
+                <h3>
+                  Protect Your Lives
+                </h3>
+
+                <p>
+                  Wrong drops and missed blocks cost a life.
+                  The round ends when all lives are gone.
+                </p>
+
+              </div>
+
+            </article>
 
           </div>
 
         </section>
 
 
-        <!-- GAME RULES -->
+        <!-- HEAT LEVELS -->
 
-        <div class="game-rules">
-
-          <article>
-
-            <span>
-              🖱️
-            </span>
-
-            <div>
-
-              <strong>
-                Drag and Drop
-              </strong>
-
-              <p>
-                Move each information card into the correct container.
-              </p>
-
-            </div>
-
-          </article>
-
-
-          <article>
-
-            <span>
-              ⭐
-            </span>
-
-            <div>
-
-              <strong>
-                First Drop Counts
-              </strong>
-
-              <p>
-                Correct first drops earn points. Wrong drops earn zero.
-              </p>
-
-            </div>
-
-          </article>
-
-
-          <article>
-
-            <span>
-              🔥
-            </span>
-
-            <div>
-
-              <strong>
-                Turn Up the Heat
-              </strong>
-
-              <p>
-                Higher heat levels contain more subtle identity clues.
-              </p>
-
-            </div>
-
-          </article>
-
-        </div>
-
-
-        <!-- HEAT SELECTION -->
-
-        <div class="heat-selection">
+        <section class="rescue-heat-section">
 
           <p class="heat-selection-title">
             Choose a Heat Level
@@ -320,6 +344,7 @@
               type="button"
               data-heat="mild"
             >
+
               <span class="heat-choice-icon">
                 🌶️
               </span>
@@ -329,12 +354,13 @@
               </strong>
 
               <small>
-                Clear sharing choices
+                Slower conveyor and clear clues
               </small>
 
               <span class="heat-point-label">
-                10 points each
+                10 base points
               </span>
+
             </button>
 
 
@@ -343,6 +369,7 @@
               type="button"
               data-heat="spicy"
             >
+
               <span class="heat-choice-icon">
                 🌶️🌶️
               </span>
@@ -352,12 +379,13 @@
               </strong>
 
               <small>
-                Personal details mixed with safe information
+                Faster movement and mixed clues
               </small>
 
               <span class="heat-point-label">
-                20 points each
+                20 base points
               </span>
+
             </button>
 
 
@@ -366,6 +394,7 @@
               type="button"
               data-heat="hot"
             >
+
               <span class="heat-choice-icon">
                 🌶️🌶️🌶️
               </span>
@@ -375,28 +404,30 @@
               </strong>
 
               <small>
-                Several clues combined together
+                Fast conveyor and tricky combinations
               </small>
 
               <span class="heat-point-label">
-                30 points each
+                30 base points
               </span>
+
             </button>
 
           </div>
 
-        </div>
+        </section>
 
 
         <button
-          class="game-primary-button"
+          class="game-primary-button rescue-start-button"
           id="startGame"
           type="button"
         >
-          Begin Backpack Rescue
+          Start Backpack Rescue
         </button>
 
       </div>
+
     </section>
 
 
@@ -405,63 +436,25 @@
     ================================================== -->
 
     <section
-      class="game-screen hidden"
+      class="rescue-screen hidden"
       id="playScreen"
     >
-      <div class="play-layout">
 
-        <!-- SIDEBAR -->
+      <!-- TOP HUD -->
 
-        <aside class="game-sidebar">
+      <section class="rescue-hud">
 
-          <div class="sidebar-game-icon">
+        <div class="hud-game-title">
+
+          <span>
             🎒
-          </div>
+          </span>
 
-          <p class="game-eyebrow">
-            Backpack Rescue
-          </p>
+          <div>
 
-          <h2>
-            Sort the information
-          </h2>
-
-          <p>
-            Drag each card into the backpack or safe.
-          </p>
-
-
-          <div class="live-stat">
-
-            <span>
-              Score
-            </span>
-
-            <strong id="currentScore">
-              0
-            </strong>
-
-          </div>
-
-
-          <div class="live-stat">
-
-            <span>
-              Correct
-            </span>
-
-            <strong id="correctCount">
-              0
-            </strong>
-
-          </div>
-
-
-          <div class="live-stat">
-
-            <span>
-              Heat
-            </span>
+            <p class="game-eyebrow">
+              Backpack Rescue
+            </p>
 
             <strong id="currentHeat">
               Mild
@@ -469,231 +462,306 @@
 
           </div>
 
+        </div>
+
+
+        <div class="hud-stat">
+
+          <span>
+            ⏱️ Time
+          </span>
+
+          <strong id="timeRemaining">
+            60
+          </strong>
+
+        </div>
+
+
+        <div class="hud-stat">
+
+          <span>
+            ⭐ Score
+          </span>
+
+          <strong id="currentScore">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="hud-stat combo-stat">
+
+          <span>
+            🔥 Combo
+          </span>
+
+          <strong id="comboCount">
+            x1
+          </strong>
+
+        </div>
+
+
+        <div class="hud-stat">
+
+          <span>
+            ❤️ Lives
+          </span>
+
+          <strong id="livesDisplay">
+            ❤️❤️❤️
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- ROUND PROGRESS -->
+
+      <section class="rescue-round-progress">
+
+        <div>
+
+          Rescued:
+
+          <strong id="itemsSorted">
+            0
+          </strong>
+
+          /
+
+          <strong id="itemsTotal">
+            15
+          </strong>
+
+        </div>
+
+
+        <div class="progress-track">
+
+          <div
+            class="progress-fill"
+            id="roundProgressFill"
+          ></div>
+
+        </div>
+
+
+        <div>
+
+          Best combo:
+
+          <strong id="bestComboLive">
+            x1
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- GAME ARENA -->
+
+      <section class="rescue-game-arena">
+
+        <!-- MEME AREA -->
+
+        <aside class="rescue-meme-panel">
+
+          <img
+            id="memeGameImage"
+            src="../../assets/mascot/thinking.png"
+            alt="Meme helps during Backpack Rescue"
+          >
+
+          <div class="meme-game-speech">
+
+            <strong id="memeGameTitle">
+              Rescue ready!
+            </strong>
+
+            <p id="memeGameMessage">
+              Catch the information before it reaches danger.
+            </p>
+
+          </div>
+
 
           <button
-            class="sidebar-hint-button"
-            id="openBackpackHint"
+            class="rescue-power-button"
+            id="freezePowerButton"
             type="button"
-            aria-expanded="false"
-            aria-controls="backpackHintPanel"
           >
-            💡 Sorting Guide
+
+            <span>
+              ❄️
+            </span>
+
+            <strong>
+              Freeze Time
+            </strong>
+
+            <small id="freezePowerCount">
+              1 available
+            </small>
+
           </button>
 
 
-          <a
-            class="sidebar-exit-link"
-            href="../index.html"
+          <button
+            class="rescue-power-button"
+            id="hintPowerButton"
+            type="button"
           >
-            Exit Game
-          </a>
+
+            <span>
+              💡
+            </span>
+
+            <strong>
+              Meme Hint
+            </strong>
+
+            <small id="hintPowerCount">
+              2 available
+            </small>
+
+          </button>
 
         </aside>
 
 
-        <!-- GAME AREA -->
+        <!-- CONVEYOR AND DROP ZONES -->
 
-        <section class="question-stage">
+        <div class="rescue-main-stage">
 
-          <div class="question-progress-row">
+          <!-- CONVEYOR -->
 
-            <div>
-              Item
+          <section
+            class="rescue-conveyor"
+            id="conveyorBelt"
+            aria-label="Moving information conveyor"
+          >
 
-              <strong id="questionNumber">
-                1
-              </strong>
-
-              of
-
-              <strong id="questionTotal">
-                10
-              </strong>
-            </div>
-
-
-            <div class="question-score-value">
-              +
-
-              <span id="questionPointValue">
-                10
-              </span>
-
-              possible
-            </div>
-
-          </div>
-
-
-          <div class="progress-track">
+            <div class="conveyor-background-lines"></div>
 
             <div
-              class="progress-fill"
-              id="questionProgressFill"
-            ></div>
-
-          </div>
-
-
-          <!-- HINT PANEL -->
-
-          <aside
-            class="category-hint-panel hidden"
-            id="backpackHintPanel"
-            aria-label="Backpack Rescue sorting guide"
-          >
-
-            <div class="category-hint-header">
-
-              <div>
-
-                <p class="game-eyebrow">
-                  Quick Reference
-                </p>
-
-                <h3>
-                  Where should it go?
-                </h3>
-
-              </div>
-
-
-              <button
-                class="close-hint-button"
-                id="closeBackpackHint"
-                type="button"
-                aria-label="Close sorting guide"
-              >
-                ×
-              </button>
-
-            </div>
-
-
-            <div class="backpack-hint-list">
-
-              <article>
-
-                <span>
-                  🎒
-                </span>
-
-                <p>
-                  <strong>Backpack:</strong>
-                  hobbies, interests, broad preferences, favorite
-                  subjects, talents, and harmless self-expression.
-                </p>
-
-              </article>
-
-
-              <article>
-
-                <span>
-                  🔒
-                </span>
-
-                <p>
-                  <strong>Safe:</strong>
-                  names, passwords, account codes, addresses, schools,
-                  birthdays, schedules, and precise locations.
-                </p>
-
-              </article>
-
-            </div>
-
-
-            <p class="hint-penalty-note">
-              Opening the guide does not remove points.
-            </p>
-
-          </aside>
-
-
-          <!-- DRAG CARD -->
-
-          <article
-            class="backpack-drag-card"
-            id="dragItemCard"
-            draggable="true"
-            tabindex="0"
-            role="button"
-            aria-describedby="dragInstructions"
-          >
-
-            <p class="game-eyebrow">
-              Drag This Information
-            </p>
-
-            <h2 id="sortItemText">
-              Loading information...
-            </h2>
-
-            <p
-              class="drag-card-category"
-              id="sortItemContext"
+              class="conveyor-spawn-zone"
+              aria-hidden="true"
             >
-              Decide whether this belongs in the backpack or safe.
-            </p>
-
-            <span class="drag-handle">
-              ⋮⋮ Drag Me ⋮⋮
-            </span>
-
-          </article>
+              <span>
+                Incoming
+              </span>
+            </div>
 
 
-          <p
-            class="keyboard-drag-instructions"
-            id="dragInstructions"
-          >
-            You can also select the Backpack or Safe buttons
-            underneath the images.
-          </p>
+            <div
+              class="moving-item-layer"
+              id="movingItemLayer"
+            >
+
+              <!-- JavaScript creates moving cards here -->
+
+            </div>
 
 
-          <!-- SORTING CONTAINERS -->
+            <div
+              class="danger-drop-zone"
+              id="dangerZone"
+            >
 
-          <div class="backpack-sort-grid">
+              <span>
+                ⚠️
+              </span>
+
+              <strong>
+                Danger Zone
+              </strong>
+
+              <small>
+                Do not let information reach here!
+              </small>
+
+            </div>
+
+          </section>
+
+
+          <!-- ACTIVE ITEM INFO -->
+
+          <section class="active-item-readout">
+
+            <div>
+
+              <p class="game-eyebrow">
+                Current Information
+              </p>
+
+              <strong id="activeItemReadout">
+                Waiting for the next block...
+              </strong>
+
+            </div>
+
+
+            <div class="item-speed-display">
+
+              Speed:
+
+              <strong id="currentSpeedLabel">
+                Normal
+              </strong>
+
+            </div>
+
+          </section>
+
+
+          <!-- DROP DESTINATIONS -->
+
+          <section class="rescue-destination-grid">
 
             <!-- BACKPACK -->
 
             <button
-              class="backpack-drop-zone share-drop-zone"
-              id="shareZone"
+              class="rescue-destination backpack-destination"
+              id="backpackDropZone"
               type="button"
               data-answer="safe"
             >
 
-              <div class="drop-image-frame">
+              <div class="destination-image-wrap">
 
-             <img
-  class="drop-container-image"
-  id="backpackImage"
-  src="../../assets/images/openBackback"
-  data-closed-src="../../assets/images/openBackback"
-  data-open-src="../../assets/images/Backback.png"
-  alt="Backpack share zone"
-  draggable="false"
->
-
-                <div
-                  class="drop-ready-message"
-                  aria-hidden="true"
+                <img
+                  id="backpackImage"
+                  src="../../assets/images/openBackpack.png"
+                  data-closed-src="../../assets/images/openBackpack.png"
+                  data-open-src="../../assets/images/Backback.png"
+                  alt="Backpack share zone"
+                  draggable="false"
                 >
-                  Drop Here!
-                </div>
+
+                <span class="destination-drop-message">
+                  Drop it in!
+                </span>
 
               </div>
 
-              <strong>
-                Share Zone
-              </strong>
 
-              <span>
-                Usually okay to share
-              </span>
+              <div class="destination-label">
+
+                <strong>
+                  Backpack
+                </strong>
+
+                <span>
+                  Safe self-expression
+                </span>
+
+              </div>
 
             </button>
 
@@ -701,16 +769,15 @@
             <!-- SAFE -->
 
             <button
-              class="backpack-drop-zone protect-drop-zone"
-              id="protectZone"
+              class="rescue-destination safe-destination"
+              id="safeDropZone"
               type="button"
               data-answer="private"
             >
 
-              <div class="drop-image-frame">
+              <div class="destination-image-wrap">
 
                 <img
-                  class="drop-container-image"
                   id="safeImage"
                   src="../../assets/images/Safe.png"
                   data-closed-src="../../assets/images/Safe.png"
@@ -719,94 +786,134 @@
                   draggable="false"
                 >
 
-                <div
-                  class="drop-ready-message"
-                  aria-hidden="true"
-                >
-                  Drop Here!
-                </div>
+                <span class="destination-drop-message">
+                  Lock it up!
+                </span>
 
               </div>
 
-              <strong>
-                Protect Zone
-              </strong>
 
-              <span>
-                Keep this information private
-              </span>
+              <div class="destination-label">
+
+                <strong>
+                  Safe
+                </strong>
+
+                <span>
+                  Private or identifying information
+                </span>
+
+              </div>
 
             </button>
 
-          </div>
+          </section>
 
 
-          <!-- FEEDBACK -->
+          <!-- FEEDBACK BANNER -->
 
-          <div
-            class="answer-feedback hidden"
-            id="answerFeedback"
+          <section
+            class="rescue-feedback-banner hidden"
+            id="rescueFeedback"
             aria-live="polite"
           >
 
-            <strong id="feedbackTitle">
-              Sorting result
-            </strong>
-
-            <p id="feedbackText"></p>
-
-            <div class="question-points-result">
-
-              Points earned:
-
-              <strong id="pointsEarnedThisQuestion">
-                0
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <!-- MEME REACTION -->
-
-          <aside
-            class="arcade-meme-reaction hidden"
-            id="memeReaction"
-            aria-live="polite"
-          >
-
-            <img
-              id="memeReactionImage"
-              src="../../assets/mascot/congrats.png"
-              alt="Meme reacts to the sorting answer"
+            <span
+              class="feedback-banner-icon"
+              id="feedbackIcon"
             >
+              ✅
+            </span>
 
-            <div class="arcade-meme-speech">
+            <div>
 
-              <strong id="memeReactionTitle">
-                Great sorting!
+              <strong id="feedbackTitle">
+                Great rescue!
               </strong>
 
-              <p id="memeReactionMessage">
-                You placed the information safely.
+              <p id="feedbackMessage">
+                You sorted the information correctly.
               </p>
 
             </div>
 
-          </aside>
 
+            <div class="feedback-points">
+
+              <strong id="feedbackPoints">
+                +10
+              </strong>
+
+              <span>
+                points
+              </span>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      </section>
+
+
+      <!-- MOBILE / ACCESSIBLE CONTROLS -->
+
+      <section class="rescue-accessible-controls">
+
+        <p>
+          Having trouble dragging? Select the moving card, then choose:
+        </p>
+
+        <div>
 
           <button
-            class="game-primary-button hidden"
-            id="nextQuestion"
+            id="sendToBackpackButton"
             type="button"
           >
-            Next Item
+            🎒 Send to Backpack
           </button>
 
-        </section>
+          <button
+            id="sendToSafeButton"
+            type="button"
+          >
+            🔒 Send to Safe
+          </button>
+
+        </div>
+
+      </section>
+
+    </section>
+
+
+    <!-- =================================================
+         PAUSE OVERLAY
+    ================================================== -->
+
+    <section
+      class="rescue-overlay hidden"
+      id="freezeOverlay"
+      aria-live="polite"
+    >
+
+      <div>
+
+        <span>
+          ❄️
+        </span>
+
+        <h2>
+          Conveyor Frozen!
+        </h2>
+
+        <p>
+          You have a few seconds to think.
+        </p>
+
       </div>
+
     </section>
 
 
@@ -815,48 +922,44 @@
     ================================================== -->
 
     <section
-      class="game-screen hidden"
+      class="rescue-screen hidden"
       id="resultScreen"
     >
-      <div class="result-card">
 
-        <div class="result-meme-celebration">
+      <div class="rescue-results-card">
+
+        <div class="results-celebration">
 
           <img
             id="resultMemeImage"
             src="../../assets/mascot/congrats.png"
-            alt="Meme celebrates the completed Backpack Rescue round"
+            alt="Meme celebrates the Backpack Rescue results"
           >
 
-          <div class="result-icon">
-            🎒
+          <div>
+
+            <p class="game-eyebrow">
+              Rescue Complete
+            </p>
+
+            <h1 id="resultHeading">
+              Backpack Saved!
+            </h1>
+
           </div>
 
         </div>
 
 
-        <p class="game-eyebrow">
-          Backpack Rescue Complete
-        </p>
+        <div class="rescue-final-score">
 
-        <h1>
-          Final Score
-        </h1>
-
-
-        <div class="final-score">
+          <span>
+            Final Score
+          </span>
 
           <strong id="finalScore">
             0
           </strong>
-
-          <span>
-            /
-
-            <span id="maximumScore">
-              100
-            </span>
-          </span>
 
         </div>
 
@@ -870,7 +973,20 @@
         </div>
 
 
-        <div class="result-stat-grid">
+        <div class="rescue-result-grid">
+
+          <article>
+
+            <span>
+              Correctly Rescued
+            </span>
+
+            <strong id="finalCorrect">
+              0/15
+            </strong>
+
+          </article>
+
 
           <article>
 
@@ -888,11 +1004,24 @@
           <article>
 
             <span>
-              Correctly Sorted
+              Best Combo
             </span>
 
-            <strong id="finalCorrect">
-              0/10
+            <strong id="finalBestCombo">
+              x1
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Lives Remaining
+            </span>
+
+            <strong id="finalLives">
+              0
             </strong>
 
           </article>
@@ -929,7 +1058,9 @@
         <p
           class="result-message"
           id="resultMessage"
-        ></p>
+        >
+          Keep practicing safe sharing and information protection.
+        </p>
 
 
         <div class="result-actions">
@@ -953,18 +1084,39 @@
         </div>
 
       </div>
+
     </section>
 
   </main>
 
 
   <!-- =================================================
+       AUDIO
+  ================================================== -->
+
+  <audio
+    id="correctSound"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="wrongSound"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="comboSound"
+    preload="auto"
+  ></audio>
+
+
+  <!-- =================================================
        SCRIPTS
   ================================================== -->
 
-  <script src="../../js/arcade/arcade-score.js?v=11"></script>
+  <script src="../../js/arcade/arcade-score.js?v=20"></script>
 
-  <script src="backpack-rescue.js?v=2"></script>
+  <script src="backpack-rescue.js?v=20"></script>
 
 </body>
 </html>
