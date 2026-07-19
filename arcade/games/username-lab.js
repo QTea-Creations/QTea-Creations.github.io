@@ -794,10 +794,10 @@ const wheelDefinitions = [
   }
 
   function renderWheel(wheel) {
-    setText(
-      wheel.word,
-      wheel.word.text
-    );
+setText(
+  wheel.wordElement,
+  wheel.word.text
+);
 
     setText(
       wheel.category,
@@ -1292,8 +1292,8 @@ const wheelDefinitions = [
     wheel,
     duration
   ) {
-    const wordElement =
-      byId(wheel.word);
+const wordElement =
+  byId(wheel.wordElement);
 
     const wheelElement =
       byId(wheel.element);
