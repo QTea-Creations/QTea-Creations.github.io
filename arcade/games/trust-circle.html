@@ -1,1 +1,1048 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <script src="../../js/safetii-debug.js?v=6"></script>
+
+  <title>
+    Trust Circle | Cyber Arcade
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/arcade-game.css"
+  >
+</head>
+
+<body class="arcade-game-page">
+
+  <!-- =================================================
+       MAIN NAVIGATION
+  ================================================== -->
+
+  <header class="site-header arcade-site-header">
+
+    <a
+      href="../../index.html"
+      class="logo"
+    >
+      <img
+        src="../../assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+    </a>
+
+    <nav class="arcade-main-nav">
+
+      <a href="../../dashboard.html">
+        Hero Headquarters
+      </a>
+
+      <a href="../../index.html#missions">
+        Missions
+      </a>
+
+      <a
+        href="../index.html"
+        class="active-nav-link"
+        aria-current="page"
+      >
+        Cyber Arcade
+      </a>
+
+      <a href="../../parents.html">
+        Parents
+      </a>
+
+      <a href="../../teachers.html">
+        Teachers
+      </a>
+
+    </nav>
+
+    <div class="game-points-pill arcade-navbar-points">
+      ⭐
+
+      <span id="globalPoints">
+        0
+      </span>
+
+      Points
+    </div>
+
+  </header>
+
+
+  <main class="game-shell">
+
+    <!-- =================================================
+         INTRO SCREEN
+    ================================================== -->
+
+    <section
+      class="game-screen"
+      id="introScreen"
+    >
+      <div class="game-intro-card">
+
+        <div class="game-intro-icon">
+          🤝
+        </div>
+
+        <p class="game-eyebrow">
+          Sharing Safety Challenge
+        </p>
+
+        <h1>
+          Trust Circle
+        </h1>
+
+        <p class="game-intro-description">
+          Decide who should be allowed to know different kinds
+          of information. Some details are safe for everyone,
+          while others should only be shared with trusted people
+          or kept completely private.
+        </p>
+
+
+        <!-- HOW TO PLAY -->
+
+        <section class="game-instruction-panel">
+
+          <div class="instruction-heading">
+
+            <span aria-hidden="true">
+              🛡️
+            </span>
+
+            <div>
+
+              <p class="game-eyebrow">
+                Hero Briefing
+              </p>
+
+              <h2>
+                Choose the Safest Audience
+              </h2>
+
+            </div>
+          </div>
+
+
+          <div class="identity-category-guide">
+
+            <article class="category-guide-card expression-guide">
+
+              <span class="category-guide-icon">
+                🌍
+              </span>
+
+              <div>
+
+                <h3>
+                  Anyone Online
+                </h3>
+
+                <p>
+                  Broad interests and harmless information that
+                  would not identify, locate, or endanger someone.
+                </p>
+
+                <small>
+                  Example: “I enjoy drawing cartoons.”
+                </small>
+
+              </div>
+            </article>
+
+
+            <article class="category-guide-card personal-guide">
+
+              <span class="category-guide-icon">
+                🧑‍🤝‍🧑
+              </span>
+
+              <div>
+
+                <h3>
+                  Friends I Know
+                </h3>
+
+                <p>
+                  Personal details that should only be shared with
+                  real friends—not strangers met online.
+                </p>
+
+                <small>
+                  Example: “I’m nervous about tomorrow’s test.”
+                </small>
+
+              </div>
+            </article>
+
+
+            <article class="category-guide-card private-guide">
+
+              <span class="category-guide-icon">
+                👨‍👩‍👧
+              </span>
+
+              <div>
+
+                <h3>
+                  Trusted Adults
+                </h3>
+
+                <p>
+                  Information that a parent, guardian, teacher,
+                  counselor, or another safe adult may need to know.
+                </p>
+
+                <small>
+                  Example: “Someone online is threatening me.”
+                </small>
+
+              </div>
+            </article>
+
+
+            <article class="category-guide-card secret-guide">
+
+              <span class="category-guide-icon">
+                🔒
+              </span>
+
+              <div>
+
+                <h3>
+                  Keep It Private
+                </h3>
+
+                <p>
+                  Passwords, verification codes, home addresses,
+                  live locations, PINs, and account access details.
+                </p>
+
+                <small>
+                  Example: “My password is GalaxyCat82.”
+                </small>
+
+              </div>
+            </article>
+
+          </div>
+
+
+          <div class="instruction-rule">
+
+            <span aria-hidden="true">
+              🎯
+            </span>
+
+            <p>
+              Read the entire situation before choosing. The safest
+              audience may change depending on what is happening.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- GAME RULES -->
+
+        <div class="game-rules">
+
+          <article>
+
+            <span>
+              🎯
+            </span>
+
+            <div>
+
+              <strong>
+                First Try Counts
+              </strong>
+
+              <p>
+                A correct first answer earns points.
+              </p>
+
+            </div>
+          </article>
+
+
+          <article>
+
+            <span>
+              💡
+            </span>
+
+            <div>
+
+              <strong>
+                Learn From Every Choice
+              </strong>
+
+              <p>
+                Meme explains why an audience is safe or unsafe.
+              </p>
+
+            </div>
+          </article>
+
+
+          <article>
+
+            <span>
+              🔥
+            </span>
+
+            <div>
+
+              <strong>
+                Turn Up the Heat
+              </strong>
+
+              <p>
+                Harder situations are worth more points.
+              </p>
+
+            </div>
+          </article>
+
+        </div>
+
+
+        <!-- HEAT SELECTION -->
+
+        <div class="heat-selection">
+
+          <p class="heat-selection-title">
+            Choose a Heat Level
+          </p>
+
+          <div class="heat-choice-grid">
+
+            <button
+              class="heat-choice selected"
+              type="button"
+              data-heat="mild"
+            >
+              <span class="heat-choice-icon">
+                🌶️
+              </span>
+
+              <strong>
+                Mild
+              </strong>
+
+              <small>
+                Clear sharing choices
+              </small>
+
+              <span class="heat-point-label">
+                10 points each
+              </span>
+            </button>
+
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="spicy"
+            >
+              <span class="heat-choice-icon">
+                🌶️🌶️
+              </span>
+
+              <strong>
+                Spicy
+              </strong>
+
+              <small>
+                Friends, chats, and groups
+              </small>
+
+              <span class="heat-point-label">
+                20 points each
+              </span>
+            </button>
+
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="hot"
+            >
+              <span class="heat-choice-icon">
+                🌶️🌶️🌶️
+              </span>
+
+              <strong>
+                Hot
+              </strong>
+
+              <small>
+                Tricky real-world situations
+              </small>
+
+              <span class="heat-point-label">
+                30 points each
+              </span>
+            </button>
+
+          </div>
+        </div>
+
+
+        <button
+          class="game-primary-button"
+          id="startGame"
+          type="button"
+        >
+          Enter the Trust Circle
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- =================================================
+         PLAY SCREEN
+    ================================================== -->
+
+    <section
+      class="game-screen hidden"
+      id="playScreen"
+    >
+      <div class="play-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="game-sidebar">
+
+          <div class="sidebar-game-icon">
+            🤝
+          </div>
+
+          <p class="game-eyebrow">
+            Trust Circle
+          </p>
+
+          <h2>
+            Choose the audience
+          </h2>
+
+          <p>
+            Decide who can safely receive the information.
+          </p>
+
+
+          <div class="live-stat">
+
+            <span>
+              Score
+            </span>
+
+            <strong id="currentScore">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="live-stat">
+
+            <span>
+              Correct
+            </span>
+
+            <strong id="correctCount">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="live-stat">
+
+            <span>
+              Heat
+            </span>
+
+            <strong id="currentHeat">
+              Mild
+            </strong>
+
+          </div>
+
+
+          <button
+            class="sidebar-hint-button"
+            id="openTrustHint"
+            type="button"
+            aria-expanded="false"
+            aria-controls="trustHintPanel"
+          >
+            💡 Audience Guide
+          </button>
+
+
+          <a
+            class="sidebar-exit-link"
+            href="../index.html"
+          >
+            Exit Game
+          </a>
+
+        </aside>
+
+
+        <!-- QUESTION STAGE -->
+
+        <section class="question-stage">
+
+          <div class="question-progress-row">
+
+            <div>
+              Situation
+
+              <strong id="questionNumber">
+                1
+              </strong>
+
+              of
+
+              <strong id="questionTotal">
+                8
+              </strong>
+            </div>
+
+
+            <div class="question-tools">
+
+              <div class="question-score-value">
+                +
+
+                <span id="questionPointValue">
+                  10
+                </span>
+
+                possible
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="progress-track">
+
+            <div
+              class="progress-fill"
+              id="questionProgressFill"
+            ></div>
+
+          </div>
+
+
+          <!-- AUDIENCE HINT PANEL -->
+
+          <aside
+            class="category-hint-panel hidden"
+            id="trustHintPanel"
+            aria-label="Trust Circle audience guide"
+          >
+
+            <div class="category-hint-header">
+
+              <div>
+
+                <p class="game-eyebrow">
+                  Quick Reference
+                </p>
+
+                <h3>
+                  Who should know?
+                </h3>
+
+              </div>
+
+
+              <button
+                class="close-hint-button"
+                id="closeTrustHint"
+                type="button"
+                aria-label="Close audience guide"
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            <div class="category-hint-list">
+
+              <article>
+
+                <span>
+                  🌍
+                </span>
+
+                <p>
+                  <strong>Anyone Online:</strong>
+                  broad interests and harmless self-expression.
+                </p>
+
+              </article>
+
+
+              <article>
+
+                <span>
+                  🧑‍🤝‍🧑
+                </span>
+
+                <p>
+                  <strong>Friends I Know:</strong>
+                  personal feelings or ordinary details shared with
+                  real friends.
+                </p>
+
+              </article>
+
+
+              <article>
+
+                <span>
+                  👨‍👩‍👧
+                </span>
+
+                <p>
+                  <strong>Trusted Adults:</strong>
+                  unsafe situations, threats, bullying, emergencies,
+                  or problems that require help.
+                </p>
+
+              </article>
+
+
+              <article>
+
+                <span>
+                  🔒
+                </span>
+
+                <p>
+                  <strong>Keep It Private:</strong>
+                  passwords, codes, addresses, live locations,
+                  and account access information.
+                </p>
+
+              </article>
+
+            </div>
+
+
+            <p class="hint-penalty-note">
+              Opening the guide does not remove points.
+            </p>
+
+          </aside>
+
+
+          <!-- SITUATION CARD -->
+
+          <article class="trust-situation-card">
+
+            <div
+              class="trust-character-avatar"
+              id="characterAvatar"
+              aria-hidden="true"
+            >
+              🦸🏽
+            </div>
+
+            <div class="trust-situation-copy">
+
+              <p class="game-eyebrow">
+                Sharing Situation
+              </p>
+
+              <h2 id="characterName">
+                Jordan needs your help.
+              </h2>
+
+              <p id="situationContext">
+                Jordan is deciding whether to share something online.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <!-- INFORMATION CARD -->
+
+          <article class="trust-information-card">
+
+            <p class="question-label">
+              Who is the safest audience for this?
+            </p>
+
+            <blockquote id="informationText">
+              “I love building model airplanes.”
+            </blockquote>
+
+          </article>
+
+
+          <!-- AUDIENCE CHOICES -->
+
+          <div
+            class="trust-audience-grid"
+            id="answerGrid"
+          >
+
+            <button
+              class="trust-audience-choice anyone-choice"
+              type="button"
+              data-audience="anyone"
+            >
+
+              <span class="trust-audience-icon">
+                🌍
+              </span>
+
+              <strong>
+                Anyone Online
+              </strong>
+
+              <small>
+                Safe for a public audience
+              </small>
+
+            </button>
+
+
+            <button
+              class="trust-audience-choice friends-choice"
+              type="button"
+              data-audience="friends"
+            >
+
+              <span class="trust-audience-icon">
+                🧑‍🤝‍🧑
+              </span>
+
+              <strong>
+                Friends I Know
+              </strong>
+
+              <small>
+                Only real friends I trust
+              </small>
+
+            </button>
+
+
+            <button
+              class="trust-audience-choice adults-choice"
+              type="button"
+              data-audience="adults"
+            >
+
+              <span class="trust-audience-icon">
+                👨‍👩‍👧
+              </span>
+
+              <strong>
+                Trusted Adults
+              </strong>
+
+              <small>
+                A safe adult who can help
+              </small>
+
+            </button>
+
+
+            <button
+              class="trust-audience-choice private-choice"
+              type="button"
+              data-audience="private"
+            >
+
+              <span class="trust-audience-icon">
+                🔒
+              </span>
+
+              <strong>
+                Keep It Private
+              </strong>
+
+              <small>
+                Do not share this information
+              </small>
+
+            </button>
+
+          </div>
+
+
+          <!-- ANSWER FEEDBACK -->
+
+          <div
+            class="answer-feedback hidden"
+            id="answerFeedback"
+            aria-live="polite"
+          >
+
+            <strong id="feedbackTitle">
+              Great decision!
+            </strong>
+
+            <p id="feedbackText"></p>
+
+            <div class="question-points-result">
+
+              Points earned:
+
+              <strong id="pointsEarnedThisQuestion">
+                0
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- MEME REACTION -->
+
+          <aside
+            class="arcade-meme-reaction hidden"
+            id="memeReaction"
+            aria-live="polite"
+          >
+
+            <img
+              id="memeReactionImage"
+              src="../../assets/mascot/congrats.png"
+              alt="Meme reacts to the answer"
+            >
+
+            <div class="arcade-meme-speech">
+
+              <strong id="memeReactionTitle">
+                Great choice!
+              </strong>
+
+              <p id="memeReactionMessage">
+                You protected the information.
+              </p>
+
+            </div>
+
+          </aside>
+
+
+          <button
+            class="game-primary-button hidden"
+            id="nextQuestion"
+            type="button"
+          >
+            Next Situation
+          </button>
+
+        </section>
+      </div>
+    </section>
+
+
+    <!-- =================================================
+         RESULTS SCREEN
+    ================================================== -->
+
+    <section
+      class="game-screen hidden"
+      id="resultScreen"
+    >
+      <div class="result-card">
+
+        <div class="result-meme-celebration">
+
+          <img
+            id="resultMemeImage"
+            src="../../assets/mascot/congrats.png"
+            alt="Meme celebrates the completed Trust Circle round"
+          >
+
+          <div class="result-icon">
+            🤝
+          </div>
+
+        </div>
+
+
+        <p class="game-eyebrow">
+          Trust Circle Complete
+        </p>
+
+        <h1>
+          Final Score
+        </h1>
+
+
+        <div class="final-score">
+
+          <strong id="finalScore">
+            0
+          </strong>
+
+          <span>
+            /
+
+            <span id="maximumScore">
+              80
+            </span>
+          </span>
+
+        </div>
+
+
+        <div
+          class="final-stars"
+          id="finalStars"
+          aria-label="Stars earned"
+        >
+          ☆☆☆
+        </div>
+
+
+        <div class="result-stat-grid">
+
+          <article>
+
+            <span>
+              Accuracy
+            </span>
+
+            <strong id="finalAccuracy">
+              0%
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Correct
+            </span>
+
+            <strong id="finalCorrect">
+              0/8
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Best Score
+            </span>
+
+            <strong id="bestScore">
+              0
+            </strong>
+
+          </article>
+
+
+          <article>
+
+            <span>
+              Global Points Earned
+            </span>
+
+            <strong id="globalPointsEarned">
+              +0
+            </strong>
+
+          </article>
+
+        </div>
+
+
+        <p
+          class="result-message"
+          id="resultMessage"
+        ></p>
+
+
+        <div class="result-actions">
+
+          <button
+            class="game-primary-button"
+            id="playAgain"
+            type="button"
+          >
+            Play Again
+          </button>
+
+
+          <a
+            class="game-secondary-link"
+            href="../index.html"
+          >
+            Return to Cyber Arcade
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- =================================================
+       SCRIPTS
+  ================================================== -->
+
+  <script src="../../js/arcade/arcade-score.js?v=6"></script>
+
+  <script src="trust-circle.js?v=1"></script>
+
+</body>
+</html>
