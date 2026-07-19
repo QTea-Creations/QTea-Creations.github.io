@@ -7023,3 +7023,391 @@ body.page-home
         height: 255px;
     }
 }
+
+/* =========================================================
+   HOMEPAGE CYBER ARCADE PREVIEW
+========================================================= */
+
+.arcade-preview-section {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(125, 67, 255, 0.16),
+            transparent 36%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(29, 203, 213, 0.16),
+            transparent 32%
+        ),
+        linear-gradient(
+            145deg,
+            #f7f3ff,
+            #effcff
+        );
+
+    border:
+        4px solid
+        rgba(125, 67, 255, 0.14);
+
+    border-radius: 34px;
+}
+
+.arcade-preview-section::before {
+    content: "";
+
+    position: absolute;
+    top: -90px;
+    right: -90px;
+
+    width: 240px;
+    height: 240px;
+
+    background:
+        rgba(255, 225, 80, 0.22);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.arcade-preview-heading {
+    position: relative;
+    z-index: 2;
+
+    margin-bottom: 28px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.arcade-preview-heading h2 {
+    margin:
+        0 0 10px;
+}
+
+.arcade-preview-copy {
+    max-width: 720px;
+    margin: 0;
+
+    color: #66738a;
+
+    line-height: 1.7;
+}
+
+.arcade-view-all-button {
+    flex: 0 0 auto;
+
+    white-space: nowrap;
+}
+
+.featured-game-grid {
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+.featured-game-card {
+    position: relative;
+
+    min-height: 360px;
+    padding: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: white;
+    color: #1c2947;
+
+    border: 3px solid #ddd7f3;
+    border-radius: 24px;
+
+    box-shadow:
+        0 14px 30px
+        rgba(48, 49, 94, 0.1);
+
+    text-decoration: none;
+
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.featured-game-card:hover {
+    transform:
+        translateY(-8px);
+
+    border-color: #7d43ff;
+
+    box-shadow:
+        0 22px 38px
+        rgba(48, 49, 94, 0.18);
+}
+
+.featured-game-card-highlight {
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #f5f0ff
+        );
+
+    border-color: #8b54ff;
+}
+
+.featured-game-card-highlight::after {
+    content: "GAME OF THE WEEK";
+
+    position: absolute;
+    top: -12px;
+    left: 50%;
+
+    padding: 6px 12px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            135deg,
+            #7d43ff,
+            #397ff0
+        );
+
+    color: white;
+
+    border-radius: 999px;
+
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+
+    white-space: nowrap;
+}
+
+.featured-game-top {
+    min-height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.featured-game-badge {
+    padding: 5px 9px;
+
+    background: #eee9ff;
+    color: #7040dd;
+
+    border-radius: 999px;
+
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.featured-game-points {
+    color: #7b8496;
+
+    font-size: 0.62rem;
+    font-weight: 800;
+}
+
+.featured-game-icon {
+    width: 82px;
+    height: 82px;
+    margin:
+        22px auto 18px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 25px;
+
+    font-size: 2.8rem;
+
+    box-shadow:
+        0 13px 24px
+        rgba(53, 52, 105, 0.15);
+}
+
+.pieces-game-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #8e5cff,
+            #4c7df1
+        );
+}
+
+.clue-game-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #24cbd7,
+            #398ee8
+        );
+}
+
+.trust-game-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #4dd797,
+            #22bfc1
+        );
+}
+
+.impostor-game-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #ff769f,
+            #ff9b61
+        );
+}
+
+.username-game-icon {
+    background:
+        linear-gradient(
+            145deg,
+            #ffe15d,
+            #ffad45
+        );
+}
+
+.featured-game-card h3 {
+    margin:
+        0 0 8px;
+
+    font-size: 1.05rem;
+    text-align: center;
+}
+
+.featured-game-card p {
+    margin: 0;
+
+    color: #6b768c;
+
+    font-size: 0.76rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.featured-game-link {
+    margin-top: auto;
+    padding-top: 18px;
+
+    color: #7140e5;
+
+    font-size: 0.76rem;
+    font-weight: 900;
+    text-align: center;
+}
+
+.arcade-preview-footer {
+    position: relative;
+    z-index: 2;
+
+    margin-top: 24px;
+    padding: 17px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.78);
+
+    border:
+        2px solid
+        rgba(125, 67, 255, 0.14);
+
+    border-radius: 18px;
+}
+
+.arcade-preview-footer > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.arcade-preview-footer span {
+    padding: 7px 10px;
+
+    background: #fff4c4;
+
+    border:
+        1px solid #ffdf65;
+    border-radius: 999px;
+
+    font-size: 0.68rem;
+    font-weight: 900;
+}
+
+.arcade-preview-footer p {
+    margin: 0;
+
+    color: #66738a;
+
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RESPONSIVE ARCADE PREVIEW
+========================================================= */
+
+@media (max-width: 1180px) {
+    .featured-game-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 780px) {
+    .arcade-preview-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .featured-game-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .arcade-preview-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 520px) {
+    .featured-game-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-game-card {
+        min-height: 320px;
+    }
+
+    .arcade-view-all-button {
+        width: 100%;
+        text-align: center;
+    }
+}
