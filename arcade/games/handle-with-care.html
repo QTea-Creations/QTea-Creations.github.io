@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Handle With Care | Safetii Net
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css?v=25"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/arcade-game.css?v=25"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/handle-with-care.css?v=25"
+  >
+
+  <script
+    src="../../js/safetii-debug.js?v=25"
+    defer
+  ></script>
+</head>
+
+<body class="handle-page">
+
+  <!-- =====================================================
+       TOP NAVIGATION
+  ====================================================== -->
+
+  <header class="handle-topbar">
+    <a
+      class="handle-brand"
+      href="../index.html"
+      aria-label="Return to the Cyber Arcade"
+    >
+      <span aria-hidden="true">
+        🛡️
+      </span>
+
+      <strong>
+        Safetii Net
+      </strong>
+    </a>
+
+    <nav class="handle-nav">
+      <a href="../../index.html">
+        Home
+      </a>
+
+      <a href="../../missions.html">
+        Missions
+      </a>
+
+      <a
+        class="active"
+        href="../index.html"
+      >
+        Cyber Arcade
+      </a>
+    </nav>
+
+    <div class="handle-global-points">
+      ⭐
+      <strong id="globalPoints">
+        0
+      </strong>
+      Points
+    </div>
+  </header>
+
+
+  <main class="handle-game-shell">
+
+    <!-- ===================================================
+         INTRO SCREEN
+    ==================================================== -->
+
+    <section
+      class="handle-screen"
+      id="introScreen"
+    >
+      <div class="handle-intro-card">
+
+        <div class="handle-title-lockup">
+          <span
+            class="handle-title-icon"
+            aria-hidden="true"
+          >
+            📦
+          </span>
+
+          <div>
+            <p class="handle-eyebrow">
+              Safetii Net Cyber Arcade
+            </p>
+
+            <h1>
+              Handle With Care
+            </h1>
+
+            <p class="handle-intro-copy">
+              Run the factory floor, manage three moving routes,
+              sort username pieces, stop private clues, and ship
+              creative usernames before the orders pile up.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- FACTORY PREVIEW -->
+
+        <section class="handle-preview-stage">
+          <div class="preview-factory-lights">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="preview-order-ticket">
+            <small>
+              FACTORY ORDER
+            </small>
+
+            <strong>
+              Build a silly animal username
+            </strong>
+          </div>
+
+          <div class="preview-conveyor preview-top-line">
+            <span class="preview-piece safe-piece-preview">
+              Wacky
+            </span>
+
+            <span class="preview-piece unsafe-piece-preview">
+              Real Name
+            </span>
+          </div>
+
+          <div class="preview-conveyor preview-middle-line">
+            <span class="preview-piece safe-piece-preview">
+              Panda
+            </span>
+
+            <span class="preview-piece unsafe-piece-preview">
+              Birth Year
+            </span>
+          </div>
+
+          <div class="preview-conveyor preview-bottom-line">
+            <span class="preview-piece safe-piece-preview">
+              Bounce
+            </span>
+          </div>
+
+          <div class="preview-worker">
+            🦸
+          </div>
+
+          <div class="preview-factory-bin preview-ship-bin">
+            <span>
+              🚀
+            </span>
+
+            <strong>
+              SHIP IT!
+            </strong>
+          </div>
+
+          <div class="preview-factory-bin preview-nope-bin">
+            <span>
+              🚫
+            </span>
+
+            <strong>
+              NOPE CHUTE
+            </strong>
+          </div>
+
+          <div class="preview-result-package">
+            WackyPandaBounce
+          </div>
+        </section>
+
+
+        <!-- HOW TO PLAY -->
+
+        <section class="handle-briefing">
+          <div class="handle-briefing-heading">
+            <span aria-hidden="true">
+              🏭
+            </span>
+
+            <div>
+              <p class="handle-eyebrow">
+                Factory briefing
+              </p>
+
+              <h2>
+                Keep every route under control
+              </h2>
+            </div>
+          </div>
+
+          <div class="handle-rule-grid">
+
+            <article>
+              <span class="handle-rule-number">
+                1
+              </span>
+
+              <div>
+                <h3>
+                  Follow the order
+                </h3>
+
+                <p>
+                  Each customer wants a different username theme,
+                  such as silly, heroic, animal, space, or nature.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span class="handle-rule-number">
+                2
+              </span>
+
+              <div>
+                <h3>
+                  Move between routes
+                </h3>
+
+                <p>
+                  Run, jump, and climb between three conveyor lines
+                  while every route continues moving.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span class="handle-rule-number">
+                3
+              </span>
+
+              <div>
+                <h3>
+                  Route every piece
+                </h3>
+
+                <p>
+                  Send useful words toward the mixer and knock private
+                  clues into the Nope Chute.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span class="handle-rule-number">
+                4
+              </span>
+
+              <div>
+                <h3>
+                  Finish and ship
+                </h3>
+
+                <p>
+                  Complete the requested username, inspect it, and
+                  place the package in the correct factory bin.
+                </p>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+
+        <!-- CONTROL SELECTION -->
+
+        <section class="handle-choice-section">
+          <div class="handle-choice-heading">
+            <p class="handle-eyebrow">
+              Choose your controls
+            </p>
+
+            <h2>
+              How do you want to run the factory?
+            </h2>
+          </div>
+
+          <div
+            class="handle-control-options"
+            role="group"
+            aria-label="Choose a control style"
+          >
+            <button
+              class="handle-control-choice active"
+              type="button"
+              data-control-mode="keyboard"
+            >
+              <span aria-hidden="true">
+                ⌨️
+              </span>
+
+              <strong>
+                Keyboard
+              </strong>
+
+              <small>
+                Move with arrows or WASD
+              </small>
+            </button>
+
+            <button
+              class="handle-control-choice"
+              type="button"
+              data-control-mode="buttons"
+            >
+              <span aria-hidden="true">
+                🎮
+              </span>
+
+              <strong>
+                Screen Buttons
+              </strong>
+
+              <small>
+                Use the on-screen movement controls
+              </small>
+            </button>
+
+            <button
+              class="handle-control-choice"
+              type="button"
+              data-control-mode="assist"
+            >
+              <span aria-hidden="true">
+                ✨
+              </span>
+
+              <strong>
+                Assist Mode
+              </strong>
+
+              <small>
+                Slower belts and automatic ladder climbing
+              </small>
+            </button>
+          </div>
+        </section>
+
+
+        <!-- HEAT LEVEL -->
+
+        <section class="handle-choice-section">
+          <div class="handle-choice-heading">
+            <p class="handle-eyebrow">
+              Choose your challenge
+            </p>
+
+            <h2>
+              Factory Speed
+            </h2>
+          </div>
+
+          <div
+            class="heat-choice-grid"
+            role="group"
+            aria-label="Choose a heat level"
+          >
+            <button
+              class="heat-choice active"
+              type="button"
+              data-heat="mild"
+            >
+              <span>
+                🌶️
+              </span>
+
+              <strong>
+                Mild
+              </strong>
+
+              <small>
+                Slower belts and one order at a time
+              </small>
+            </button>
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="spicy"
+            >
+              <span>
+                🌶️🌶️
+              </span>
+
+              <strong>
+                Spicy
+              </strong>
+
+              <small>
+                Faster routes and more private clues
+              </small>
+            </button>
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="hot"
+            >
+              <span>
+                🌶️🌶️🌶️
+              </span>
+
+              <strong>
+                Hot
+              </strong>
+
+              <small>
+                Rush orders, jams, and crossing routes
+              </small>
+            </button>
+          </div>
+        </section>
+
+
+        <button
+          class="handle-start-button"
+          id="startGame"
+          type="button"
+        >
+          <span aria-hidden="true">
+            🏭
+          </span>
+
+          Start the Factory
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         PLAY SCREEN
+    ==================================================== -->
+
+    <section
+      class="handle-screen hidden"
+      id="playScreen"
+    >
+
+      <!-- HUD -->
+
+      <section
+        class="handle-hud"
+        aria-label="Factory game status"
+      >
+        <div class="handle-hud-title">
+          <span aria-hidden="true">
+            📦
+          </span>
+
+          <div>
+            <small>
+              Handle With Care
+            </small>
+
+            <strong id="factoryName">
+              The Mix-Up Mill
+            </strong>
+          </div>
+        </div>
+
+        <div class="handle-hud-stat">
+          <span>
+            Order
+          </span>
+
+          <strong>
+            <span id="currentOrderNumber">
+              1
+            </span>
+            /
+            <span id="totalOrders">
+              6
+            </span>
+          </strong>
+        </div>
+
+        <div class="handle-hud-stat">
+          <span>
+            Score
+          </span>
+
+          <strong id="currentScore">
+            0
+          </strong>
+        </div>
+
+        <div class="handle-hud-stat">
+          <span>
+            Combo
+          </span>
+
+          <strong>
+            <span id="comboCount">
+              0
+            </span>x
+          </strong>
+        </div>
+
+        <div class="handle-hud-stat">
+          <span>
+            Time
+          </span>
+
+          <strong id="timeRemaining">
+            75
+          </strong>
+        </div>
+
+        <div class="handle-hud-stat">
+          <span>
+            Factory Health
+          </span>
+
+          <strong id="factoryHealthDisplay">
+            ❤️❤️❤️
+          </strong>
+        </div>
+      </section>
+
+
+      <!-- ORDER PROGRESS -->
+
+      <section class="handle-order-progress">
+        <div>
+          <span>
+            Orders shipped
+          </span>
+
+          <strong>
+            <span id="ordersShipped">
+              0
+            </span>
+            /
+            <span id="ordersRequired">
+              6
+            </span>
+          </strong>
+        </div>
+
+        <div class="handle-progress-track">
+          <div
+            class="handle-progress-fill"
+            id="orderProgressFill"
+          ></div>
+        </div>
+
+        <div>
+          <span>
+            Private clues blocked
+          </span>
+
+          <strong id="privateCluesBlocked">
+            0
+          </strong>
+        </div>
+      </section>
+
+
+      <!-- CURRENT ORDER -->
+
+      <section
+        class="factory-order-panel"
+        id="factoryOrderPanel"
+      >
+        <div class="factory-order-icon">
+          📋
+        </div>
+
+        <div class="factory-order-copy">
+          <small>
+            CURRENT ORDER
+          </small>
+
+          <h2 id="orderTitle">
+            Silly Animal
+          </h2>
+
+          <p id="orderDescription">
+            Build a funny username using one style word,
+            one animal word, and one action word.
+          </p>
+        </div>
+
+        <div class="factory-order-recipe">
+          <span id="recipeSlotOne">
+            STYLE
+          </span>
+
+          <strong>
+            +
+          </strong>
+
+          <span id="recipeSlotTwo">
+            ANIMAL
+          </span>
+
+          <strong>
+            +
+          </strong>
+
+          <span id="recipeSlotThree">
+            ACTION
+          </span>
+        </div>
+
+        <div class="order-patience">
+          <span>
+            Order patience
+          </span>
+
+          <div class="order-patience-track">
+            <div
+              class="order-patience-fill"
+              id="orderPatienceFill"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- FACTORY GAME AREA -->
+
+      <section
+        class="handle-factory"
+        id="handleFactory"
+        aria-label="Username factory game area"
+      >
+        <div class="factory-wall-grid"></div>
+
+        <div class="factory-light-row">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+
+        <!-- TOP ROUTE -->
+
+        <section
+          class="factory-route route-top"
+          data-route="top"
+        >
+          <header class="route-label">
+            <span>
+              🎨
+            </span>
+
+            <strong>
+              Style Line
+            </strong>
+          </header>
+
+          <div class="route-conveyor">
+            <div class="route-belt-marks"></div>
+
+            <div
+              class="factory-piece-layer"
+              id="topRoutePieces"
+            ></div>
+          </div>
+
+          <button
+            class="route-switch"
+            id="topRouteSwitch"
+            type="button"
+            data-route-switch="top"
+            aria-label="Switch the top conveyor route"
+          >
+            <span>
+              ↘
+            </span>
+
+            <strong>
+              SWITCH
+            </strong>
+          </button>
+
+          <div
+            class="route-gate"
+            id="topRouteGate"
+          >
+            <span></span>
+            <span></span>
+          </div>
+        </section>
+
+
+        <!-- MIDDLE ROUTE -->
+
+        <section
+          class="factory-route route-middle"
+          data-route="middle"
+        >
+          <header class="route-label">
+            <span>
+              🐼
+            </span>
+
+            <strong>
+              Character Line
+            </strong>
+          </header>
+
+          <div class="route-conveyor">
+            <div class="route-belt-marks"></div>
+
+            <div
+              class="factory-piece-layer"
+              id="middleRoutePieces"
+            ></div>
+          </div>
+
+          <button
+            class="route-switch"
+            id="middleRouteSwitch"
+            type="button"
+            data-route-switch="middle"
+            aria-label="Switch the middle conveyor route"
+          >
+            <span>
+              ↘
+            </span>
+
+            <strong>
+              SWITCH
+            </strong>
+          </button>
+
+          <div
+            class="route-gate"
+            id="middleRouteGate"
+          >
+            <span></span>
+            <span></span>
+          </div>
+        </section>
+
+
+        <!-- BOTTOM ROUTE -->
+
+        <section
+          class="factory-route route-bottom"
+          data-route="bottom"
+        >
+          <header class="route-label">
+            <span>
+              ⚡
+            </span>
+
+            <strong>
+              Power Line
+            </strong>
+          </header>
+
+          <div class="route-conveyor">
+            <div class="route-belt-marks"></div>
+
+            <div
+              class="factory-piece-layer"
+              id="bottomRoutePieces"
+            ></div>
+          </div>
+
+          <button
+            class="route-switch"
+            id="bottomRouteSwitch"
+            type="button"
+            data-route-switch="bottom"
+            aria-label="Switch the bottom conveyor route"
+          >
+            <span>
+              ↘
+            </span>
+
+            <strong>
+              SWITCH
+            </strong>
+          </button>
+
+          <div
+            class="route-gate"
+            id="bottomRouteGate"
+          >
+            <span></span>
+            <span></span>
+          </div>
+        </section>
+
+
+        <!-- ROUTE CONNECTORS -->
+
+        <div
+          class="route-slide route-slide-top"
+          aria-hidden="true"
+        ></div>
+
+        <div
+          class="route-slide route-slide-middle"
+          aria-hidden="true"
+        ></div>
+
+        <div
+          class="route-slide route-slide-bottom"
+          aria-hidden="true"
+        ></div>
+
+
+        <!-- LADDERS -->
+
+        <div
+          class="factory-ladder ladder-left"
+          aria-hidden="true"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div
+          class="factory-ladder ladder-right"
+          aria-hidden="true"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+
+        <!-- MIXER -->
+
+        <section
+          class="username-mixer"
+          id="usernameMixer"
+        >
+          <div class="mixer-top">
+            <span class="mixer-light"></span>
+            <span class="mixer-light"></span>
+            <span class="mixer-light"></span>
+          </div>
+
+          <div class="mixer-body">
+            <span class="mixer-gear">
+              ⚙️
+            </span>
+
+            <small>
+              USERNAME MIXER
+            </small>
+
+            <strong id="mixerUsername">
+              Waiting for pieces...
+            </strong>
+
+            <div class="mixer-slots">
+              <span
+                class="mixer-slot"
+                id="mixerSlotOne"
+              >
+                ?
+              </span>
+
+              <span>
+                +
+              </span>
+
+              <span
+                class="mixer-slot"
+                id="mixerSlotTwo"
+              >
+                ?
+              </span>
+
+              <span>
+                +
+              </span>
+
+              <span
+                class="mixer-slot"
+                id="mixerSlotThree"
+              >
+                ?
+              </span>
+            </div>
+          </div>
+
+          <button
+            class="mixer-button"
+            id="mixUsernameButton"
+            type="button"
+            disabled
+          >
+            MIX IT!
+          </button>
+        </section>
+
+
+        <!-- INSPECTION SCANNER -->
+
+        <section
+          class="factory-scanner"
+          id="factoryScanner"
+        >
+          <header>
+            <span>
+              🔍
+            </span>
+
+            <strong>
+              Final Inspection
+            </strong>
+          </header>
+
+          <div class="scanner-window">
+            <div class="scanner-beam"></div>
+
+            <strong id="scannerUsername">
+              No package
+            </strong>
+
+            <small id="scannerMessage">
+              Finish mixing a username first.
+            </small>
+          </div>
+
+          <button
+            class="scanner-button"
+            id="scanUsernameButton"
+            type="button"
+            disabled
+          >
+            SCAN PACKAGE
+          </button>
+        </section>
+
+
+        <!-- FACTORY BINS -->
+
+        <section class="factory-bin-zone">
+
+          <button
+            class="factory-bin ship-bin"
+            id="shipItBin"
+            type="button"
+            disabled
+          >
+            <span class="bin-icon">
+              🚀
+            </span>
+
+            <strong>
+              SHIP IT!
+            </strong>
+
+            <small>
+              Finished safe order
+            </small>
+          </button>
+
+          <button
+            class="factory-bin parts-bin"
+            id="partsBin"
+            type="button"
+          >
+            <span class="bin-icon">
+              🧰
+            </span>
+
+            <strong>
+              PARTS BOX
+            </strong>
+
+            <small>
+              Save a useful piece
+            </small>
+          </button>
+
+          <button
+            class="factory-bin nope-bin"
+            id="nopeChute"
+            type="button"
+          >
+            <span class="bin-icon">
+              🚫
+            </span>
+
+            <strong>
+              NOPE CHUTE
+            </strong>
+
+            <small>
+              Private information only
+            </small>
+          </button>
+
+        </section>
+
+
+        <!-- PLAYER CHARACTER -->
+
+        <div
+          class="factory-worker"
+          id="factoryWorker"
+          aria-label="Factory worker"
+        >
+          <div class="factory-worker-character">
+            🦸
+          </div>
+
+          <div class="factory-worker-shadow"></div>
+        </div>
+
+
+        <!-- FACTORY JAM -->
+
+        <div
+          class="factory-jam-alert hidden"
+          id="factoryJamAlert"
+          aria-live="assertive"
+        >
+          <span>
+            ⚠️
+          </span>
+
+          <div>
+            <strong>
+              FACTORY JAM!
+            </strong>
+
+            <small>
+              Reach the flashing machine and repair it.
+            </small>
+          </div>
+        </div>
+
+
+        <!-- COMBO DISPLAY -->
+
+        <div
+          class="factory-combo-display hidden"
+          id="comboDisplay"
+          aria-live="polite"
+        >
+          <strong id="comboTitle">
+            NICE ROUTE!
+          </strong>
+
+          <span id="comboMultiplier">
+            2x Combo
+          </span>
+        </div>
+
+
+        <!-- FLOATING MESSAGES -->
+
+        <div
+          class="factory-announcement hidden"
+          id="factoryAnnouncement"
+          aria-live="assertive"
+        >
+          <span id="announcementIcon">
+            📦
+          </span>
+
+          <div>
+            <small id="announcementLabel">
+              New Order
+            </small>
+
+            <strong id="announcementTitle">
+              Silly Animal
+            </strong>
+
+            <p id="announcementMessage">
+              Find one style, one animal, and one action word.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- ON-SCREEN MOVEMENT CONTROLS -->
+
+        <div
+          class="factory-mobile-controls hidden"
+          id="factoryMobileControls"
+          aria-label="Factory movement controls"
+        >
+          <button
+            id="moveLeftButton"
+            type="button"
+            aria-label="Move left"
+          >
+            ◀
+          </button>
+
+          <button
+            id="moveUpButton"
+            type="button"
+            aria-label="Move or climb up"
+          >
+            ▲
+          </button>
+
+          <button
+            id="actionButton"
+            type="button"
+            aria-label="Use nearby factory control"
+          >
+            USE
+          </button>
+
+          <button
+            id="moveDownButton"
+            type="button"
+            aria-label="Move or climb down"
+          >
+            ▼
+          </button>
+
+          <button
+            id="moveRightButton"
+            type="button"
+            aria-label="Move right"
+          >
+            ▶
+          </button>
+
+          <button
+            id="jumpButton"
+            type="button"
+            aria-label="Jump"
+          >
+            JUMP
+          </button>
+        </div>
+
+
+        <!-- CONTROL REMINDER -->
+
+        <div
+          class="factory-control-reminder"
+          id="controlReminder"
+        >
+          Move with Arrow Keys or WASD · Jump with Space · Use with E
+        </div>
+
+      </section>
+
+
+      <!-- FEEDBACK -->
+
+      <section
+        class="handle-feedback hidden"
+        id="handleFeedback"
+        aria-live="polite"
+      >
+        <span
+          class="handle-feedback-icon"
+          id="handleFeedbackIcon"
+        >
+          ✅
+        </span>
+
+        <div>
+          <strong id="handleFeedbackTitle">
+            Perfect piece!
+          </strong>
+
+          <p id="handleFeedbackMessage">
+            That word matches the current factory order.
+          </p>
+        </div>
+
+        <div class="handle-feedback-points">
+          <strong id="handleFeedbackPoints">
+            +10
+          </strong>
+
+          <span>
+            points
+          </span>
+        </div>
+      </section>
+
+    </section>
+
+
+    <!-- ===================================================
+         ORDER COMPLETE OVERLAY
+    ==================================================== -->
+
+    <section
+      class="handle-overlay hidden"
+      id="orderCompleteOverlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="orderCompleteHeading"
+    >
+      <div class="handle-overlay-card">
+
+        <span class="handle-overlay-icon">
+          🚀
+        </span>
+
+        <p class="handle-eyebrow">
+          Order shipped
+        </p>
+
+        <h2 id="orderCompleteHeading">
+          WackyPandaBounce
+        </h2>
+
+        <p id="orderCompleteMessage">
+          Safe, creative, and ready for delivery!
+        </p>
+
+        <div class="handle-overlay-stats">
+          <article>
+            <span>
+              Order Score
+            </span>
+
+            <strong id="orderCompleteScore">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Creativity
+            </span>
+
+            <strong id="orderCreativity">
+              Great
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Private Clues Blocked
+            </span>
+
+            <strong id="orderPrivateBlocked">
+              0
+            </strong>
+          </article>
+        </div>
+
+        <button
+          class="handle-continue-button"
+          id="continueOrderButton"
+          type="button"
+        >
+          Next Order
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         FACTORY COMPLETE OVERLAY
+    ==================================================== -->
+
+    <section
+      class="handle-overlay hidden"
+      id="factoryCompleteOverlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="factoryCompleteHeading"
+    >
+      <div class="handle-overlay-card factory-complete-card">
+
+        <span class="handle-overlay-icon">
+          🏭
+        </span>
+
+        <p class="handle-eyebrow">
+          Factory cleared
+        </p>
+
+        <h2 id="factoryCompleteHeading">
+          The Mix-Up Mill Is Running!
+        </h2>
+
+        <p>
+          Every order has been shipped and the factory floor is
+          ready for its next challenge.
+        </p>
+
+        <button
+          class="handle-continue-button"
+          id="finishFactoryButton"
+          type="button"
+        >
+          View Results
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         RESULTS SCREEN
+    ==================================================== -->
+
+    <section
+      class="handle-screen hidden"
+      id="resultScreen"
+    >
+      <div class="handle-results-card">
+
+        <div class="handle-results-heading">
+          <div
+            class="handle-result-worker"
+            aria-hidden="true"
+          >
+            🦸
+          </div>
+
+          <div>
+            <p class="handle-eyebrow">
+              Shift complete
+            </p>
+
+            <h1 id="resultHeading">
+              Factory Floor Mastered!
+            </h1>
+
+            <p id="resultMessage">
+              You managed every route, blocked private clues,
+              and shipped a full set of creative usernames.
+            </p>
+          </div>
+        </div>
+
+
+        <div class="handle-rank-card">
+          <span>
+            Factory rank
+          </span>
+
+          <strong id="factoryRank">
+            Route Rookie
+          </strong>
+        </div>
+
+
+        <div class="handle-final-score">
+          <span>
+            Final Score
+          </span>
+
+          <strong id="finalScore">
+            0
+          </strong>
+
+          <div
+            class="handle-final-stars"
+            id="finalStars"
+            aria-label="Stars earned"
+          >
+            ☆☆☆
+          </div>
+        </div>
+
+
+        <div class="handle-result-grid">
+
+          <article>
+            <span>
+              Orders Shipped
+            </span>
+
+            <strong id="finalOrdersShipped">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Private Clues Blocked
+            </span>
+
+            <strong id="finalPrivateBlocked">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Best Combo
+            </span>
+
+            <strong id="finalBestCombo">
+              0x
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Factory Accuracy
+            </span>
+
+            <strong id="finalAccuracy">
+              0%
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Best Score
+            </span>
+
+            <strong id="bestScore">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Global Points Earned
+            </span>
+
+            <strong id="globalPointsEarned">
+              0
+            </strong>
+          </article>
+
+        </div>
+
+
+        <section class="shipped-username-section">
+          <h2>
+            Usernames Shipped
+          </h2>
+
+          <div
+            class="shipped-username-list"
+            id="shippedUsernameList"
+          ></div>
+        </section>
+
+
+        <div class="handle-result-actions">
+          <button
+            class="handle-play-again-button"
+            id="playAgain"
+            type="button"
+          >
+            Work Another Shift
+          </button>
+
+          <a
+            class="handle-back-button"
+            href="../index.html"
+          >
+            Back to Cyber Arcade
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <script src="../../js/arcade/arcade-score.js?v=25"></script>
+  <script src="handle-with-care.js?v=25"></script>
+</body>
+</html>
