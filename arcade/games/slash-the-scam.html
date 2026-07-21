@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Slash the Scam | Safetii Net
+  </title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/style.css?v=24"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/arcade-game.css?v=24"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../../css/slash-the-scam.css?v=24"
+  >
+
+  <script
+    src="../../js/safetii-debug.js?v=24"
+    defer
+  ></script>
+</head>
+
+<body class="slash-page">
+
+  <!-- =====================================================
+       TOP NAVIGATION
+  ====================================================== -->
+
+  <header class="slash-topbar">
+    <a
+      class="slash-brand"
+      href="../index.html"
+      aria-label="Return to the Cyber Arcade"
+    >
+      <span aria-hidden="true">
+        🛡️
+      </span>
+
+      <strong>
+        Safetii Net
+      </strong>
+    </a>
+
+    <nav class="slash-nav">
+      <a href="../../index.html">
+        Home
+      </a>
+
+      <a href="../../missions.html">
+        Missions
+      </a>
+
+      <a
+        class="active"
+        href="../index.html"
+      >
+        Cyber Arcade
+      </a>
+    </nav>
+
+    <div class="slash-global-points">
+      ⭐
+      <strong id="globalPoints">
+        0
+      </strong>
+      Points
+    </div>
+  </header>
+
+
+  <main class="slash-game-shell">
+
+    <!-- ===================================================
+         INTRO SCREEN
+    ==================================================== -->
+
+    <section
+      class="slash-screen"
+      id="introScreen"
+    >
+      <div class="slash-intro-card">
+
+        <div class="slash-title-lockup">
+          <span
+            class="slash-title-icon"
+            aria-hidden="true"
+          >
+            ⚔️
+          </span>
+
+          <div>
+            <p class="slash-eyebrow">
+              Safetii Net Cyber Arcade
+            </p>
+
+            <h1>
+              Slash the Scam
+            </h1>
+
+            <p class="slash-intro-copy">
+              Swipe through suspicious messages, protect safe alerts,
+              build huge combos, and stop the Clickster before the
+              network falls apart.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- GAME PREVIEW -->
+
+        <div class="slash-preview-stage">
+          <div class="preview-sky-lines"></div>
+
+          <div class="preview-message preview-message-one">
+            <span>
+              🎁
+            </span>
+
+            <strong>
+              You won 5,000 gems!
+            </strong>
+          </div>
+
+          <div class="preview-message preview-message-two safe-preview">
+            <span>
+              🛡️
+            </span>
+
+            <strong>
+              Security report received
+            </strong>
+          </div>
+
+          <div class="preview-message preview-message-three">
+            <span>
+              🔑
+            </span>
+
+            <strong>
+              Send your password now
+            </strong>
+          </div>
+
+          <div
+            class="preview-slash-line"
+            aria-hidden="true"
+          ></div>
+
+          <div class="preview-comic-word">
+            SLASH!
+          </div>
+
+          <div class="preview-hero">
+            🦸
+          </div>
+        </div>
+
+
+        <!-- HOW TO PLAY -->
+
+        <section class="slash-briefing">
+          <div class="slash-briefing-heading">
+            <span aria-hidden="true">
+              🎯
+            </span>
+
+            <div>
+              <p class="slash-eyebrow">
+                Your mission
+              </p>
+
+              <h2>
+                Slash scams. Protect safe messages.
+              </h2>
+            </div>
+          </div>
+
+          <div class="slash-rule-grid">
+
+            <article>
+              <span class="slash-rule-number">
+                1
+              </span>
+
+              <div>
+                <h3>
+                  Watch the stream
+                </h3>
+
+                <p>
+                  Messages, links, downloads, alerts, and decoys will
+                  fly across the screen.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span class="slash-rule-number">
+                2
+              </span>
+
+              <div>
+                <h3>
+                  Slash suspicious items
+                </h3>
+
+                <p>
+                  Swipe across threats or click them when using Click
+                  Mode.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span class="slash-rule-number">
+                3
+              </span>
+
+              <div>
+                <h3>
+                  Protect legitimate alerts
+                </h3>
+
+                <p>
+                  Safe objects must fly through untouched. Slashing one
+                  will break your combo.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span class="slash-rule-number">
+                4
+              </span>
+
+              <div>
+                <h3>
+                  Defeat the Clickster
+                </h3>
+
+                <p>
+                  Survive every wave and use precision slashes during
+                  the final boss battle.
+                </p>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+
+        <!-- CONTROL SELECTION -->
+
+        <section class="slash-choice-section">
+          <div class="slash-choice-heading">
+            <p class="slash-eyebrow">
+              Choose your controls
+            </p>
+
+            <h2>
+              How do you want to play?
+            </h2>
+          </div>
+
+          <div
+            class="slash-control-options"
+            role="group"
+            aria-label="Choose a control style"
+          >
+            <button
+              class="slash-control-choice active"
+              type="button"
+              data-control-mode="swipe"
+            >
+              <span aria-hidden="true">
+                ⚔️
+              </span>
+
+              <strong>
+                Swipe Mode
+              </strong>
+
+              <small>
+                Hold and drag across threats
+              </small>
+            </button>
+
+            <button
+              class="slash-control-choice"
+              type="button"
+              data-control-mode="click"
+            >
+              <span aria-hidden="true">
+                👆
+              </span>
+
+              <strong>
+                Click Mode
+              </strong>
+
+              <small>
+                Click suspicious objects
+              </small>
+            </button>
+
+            <button
+              class="slash-control-choice"
+              type="button"
+              data-control-mode="keyboard"
+            >
+              <span aria-hidden="true">
+                ⌨️
+              </span>
+
+              <strong>
+                Keyboard Mode
+              </strong>
+
+              <small>
+                Move with arrows and press Space
+              </small>
+            </button>
+          </div>
+        </section>
+
+
+        <!-- HEAT LEVEL -->
+
+        <section class="slash-choice-section">
+          <div class="slash-choice-heading">
+            <p class="slash-eyebrow">
+              Choose your challenge
+            </p>
+
+            <h2>
+              Heat Level
+            </h2>
+          </div>
+
+          <div
+            class="heat-choice-grid"
+            role="group"
+            aria-label="Choose a heat level"
+          >
+            <button
+              class="heat-choice active"
+              type="button"
+              data-heat="mild"
+            >
+              <span>
+                🌶️
+              </span>
+
+              <strong>
+                Mild
+              </strong>
+
+              <small>
+                Slower objects and more lives
+              </small>
+            </button>
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="spicy"
+            >
+              <span>
+                🌶️🌶️
+              </span>
+
+              <strong>
+                Spicy
+              </strong>
+
+              <small>
+                Faster waves and tricky decoys
+              </small>
+            </button>
+
+            <button
+              class="heat-choice"
+              type="button"
+              data-heat="hot"
+            >
+              <span>
+                🌶️🌶️🌶️
+              </span>
+
+              <strong>
+                Hot
+              </strong>
+
+              <small>
+                Rapid objects and harder copycats
+              </small>
+            </button>
+          </div>
+        </section>
+
+
+        <button
+          class="slash-start-button"
+          id="startGame"
+          type="button"
+        >
+          <span aria-hidden="true">
+            ⚔️
+          </span>
+
+          Start Slashing
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         PLAY SCREEN
+    ==================================================== -->
+
+    <section
+      class="slash-screen hidden"
+      id="playScreen"
+    >
+
+      <!-- GAME HUD -->
+
+      <section
+        class="slash-hud"
+        aria-label="Game status"
+      >
+        <div class="slash-hud-title">
+          <span aria-hidden="true">
+            ⚔️
+          </span>
+
+          <div>
+            <small>
+              Slash the Scam
+            </small>
+
+            <strong id="currentWaveName">
+              Warm-Up
+            </strong>
+          </div>
+        </div>
+
+        <div class="slash-hud-stat">
+          <span>
+            Wave
+          </span>
+
+          <strong>
+            <span id="currentWave">
+              1
+            </span>
+            /
+            <span id="totalWaves">
+              5
+            </span>
+          </strong>
+        </div>
+
+        <div class="slash-hud-stat">
+          <span>
+            Score
+          </span>
+
+          <strong id="currentScore">
+            0
+          </strong>
+        </div>
+
+        <div class="slash-hud-stat">
+          <span>
+            Combo
+          </span>
+
+          <strong>
+            <span id="comboCount">
+              0
+            </span>x
+          </strong>
+        </div>
+
+        <div class="slash-hud-stat">
+          <span>
+            Time
+          </span>
+
+          <strong id="timeRemaining">
+            60
+          </strong>
+        </div>
+
+        <div class="slash-hud-stat">
+          <span>
+            Lives
+          </span>
+
+          <strong id="livesDisplay">
+            ❤️❤️❤️
+          </strong>
+        </div>
+      </section>
+
+
+      <!-- WAVE PROGRESS -->
+
+      <section class="slash-wave-progress">
+        <div>
+          <span>
+            Threats stopped
+          </span>
+
+          <strong>
+            <span id="threatsStopped">
+              0
+            </span>
+            /
+            <span id="threatGoal">
+              8
+            </span>
+          </strong>
+        </div>
+
+        <div class="slash-progress-track">
+          <div
+            class="slash-progress-fill"
+            id="waveProgressFill"
+          ></div>
+        </div>
+
+        <div>
+          <span>
+            Safe messages protected
+          </span>
+
+          <strong id="safeMessagesProtected">
+            0
+          </strong>
+        </div>
+      </section>
+
+
+      <!-- GAME AREA -->
+
+      <section
+        class="slash-arena"
+        id="slashArena"
+        aria-label="Slash the Scam game area"
+      >
+        <div class="slash-background-grid"></div>
+
+        <div class="slash-sky-beam slash-sky-beam-one"></div>
+        <div class="slash-sky-beam slash-sky-beam-two"></div>
+
+        <div class="slash-city-layer">
+          <span>
+            ▰
+          </span>
+          <span>
+            ▰
+          </span>
+          <span>
+            ▰
+          </span>
+          <span>
+            ▰
+          </span>
+          <span>
+            ▰
+          </span>
+        </div>
+
+
+        <!-- COMBO DISPLAY -->
+
+        <div
+          class="slash-combo-display hidden"
+          id="comboDisplay"
+          aria-live="polite"
+        >
+          <strong id="comboTitle">
+            CLEAN CUT!
+          </strong>
+
+          <span id="comboMultiplier">
+            2x Combo
+          </span>
+        </div>
+
+
+        <!-- ANNOUNCEMENT BANNER -->
+
+        <div
+          class="slash-wave-announcement hidden"
+          id="waveAnnouncement"
+          aria-live="assertive"
+        >
+          <span id="waveAnnouncementIcon">
+            ⚡
+          </span>
+
+          <div>
+            <small id="waveAnnouncementLabel">
+              Wave 1
+            </small>
+
+            <strong id="waveAnnouncementTitle">
+              Warm-Up
+            </strong>
+
+            <p id="waveAnnouncementMessage">
+              Slash suspicious messages and protect safe alerts.
+            </p>
+          </div>
+        </div>
+
+
+        <!-- OBJECTS ARE CREATED HERE BY JAVASCRIPT -->
+
+        <div
+          class="slash-object-layer"
+          id="slashObjectLayer"
+        ></div>
+
+
+        <!-- SWIPE TRAIL -->
+
+        <svg
+          class="slash-trail-layer"
+          id="slashTrailLayer"
+          aria-hidden="true"
+        >
+          <path
+            id="slashTrailPath"
+            d=""
+          ></path>
+        </svg>
+
+
+        <!-- KEYBOARD TARGET -->
+
+        <div
+          class="keyboard-target hidden"
+          id="keyboardTarget"
+          aria-hidden="true"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+
+        <!-- HERO AREA -->
+
+        <div class="slash-hero-platform">
+          <div
+            class="slash-hero-character"
+            id="slashHeroCharacter"
+            aria-hidden="true"
+          >
+            🦸
+          </div>
+
+          <div class="slash-hero-shadow"></div>
+        </div>
+
+
+        <!-- POWER-UP BAR -->
+
+        <div class="slash-power-bar">
+
+          <button
+            class="slash-power-button"
+            id="slowMotionButton"
+            type="button"
+            disabled
+          >
+            <span>
+              🐌
+            </span>
+
+            <strong>
+              Slow-Mo
+            </strong>
+
+            <small id="slowMotionCount">
+              0
+            </small>
+          </button>
+
+          <button
+            class="slash-power-button"
+            id="truthVisionButton"
+            type="button"
+            disabled
+          >
+            <span>
+              👁️
+            </span>
+
+            <strong>
+              Truth Vision
+            </strong>
+
+            <small id="truthVisionCount">
+              0
+            </small>
+          </button>
+
+          <button
+            class="slash-power-button"
+            id="safeBubbleButton"
+            type="button"
+            disabled
+          >
+            <span>
+              🫧
+            </span>
+
+            <strong>
+              Safe Bubble
+            </strong>
+
+            <small id="safeBubbleCount">
+              0
+            </small>
+          </button>
+
+        </div>
+
+
+        <!-- IN-GAME INSTRUCTION -->
+
+        <div
+          class="slash-control-reminder"
+          id="controlReminder"
+        >
+          Hold and swipe across suspicious objects
+        </div>
+
+      </section>
+
+
+      <!-- FEEDBACK PANEL -->
+
+      <section
+        class="slash-feedback hidden"
+        id="slashFeedback"
+        aria-live="polite"
+      >
+        <span
+          class="slash-feedback-icon"
+          id="slashFeedbackIcon"
+        >
+          ⚔️
+        </span>
+
+        <div>
+          <strong id="slashFeedbackTitle">
+            Scam blocked!
+          </strong>
+
+          <p id="slashFeedbackMessage">
+            That message was trying to rush you.
+          </p>
+        </div>
+
+        <div class="slash-feedback-points">
+          <strong id="slashFeedbackPoints">
+            +10
+          </strong>
+
+          <span>
+            points
+          </span>
+        </div>
+      </section>
+
+    </section>
+
+
+    <!-- ===================================================
+         WAVE COMPLETE OVERLAY
+    ==================================================== -->
+
+    <section
+      class="slash-overlay hidden"
+      id="waveCompleteOverlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="waveCompleteHeading"
+    >
+      <div class="slash-overlay-card">
+        <span class="slash-overlay-icon">
+          ⚡
+        </span>
+
+        <p class="slash-eyebrow">
+          Wave complete
+        </p>
+
+        <h2 id="waveCompleteHeading">
+          Warm-Up Cleared!
+        </h2>
+
+        <p id="waveCompleteMessage">
+          Nice work. The next wave is moving faster.
+        </p>
+
+        <div class="slash-overlay-stats">
+          <article>
+            <span>
+              Score
+            </span>
+
+            <strong id="waveCompleteScore">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Best Combo
+            </span>
+
+            <strong id="waveCompleteCombo">
+              0x
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Accuracy
+            </span>
+
+            <strong id="waveCompleteAccuracy">
+              100%
+            </strong>
+          </article>
+        </div>
+
+        <button
+          class="slash-continue-button"
+          id="continueWaveButton"
+          type="button"
+        >
+          Continue
+        </button>
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         BOSS INTRO OVERLAY
+    ==================================================== -->
+
+    <section
+      class="slash-overlay hidden"
+      id="bossIntroOverlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="bossIntroHeading"
+    >
+      <div class="slash-overlay-card boss-intro-card">
+
+        <div class="clickster-preview">
+          <span>
+            😈
+          </span>
+
+          <div class="clickster-static"></div>
+        </div>
+
+        <p class="slash-eyebrow">
+          Final wave
+        </p>
+
+        <h2 id="bossIntroHeading">
+          The Clickster Appears!
+        </h2>
+
+        <p>
+          The Clickster changes disguises and hides dangerous requests
+          inside believable messages. Slash only the unsafe parts.
+        </p>
+
+        <button
+          class="slash-continue-button"
+          id="startBossButton"
+          type="button"
+        >
+          Face the Clickster
+        </button>
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         BOSS BATTLE UI
+    ==================================================== -->
+
+    <section
+      class="slash-boss-panel hidden"
+      id="bossPanel"
+      aria-label="Clickster boss status"
+    >
+      <div class="slash-boss-heading">
+        <span>
+          😈
+        </span>
+
+        <div>
+          <small>
+            Final Boss
+          </small>
+
+          <strong>
+            The Clickster
+          </strong>
+        </div>
+      </div>
+
+      <div class="slash-boss-health-wrapper">
+        <span>
+          Boss Health
+        </span>
+
+        <div class="slash-boss-health-track">
+          <div
+            class="slash-boss-health-fill"
+            id="bossHealthFill"
+          ></div>
+        </div>
+      </div>
+
+      <strong id="bossHealthText">
+        100%
+      </strong>
+    </section>
+
+
+    <!-- ===================================================
+         RESULTS SCREEN
+    ==================================================== -->
+
+    <section
+      class="slash-screen hidden"
+      id="resultScreen"
+    >
+      <div class="slash-results-card">
+
+        <div class="slash-results-heading">
+          <div
+            class="slash-result-hero"
+            id="resultHero"
+            aria-hidden="true"
+          >
+            🦸
+          </div>
+
+          <div>
+            <p class="slash-eyebrow">
+              Mission complete
+            </p>
+
+            <h1 id="resultHeading">
+              The Network Is Safe!
+            </h1>
+
+            <p id="resultMessage">
+              You slashed the scams, protected safe messages, and
+              defeated the Clickster.
+            </p>
+          </div>
+        </div>
+
+
+        <div class="slash-rank-card">
+          <span>
+            Your rank
+          </span>
+
+          <strong id="slashRank">
+            Scam Spotter
+          </strong>
+        </div>
+
+
+        <div class="slash-final-score">
+          <span>
+            Final Score
+          </span>
+
+          <strong id="finalScore">
+            0
+          </strong>
+
+          <div
+            class="slash-final-stars"
+            id="finalStars"
+            aria-label="Stars earned"
+          >
+            ☆☆☆
+          </div>
+        </div>
+
+
+        <div class="slash-result-grid">
+
+          <article>
+            <span>
+              Threats Slashed
+            </span>
+
+            <strong id="finalThreatsSlashed">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Safe Messages Protected
+            </span>
+
+            <strong id="finalSafeProtected">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Best Combo
+            </span>
+
+            <strong id="finalBestCombo">
+              0x
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Accuracy
+            </span>
+
+            <strong id="finalAccuracy">
+              0%
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Best Score
+            </span>
+
+            <strong id="bestScore">
+              0
+            </strong>
+          </article>
+
+          <article>
+            <span>
+              Global Points Earned
+            </span>
+
+            <strong id="globalPointsEarned">
+              0
+            </strong>
+          </article>
+
+        </div>
+
+
+        <div class="slash-result-actions">
+          <button
+            class="slash-play-again-button"
+            id="playAgain"
+            type="button"
+          >
+            Slash Again
+          </button>
+
+          <a
+            class="slash-back-button"
+            href="../index.html"
+          >
+            Back to Cyber Arcade
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <script src="../../js/arcade/arcade-score.js?v=24"></script>
+  <script src="slash-the-scam.js?v=24"></script>
+</body>
+</html>
