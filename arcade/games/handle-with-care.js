@@ -679,66 +679,28 @@ document.addEventListener("DOMContentLoaded", () => {
     runTutorialStep();
   }
 
-  function skipTutorial() {
-    markTutorialComplete();
+function skipTutorial() {
+  markTutorialComplete();
 
-    tutorialActive = false;
+  tutorialActive = false;
 
-    hide(tutorialOpeningOverlay);
-    hide(tutorialCard);
-    hide(tutorialSkipButton);
-    hide(tutorialHighlight);
+  clearTutorialTargetPulses();
 
-    clearPieces();
-    resetOrderMachines();
+  hide(tutorialOpeningOverlay);
+  hide(tutorialCard);
+  hide(tutorialSkipButton);
+  hide(tutorialHighlight);
 
-    beginNormalOrder(0);
-  }
+  clearPieces();
+  resetOrderMachines();
 
-  const tutorialSteps = [
-    {
-      title: "Walk to the Wacky piece",
-      message: "Use A and D or the left and right arrow keys.",
-      control: "⬅️  ➡️"
-    },
-    {
-      title: "Pick it up",
-      message: "Stand close to Wacky and press E.",
-      control: "E"
-    },
-    {
-      title: "Carry it to the mixer",
-      message: "Climb down, walk to the Username Mixer, and press E.",
-      control: "⚙️"
-    },
-    {
-      title: "Block private information",
-      message: "Pick up Home Address and carry it to the Nope Chute.",
-      control: "🚫"
-    },
-    {
-      title: "Fill the remaining slots",
-      message: "Collect Panda and Bounce and place them in the mixer.",
-      control: "✨"
-    },
-    {
-      title: "Mix the username",
-      message: "Stand at the mixer with empty hands and press E.",
-      control: "⚙️"
-    },
-{
-  title: "Collect and inspect the package",
-  message:
-    "Press E at the mixer to collect the package. Then carry it to Final Inspection and press E again.",
-  control: "📦 ➜ 🔍"
-},
-    {
-      title: "Ship it!",
-      message: "Carry the approved package to Ship It and press E.",
-      control: "🚀"
-    }
-  ];
+  /*
+    Skipping training should also open every lane.
+  */
+  unlockLanes(3);
 
+  beginNormalOrder(0);
+}
    function clearTutorialTargetPulses() {
   document
     .querySelectorAll(".tutorial-target-pulse")
@@ -876,31 +838,40 @@ function runTutorialStep() {
     runTutorialStep();
   }
 
-  function completeTutorial() {
-    markTutorialComplete();
+function completeTutorial() {
+  markTutorialComplete();
 
-    tutorialActive = false;
+  tutorialActive = false;
 
-    hide(tutorialCard);
-    hide(tutorialSkipButton);
-    hide(tutorialHighlight);
+  clearTutorialTargetPulses();
 
-    showFeedback({
-      correct: true,
-      icon: "🎉",
-      title: "Training complete!",
-      message: "The real factory shift is ready.",
-      points: "+50"
-    });
+  hide(tutorialCard);
+  hide(tutorialSkipButton);
+  hide(tutorialHighlight);
 
-    score += 50;
+  score += 50;
 
-    managedTimeout(() => {
-      clearPieces();
-      resetOrderMachines();
-      beginNormalOrder(0);
-    }, 1200);
-  }
+  showFeedback({
+    correct: true,
+    icon: "🎉",
+    title: "Training complete!",
+    message: "All three factory lines are now open!",
+    points: "+50"
+  });
+
+  managedTimeout(() => {
+    clearPieces();
+    resetOrderMachines();
+
+    /*
+      Explicitly unlock all lanes before starting
+      the first real order.
+    */
+    unlockLanes(3);
+
+    beginNormalOrder(0);
+  }, 1200);
+}
 
   /* =========================================================
      ORDER SYSTEM
@@ -926,11 +897,13 @@ function runTutorialStep() {
       timeRemaining = null;
     }
 
-    const laneCount = getLaneCountForOrder(index);
+/*
+  Every real order uses all three conveyor lines.
+*/
+unlockLanes(3);
 
-    unlockLanes(laneCount);
-    renderOrder();
-    updateHUD();
+renderOrder();
+updateHUD();
 
     showAnnouncement(
       "📦",
@@ -983,15 +956,12 @@ function getLaneCountForOrder(index) {
     setText("recipeSlotTwo", currentOrder.labels[1]);
     setText("recipeSlotThree", currentOrder.labels[2]);
 
-    setText(
-      "factoryStageName",
-      getLaneCountForOrder(currentOrderIndex) === 1
-        ? "Training Floor"
-        : getLaneCountForOrder(currentOrderIndex) === 2
-          ? "Double-Line Floor"
-          : "Full Factory Floor"
-    );
-  }
+setText(
+  "factoryStageName",
+  tutorialActive
+    ? "Training Floor — All Lines Open"
+    : "Full Factory Floor — All Lines Open"
+);
 
   /* =========================================================
      HUD
@@ -1342,13 +1312,6 @@ function getLaneCountForOrder(index) {
         : Math.min(levels.length - 1, currentIndex + 1);
 
     const laneCount = getLaneCountForOrder(currentOrderIndex);
-
-     setText(
-  "factoryStageName",
-  tutorialActive
-    ? "Training Floor — All Lines Open"
-    : "Full Factory Floor"
-);
 
     const minimumIndex =
       laneCount === 1
