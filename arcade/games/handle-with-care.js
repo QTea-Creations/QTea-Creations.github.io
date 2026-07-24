@@ -701,11 +701,12 @@ document.addEventListener("DOMContentLoaded", () => {
       message: "Stand at the mixer with empty hands and press E.",
       control: "⚙️"
     },
-    {
-      title: "Inspect the package",
-      message: "Carry the package to Final Inspection and press E.",
-      control: "🔍"
-    },
+{
+  title: "Collect and inspect the package",
+  message:
+    "Press E at the mixer to collect the package. Then carry it to Final Inspection and press E again.",
+  control: "📦 ➜ 🔍"
+},
     {
       title: "Ship it!",
       message: "Carry the approved package to Ship It and press E.",
