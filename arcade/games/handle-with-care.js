@@ -2892,3 +2892,276 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateGlobalPoints();
 });
+
+/* =========================================================
+   HANDLE WITH CARE - BOOT SCREEN + EASY TUTORIAL
+========================================================= */
+(function () {
+  const bootOverlay = document.getElementById("factoryBootOverlay");
+  const bootTypeLines = document.getElementById("bootTypeLines");
+  const bootReadyPanel = document.getElementById("bootReadyPanel");
+  const bootContinue = document.getElementById("bootContinue");
+  const bootSkip = document.getElementById("bootSkip");
+
+  const tutorialOverlay = document.getElementById("factoryTutorialOverlay");
+  const tutorialStepCount = document.getElementById("tutorialStepCount");
+  const tutorialStepTitle = document.getElementById("tutorialStepTitle");
+  const tutorialStepText = document.getElementById("tutorialStepText");
+  const tutorialPrev = document.getElementById("tutorialPrev");
+  const tutorialNext = document.getElementById("tutorialNext");
+  const tutorialFinish = document.getElementById("tutorialFinish");
+  const tutorialSkip = document.getElementById("tutorialSkip");
+
+  const startGameButton = document.getElementById("startGame");
+  const playScreen = document.getElementById("playScreen");
+
+  if (!bootOverlay || !tutorialOverlay) {
+    return;
+  }
+
+  const BOOT_SEEN_KEY = "safetii_handle_boot_seen_v1";
+  const TUTORIAL_SEEN_KEY = "safetii_handle_tutorial_seen_v1";
+
+  const tutorialSteps = [
+    {
+      title: "Welcome to the factory!",
+      text: "Information parts move through the factory lines. Your job is to spot what belongs in a safe username and what should not be used."
+    },
+    {
+      title: "Watch the three lines",
+      text: "The Style Line carries interests and aesthetics. The Character Line carries traits and personality words. The Power Line carries action or energy words."
+    },
+    {
+      title: "Build a safe username",
+      text: "Pick good pieces and combine them in the mixer. You want a fun username that does not reveal private details like exact age, address, or other identifying information."
+    },
+    {
+      title: "First try counts",
+      text: "In easy mode, learn the system and have fun. Returning players can skip this tutorial next time and jump straight into the challenge."
+    }
+  ];
+
+  let tutorialIndex = 0;
+
+  function addOverlayLock() {
+    document.body.classList.add("factory-overlay-open");
+  }
+
+  function removeOverlayLock() {
+    const bootHidden = bootOverlay.classList.contains("is-hidden");
+    const tutorialHidden = tutorialOverlay.classList.contains("is-hidden");
+    if (bootHidden && tutorialHidden) {
+      document.body.classList.remove("factory-overlay-open");
+    }
+  }
+
+  function typeBootLines(lines, done) {
+    if (!bootTypeLines) {
+      if (typeof done === "function") done();
+      return;
+    }
+
+    bootTypeLines.innerHTML = "";
+    let lineIndex = 0;
+
+    function typeLine() {
+      if (lineIndex >= lines.length) {
+        if (typeof done === "function") done();
+        return;
+      }
+
+      const lineElement = document.createElement("p");
+      lineElement.className = "factory-boot-line";
+      bootTypeLines.appendChild(lineElement);
+
+      const currentText = lines[lineIndex];
+      let charIndex = 0;
+
+      function typeChar() {
+        lineElement.textContent = currentText.slice(0, charIndex + 1);
+        charIndex += 1;
+
+        if (charIndex < currentText.length) {
+          setTimeout(typeChar, 28);
+        } else {
+          lineIndex += 1;
+          setTimeout(typeLine, 280);
+        }
+      }
+
+      typeChar();
+    }
+
+    typeLine();
+  }
+
+  function revealBootReady() {
+    if (bootReadyPanel) {
+      bootReadyPanel.classList.add("is-visible");
+    }
+  }
+
+  function hideBootOverlay() {
+    bootOverlay.classList.add("is-hidden");
+    localStorage.setItem(BOOT_SEEN_KEY, "yes");
+    removeOverlayLock();
+  }
+
+  function runBootAnimation() {
+    addOverlayLock();
+
+    const seenBoot = localStorage.getItem(BOOT_SEEN_KEY) === "yes";
+
+    if (seenBoot) {
+      if (bootTypeLines) {
+        bootTypeLines.innerHTML = `
+          <p class="factory-boot-line">WELCOME BACK, PLAYER.</p>
+          <p class="factory-boot-line">FACTORY SYSTEM ONLINE.</p>
+        `;
+      }
+      revealBootReady();
+      return;
+    }
+
+    typeBootLines(
+      [
+        "BOOTING SAFETII FACTORY...",
+        "SCANNING PLAYER PROFILE...",
+        "LOADING MEME ASSISTANT...",
+        "FACTORY SYSTEMS READY."
+      ],
+      revealBootReady
+    );
+  }
+
+  if (bootContinue) {
+    bootContinue.addEventListener("click", hideBootOverlay);
+  }
+
+  if (bootSkip) {
+    bootSkip.addEventListener("click", hideBootOverlay);
+  }
+
+  function updateTutorialStep() {
+    const step = tutorialSteps[tutorialIndex];
+    tutorialStepCount.textContent = `Step ${tutorialIndex + 1} of ${tutorialSteps.length}`;
+    tutorialStepTitle.textContent = step.title;
+    tutorialStepText.textContent = step.text;
+
+    tutorialPrev.disabled = tutorialIndex === 0;
+    tutorialPrev.style.opacity = tutorialIndex === 0 ? "0.45" : "1";
+
+    if (tutorialIndex === tutorialSteps.length - 1) {
+      tutorialNext.classList.add("hidden");
+      tutorialFinish.classList.remove("hidden");
+    } else {
+      tutorialNext.classList.remove("hidden");
+      tutorialFinish.classList.add("hidden");
+    }
+  }
+
+  function showTutorial() {
+    tutorialIndex = 0;
+    updateTutorialStep();
+    tutorialOverlay.classList.remove("is-hidden");
+    tutorialOverlay.setAttribute("aria-hidden", "false");
+    addOverlayLock();
+  }
+
+  function hideTutorial(markSeen) {
+    tutorialOverlay.classList.add("is-hidden");
+    tutorialOverlay.setAttribute("aria-hidden", "true");
+
+    if (markSeen) {
+      localStorage.setItem(TUTORIAL_SEEN_KEY, "yes");
+    }
+
+    removeOverlayLock();
+  }
+
+  if (tutorialPrev) {
+    tutorialPrev.addEventListener("click", function () {
+      if (tutorialIndex > 0) {
+        tutorialIndex -= 1;
+        updateTutorialStep();
+      }
+    });
+  }
+
+  if (tutorialNext) {
+    tutorialNext.addEventListener("click", function () {
+      if (tutorialIndex < tutorialSteps.length - 1) {
+        tutorialIndex += 1;
+        updateTutorialStep();
+      }
+    });
+  }
+
+  if (tutorialFinish) {
+    tutorialFinish.addEventListener("click", function () {
+      hideTutorial(true);
+    });
+  }
+
+  if (tutorialSkip) {
+    tutorialSkip.addEventListener("click", function () {
+      hideTutorial(true);
+    });
+  }
+
+  function getSelectedHeatLevel() {
+    const activeButton =
+      document.querySelector('.heat-choice.is-active') ||
+      document.querySelector('.heat-choice.active') ||
+      document.querySelector('.heat-choice[aria-pressed="true"]') ||
+      document.querySelector('.heat-choice.selected');
+
+    if (activeButton && activeButton.dataset.heat) {
+      return activeButton.dataset.heat.toLowerCase();
+    }
+
+    const selectedInput =
+      document.querySelector('input[name="heatLevel"]:checked') ||
+      document.getElementById("selectedHeat");
+
+    if (selectedInput) {
+      const value = selectedInput.value || selectedInput.textContent || "";
+      return String(value).trim().toLowerCase();
+    }
+
+    return "mild";
+  }
+
+  function isVisible(element) {
+    if (!element) return false;
+    const style = window.getComputedStyle(element);
+    return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+  }
+
+  function maybeShowTutorialAfterStart() {
+    const alreadySeen = localStorage.getItem(TUTORIAL_SEEN_KEY) === "yes";
+    if (alreadySeen) return;
+
+    const heat = getSelectedHeatLevel();
+    if (heat !== "mild") return;
+
+    setTimeout(function () {
+      if (playScreen && isVisible(playScreen)) {
+        showTutorial();
+      }
+    }, 250);
+  }
+
+  if (startGameButton) {
+    startGameButton.addEventListener(
+      "click",
+      function () {
+        maybeShowTutorialAfterStart();
+      },
+      true
+    );
+  }
+
+  tutorialOverlay.classList.add("is-hidden");
+  runBootAnimation();
+})();
