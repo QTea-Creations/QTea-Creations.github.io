@@ -1718,82 +1718,99 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function mixUsername() {
-    if (carriedItem) {
-      return;
-    }
-
-    if (!mixerPieces.every(Boolean)) {
-      showFeedback({
-        correct: false,
-        icon: "⚙️",
-        title: "Mixer not ready",
-        message: "Fill all three recipe slots first.",
-        points: "+0"
-      });
-      return;
-    }
-
-    if (mixedPackage) {
-      carriedItem = mixedPackage;
-      mixedPackage = null;
-
-      updateCarriedItem();
-      updateMixer();
-
-      showFeedback({
-        correct: true,
-        icon: "📦",
-        title: "Package collected!",
-        message: "Carry it to Final Inspection.",
-        points: "+0"
-      });
-
-      return;
-    }
-
-    mixerStation?.classList.add("mixer-running");
-
-    setText("mixerStatus", "Mixing...");
-
-    managedTimeout(() => {
-      mixerStation?.classList.remove("mixer-running");
-
-      const username = mixerPieces
-        .map((piece) => piece.text)
-        .join("");
-
-      mixedPackage = {
-        text: username,
-        package: true,
-        approved: false
-      };
-
-      mixerPieces = [null, null, null];
-
-      score += 25 * getSettings().scoreMultiplier;
-      correctActions += 1;
-
-      updateMixer();
-
-      showFeedback({
-        correct: true,
-        icon: "📦",
-        title: `${username} created!`,
-        message: "Press E again to pick up the package.",
-        points: "+25"
-      });
-
-      if (
-        tutorialActive &&
-        tutorialStep === 5
-      ) {
-        advanceTutorial();
-      }
-
-      updateHUD();
-    }, 1000);
+function mixUsername() {
+  if (carriedItem) {
+    return;
   }
+
+  /*
+    IMPORTANT:
+    Check for a completed package BEFORE checking the mixer slots.
+    The slots are emptied after the package is created.
+  */
+  if (mixedPackage) {
+    carriedItem = mixedPackage;
+    mixedPackage = null;
+
+    updateCarriedItem();
+    updateMixer();
+
+    mixerStation?.classList.remove("tutorial-target-pulse");
+    scannerStation?.classList.add("tutorial-target-pulse");
+
+    showFeedback({
+      correct: true,
+      icon: "📦",
+      title: "Package collected!",
+      message: "Carry it to Final Inspection and press E.",
+      points: "+0"
+    });
+
+    return;
+  }
+
+  if (!mixerPieces.every(Boolean)) {
+    showFeedback({
+      correct: false,
+      icon: "⚙️",
+      title: "Mixer not ready",
+      message: "Fill all three recipe slots first.",
+      points: "+0"
+    });
+
+    return;
+  }
+
+  mixerStation?.classList.add("mixer-running");
+
+  setText("mixerStatus", "Mixing...");
+
+  managedTimeout(() => {
+    mixerStation?.classList.remove("mixer-running");
+
+    const username = mixerPieces
+      .map((piece) => piece.text)
+      .join("");
+
+    mixedPackage = {
+      text: username,
+      package: true,
+      approved: false
+    };
+
+    mixerPieces = [null, null, null];
+
+    score += 25 * getSettings().scoreMultiplier;
+    correctActions += 1;
+
+    updateMixer();
+
+    setText(
+      "mixerStatus",
+      `${username} ready — press E to collect`
+    );
+
+    mixerStation?.classList.add("tutorial-target-pulse");
+
+    showFeedback({
+      correct: true,
+      icon: "📦",
+      title: `${username} created!`,
+      message:
+        "Press E at the mixer again to pick up the finished package.",
+      points: "+25"
+    });
+
+    if (
+      tutorialActive &&
+      tutorialStep === 5
+    ) {
+      advanceTutorial();
+    }
+
+    updateHUD();
+  }, 1000);
+}
 
   function placeInScanner() {
     if (!carriedItem?.package) {
