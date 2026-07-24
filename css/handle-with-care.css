@@ -3909,3 +3909,84 @@ body.handle-page button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========================================================
+   TUTORIAL VISIBILITY FIX
+   Lets players see the factory behind the guide
+========================================================= */
+
+.factory-tutorial-card {
+  top: 10px;
+
+  width: min(560px, calc(100% - 260px));
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(239, 249, 255, 0.7)
+    );
+
+  border-color:
+    rgba(53, 201, 223, 0.9);
+
+  box-shadow:
+    0 0 0 4px rgba(117, 70, 239, 0.38),
+    0 12px 28px rgba(2, 9, 30, 0.22);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  pointer-events: none;
+}
+
+.factory-tutorial-card
+.tutorial-guide-character,
+.factory-tutorial-card
+.tutorial-guide-copy,
+.factory-tutorial-card
+.tutorial-guide-control {
+  pointer-events: none;
+}
+
+.tutorial-skip-button {
+  pointer-events: auto;
+}
+
+.tutorial-guide-copy h2,
+.tutorial-guide-copy p,
+.tutorial-guide-copy small {
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.95);
+}
+
+.tutorial-guide-character {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(117, 70, 239, 0.9),
+      rgba(53, 201, 223, 0.9)
+    );
+}
+
+.tutorial-guide-control {
+  background:
+    rgba(255, 248, 216, 0.82);
+}
+
+@media (max-width: 900px) {
+  .factory-tutorial-card {
+    width: calc(100% - 190px);
+  }
+}
+
+@media (max-width: 650px) {
+  .factory-tutorial-card {
+    top: 50px;
+
+    width: calc(100% - 20px);
+
+    background:
+      rgba(255, 255, 255, 0.76);
+  }
+}
