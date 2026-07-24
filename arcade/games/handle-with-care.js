@@ -1365,31 +1365,157 @@ function runTutorialStep() {
 
     updateWorker();
   }
+/* =========================================================
+   INTERACTION
+========================================================= */
 
-  /* =========================================================
-     INTERACTION
-  ========================================================= */
+function useNearbyObject() {
+  if (!gameActive || paused) {
+    return;
+  }
 
-  function useNearbyObject() {
-    if (!gameActive || paused) {
+  /*
+    When carrying something, prioritize a nearby
+    drop-off station.
+  */
+  if (carriedItem) {
+    const nearbyStation =
+      getNearbyStation();
+
+    if (nearbyStation) {
+      placeCarriedItem(
+        nearbyStation
+      );
+
       return;
     }
+  }
 
-    if (carriedItem) {
-      const station = getNearbyStation();
+  /*
+    With empty hands, first look for a conveyor piece.
+  */
+  const nearbyPiece =
+    getNearbyPiece();
 
-      if (station) {
-        placeCarriedItem(station);
-        return;
-      }
-    }
+  if (nearbyPiece) {
+    pickUpPiece(
+      nearbyPiece
+    );
 
-    const nearbyPiece = getNearbyPiece();
+    return;
+  }
 
-    if (nearbyPiece) {
-      pickUpPiece(nearbyPiece);
-      return;
-    }
+  /*
+    Then check the Parts Shelf.
+  */
+  const shelfPiece =
+    getNearbyShelfPiece();
+
+  if (shelfPiece) {
+    pickUpShelfPiece(
+      shelfPiece.index
+    );
+
+    return;
+  }
+
+  /*
+    Finally, operate a machine with empty hands.
+  */
+  const nearbyStation =
+    getNearbyStation();
+
+  if (nearbyStation) {
+    useEmptyHandStation(
+      nearbyStation
+    );
+
+    return;
+  }
+
+  showFeedback({
+    correct: false,
+    icon: "✋",
+    title: "Nothing close enough",
+    message:
+      "Move closer to a piece or machine and press E again.",
+    points: "+0"
+  });
+}
+
+
+function getWorkerLane() {
+  const laneDistances = {
+    one:
+      Math.abs(
+        workerY -
+        floorLevels.laneOne
+      ),
+
+    two:
+      Math.abs(
+        workerY -
+        floorLevels.laneTwo
+      ),
+
+    three:
+      Math.abs(
+        workerY -
+        floorLevels.laneThree
+      )
+  };
+
+  return Object
+    .entries(laneDistances)
+    .sort(
+      (first, second) =>
+        first[1] - second[1]
+    )[0][0];
+}
+
+
+function getNearbyPiece() {
+  const workerLane =
+    getWorkerLane();
+
+  const interactionRange =
+    selectedControlMode === "assist"
+      ? 18
+      : 12;
+
+  const nearbyPieces =
+    activePieces
+      .filter((piece) => {
+        if (
+          !piece ||
+          piece.removed ||
+          !piece.element
+        ) {
+          return false;
+        }
+
+        return (
+          piece.lane === workerLane &&
+          Math.abs(
+            piece.x -
+            workerX
+          ) <= interactionRange
+        );
+      })
+      .sort(
+        (first, second) =>
+          Math.abs(
+            first.x -
+            workerX
+          ) -
+          Math.abs(
+            second.x -
+            workerX
+          )
+      );
+
+  return nearbyPieces[0] || null;
+}
 
     const shelfPiece = getNearbyShelfPiece();
 
