@@ -3969,3 +3969,414 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========================================================
+   HANDLE WITH CARE - BOOT ANIMATION + TUTORIAL
+========================================================= */
+
+.factory-boot-overlay,
+.factory-tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top, rgba(92, 80, 255, 0.25), transparent 35%),
+    rgba(10, 15, 32, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.factory-boot-overlay.is-hidden,
+.factory-tutorial-overlay.is-hidden {
+  display: none;
+}
+
+.factory-boot-card {
+  width: min(680px, 100%);
+  position: relative;
+}
+
+.boot-skip-button {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #ffffff;
+  color: #222b55;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.factory-boot-device {
+  border-radius: 36px;
+  padding: 24px;
+  background: linear-gradient(160deg, #1a2652, #202a68 45%, #0c1737);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 6px rgba(255, 255, 255, 0.08);
+  animation: factoryFloat 3.2s ease-in-out infinite;
+}
+
+.factory-boot-toplights {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.factory-boot-toplights span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f7d74b;
+  box-shadow: 0 0 10px rgba(247, 215, 75, 0.85);
+  animation: factoryBlink 1.6s infinite;
+}
+
+.factory-boot-toplights span:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.factory-boot-toplights span:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.factory-boot-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px;
+  padding: 30px 24px 24px;
+  min-height: 420px;
+  background:
+    linear-gradient(180deg, rgba(32, 49, 104, 0.95), rgba(9, 20, 54, 0.96)),
+    radial-gradient(circle at top, rgba(33, 255, 229, 0.18), transparent 38%);
+  box-shadow:
+    inset 0 0 0 4px rgba(255, 255, 255, 0.06),
+    inset 0 0 40px rgba(59, 195, 255, 0.12);
+}
+
+.factory-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20%;
+  height: 22%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0),
+    rgba(92, 255, 230, 0.18),
+    rgba(255, 255, 255, 0)
+  );
+  animation: scanMove 3.4s linear infinite;
+  pointer-events: none;
+}
+
+.factory-boot-pixels .pixel {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #58f1ee;
+  opacity: 0.5;
+  border-radius: 2px;
+  animation: pixelDrift 4s ease-in-out infinite;
+}
+
+.pixel-1 { top: 12%; left: 10%; animation-delay: 0s; }
+.pixel-2 { top: 22%; right: 16%; animation-delay: 0.4s; }
+.pixel-3 { top: 36%; left: 18%; animation-delay: 1s; }
+.pixel-4 { bottom: 28%; right: 12%; animation-delay: 1.4s; }
+.pixel-5 { bottom: 18%; left: 14%; animation-delay: 2s; }
+
+.factory-boot-meme-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+.factory-boot-meme {
+  width: 150px;
+  max-width: 42vw;
+  filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.25));
+  animation: memeBob 2.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.factory-boot-text {
+  text-align: center;
+  color: #ecf4ff;
+}
+
+.factory-boot-label {
+  margin: 0 0 12px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #78f6ff;
+  text-transform: uppercase;
+}
+
+.factory-boot-lines {
+  min-height: 94px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.factory-boot-line {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e6f2ff;
+  letter-spacing: 0.03em;
+}
+
+.factory-boot-ready-panel {
+  margin-top: 18px;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: 0.35s ease;
+  text-align: center;
+}
+
+.factory-boot-ready-panel.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.factory-boot-ready-title {
+  margin: 0 0 4px;
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.factory-boot-ready-subtitle {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  color: #b7ccff;
+}
+
+.factory-boot-continue {
+  border: 0;
+  border-radius: 18px;
+  padding: 14px 22px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  color: #132a5d;
+  background: linear-gradient(90deg, #78f6ff, #77ffc5);
+  box-shadow: 0 16px 32px rgba(53, 202, 255, 0.28);
+  animation: pulseButton 1.8s ease-in-out infinite;
+}
+
+/* Tutorial */
+.factory-tutorial-card {
+  width: min(760px, 100%);
+  border-radius: 28px;
+  padding: 24px;
+  background: linear-gradient(180deg, #ffffff, #f3f5ff);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.factory-tutorial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.factory-tutorial-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6a56ff, #24d4ff);
+  color: #fff;
+  font-weight: 800;
+}
+
+.factory-tutorial-skip {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: #eef1ff;
+  color: #223260;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.factory-tutorial-body {
+  display: grid;
+  gap: 20px;
+}
+
+.factory-tutorial-meme-area {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.factory-tutorial-meme {
+  width: 100%;
+  max-width: 110px;
+  animation: memeBob 2.2s ease-in-out infinite;
+}
+
+.factory-tutorial-bubble {
+  border-radius: 22px;
+  padding: 20px;
+  background: #eef5ff;
+  border: 3px solid #d7e6ff;
+}
+
+.factory-tutorial-step-count {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #7d57ff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.factory-tutorial-bubble h3 {
+  margin: 0 0 10px;
+  font-size: 1.55rem;
+  color: #1c2d5a;
+}
+
+.factory-tutorial-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #42547d;
+}
+
+.factory-tutorial-mini-map {
+  display: grid;
+  gap: 10px;
+}
+
+.factory-mini-lane {
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: linear-gradient(90deg, #233869, #304d88);
+  color: #fff;
+  font-weight: 800;
+  position: relative;
+  overflow: hidden;
+}
+
+.factory-mini-lane::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.08) 0 18px,
+      rgba(255, 255, 255, 0.02) 18px 36px
+    );
+  animation: laneMove 3s linear infinite;
+}
+
+.factory-tutorial-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.factory-tutorial-button {
+  border: 0;
+  border-radius: 16px;
+  padding: 12px 18px;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(90deg, #6b57ff, #25d4ff);
+  color: #fff;
+}
+
+.factory-tutorial-button.ghost {
+  background: #eef1ff;
+  color: #223260;
+}
+
+.factory-tutorial-button.hidden {
+  display: none;
+}
+
+/* Optional body class while overlays are open */
+.factory-overlay-open {
+  overflow: hidden;
+}
+
+/* Animations */
+@keyframes factoryFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes memeBob {
+  0%, 100% { transform: translateY(0px) rotate(-2deg); }
+  25% { transform: translateY(-6px) rotate(1deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+  75% { transform: translateY(-4px) rotate(-1deg); }
+}
+
+@keyframes factoryBlink {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+
+@keyframes scanMove {
+  0% { transform: translateY(-120%); }
+  100% { transform: translateY(550%); }
+}
+
+@keyframes pixelDrift {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.35; }
+  50% { transform: translateY(-14px) scale(1.25); opacity: 0.85; }
+}
+
+@keyframes pulseButton {
+  0%, 100% { transform: scale(1); box-shadow: 0 16px 32px rgba(53, 202, 255, 0.28); }
+  50% { transform: scale(1.03); box-shadow: 0 18px 38px rgba(53, 202, 255, 0.4); }
+}
+
+@keyframes laneMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(36px); }
+}
+
+@media (max-width: 700px) {
+  .factory-boot-screen {
+    min-height: 380px;
+  }
+
+  .factory-tutorial-meme-area {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .factory-tutorial-meme {
+    margin: 0 auto;
+  }
+
+  .factory-tutorial-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
