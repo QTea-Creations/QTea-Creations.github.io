@@ -57,11 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const carriedItemText = byId("carriedItemText");
   const carriedItemIcon = byId("carriedItemIcon");
 
-  const mixerStation = byId("mixerStation");
-  const scannerStation = byId("scannerStation");
-  const shippingStation = byId("shippingStation");
-  const nopeChuteStation = byId("nopeChuteStation");
-  const partsShelfStation = byId("partsShelfStation");
+   const mixerStation = byId("mixerStation");
+   const scannerStation = byId("scannerStation");
+   const shippingStation = byId("shippingStation");
+   const nopeChuteStation = byId("nopeChuteStation");
+   const garbageCanStation = byId("garbageCanStation");
+   const partsShelfStation = byId("partsShelfStation");
 
   const tutorialCard = byId("factoryTutorialCard");
   const tutorialHighlight = byId("tutorialHighlight");
@@ -324,14 +325,38 @@ document.addEventListener("DOMContentLoaded", () => {
     three: ["action", "hero", "nature"]
   };
 
-  const stationPositions = {
-    nope: 8,
-    parts: 28,
-    mixer: 50,
-    scanner: 72,
-    shipping: 91
-  };
+ const stationElements = {
+  nope: nopeChuteStation,
+  garbage: garbageCanStation,
+  parts: partsShelfStation,
+  mixer: mixerStation,
+  scanner: scannerStation,
+  shipping: shippingStation
+};
 
+   function getStationCenterX(stationName) {
+  const station = stationElements[stationName];
+
+  if (!station || !handleFactory) {
+    return null;
+  }
+
+  const factoryRect =
+    handleFactory.getBoundingClientRect();
+
+  const stationRect =
+    station.getBoundingClientRect();
+
+  const stationCenter =
+    stationRect.left +
+    stationRect.width / 2;
+
+  return (
+    ((stationCenter - factoryRect.left) /
+      factoryRect.width) *
+    100
+  );
+}
   const floorLevels = {
     ground: 87,
     laneThree: 62,
@@ -1401,80 +1426,51 @@ function runTutorialStep() {
     )[0][0];
   }
 
-  function getNearbyPiece() {
-    const lane = getWorkerLane();
+function getNearbyStation() {
+  if (
+    Math.abs(
+      workerY -
+      floorLevels.ground
+    ) > 12
+  ) {
+    return null;
+  }
 
-    const range =
-      selectedControlMode === "assist"
-        ? 18
-        : 12;
+  const range =
+    selectedControlMode === "assist"
+      ? 12
+      : 8;
 
-    return activePieces
+  const nearbyStations =
+    Object.keys(stationElements)
+      .map((stationName) => {
+        const stationX =
+          getStationCenterX(stationName);
+
+        if (stationX === null) {
+          return null;
+        }
+
+        return {
+          name: stationName,
+          distance:
+            Math.abs(
+              workerX - stationX
+            )
+        };
+      })
+      .filter(Boolean)
       .filter(
-        (piece) =>
-          !piece.removed &&
-          piece.lane === lane &&
-          Math.abs(piece.x - workerX) <= range
+        (station) =>
+          station.distance <= range
       )
       .sort(
         (a, b) =>
-          Math.abs(a.x - workerX) -
-          Math.abs(b.x - workerX)
-      )[0];
-  }
+          a.distance - b.distance
+      );
 
-  function pickUpPiece(piece) {
-    if (carriedItem) {
-      return;
-    }
-
-    carriedItem = {
-      ...piece.data,
-      source: "belt"
-    };
-
-    removePiece(piece);
-    updateCarriedItem();
-
-    combo += 1;
-    bestCombo = Math.max(bestCombo, combo);
-    correctActions += 1;
-
-    showFeedback({
-      correct: true,
-      icon: carriedItem.unsafe ? "⚠️" : "✨",
-      title: `${carriedItem.text} picked up!`,
-      message: carriedItem.unsafe
-        ? "Carry it to the Nope Chute."
-        : "Carry it to the mixer or Parts Shelf.",
-      points: "+5"
-    });
-
-    score += 5 * getSettings().scoreMultiplier;
-    updateHUD();
-
-    if (tutorialActive) {
-      if (
-        tutorialStep === 1 &&
-        carriedItem.text === "Wacky"
-      ) {
-        advanceTutorial();
-      }
-
-if (
-  tutorialStep === 3 &&
-  carriedItem.text === "Home Address"
-) {
-  clearTutorialTargetPulses();
-  pulseTutorialTarget(nopeChuteStation);
-
-  setText(
-    "tutorialStepMessage",
-    "Great! Now climb down, walk to the pulsing Nope Chute, and press E."
-  );
+  return nearbyStations[0]?.name || null;
 }
-    }
-  }
 
   function updateCarriedItem() {
     if (!carriedItem) {
@@ -1514,77 +1510,125 @@ if (
       )[0]?.[0] || null;
   }
 
-  function placeCarriedItem(station) {
-    switch (station) {
-      case "nope":
-        placeInNopeChute();
-        break;
+function placeCarriedItem(station) {
+  switch (station) {
+    case "nope":
+      placeInNopeChute();
+      break;
 
-      case "parts":
-        placeOnShelf();
-        break;
+    case "garbage":
+      placeInGarbageCan();
+      break;
 
-      case "mixer":
-        placeInMixer();
-        break;
+    case "parts":
+      placeOnShelf();
+      break;
 
-      case "scanner":
-        placeInScanner();
-        break;
+    case "mixer":
+      placeInMixer();
+      break;
 
-      case "shipping":
-        placeInShipping();
-        break;
+    case "scanner":
+      placeInScanner();
+      break;
 
-      default:
-        break;
-    }
+    case "shipping":
+      placeInShipping();
+      break;
+
+    default:
+      break;
+  }
+}
+
+function placeInGarbageCan() {
+  if (!carriedItem) {
+    return;
   }
 
-  function placeInNopeChute() {
-    if (!carriedItem) {
-      return;
-    }
-
-    if (!carriedItem.unsafe) {
-      mistake(
-        "That piece was safe",
-        `${carriedItem.text} could have been used in a username.`
-      );
-      return;
-    }
-
-    privateCluesBlocked += 1;
-    orderPrivateBlocked += 1;
-    correctActions += 1;
-
-    score += 20 * getSettings().scoreMultiplier;
-    combo += 1;
-    bestCombo = Math.max(bestCombo, combo);
-
-    const removedText = carriedItem.text;
-
-    carriedItem = null;
-    updateCarriedItem();
-
+  if (carriedItem.package) {
     showFeedback({
-      correct: true,
-      icon: "🚫",
-      title: "Private clue blocked!",
-      message: `${removedText} went into the Nope Chute.`,
-      points: "+20"
+      correct: false,
+      icon: "📦",
+      title: "Do not trash the package",
+      message:
+        "Take the finished package to Final Inspection or Shipping.",
+      points: "+0"
     });
 
-    if (
-      tutorialActive &&
-      tutorialStep === 3
-    ) {
-      advanceTutorial();
-    }
-
-    updateHUD();
+    return;
   }
 
+  const discardedItem =
+    carriedItem;
+
+  const neededForOrder =
+    !discardedItem.unsafe &&
+    currentOrder.categories.some(
+      (category, index) =>
+        category ===
+          discardedItem.category &&
+        !mixerPieces[index]
+    );
+
+  carriedItem = null;
+  updateCarriedItem();
+
+  garbageCanStation?.classList.add(
+    "garbage-drop"
+  );
+
+  managedTimeout(() => {
+    garbageCanStation?.classList.remove(
+      "garbage-drop"
+    );
+  }, 420);
+
+  if (discardedItem.unsafe) {
+    combo = 0;
+
+    showFeedback({
+      correct: false,
+      icon: "🚫",
+      title: "Private clue discarded",
+      message:
+        `${discardedItem.text} is gone, but private clues belong in the Nope Chute.`,
+      points: "+0"
+    });
+
+    return;
+  }
+
+  if (neededForOrder) {
+    score = Math.max(
+      0,
+      score - 5
+    );
+
+    combo = 0;
+    mistakes += 1;
+
+    showFeedback({
+      correct: false,
+      icon: "🗑️",
+      title: "Needed piece discarded",
+      message:
+        `${discardedItem.text} matched an empty recipe slot.`,
+      points: "−5"
+    });
+  } else {
+    showFeedback({
+      correct: true,
+      icon: "🗑️",
+      title: "Unwanted piece removed",
+      message:
+        `${discardedItem.text} was safely cleared from your hands.`,
+      points: "+0"
+    });
+  }
+
+  updateHUD();
+}
   function placeOnShelf() {
     if (!carriedItem) {
       return;
@@ -1641,24 +1685,34 @@ if (
     });
   }
 
-  function getNearbyShelfPiece() {
-    if (
-      Math.abs(workerY - floorLevels.ground) > 12 ||
-      Math.abs(workerX - stationPositions.parts) > 12 ||
-      carriedItem
-    ) {
-      return null;
-    }
+function getNearbyShelfPiece() {
+  const partsX =
+    getStationCenterX("parts");
 
-    const index = shelfPieces.findIndex(Boolean);
-
-    return index >= 0
-      ? {
-          index,
-          piece: shelfPieces[index]
-        }
-      : null;
+  if (
+    partsX === null ||
+    Math.abs(
+      workerY -
+      floorLevels.ground
+    ) > 12 ||
+    Math.abs(
+      workerX - partsX
+    ) > 12 ||
+    carriedItem
+  ) {
+    return null;
   }
+
+  const index =
+    shelfPieces.findIndex(Boolean);
+
+  return index >= 0
+    ? {
+        index,
+        piece: shelfPieces[index]
+      }
+    : null;
+}
 
   function pickUpShelfPiece(index) {
     if (carriedItem || !shelfPieces[index]) {
