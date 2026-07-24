@@ -4063,3 +4063,80 @@ body.handle-page button {
     transform: scale(1.08);
   }
 }
+
+.garbage-station {
+  background:
+    linear-gradient(
+      180deg,
+      #68788f,
+      #3c4a60
+    );
+
+  color: #ffffff;
+
+  border-color: #dce4ef;
+}
+
+.garbage-station .station-icon {
+  display: inline-block;
+
+  animation:
+    garbageCanWiggle
+    2.2s ease-in-out infinite;
+}
+
+.garbage-station.garbage-ready {
+  box-shadow:
+    0 0 0 6px rgba(255, 216, 79, 0.22),
+    0 0 28px rgba(255, 216, 79, 0.55);
+
+  transform: translateY(-5px);
+}
+
+.garbage-station.garbage-drop {
+  animation:
+    garbageDropBounce
+    420ms ease;
+}
+
+@keyframes garbageCanWiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  45% {
+    transform: rotate(0);
+  }
+
+  50% {
+    transform: rotate(-7deg);
+  }
+
+  55% {
+    transform: rotate(7deg);
+  }
+
+  60% {
+    transform: rotate(0);
+  }
+}
+
+@keyframes garbageDropBounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform:
+      scale(1.08)
+      rotate(-2deg);
+  }
+
+  70% {
+    transform:
+      scale(0.96)
+      rotate(2deg);
+  }
+}
