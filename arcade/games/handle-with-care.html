@@ -53,6 +53,94 @@
   ></script>
 </head>
 
+<!-- HANDLE WITH CARE: BOOT ANIMATION OVERLAY -->
+<div id="factoryBootOverlay" class="factory-boot-overlay">
+  <div class="factory-boot-card">
+    <button id="bootSkip" class="boot-skip-button" type="button">Skip</button>
+
+    <div class="factory-boot-device">
+      <div class="factory-boot-toplights">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="factory-boot-screen">
+        <div class="factory-scanline"></div>
+
+        <div class="factory-boot-pixels">
+          <span class="pixel pixel-1"></span>
+          <span class="pixel pixel-2"></span>
+          <span class="pixel pixel-3"></span>
+          <span class="pixel pixel-4"></span>
+          <span class="pixel pixel-5"></span>
+        </div>
+
+        <div class="factory-boot-meme-wrap">
+          <img
+            src="../../assets/mascot/welcome.png"
+            alt="Meme mascot"
+            class="factory-boot-meme"
+            id="factoryBootMeme"
+          >
+        </div>
+
+        <div class="factory-boot-text">
+          <p class="factory-boot-label">SAFETII FACTORY SYSTEM</p>
+          <div id="bootTypeLines" class="factory-boot-lines"></div>
+        </div>
+
+        <div id="bootReadyPanel" class="factory-boot-ready-panel">
+          <p class="factory-boot-ready-title">Player detected!</p>
+          <p class="factory-boot-ready-subtitle">Factory systems ready.</p>
+          <button id="bootContinue" class="factory-boot-continue" type="button">
+            Enter Factory
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HANDLE WITH CARE: TUTORIAL OVERLAY -->
+<div id="factoryTutorialOverlay" class="factory-tutorial-overlay" aria-hidden="true">
+  <div class="factory-tutorial-card">
+    <div class="factory-tutorial-header">
+      <div class="factory-tutorial-badge">Easy Mode Tutorial</div>
+      <button id="tutorialSkip" class="factory-tutorial-skip" type="button">Skip</button>
+    </div>
+
+    <div class="factory-tutorial-body">
+      <div class="factory-tutorial-meme-area">
+        <img
+          src="../../assets/mascot/welcome.png"
+          alt="Meme mascot"
+          class="factory-tutorial-meme"
+        >
+        <div class="factory-tutorial-bubble">
+          <p id="tutorialStepCount" class="factory-tutorial-step-count">Step 1 of 4</p>
+          <h3 id="tutorialStepTitle">Welcome to the factory!</h3>
+          <p id="tutorialStepText">
+            I’ll show you how this machine works before you start playing.
+          </p>
+        </div>
+      </div>
+
+      <div class="factory-tutorial-mini-map">
+        <div class="factory-mini-lane">Style Line</div>
+        <div class="factory-mini-lane">Character Line</div>
+        <div class="factory-mini-lane">Power Line</div>
+      </div>
+    </div>
+
+    <div class="factory-tutorial-footer">
+      <button id="tutorialPrev" class="factory-tutorial-button ghost" type="button">Back</button>
+      <button id="tutorialNext" class="factory-tutorial-button" type="button">Next</button>
+      <button id="tutorialFinish" class="factory-tutorial-button hidden" type="button">Start Playing</button>
+    </div>
+  </div>
+</div>
+  
 <body class="handle-page">
 
   <!-- =====================================================
