@@ -611,6 +611,60 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       beginNormalOrder(0);
     }
+     const tutorialSteps = [
+  {
+    title: "Walk to the Wacky piece",
+    message: "Use A and D or the left and right arrow keys.",
+    control: "⬅️ ➡️"
+  },
+  {
+    title: "Pick it up",
+    message: "Stand close to Wacky and press E.",
+    control: "E"
+  },
+  {
+    title: "Carry it to the mixer",
+    message:
+      "Climb down, walk to the Username Mixer, and press E.",
+    control: "⚙️"
+  },
+  {
+    title: "Block private information",
+    message:
+      "Pick up Home Address and carry it to the Nope Chute.",
+    control: "🚫"
+  },
+  {
+    title: "Fill the remaining slots",
+    message:
+      "Collect Panda and Bounce and place them in the mixer.",
+    control: "✨"
+  },
+  {
+    title: "Mix the username",
+    message:
+      "Stand at the mixer with empty hands and press E.",
+    control: "⚙️"
+  },
+  {
+    title: "Collect and inspect the package",
+    message:
+      "Press E at the mixer to collect the package. Carry it to Final Inspection and press E.",
+    control: "📦 ➜ 🔍"
+  },
+  {
+    title: "Try Time Freeze",
+    message:
+      "Press F to activate Time Freeze.",
+    control: "F ❄️"
+  },
+  {
+    title: "Collect and ship it",
+    message:
+      "Press E at Final Inspection to collect the approved package. Carry it to Ship It and press E.",
+    control: "📦 ➜ 🚀"
+  }
+];
   }
 
   function configureControls() {
@@ -819,9 +873,27 @@ function runTutorialStep() {
       pulseTutorialTarget(mixerStation);
       break;
 
-    case 7:
-      pulseTutorialTarget(shippingStation);
-      break;
+case 7: {
+  const freezeTarget =
+    byId("freezeButton") ||
+    byId("timeFreezeFill")
+      ?.closest(".time-freeze-panel");
+
+  timeFreezeCharge = 100;
+  updateHUD();
+
+  pulseTutorialTarget(
+    freezeTarget
+  );
+
+  break;
+}
+
+case 8:
+  pulseTutorialTarget(
+    scannerStation
+  );
+  break;
 
     default:
       break;
@@ -962,6 +1034,7 @@ setText(
     ? "Training Floor — All Lines Open"
     : "Full Factory Floor — All Lines Open"
 );
+}
 
   /* =========================================================
      HUD
@@ -2441,7 +2514,7 @@ function mixUsername() {
 
     if (
       tutorialActive &&
-      tutorialStep === 7
+      tutorialStep === 8
     ) {
       hide(orderCompleteOverlay);
       completeTutorial();
@@ -2475,15 +2548,27 @@ function mixUsername() {
       hide(timeFreezeEffect);
     }, 1000);
 
-    showFeedback({
-      correct: true,
-      icon: "❄️",
-      title: "Time Freeze activated!",
-      message: "Every conveyor belt has slowed down.",
-      points: "+0"
-    });
+showFeedback({
+  correct: true,
+  icon: "❄️",
+  title: "Time Freeze activated!",
+  message:
+    "Every conveyor belt has slowed down.",
+  points: "+0"
+});
 
-    managedTimeout(() => {
+if (
+  tutorialActive &&
+  tutorialStep === 7
+) {
+  clearTutorialTargetPulses();
+
+  managedTimeout(() => {
+    advanceTutorial();
+  }, 700);
+}
+
+managedTimeout(() => {
       timeFreezeActive = false;
       handleFactory?.classList.remove("time-freeze-active");
     }, getSettings().freezeDuration);
