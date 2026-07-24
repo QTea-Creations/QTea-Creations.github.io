@@ -1663,20 +1663,149 @@ function getNearbyStation() {
     show(carriedItemBubble);
   }
 
+function isWrongTutorialDestination(station) {
+  if (
+    !tutorialActive ||
+    !carriedItem
+  ) {
+    return false;
+  }
+
+  /*
+    Wacky belongs in the mixer.
+  */
+  if (
+    tutorialStep === 2 &&
+    carriedItem.text === "Wacky"
+  ) {
+    return station !== "mixer";
+  }
+
+  /*
+    Home Address belongs in the Nope Chute.
+  */
+  if (
+    tutorialStep === 3 &&
+    carriedItem.text === "Home Address"
+  ) {
+    return station !== "nope";
+  }
+
+  /*
+    Panda and Bounce belong in the mixer.
+  */
+  if (
+    tutorialStep === 4 &&
+    (
+      carriedItem.text === "Panda" ||
+      carriedItem.text === "Bounce"
+    )
+  ) {
+    return station !== "mixer";
+  }
+
+  /*
+    Unapproved packages belong at Final Inspection.
+  */
+  if (
+    tutorialStep === 6 &&
+    carriedItem.package &&
+    !carriedItem.approved
+  ) {
+    return station !== "scanner";
+  }
+
+  /*
+    Approved packages belong at Shipping.
+  */
+  if (
+    tutorialStep === 7 &&
+    carriedItem.package &&
+    carriedItem.approved
+  ) {
+    return station !== "shipping";
+  }
+
+  return false;
+}
+
+
+function handleWrongTutorialDestination() {
+  clearTutorialTargetPulses();
+
+  let correctStation;
+  let correctStationName;
+
+  if (
+    carriedItem.text === "Home Address"
+  ) {
+    correctStation =
+      nopeChuteStation;
+
+    correctStationName =
+      "Nope Chute";
+  } else if (
+    carriedItem.package &&
+    carriedItem.approved
+  ) {
+    correctStation =
+      shippingStation;
+
+    correctStationName =
+      "Ship It";
+  } else if (
+    carriedItem.package
+  ) {
+    correctStation =
+      scannerStation;
+
+    correctStationName =
+      "Final Inspection";
+  } else {
+    correctStation =
+      mixerStation;
+
+    correctStationName =
+      "Username Mixer";
+  }
+
+  pulseTutorialTarget(
+    correctStation
+  );
+
+  showFeedback({
+    correct: false,
+    icon: "↩️",
+    title: "Try another station",
+    message:
+      `Keep carrying ${carriedItem.text}. Take it to ${correctStationName}.`,
+    points: "+0"
+  });
+
+  setText(
+    "tutorialStepMessage",
+    `You still have ${carriedItem.text}. Carry it to the pulsing ${correctStationName} and press E.`
+  );
+
+  /*
+    The item stays in the player's hands.
+  */
+  updateCarriedItem();
+}
+
+
 function placeCarriedItem(station) {
   if (!carriedItem) {
     return;
   }
 
-  /*
-    During the tutorial, do not allow an important
-    tutorial object to disappear into the wrong station.
-  */
   if (
     tutorialActive &&
-    isWrongTutorialDestination(station)
+    isWrongTutorialDestination(
+      station
+    )
   ) {
-    handleWrongTutorialDestination(station);
+    handleWrongTutorialDestination();
     return;
   }
 
