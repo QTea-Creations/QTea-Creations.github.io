@@ -666,7 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearPieces();
     resetOrderMachines();
 
-    unlockLanes(1);
+    unlockLanes(3);
 
     currentOrder = orders[0];
     renderOrder();
@@ -945,25 +945,20 @@ function runTutorialStep() {
     );
   }
 
-  function getLaneCountForOrder(index) {
-    if (selectedDifficulty === "hard") {
-      return 3;
-    }
+function getLaneCountForOrder(index) {
+  /*
+    Every order can require pieces from all three lines.
 
-    if (selectedDifficulty === "medium") {
-      return index >= 2 ? 3 : 2;
-    }
+    Keep all three lanes open so the child can always collect:
+    - Style pieces
+    - Character or animal pieces
+    - Power or action pieces
 
-    if (index <= 1) {
-      return 1;
-    }
-
-    if (index <= 3) {
-      return 2;
-    }
-
-    return 3;
-  }
+    Difficulty is controlled by speed, timers, health,
+    and private-piece frequency instead of locked lanes.
+  */
+  return 3;
+}
 
   function unlockLanes(count) {
     const laneNames = ["one", "two", "three"];
@@ -1347,6 +1342,13 @@ function runTutorialStep() {
         : Math.min(levels.length - 1, currentIndex + 1);
 
     const laneCount = getLaneCountForOrder(currentOrderIndex);
+
+     setText(
+  "factoryStageName",
+  tutorialActive
+    ? "Training Floor — All Lines Open"
+    : "Full Factory Floor"
+);
 
     const minimumIndex =
       laneCount === 1
