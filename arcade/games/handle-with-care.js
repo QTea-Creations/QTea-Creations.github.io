@@ -1375,8 +1375,8 @@ function useNearbyObject() {
   }
 
   /*
-    When carrying something, prioritize a nearby
-    drop-off station.
+    When carrying an object, first try to place it
+    into the nearest ground-floor station.
   */
   if (carriedItem) {
     const nearbyStation =
@@ -1392,7 +1392,8 @@ function useNearbyObject() {
   }
 
   /*
-    With empty hands, first look for a conveyor piece.
+    With empty hands, first look for a nearby
+    conveyor piece.
   */
   const nearbyPiece =
     getNearbyPiece();
@@ -1406,7 +1407,7 @@ function useNearbyObject() {
   }
 
   /*
-    Then check the Parts Shelf.
+    Then look for a saved Parts Shelf item.
   */
   const shelfPiece =
     getNearbyShelfPiece();
@@ -1420,7 +1421,8 @@ function useNearbyObject() {
   }
 
   /*
-    Finally, operate a machine with empty hands.
+    Finally, operate a nearby machine with
+    empty hands.
   */
   const nearbyStation =
     getNearbyStation();
@@ -1445,7 +1447,7 @@ function useNearbyObject() {
 
 
 function getWorkerLane() {
-  const laneDistances = {
+  const distances = {
     one:
       Math.abs(
         workerY -
@@ -1466,7 +1468,7 @@ function getWorkerLane() {
   };
 
   return Object
-    .entries(laneDistances)
+    .entries(distances)
     .sort(
       (first, second) =>
         first[1] - second[1]
@@ -1486,15 +1488,10 @@ function getNearbyPiece() {
   const nearbyPieces =
     activePieces
       .filter((piece) => {
-        if (
-          !piece ||
-          piece.removed ||
-          !piece.element
-        ) {
-          return false;
-        }
-
         return (
+          piece &&
+          !piece.removed &&
+          piece.element &&
           piece.lane === workerLane &&
           Math.abs(
             piece.x -
@@ -1517,40 +1514,80 @@ function getNearbyPiece() {
   return nearbyPieces[0] || null;
 }
 
-    const shelfPiece = getNearbyShelfPiece();
 
-    if (shelfPiece) {
-      pickUpShelfPiece(shelfPiece.index);
-      return;
-    }
-
-    const station = getNearbyStation();
-
-    if (station) {
-      useEmptyHandStation(station);
-      return;
-    }
-
-    showFeedback({
-      correct: false,
-      icon: "✋",
-      title: "Nothing close enough",
-      message: "Move closer to a piece or machine and press E again.",
-      points: "+0"
-    });
+function pickUpPiece(piece) {
+  if (
+    carriedItem ||
+    !piece ||
+    piece.removed
+  ) {
+    return;
   }
 
-  function getWorkerLane() {
-    const distances = {
-      one: Math.abs(workerY - floorLevels.laneOne),
-      two: Math.abs(workerY - floorLevels.laneTwo),
-      three: Math.abs(workerY - floorLevels.laneThree)
-    };
+  carriedItem = {
+    ...piece.data,
+    source: "belt"
+  };
 
-    return Object.entries(distances).sort(
-      (a, b) => a[1] - b[1]
-    )[0][0];
+  removePiece(piece);
+  updateCarriedItem();
+
+  combo += 1;
+
+  bestCombo = Math.max(
+    bestCombo,
+    combo
+  );
+
+  correctActions += 1;
+
+  score +=
+    5 *
+    getSettings().scoreMultiplier;
+
+  showFeedback({
+    correct: true,
+    icon:
+      carriedItem.unsafe
+        ? "⚠️"
+        : "✨",
+    title:
+      `${carriedItem.text} picked up!`,
+    message:
+      carriedItem.unsafe
+        ? "Carry it to the Nope Chute."
+        : "Carry it to the mixer, Parts Shelf, or Garbage Can.",
+    points: "+5"
+  });
+
+  if (tutorialActive) {
+    if (
+      tutorialStep === 1 &&
+      carriedItem.text === "Wacky"
+    ) {
+      advanceTutorial();
+    }
+
+    if (
+      tutorialStep === 3 &&
+      carriedItem.text === "Home Address"
+    ) {
+      clearTutorialTargetPulses();
+
+      pulseTutorialTarget(
+        nopeChuteStation
+      );
+
+      setText(
+        "tutorialStepMessage",
+        "Great! Climb down, walk to the pulsing Nope Chute, and press E."
+      );
+    }
   }
+
+  updateHUD();
+}
+
 
 function getNearbyStation() {
   if (
@@ -1562,16 +1599,19 @@ function getNearbyStation() {
     return null;
   }
 
-  const range =
+  const interactionRange =
     selectedControlMode === "assist"
       ? 12
       : 8;
 
   const nearbyStations =
-    Object.keys(stationElements)
+    Object
+      .keys(stationElements)
       .map((stationName) => {
         const stationX =
-          getStationCenterX(stationName);
+          getStationCenterX(
+            stationName
+          );
 
         if (stationX === null) {
           return null;
@@ -1581,21 +1621,27 @@ function getNearbyStation() {
           name: stationName,
           distance:
             Math.abs(
-              workerX - stationX
+              workerX -
+              stationX
             )
         };
       })
       .filter(Boolean)
       .filter(
         (station) =>
-          station.distance <= range
+          station.distance <=
+          interactionRange
       )
       .sort(
-        (a, b) =>
-          a.distance - b.distance
+        (first, second) =>
+          first.distance -
+          second.distance
       );
 
-  return nearbyStations[0]?.name || null;
+  return (
+    nearbyStations[0]?.name ||
+    null
+  );
 }
 
   function updateCarriedItem() {
@@ -1617,26 +1663,7 @@ function getNearbyStation() {
     show(carriedItemBubble);
   }
 
-  function getNearbyStation() {
-    if (Math.abs(workerY - floorLevels.ground) > 12) {
-      return null;
-    }
-
-    const range =
-      selectedControlMode === "assist"
-        ? 14
-        : 10;
-
-    return Object.entries(stationPositions)
-      .filter(([, x]) => Math.abs(workerX - x) <= range)
-      .sort(
-        (a, b) =>
-          Math.abs(workerX - a[1]) -
-          Math.abs(workerX - b[1])
-      )[0]?.[0] || null;
-  }
-
-function placeCarriedItem(station) {
+ function placeCarriedItem(station) {
   switch (station) {
     case "nope":
       placeInNopeChute();
@@ -1672,6 +1699,71 @@ function placeInGarbageCan() {
     return;
   }
 
+function placeInNopeChute() {
+  if (!carriedItem) {
+    return;
+  }
+
+  if (!carriedItem.unsafe) {
+    mistake(
+      "That piece was safe",
+      `${carriedItem.text} is a creative word. Use the Garbage Can if you do not want it.`
+    );
+
+    return;
+  }
+
+  const removedText =
+    carriedItem.text;
+
+  privateCluesBlocked += 1;
+  orderPrivateBlocked += 1;
+  correctActions += 1;
+
+  score +=
+    20 *
+    getSettings().scoreMultiplier;
+
+  combo += 1;
+
+  bestCombo = Math.max(
+    bestCombo,
+    combo
+  );
+
+  carriedItem = null;
+
+  updateCarriedItem();
+
+  nopeChuteStation?.classList.add(
+    "nope-drop"
+  );
+
+  managedTimeout(() => {
+    nopeChuteStation?.classList.remove(
+      "nope-drop"
+    );
+  }, 420);
+
+  showFeedback({
+    correct: true,
+    icon: "🚫",
+    title: "Private clue blocked!",
+    message:
+      `${removedText} went into the Nope Chute.`,
+    points: "+20"
+  });
+
+  if (
+    tutorialActive &&
+    tutorialStep === 3
+  ) {
+    advanceTutorial();
+  }
+
+  updateHUD();
+}
+   
   if (carriedItem.package) {
     showFeedback({
       correct: false,
@@ -2931,16 +3023,33 @@ function mixUsername() {
     );
   });
 
-  shelfSlotButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      if (
-        Math.abs(workerX - stationPositions.parts) <= 14 &&
-        Math.abs(workerY - floorLevels.ground) <= 12
-      ) {
-        pickUpShelfPiece(index);
+shelfSlotButtons.forEach(
+  (button, index) => {
+    button.addEventListener(
+      "click",
+      () => {
+        const partsX =
+          getStationCenterX("parts");
+
+        if (
+          partsX !== null &&
+          Math.abs(
+            workerX -
+            partsX
+          ) <= 14 &&
+          Math.abs(
+            workerY -
+            floorLevels.ground
+          ) <= 12
+        ) {
+          pickUpShelfPiece(
+            index
+          );
+        }
       }
-    });
-  });
+    );
+  }
+);
 
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
