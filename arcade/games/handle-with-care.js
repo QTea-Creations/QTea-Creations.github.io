@@ -714,6 +714,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
+   function clearTutorialTargetPulses() {
+  document
+    .querySelectorAll(".tutorial-target-pulse")
+    .forEach((element) => {
+      element.classList.remove("tutorial-target-pulse");
+    });
+}
+
+function pulseTutorialTarget(element) {
+  if (!element) {
+    return;
+  }
+
+  element.classList.add("tutorial-target-pulse");
+}
+
   function runTutorialStep() {
     const step = tutorialSteps[tutorialStep];
 
