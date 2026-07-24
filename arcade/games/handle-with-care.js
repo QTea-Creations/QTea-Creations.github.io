@@ -730,67 +730,116 @@ function pulseTutorialTarget(element) {
   element.classList.add("tutorial-target-pulse");
 }
 
-  function runTutorialStep() {
-    const step = tutorialSteps[tutorialStep];
+function runTutorialStep() {
+  const step = tutorialSteps[tutorialStep];
 
-    setText(
-      "tutorialStepLabel",
-      `Tutorial ${tutorialStep + 1} of ${tutorialSteps.length}`
-    );
+  clearTutorialTargetPulses();
 
-    setText("tutorialStepTitle", step.title);
-    setText("tutorialStepMessage", step.message);
-    setText("tutorialControlIcon", step.control);
+  setText(
+    "tutorialStepLabel",
+    `Tutorial ${tutorialStep + 1} of ${tutorialSteps.length}`
+  );
 
-    switch (tutorialStep) {
-      case 0:
-        tutorialTargetPiece = createPiece("one", {
-          text: "Wacky",
-          category: "style",
+  setText("tutorialStepTitle", step.title);
+  setText("tutorialStepMessage", step.message);
+  setText("tutorialControlIcon", step.control);
+
+  switch (tutorialStep) {
+    case 0:
+      tutorialTargetPiece = createPiece("one", {
+        text: "Wacky",
+        category: "style",
+        unsafe: false,
+        fixedX: 54,
+        tutorial: true
+      });
+
+      pulseTutorialTarget(
+        tutorialTargetPiece?.element
+      );
+      break;
+
+    case 1:
+      pulseTutorialTarget(
+        tutorialTargetPiece?.element
+      );
+      break;
+
+    case 2:
+      pulseTutorialTarget(mixerStation);
+      break;
+
+    case 3:
+      tutorialTargetPiece = createPiece("one", {
+        text: "Home Address",
+        category: "unsafe",
+        unsafe: true,
+        reason:
+          "A home address is private location information.",
+        fixedX: 52,
+        tutorial: true
+      });
+
+      pulseTutorialTarget(
+        tutorialTargetPiece?.element
+      );
+      break;
+
+    case 4:
+      if (
+        !activePieces.some(
+          (piece) =>
+            piece.data.text === "Panda"
+        )
+      ) {
+        const pandaPiece = createPiece("two", {
+          text: "Panda",
+          category: "animal",
           unsafe: false,
-          fixedX: 54,
+          fixedX: 40,
           tutorial: true
         });
-        break;
 
-      case 3:
-        tutorialTargetPiece = createPiece("one", {
-          text: "Home Address",
-          category: "unsafe",
-          unsafe: true,
-          reason: "A home address is private location information.",
-          fixedX: 52,
+        const bouncePiece = createPiece("three", {
+          text: "Bounce",
+          category: "action",
+          unsafe: false,
+          fixedX: 64,
           tutorial: true
         });
-        break;
 
-      case 4:
-        if (!activePieces.some((piece) => piece.data.text === "Panda")) {
-          createPiece("two", {
-            text: "Panda",
-            category: "animal",
-            unsafe: false,
-            fixedX: 40,
-            tutorial: true
-          });
+        unlockLanes(3);
 
-          createPiece("three", {
-            text: "Bounce",
-            category: "action",
-            unsafe: false,
-            fixedX: 64,
-            tutorial: true
-          });
+        pulseTutorialTarget(
+          pandaPiece?.element
+        );
 
-          unlockLanes(3);
-        }
-        break;
+        pulseTutorialTarget(
+          bouncePiece?.element
+        );
+      }
+      break;
 
-      default:
-        break;
-    }
+    case 5:
+      pulseTutorialTarget(mixerStation);
+      break;
+
+    case 6:
+      /*
+        The mixer pulses first because the player
+        must collect the completed package there.
+      */
+      pulseTutorialTarget(mixerStation);
+      break;
+
+    case 7:
+      pulseTutorialTarget(shippingStation);
+      break;
+
+    default:
+      break;
   }
-
+}
   function advanceTutorial() {
     tutorialStep += 1;
 
@@ -1412,15 +1461,18 @@ function pulseTutorialTarget(element) {
         advanceTutorial();
       }
 
-      if (
-        tutorialStep === 3 &&
-        carriedItem.text === "Home Address"
-      ) {
-        setText(
-          "tutorialStepMessage",
-          "Great. Now climb down and carry it to the Nope Chute."
-        );
-      }
+if (
+  tutorialStep === 3 &&
+  carriedItem.text === "Home Address"
+) {
+  clearTutorialTargetPulses();
+  pulseTutorialTarget(nopeChuteStation);
+
+  setText(
+    "tutorialStepMessage",
+    "Great! Now climb down, walk to the pulsing Nope Chute, and press E."
+  );
+}
     }
   }
 
