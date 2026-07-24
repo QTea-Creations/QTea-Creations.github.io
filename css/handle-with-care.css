@@ -4179,3 +4179,32 @@ body.handle-page button {
       repeat(2, minmax(0, 1fr));
   }
 }
+
+.nope-station.nope-drop {
+  animation:
+    nopeChuteDrop
+    420ms ease;
+}
+
+@keyframes nopeChuteDrop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform:
+      scale(1.08)
+      rotate(-2deg);
+
+    box-shadow:
+      0 0 0 7px rgba(239, 85, 118, 0.22),
+      0 0 28px rgba(239, 85, 118, 0.6);
+  }
+
+  70% {
+    transform:
+      scale(0.96)
+      rotate(2deg);
+  }
+}
