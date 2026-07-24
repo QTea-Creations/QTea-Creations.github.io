@@ -4140,3 +4140,42 @@ body.handle-page button {
       rotate(2deg);
   }
 }
+
+/* Six evenly aligned factory drop-off stations */
+
+.factory-machine-row {
+  left: 2%;
+  right: 2%;
+
+  width: auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(6, minmax(0, 1fr));
+
+  align-items: stretch;
+  gap: 10px;
+}
+
+.factory-station {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+@media (max-width: 1050px) {
+  .factory-machine-row {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 9px;
+  }
+}
+
+@media (max-width: 620px) {
+  .factory-machine-row {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
