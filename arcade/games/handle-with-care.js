@@ -2,61 +2,103 @@
 
 /* =========================================================
    SAFETII NET — HANDLE WITH CARE
-   MULTI-ROUTE USERNAME FACTORY
+   PHYSICAL USERNAME FACTORY
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const byId = (id) => document.getElementById(id);
 
+  /* ---------------------------------------------------------
+     MAIN SCREENS
+  --------------------------------------------------------- */
+
   const introScreen = byId("introScreen");
   const playScreen = byId("playScreen");
   const resultScreen = byId("resultScreen");
 
-  const handleFactory = byId("handleFactory");
-  const factoryWorker = byId("factoryWorker");
-
   const startGameButton = byId("startGame");
   const playAgainButton = byId("playAgain");
 
+  const handleFactory = byId("handleFactory");
+  const factoryWorker = byId("factoryWorker");
+
+  /* ---------------------------------------------------------
+     OVERLAYS
+  --------------------------------------------------------- */
+
+  const tutorialOpeningOverlay = byId("tutorialOpeningOverlay");
+  const howToPlayOverlay = byId("howToPlayOverlay");
+  const pauseOverlay = byId("pauseOverlay");
   const orderCompleteOverlay = byId("orderCompleteOverlay");
-  const factoryCompleteOverlay = byId("factoryCompleteOverlay");
+
+  const beginTutorialButton = byId("beginTutorialButton");
+  const skipTutorialOpeningButton = byId("skipTutorialOpeningButton");
+  const tutorialSkipButton = byId("tutorialSkipButton");
+
+  const howToPlayButton = byId("howToPlayButton");
+  const gameHelpButton = byId("gameHelpButton");
+  const pauseHelpButton = byId("pauseHelpButton");
+  const replayTutorialButton = byId("replayTutorialButton");
+
+  const closeHowToPlayButton = byId("closeHowToPlayButton");
+  const closeInstructionsButton = byId("closeInstructionsButton");
+
+  const pauseGameButton = byId("pauseGameButton");
+  const resumeGameButton = byId("resumeGameButton");
+  const restartGameButton = byId("restartGameButton");
 
   const continueOrderButton = byId("continueOrderButton");
-  const finishFactoryButton = byId("finishFactoryButton");
 
-  const mixUsernameButton = byId("mixUsernameButton");
-  const scanUsernameButton = byId("scanUsernameButton");
-  const shipItBin = byId("shipItBin");
-  const partsBin = byId("partsBin");
-  const nopeChute = byId("nopeChute");
+  /* ---------------------------------------------------------
+     GAME ELEMENTS
+  --------------------------------------------------------- */
 
-  const factoryMobileControls = byId("factoryMobileControls");
+  const carriedItemBubble = byId("carriedItemBubble");
+  const carriedItemText = byId("carriedItemText");
+  const carriedItemIcon = byId("carriedItemIcon");
+
+  const mixerStation = byId("mixerStation");
+  const scannerStation = byId("scannerStation");
+  const shippingStation = byId("shippingStation");
+  const nopeChuteStation = byId("nopeChuteStation");
+  const partsShelfStation = byId("partsShelfStation");
+
+  const tutorialCard = byId("factoryTutorialCard");
+  const tutorialHighlight = byId("tutorialHighlight");
+
+  const timeFreezeEffect = byId("timeFreezeEffect");
+  const soundToggleButton = byId("soundToggleButton");
+
+  const mobileControls = byId("factoryMobileControls");
 
   const controlChoices = [
     ...document.querySelectorAll(".handle-control-choice")
   ];
 
-  const heatChoices = [
-    ...document.querySelectorAll(".heat-choice")
+  const difficultyChoices = [
+    ...document.querySelectorAll(".handle-difficulty-choice")
   ];
 
-  const routeElements = {
-    top: {
-      layer: byId("topRoutePieces"),
-      switch: byId("topRouteSwitch"),
-      gate: byId("topRouteGate")
+  const shelfSlotButtons = [
+    ...document.querySelectorAll(".parts-shelf-slot")
+  ];
+
+  const laneElements = {
+    one: {
+      element: byId("factoryLaneOne"),
+      layer: byId("laneOnePieces")
     },
 
-    middle: {
-      layer: byId("middleRoutePieces"),
-      switch: byId("middleRouteSwitch"),
-      gate: byId("middleRouteGate")
+    two: {
+      element: byId("factoryLaneTwo"),
+      layer: byId("laneTwoPieces"),
+      lock: byId("laneTwoLock")
     },
 
-    bottom: {
-      layer: byId("bottomRoutePieces"),
-      switch: byId("bottomRouteSwitch"),
-      gate: byId("bottomRouteGate")
+    three: {
+      element: byId("factoryLaneThree"),
+      layer: byId("laneThreePieces"),
+      lock: byId("laneThreeLock")
     }
   };
 
@@ -65,50 +107,59 @@ document.addEventListener("DOMContentLoaded", () => {
     right: byId("moveRightButton"),
     up: byId("moveUpButton"),
     down: byId("moveDownButton"),
-    jump: byId("jumpButton"),
-    action: byId("actionButton")
+    action: byId("actionButton"),
+    freeze: byId("freezeButton")
   };
 
+  /* =========================================================
+     STORAGE KEYS
+  ========================================================= */
+
+  const TUTORIAL_KEY = "handleWithCareTutorialComplete";
+  const BEST_SCORE_KEY = "handleWithCareBestScore";
 
   /* =========================================================
      GAME DATA
   ========================================================= */
 
-  const heatSettings = {
-    mild: {
-      label: "Mild",
-      orders: 5,
+  const difficultySettings = {
+    easy: {
+      totalOrders: 6,
       health: 5,
-      orderTime: 80,
-      spawnDelay: 2200,
-      pieceDuration: 10500,
-      unsafeChance: 0.24,
-      jamChance: 0.04,
+      firstTimedOrder: 2,
+      orderTime: 105,
+      spawnDelay: 4200,
+      pieceDuration: 19000,
+      unsafeChance: 0.18,
+      freezeDuration: 7000,
+      freezeSpeed: 0.2,
       scoreMultiplier: 1
     },
 
-    spicy: {
-      label: "Spicy",
-      orders: 6,
+    medium: {
+      totalOrders: 6,
       health: 4,
-      orderTime: 68,
-      spawnDelay: 1750,
-      pieceDuration: 8500,
-      unsafeChance: 0.34,
-      jamChance: 0.07,
-      scoreMultiplier: 2
+      firstTimedOrder: 0,
+      orderTime: 80,
+      spawnDelay: 3000,
+      pieceDuration: 14000,
+      unsafeChance: 0.29,
+      freezeDuration: 6000,
+      freezeSpeed: 0.26,
+      scoreMultiplier: 1.5
     },
 
-    hot: {
-      label: "Hot",
-      orders: 7,
+    hard: {
+      totalOrders: 7,
       health: 3,
-      orderTime: 58,
-      spawnDelay: 1350,
-      pieceDuration: 6900,
-      unsafeChance: 0.43,
-      jamChance: 0.11,
-      scoreMultiplier: 3
+      firstTimedOrder: 0,
+      orderTime: 65,
+      spawnDelay: 2200,
+      pieceDuration: 10500,
+      unsafeChance: 0.39,
+      freezeDuration: 5000,
+      freezeSpeed: 0.32,
+      scoreMultiplier: 2
     }
   };
 
@@ -118,14 +169,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "Cosmic",
       "Mighty",
       "Neon",
-      "Sneaky",
       "Turbo",
       "Glitter",
       "Mystic",
-      "Jolly",
-      "Brave",
-      "Fuzzy",
-      "Super"
+      "Fuzzy"
     ],
 
     animal: [
@@ -136,11 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "Koala",
       "Tiger",
       "Llama",
-      "Gecko",
-      "Penguin",
-      "Rabbit",
-      "Turtle",
-      "Fox"
+      "Penguin"
     ],
 
     action: [
@@ -150,11 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "Dash",
       "Flip",
       "Spark",
-      "Spin",
-      "Jump",
       "Glide",
-      "Roar",
-      "Rush",
       "Bolt"
     ],
 
@@ -166,9 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "Meteor",
       "Lunar",
       "Astro",
-      "Rocket",
-      "Cosmos",
-      "Starlight"
+      "Rocket"
     ],
 
     nature: [
@@ -177,10 +214,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "Forest",
       "Breeze",
       "Canyon",
-      "Pebble",
       "Willow",
       "Sunbeam",
-      "Rain",
       "Cloud"
     ],
 
@@ -190,10 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "Ranger",
       "Shield",
       "Champion",
-      "Hero",
-      "Defender",
       "Scout",
-      "Protector",
+      "Defender",
       "Legend"
     ],
 
@@ -205,220 +238,166 @@ document.addEventListener("DOMContentLoaded", () => {
       "Bubbles",
       "Banana",
       "Jelly",
-      "Pudding",
-      "Sprinkles",
-      "Goofy"
+      "Sprinkles"
     ]
   };
 
   const unsafePieces = [
     {
       text: "Real Name",
-      privateType: "name",
-      reason: "A real name can reveal who owns the account."
+      reason: "A real name can identify the person behind an account."
     },
-
-    {
-      text: "Birth Year",
-      privateType: "birthday",
-      reason: "A birth year can expose age and identity information."
-    },
-
-    {
-      text: "School Name",
-      privateType: "school",
-      reason: "A school name can reveal where someone regularly goes."
-    },
-
-    {
-      text: "Phone Number",
-      privateType: "phone",
-      reason: "Phone numbers should not be placed in public usernames."
-    },
-
     {
       text: "Home Address",
-      privateType: "address",
-      reason: "An address is private location information."
+      reason: "A home address is private location information."
     },
-
+    {
+      text: "School Name",
+      reason: "A school name may reveal where someone regularly goes."
+    },
+    {
+      text: "Phone Number",
+      reason: "Phone numbers should not appear in public usernames."
+    },
     {
       text: "Password",
-      privateType: "password",
-      reason: "Passwords must always remain secret."
+      reason: "Passwords must always remain private."
     },
-
+    {
+      text: "Birth Year",
+      reason: "A birth year may reveal someone’s exact age."
+    },
     {
       text: "Login Code",
-      privateType: "code",
-      reason: "Verification codes should never be shared."
-    },
-
-    {
-      text: "Exact Age",
-      privateType: "age",
-      reason: "Exact age can expose personal information."
-    },
-
-    {
-      text: "Team Schedule",
-      privateType: "schedule",
-      reason: "A schedule may reveal where someone will be."
+      reason: "Login and verification codes should never be shared."
     }
   ];
 
-  const orderDefinitions = [
+  const orders = [
     {
       title: "Silly Animal",
-      description:
-        "Build a funny username using one style word, one animal word, and one action word.",
+      description: "Collect one style, one animal, and one action word.",
       categories: ["style", "animal", "action"],
-      labels: ["STYLE", "ANIMAL", "ACTION"],
-      example: "WackyPandaBounce"
+      labels: ["STYLE", "ANIMAL", "ACTION"]
     },
-
     {
       title: "Space Explorer",
-      description:
-        "Build a space-themed username with a cosmic word, a character, and an action.",
+      description: "Collect one space word, one animal, and one action.",
       categories: ["space", "animal", "action"],
-      labels: ["SPACE", "CHARACTER", "ACTION"],
-      example: "NovaFalconZoom"
+      labels: ["SPACE", "ANIMAL", "ACTION"]
     },
-
     {
       title: "Nature Hero",
-      description:
-        "Build a username inspired by nature and superhero adventures.",
+      description: "Collect one nature word, one hero word, and one action.",
       categories: ["nature", "hero", "action"],
-      labels: ["NATURE", "HERO", "ACTION"],
-      example: "WillowGuardianDash"
+      labels: ["NATURE", "HERO", "ACTION"]
     },
-
     {
       title: "Maximum Mayhem",
-      description:
-        "Create a wild username using something silly, a character, and a power word.",
+      description: "Collect one silly word, one animal, and one action.",
       categories: ["silly", "animal", "action"],
-      labels: ["SILLY", "CHARACTER", "POWER"],
-      example: "PickleDragonBlast"
+      labels: ["SILLY", "ANIMAL", "ACTION"]
     },
-
     {
       title: "Hero in Space",
-      description:
-        "Combine a space word, a hero title, and an energetic action.",
+      description: "Collect one space word, one hero word, and one action.",
       categories: ["space", "hero", "action"],
-      labels: ["SPACE", "HERO", "ACTION"],
-      example: "CometRangerBolt"
+      labels: ["SPACE", "HERO", "ACTION"]
     },
-
     {
       title: "Forest Friend",
-      description:
-        "Use nature, animal, and silly pieces to create a playful username.",
+      description: "Collect one nature word, one animal, and one silly word.",
       categories: ["nature", "animal", "silly"],
-      labels: ["NATURE", "ANIMAL", "SILLY"],
-      example: "RiverOtterGiggle"
+      labels: ["NATURE", "ANIMAL", "SILLY"]
     },
-
     {
       title: "Mystery Mix",
-      description:
-        "Build a creative username from three surprise categories.",
+      description: "Collect one style word, one hero word, and one nature word.",
       categories: ["style", "hero", "nature"],
-      labels: ["STYLE", "HERO", "NATURE"],
-      example: "MysticScoutBreeze"
+      labels: ["STYLE", "HERO", "NATURE"]
     }
   ];
 
-  const routeCategoryPools = {
-    top: [
-      "style",
-      "space",
-      "nature",
-      "silly"
-    ],
-
-    middle: [
-      "animal",
-      "hero",
-      "silly"
-    ],
-
-    bottom: [
-      "action",
-      "hero",
-      "nature"
-    ]
+  const laneCategoryPools = {
+    one: ["style", "space", "nature", "silly"],
+    two: ["animal", "hero", "silly"],
+    three: ["action", "hero", "nature"]
   };
 
+  const stationPositions = {
+    nope: 8,
+    parts: 28,
+    mixer: 50,
+    scanner: 72,
+    shipping: 91
+  };
+
+  const floorLevels = {
+    ground: 87,
+    laneThree: 62,
+    laneTwo: 39,
+    laneOne: 16
+  };
 
   /* =========================================================
-     GAME STATE
+     STATE
   ========================================================= */
 
   let selectedControlMode = "keyboard";
-  let selectedHeat = "mild";
+  let selectedDifficulty = "easy";
 
   let gameActive = false;
   let orderActive = false;
-  let pausedForOverlay = false;
+  let paused = false;
+  let tutorialActive = false;
+  let soundEnabled = true;
 
   let currentOrderIndex = 0;
-  let totalOrders = 5;
-  let ordersShipped = 0;
+  let currentOrder = orders[0];
 
   let score = 0;
   let combo = 0;
   let bestCombo = 0;
 
-  let factoryHealth = 5;
-  let timeRemaining = 80;
-  let orderPatience = 100;
-
+  let health = 5;
+  let timeRemaining = 0;
+  let ordersShipped = 0;
   let privateCluesBlocked = 0;
   let orderPrivateBlocked = 0;
 
   let correctActions = 0;
   let mistakes = 0;
 
-  let currentOrder = null;
-  let mixerPieces = [null, null, null];
+  let workerX = 12;
+  let workerY = floorLevels.ground;
+  let workerMovingLeft = false;
+  let workerMovingRight = false;
 
-  let mixedUsername = "";
-  let scannedUsername = "";
-  let packageApproved = false;
-
-  let savedPart = null;
-  let selectedPiece = null;
-
+  let carriedItem = null;
   let activePieces = [];
+  let mixerPieces = [null, null, null];
+  let shelfPieces = [null, null, null];
+
+  let mixedPackage = null;
+  let approvedPackage = null;
+
+  let timeFreezeCharge = 100;
+  let timeFreezeActive = false;
 
   let spawnInterval = null;
   let timerInterval = null;
-  let animationFrameId = null;
-
-  let factoryJamActive = false;
-  let jammedRoute = null;
-
-  let workerX = 10;
-  let workerY = 78;
-  let workerVelocityY = 0;
-  let workerGrounded = true;
-  let workerMovingLeft = false;
-  let workerMovingRight = false;
-  let workerMovingUp = false;
-  let workerMovingDown = false;
-
+  let workerAnimationFrame = null;
+  let pieceAnimationFrame = null;
   let lastWorkerTimestamp = 0;
 
-  const shippedUsernames = [];
-  const activeTimeouts = new Set();
+  let tutorialStep = 0;
+  let tutorialTargetPiece = null;
 
+  const shippedUsernames = [];
+  const managedTimeouts = new Set();
 
   /* =========================================================
-     HELPERS
+     GENERAL HELPERS
   ========================================================= */
 
   function setText(id, value) {
@@ -429,41 +408,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function showElement(element) {
+  function show(element) {
     element?.classList.remove("hidden");
   }
 
-  function hideElement(element) {
+  function hide(element) {
     element?.classList.add("hidden");
   }
 
   function chooseRandom(list) {
-    return list[
-      Math.floor(Math.random() * list.length)
-    ];
+    return list[Math.floor(Math.random() * list.length)];
   }
 
-  function createManagedTimeout(callback, delay) {
+  function managedTimeout(callback, delay) {
     const timeout = window.setTimeout(() => {
-      activeTimeouts.delete(timeout);
+      managedTimeouts.delete(timeout);
       callback();
     }, delay);
 
-    activeTimeouts.add(timeout);
-
+    managedTimeouts.add(timeout);
     return timeout;
   }
 
   function clearManagedTimeouts() {
-    activeTimeouts.forEach((timeout) => {
+    managedTimeouts.forEach((timeout) => {
       window.clearTimeout(timeout);
     });
 
-    activeTimeouts.clear();
+    managedTimeouts.clear();
   }
 
   function getSettings() {
-    return heatSettings[selectedHeat];
+    return difficultySettings[selectedDifficulty];
+  }
+
+  function isTutorialComplete() {
+    return localStorage.getItem(TUTORIAL_KEY) === "true";
+  }
+
+  function markTutorialComplete() {
+    localStorage.setItem(TUTORIAL_KEY, "true");
   }
 
   function updateGlobalPoints() {
@@ -471,25 +455,18 @@ document.addEventListener("DOMContentLoaded", () => {
       window.SafetiiArcade &&
       typeof window.SafetiiArcade.getGlobalPoints === "function"
     ) {
-      setText(
-        "globalPoints",
-        window.SafetiiArcade.getGlobalPoints()
-      );
-
+      setText("globalPoints", window.SafetiiArcade.getGlobalPoints());
       return;
     }
 
     setText(
       "globalPoints",
-      Number(
-        localStorage.getItem("safetiiGlobalPoints") || 0
-      )
+      Number(localStorage.getItem("safetiiGlobalPoints") || 0)
     );
   }
 
-
   /* =========================================================
-     SELECTION CONTROLS
+     INTRO SELECTIONS
   ========================================================= */
 
   controlChoices.forEach((button) => {
@@ -499,98 +476,95 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       button.classList.add("active");
-
-      selectedControlMode =
-        button.dataset.controlMode || "keyboard";
+      selectedControlMode = button.dataset.controlMode || "keyboard";
     });
   });
 
-  heatChoices.forEach((button) => {
+  difficultyChoices.forEach((button) => {
     button.addEventListener("click", () => {
-      heatChoices.forEach((choice) => {
+      difficultyChoices.forEach((choice) => {
         choice.classList.remove("active");
       });
 
       button.classList.add("active");
-
-      selectedHeat =
-        button.dataset.heat || "mild";
+      selectedDifficulty = button.dataset.difficulty || "easy";
     });
   });
-
 
   /* =========================================================
      START AND RESET
   ========================================================= */
 
-  function resetGameState() {
-    stopLoops();
+  function resetGame() {
+    stopAllLoops();
     clearManagedTimeouts();
-    clearAllPieces();
+    clearPieces();
+
+    const settings = getSettings();
 
     gameActive = true;
     orderActive = false;
-    pausedForOverlay = false;
+    paused = false;
+    tutorialActive = false;
 
     currentOrderIndex = 0;
-    ordersShipped = 0;
+    currentOrder = orders[0];
 
     score = 0;
     combo = 0;
     bestCombo = 0;
 
-    correctActions = 0;
-    mistakes = 0;
-
+    health = settings.health;
+    timeRemaining = settings.orderTime;
+    ordersShipped = 0;
     privateCluesBlocked = 0;
     orderPrivateBlocked = 0;
 
-    currentOrder = null;
+    correctActions = 0;
+    mistakes = 0;
+
+    workerX = 12;
+    workerY = floorLevels.ground;
+    workerMovingLeft = false;
+    workerMovingRight = false;
+
+    carriedItem = null;
     mixerPieces = [null, null, null];
+    shelfPieces = [null, null, null];
 
-    mixedUsername = "";
-    scannedUsername = "";
-    packageApproved = false;
+    mixedPackage = null;
+    approvedPackage = null;
 
-    savedPart = null;
-    selectedPiece = null;
-
-    factoryJamActive = false;
-    jammedRoute = null;
+    timeFreezeCharge = 100;
+    timeFreezeActive = false;
 
     shippedUsernames.length = 0;
 
-    const settings = getSettings();
+    hide(tutorialOpeningOverlay);
+    hide(howToPlayOverlay);
+    hide(pauseOverlay);
+    hide(orderCompleteOverlay);
+    hide(tutorialCard);
+    hide(tutorialSkipButton);
+    hide(tutorialHighlight);
+    hide(timeFreezeEffect);
 
-    totalOrders = settings.orders;
-    factoryHealth = settings.health;
-    timeRemaining = settings.orderTime;
-    orderPatience = 100;
-
-    workerX = 10;
-    workerY = 78;
-    workerVelocityY = 0;
-    workerGrounded = true;
-
-    hideElement(orderCompleteOverlay);
-    hideElement(factoryCompleteOverlay);
-    hideElement(byId("factoryJamAlert"));
-    hideElement(byId("handleFeedback"));
-    hideElement(byId("comboDisplay"));
-
-    resetMixer();
-    updateWorkerPosition();
+    updateWorker();
+    updateCarriedItem();
+    updateMixer();
+    updateShelf();
     updateHUD();
   }
 
   function startGame() {
-    resetGameState();
+    resetGame();
 
-    hideElement(introScreen);
-    hideElement(resultScreen);
-    showElement(playScreen);
+    hide(introScreen);
+    hide(resultScreen);
+    show(playScreen);
 
     configureControls();
+    startWorkerLoop();
 
     if (
       window.SafetiiArcade &&
@@ -599,74 +573,271 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         window.SafetiiArcade.startRound({
           gameId: "handle-with-care",
-          heat: selectedHeat,
-          questionCount: totalOrders
+          heat: selectedDifficulty,
+          questionCount: getSettings().totalOrders
         });
       } catch (error) {
-        console.warn(
-          "Could not start arcade round:",
-          error
-        );
+        console.warn("Unable to start arcade round:", error);
       }
     }
 
-    startOrder(0);
-    startWorkerLoop();
+    if (selectedDifficulty === "easy") {
+      showTutorialChoice();
+    } else {
+      beginNormalOrder(0);
+    }
   }
 
   function configureControls() {
-    const useScreenButtons =
+    const usesButtons =
       selectedControlMode === "buttons" ||
       selectedControlMode === "assist";
 
-    factoryMobileControls?.classList.toggle(
-      "hidden",
-      !useScreenButtons
-    );
+    mobileControls?.classList.toggle("hidden", !usesButtons);
 
-    const reminderMap = {
-      keyboard:
-        "Move with Arrow Keys or WASD · Jump with Space · Use with E",
-
-      buttons:
-        "Use the movement buttons · Press USE near switches and pieces",
-
-      assist:
-        "Assist Mode: slower belts and automatic ladder climbing"
+    const reminders = {
+      keyboard: "Move: WASD or Arrows · Use: E · Time Freeze: F",
+      buttons: "Move with the screen buttons · USE picks up and places",
+      assist: "Assist Mode · Larger interaction range · Easier climbing"
     };
 
-    setText(
-      "controlReminder",
-      reminderMap[selectedControlMode]
-    );
+    setText("controlReminder", reminders[selectedControlMode]);
   }
 
+  /* =========================================================
+     TUTORIAL CHOICE
+  ========================================================= */
+
+  function showTutorialChoice() {
+    const returning = isTutorialComplete();
+
+    setText(
+      "tutorialOpeningHeading",
+      returning
+        ? "Welcome back to factory training!"
+        : "Ready for a quick tutorial?"
+    );
+
+    setText(
+      "tutorialOpeningMessage",
+      returning
+        ? "Replay the training or skip directly to your first order."
+        : "Learn how to collect, carry, mix, inspect, and ship your first username."
+    );
+
+    show(tutorialOpeningOverlay);
+  }
+
+  function beginTutorial() {
+    hide(tutorialOpeningOverlay);
+
+    tutorialActive = true;
+    orderActive = false;
+    tutorialStep = 0;
+
+    show(tutorialCard);
+    show(tutorialSkipButton);
+
+    clearPieces();
+    resetOrderMachines();
+
+    unlockLanes(1);
+
+    currentOrder = orders[0];
+    renderOrder();
+
+    workerX = 12;
+    workerY = floorLevels.laneOne;
+
+    updateWorker();
+
+    runTutorialStep();
+  }
+
+  function skipTutorial() {
+    markTutorialComplete();
+
+    tutorialActive = false;
+
+    hide(tutorialOpeningOverlay);
+    hide(tutorialCard);
+    hide(tutorialSkipButton);
+    hide(tutorialHighlight);
+
+    clearPieces();
+    resetOrderMachines();
+
+    beginNormalOrder(0);
+  }
+
+  const tutorialSteps = [
+    {
+      title: "Walk to the Wacky piece",
+      message: "Use A and D or the left and right arrow keys.",
+      control: "⬅️  ➡️"
+    },
+    {
+      title: "Pick it up",
+      message: "Stand close to Wacky and press E.",
+      control: "E"
+    },
+    {
+      title: "Carry it to the mixer",
+      message: "Climb down, walk to the Username Mixer, and press E.",
+      control: "⚙️"
+    },
+    {
+      title: "Block private information",
+      message: "Pick up Home Address and carry it to the Nope Chute.",
+      control: "🚫"
+    },
+    {
+      title: "Fill the remaining slots",
+      message: "Collect Panda and Bounce and place them in the mixer.",
+      control: "✨"
+    },
+    {
+      title: "Mix the username",
+      message: "Stand at the mixer with empty hands and press E.",
+      control: "⚙️"
+    },
+    {
+      title: "Inspect the package",
+      message: "Carry the package to Final Inspection and press E.",
+      control: "🔍"
+    },
+    {
+      title: "Ship it!",
+      message: "Carry the approved package to Ship It and press E.",
+      control: "🚀"
+    }
+  ];
+
+  function runTutorialStep() {
+    const step = tutorialSteps[tutorialStep];
+
+    setText(
+      "tutorialStepLabel",
+      `Tutorial ${tutorialStep + 1} of ${tutorialSteps.length}`
+    );
+
+    setText("tutorialStepTitle", step.title);
+    setText("tutorialStepMessage", step.message);
+    setText("tutorialControlIcon", step.control);
+
+    switch (tutorialStep) {
+      case 0:
+        tutorialTargetPiece = createPiece("one", {
+          text: "Wacky",
+          category: "style",
+          unsafe: false,
+          fixedX: 54,
+          tutorial: true
+        });
+        break;
+
+      case 3:
+        tutorialTargetPiece = createPiece("one", {
+          text: "Home Address",
+          category: "unsafe",
+          unsafe: true,
+          reason: "A home address is private location information.",
+          fixedX: 52,
+          tutorial: true
+        });
+        break;
+
+      case 4:
+        if (!activePieces.some((piece) => piece.data.text === "Panda")) {
+          createPiece("two", {
+            text: "Panda",
+            category: "animal",
+            unsafe: false,
+            fixedX: 40,
+            tutorial: true
+          });
+
+          createPiece("three", {
+            text: "Bounce",
+            category: "action",
+            unsafe: false,
+            fixedX: 64,
+            tutorial: true
+          });
+
+          unlockLanes(3);
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  function advanceTutorial() {
+    tutorialStep += 1;
+
+    if (tutorialStep >= tutorialSteps.length) {
+      completeTutorial();
+      return;
+    }
+
+    runTutorialStep();
+  }
+
+  function completeTutorial() {
+    markTutorialComplete();
+
+    tutorialActive = false;
+
+    hide(tutorialCard);
+    hide(tutorialSkipButton);
+    hide(tutorialHighlight);
+
+    showFeedback({
+      correct: true,
+      icon: "🎉",
+      title: "Training complete!",
+      message: "The real factory shift is ready.",
+      points: "+50"
+    });
+
+    score += 50;
+
+    managedTimeout(() => {
+      clearPieces();
+      resetOrderMachines();
+      beginNormalOrder(0);
+    }, 1200);
+  }
 
   /* =========================================================
      ORDER SYSTEM
   ========================================================= */
 
-  function startOrder(index) {
-    stopLoops();
-    clearAllPieces();
+  function beginNormalOrder(index) {
+    clearPieces();
+    resetOrderMachines();
 
     currentOrderIndex = index;
-    currentOrder =
-      orderDefinitions[
-        index % orderDefinitions.length
-      ];
+    currentOrder = orders[index % orders.length];
 
-    mixerPieces = [null, null, null];
-    mixedUsername = "";
-    scannedUsername = "";
-    packageApproved = false;
-    selectedPiece = null;
     orderPrivateBlocked = 0;
 
-    timeRemaining = getSettings().orderTime;
-    orderPatience = 100;
+    const settings = getSettings();
 
-    resetMixer();
+    timeRemaining = settings.orderTime;
+
+    if (
+      selectedDifficulty === "easy" &&
+      index < settings.firstTimedOrder
+    ) {
+      timeRemaining = null;
+    }
+
+    const laneCount = getLaneCountForOrder(index);
+
+    unlockLanes(laneCount);
     renderOrder();
     updateHUD();
 
@@ -677,405 +848,273 @@ document.addEventListener("DOMContentLoaded", () => {
       currentOrder.description,
       () => {
         orderActive = true;
-        pausedForOverlay = false;
-
         startSpawning();
         startTimer();
       }
     );
   }
 
-  function renderOrder() {
-    setText(
-      "currentOrderNumber",
-      currentOrderIndex + 1
-    );
+  function getLaneCountForOrder(index) {
+    if (selectedDifficulty === "hard") {
+      return 3;
+    }
 
-    setText("totalOrders", totalOrders);
-    setText("ordersRequired", totalOrders);
+    if (selectedDifficulty === "medium") {
+      return index >= 2 ? 3 : 2;
+    }
+
+    if (index <= 1) {
+      return 1;
+    }
+
+    if (index <= 3) {
+      return 2;
+    }
+
+    return 3;
+  }
+
+  function unlockLanes(count) {
+    const laneNames = ["one", "two", "three"];
+
+    laneNames.forEach((name, index) => {
+      const unlocked = index < count;
+      const lane = laneElements[name];
+
+      lane.element?.classList.toggle("locked-lane", !unlocked);
+      lane.lock?.classList.toggle("hidden", unlocked);
+    });
+  }
+
+  function renderOrder() {
+    setText("currentOrderNumber", currentOrderIndex + 1);
+    setText("totalOrders", getSettings().totalOrders);
 
     setText("orderTitle", currentOrder.title);
-    setText(
-      "orderDescription",
-      currentOrder.description
-    );
+    setText("orderDescription", currentOrder.description);
+
+    setText("recipeSlotOne", currentOrder.labels[0]);
+    setText("recipeSlotTwo", currentOrder.labels[1]);
+    setText("recipeSlotThree", currentOrder.labels[2]);
 
     setText(
-      "recipeSlotOne",
-      currentOrder.labels[0]
-    );
-
-    setText(
-      "recipeSlotTwo",
-      currentOrder.labels[1]
-    );
-
-    setText(
-      "recipeSlotThree",
-      currentOrder.labels[2]
+      "factoryStageName",
+      getLaneCountForOrder(currentOrderIndex) === 1
+        ? "Training Floor"
+        : getLaneCountForOrder(currentOrderIndex) === 2
+          ? "Double-Line Floor"
+          : "Full Factory Floor"
     );
   }
-
-  function showAnnouncement(
-    icon,
-    label,
-    title,
-    message,
-    callback
-  ) {
-    const announcement =
-      byId("factoryAnnouncement");
-
-    setText("announcementIcon", icon);
-    setText("announcementLabel", label);
-    setText("announcementTitle", title);
-    setText("announcementMessage", message);
-
-    showElement(announcement);
-
-    createManagedTimeout(() => {
-      hideElement(announcement);
-
-      if (typeof callback === "function") {
-        callback();
-      }
-    }, 1900);
-  }
-
 
   /* =========================================================
      HUD
   ========================================================= */
 
   function updateHUD() {
-    setText("currentScore", score);
+    setText("currentScore", Math.round(score));
     setText("comboCount", combo);
+
     setText(
       "timeRemaining",
-      Math.max(0, timeRemaining)
+      timeRemaining === null
+        ? "Practice"
+        : Math.max(0, Math.ceil(timeRemaining))
     );
-
-    setText("ordersShipped", ordersShipped);
-    setText(
-      "privateCluesBlocked",
-      privateCluesBlocked
-    );
-
-    const progress =
-      totalOrders <= 0
-        ? 0
-        : (ordersShipped / totalOrders) * 100;
-
-    const progressFill =
-      byId("orderProgressFill");
-
-    if (progressFill) {
-      progressFill.style.width =
-        `${Math.min(100, progress)}%`;
-    }
 
     const settings = getSettings();
 
     setText(
       "factoryHealthDisplay",
-      `${"❤️".repeat(Math.max(0, factoryHealth))}${"🖤".repeat(
-        Math.max(0, settings.health - factoryHealth)
+      `${"❤️".repeat(Math.max(0, health))}${"🖤".repeat(
+        Math.max(0, settings.health - health)
       )}`
     );
 
-    const patienceFill =
-      byId("orderPatienceFill");
+    const freezeFill = byId("timeFreezeFill");
 
-    if (patienceFill) {
-      patienceFill.style.width =
-        `${Math.max(0, orderPatience)}%`;
-
-      patienceFill.classList.toggle(
-        "low-patience",
-        orderPatience <= 30
-      );
+    if (freezeFill) {
+      freezeFill.style.width = `${Math.min(100, timeFreezeCharge)}%`;
     }
-
-    const timeElement = byId("timeRemaining");
-
-    timeElement?.classList.toggle(
-      "danger-time",
-      timeRemaining <= 10
-    );
   }
 
-
   /* =========================================================
-     SPAWNING
+     PIECE SPAWNING
   ========================================================= */
 
   function startSpawning() {
     window.clearInterval(spawnInterval);
 
-    spawnPiece("top");
-    spawnPiece("middle");
-    spawnPiece("bottom");
-
-    const settings = getSettings();
-
-    let delay = settings.spawnDelay;
-
-    if (selectedControlMode === "assist") {
-      delay *= 1.25;
-    }
+    spawnNeededPiece();
 
     spawnInterval = window.setInterval(() => {
       if (
         !gameActive ||
         !orderActive ||
-        pausedForOverlay ||
-        factoryJamActive
+        paused ||
+        tutorialActive
       ) {
         return;
       }
 
-      const route = chooseRandom([
-        "top",
-        "middle",
-        "bottom"
-      ]);
-
-      spawnPiece(route);
+      spawnNeededPiece();
 
       if (
-        selectedHeat !== "mild" &&
-        Math.random() < 0.28
+        selectedDifficulty !== "easy" &&
+        Math.random() < 0.22
       ) {
-        const secondRoute = chooseRandom(
-          ["top", "middle", "bottom"].filter(
-            (item) => item !== route
-          )
-        );
-
-        createManagedTimeout(() => {
-          if (orderActive && !factoryJamActive) {
-            spawnPiece(secondRoute);
-          }
-        }, 250);
+        managedTimeout(spawnNeededPiece, 450);
       }
-
-      maybeTriggerJam();
-    }, delay);
+    }, getSettings().spawnDelay);
   }
 
-  function spawnPiece(route) {
-    if (
-      !orderActive ||
-      !routeElements[route]?.layer
-    ) {
+  function spawnNeededPiece() {
+    const unlockedLanes = getUnlockedLanes();
+
+    if (unlockedLanes.length === 0) {
       return;
     }
 
-    const settings = getSettings();
+    const unsafe = Math.random() < getSettings().unsafeChance;
 
-    const isUnsafe =
-      Math.random() < settings.unsafeChance;
+    if (unsafe) {
+      const data = chooseRandom(unsafePieces);
 
-    let pieceData;
-
-    if (isUnsafe) {
-      const unsafe = chooseRandom(unsafePieces);
-
-      pieceData = {
-        text: unsafe.text,
+      createPiece(chooseRandom(unlockedLanes), {
+        text: data.text,
         category: "unsafe",
         unsafe: true,
-        reason: unsafe.reason
-      };
-    } else {
-      const routePool =
-        routeCategoryPools[route];
+        reason: data.reason
+      });
 
-      let category = chooseRandom(routePool);
-
-      if (Math.random() < 0.62) {
-        const neededCategories =
-          currentOrder.categories.filter(
-            (needed) =>
-              !mixerPieces.some(
-                (piece) =>
-                  piece?.category === needed
-              )
-          );
-
-        const allowedNeeded =
-          neededCategories.filter(
-            (needed) =>
-              routePool.includes(needed)
-          );
-
-        if (allowedNeeded.length > 0) {
-          category = chooseRandom(
-            allowedNeeded
-          );
-        }
-      }
-
-      pieceData = {
-        text: chooseRandom(safeWords[category]),
-        category,
-        unsafe: false,
-        reason:
-          "This is a creative word that does not reveal private information."
-      };
+      return;
     }
 
-    createFactoryPiece(route, pieceData);
+    const missingCategories = currentOrder.categories.filter(
+      (category, index) => !mixerPieces[index]
+    );
+
+    let category = chooseRandom(missingCategories);
+
+    const validLanes = unlockedLanes.filter((lane) =>
+      laneCategoryPools[lane].includes(category)
+    );
+
+    let lane = validLanes.length
+      ? chooseRandom(validLanes)
+      : chooseRandom(unlockedLanes);
+
+    if (!laneCategoryPools[lane].includes(category)) {
+      category = chooseRandom(laneCategoryPools[lane]);
+    }
+
+    createPiece(lane, {
+      text: chooseRandom(safeWords[category]),
+      category,
+      unsafe: false
+    });
   }
 
-  function createFactoryPiece(route, data) {
-    const layer =
-      routeElements[route].layer;
+  function getUnlockedLanes() {
+    return ["one", "two", "three"].filter(
+      (name) =>
+        !laneElements[name].element?.classList.contains("locked-lane")
+    );
+  }
 
-    const element =
-      document.createElement("button");
+  function createPiece(lane, data) {
+    const layer = laneElements[lane]?.layer;
+
+    if (!layer) {
+      return null;
+    }
+
+    const element = document.createElement("button");
 
     element.type = "button";
-    element.className =
-      `factory-moving-piece ${
-        data.unsafe
-          ? "private-piece"
-          : "creative-piece"
-      }`;
+    element.className = `factory-moving-piece ${
+      data.unsafe ? "private-piece" : "creative-piece"
+    }`;
 
     element.innerHTML = `
-      <span>
-        ${data.unsafe ? "⚠️" : "✨"}
-      </span>
-
-      <strong>
-        ${data.text}
-      </strong>
-
-      <small>
-        ${data.unsafe ? "PRIVATE" : data.category.toUpperCase()}
-      </small>
+      <span>${data.unsafe ? "⚠️" : "✨"}</span>
+      <strong>${data.text}</strong>
+      <small>${data.unsafe ? "PRIVATE" : data.category.toUpperCase()}</small>
     `;
 
     layer.appendChild(element);
 
-    const settings = getSettings();
-
-    let duration = settings.pieceDuration;
-
-    if (selectedControlMode === "assist") {
-      duration *= 1.28;
-    }
-
     const piece = {
       element,
-      route,
+      lane,
       data,
-      progress: 0,
-      duration,
-      createdAt: performance.now(),
+      x: data.fixedX ?? -12,
       removed: false,
-      selected: false,
-      routed: false
+      tutorial: Boolean(data.tutorial),
+      lastTimestamp: performance.now()
     };
 
     activePieces.push(piece);
 
-    element.addEventListener("click", () => {
-      selectFactoryPiece(piece);
-    });
+    updatePiecePosition(piece);
 
-    requestPieceAnimation();
+    if (!piece.tutorial) {
+      requestPieceAnimation();
+    }
+
+    return piece;
   }
 
-
-  /* =========================================================
-     PIECE MOVEMENT
-  ========================================================= */
-
   function requestPieceAnimation() {
-    if (animationFrameId) {
+    if (pieceAnimationFrame) {
       return;
     }
 
-    animationFrameId =
-      window.requestAnimationFrame(
-        animateFactoryPieces
-      );
+    pieceAnimationFrame = window.requestAnimationFrame(animatePieces);
   }
 
-  function animateFactoryPieces(timestamp) {
-    animationFrameId = null;
+  function animatePieces(timestamp) {
+    pieceAnimationFrame = null;
 
     if (!gameActive) {
       return;
     }
 
     activePieces.forEach((piece) => {
-      if (piece.removed) {
+      if (piece.removed || piece.tutorial) {
         return;
       }
 
-      if (
-        pausedForOverlay ||
-        factoryJamActive
-      ) {
-        piece.createdAt = timestamp;
-        return;
-      }
+      const delta = timestamp - piece.lastTimestamp;
+      piece.lastTimestamp = timestamp;
 
-      const elapsed =
-        timestamp - piece.createdAt;
+      if (!paused && orderActive) {
+        const speedFactor = timeFreezeActive
+          ? getSettings().freezeSpeed
+          : 1;
 
-      piece.createdAt = timestamp;
+        piece.x +=
+          (delta / getSettings().pieceDuration) *
+          124 *
+          speedFactor;
 
-      piece.progress +=
-        elapsed / piece.duration;
+        updatePiecePosition(piece);
 
-      const x =
-        piece.progress * 112 - 10;
-
-      piece.element.style.left =
-        `${x}%`;
-
-      if (piece.progress >= 1) {
-        handlePieceMissed(piece);
+        if (piece.x >= 108) {
+          handleMissedPiece(piece);
+        }
       }
     });
 
-    activePieces = activePieces.filter(
-      (piece) => !piece.removed
-    );
+    activePieces = activePieces.filter((piece) => !piece.removed);
 
-    if (activePieces.length > 0) {
+    if (activePieces.length) {
       requestPieceAnimation();
     }
   }
 
-  function handlePieceMissed(piece) {
-    if (piece.removed) {
-      return;
-    }
-
-    if (piece.data.unsafe) {
-      damageFactory(
-        "Private clue reached the end!",
-        piece.data.reason
-      );
-    } else {
-      breakCombo();
-
-      showFeedback({
-        correct: false,
-        icon: "📦",
-        title: "Useful piece missed",
-        message:
-          `${piece.data.text} rolled past the factory controls.`,
-        points: "+0"
-      });
-    }
-
-    removePiece(piece);
+  function updatePiecePosition(piece) {
+    piece.element.style.left = `${piece.x}%`;
   }
 
   function removePiece(piece) {
@@ -1085,13 +1124,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     piece.removed = true;
     piece.element.remove();
-
-    if (selectedPiece === piece) {
-      selectedPiece = null;
-    }
   }
 
-  function clearAllPieces() {
+  function clearPieces() {
     activePieces.forEach((piece) => {
       piece.removed = true;
       piece.element.remove();
@@ -1099,705 +1134,881 @@ document.addEventListener("DOMContentLoaded", () => {
 
     activePieces = [];
 
-    Object.values(routeElements).forEach(
-      (route) => {
-        if (route.layer) {
-          route.layer.innerHTML = "";
-        }
+    Object.values(laneElements).forEach((lane) => {
+      if (lane.layer) {
+        lane.layer.innerHTML = "";
       }
-    );
+    });
   }
 
+  function handleMissedPiece(piece) {
+    if (piece.data.unsafe) {
+      damageFactory(
+        "Private clue escaped!",
+        piece.data.reason
+      );
+    } else {
+      combo = 0;
+
+      showFeedback({
+        correct: false,
+        icon: "📦",
+        title: "Piece missed",
+        message: `${piece.data.text} rolled off the line.`,
+        points: "+0"
+      });
+    }
+
+    removePiece(piece);
+  }
 
   /* =========================================================
-     PIECE SELECTION AND ROUTING
+     PLAYER MOVEMENT
   ========================================================= */
 
-  function selectFactoryPiece(piece) {
-    if (
-      !orderActive ||
-      piece.removed ||
-      pausedForOverlay
-    ) {
+  function startWorkerLoop() {
+    lastWorkerTimestamp = performance.now();
+
+    workerAnimationFrame =
+      window.requestAnimationFrame(workerLoop);
+  }
+
+  function workerLoop(timestamp) {
+    if (!gameActive) {
       return;
     }
 
-    activePieces.forEach((item) => {
-      item.selected = false;
-      item.element.classList.remove(
-        "selected-piece"
-      );
-    });
+    const delta = Math.min(34, timestamp - lastWorkerTimestamp);
+    lastWorkerTimestamp = timestamp;
 
-    piece.selected = true;
-    piece.element.classList.add(
-      "selected-piece"
+    if (!paused) {
+      const speed =
+        selectedControlMode === "assist"
+          ? 0.045
+          : 0.038;
+
+      if (workerMovingLeft) {
+        workerX -= speed * delta;
+      }
+
+      if (workerMovingRight) {
+        workerX += speed * delta;
+      }
+
+      workerX = Math.max(2, Math.min(98, workerX));
+
+      timeFreezeCharge = Math.min(
+        100,
+        timeFreezeCharge + delta * 0.0038
+      );
+
+      updateWorker();
+      updateHUD();
+
+      if (tutorialActive) {
+        checkTutorialMovement();
+      }
+    }
+
+    workerAnimationFrame =
+      window.requestAnimationFrame(workerLoop);
+  }
+
+  function updateWorker() {
+    if (!factoryWorker) {
+      return;
+    }
+
+    factoryWorker.style.left = `${workerX}%`;
+    factoryWorker.style.top = `${workerY}%`;
+
+    factoryWorker.classList.toggle(
+      "worker-moving",
+      workerMovingLeft || workerMovingRight
     );
 
-    selectedPiece = piece;
+    factoryWorker.classList.toggle(
+      "worker-facing-left",
+      workerMovingLeft
+    );
+  }
+
+  function moveVertical(direction) {
+    const levels = [
+      floorLevels.laneOne,
+      floorLevels.laneTwo,
+      floorLevels.laneThree,
+      floorLevels.ground
+    ];
+
+    const currentIndex = levels.reduce(
+      (closest, value, index) =>
+        Math.abs(value - workerY) <
+        Math.abs(levels[closest] - workerY)
+          ? index
+          : closest,
+      0
+    );
+
+    const nextIndex =
+      direction === "up"
+        ? Math.max(0, currentIndex - 1)
+        : Math.min(levels.length - 1, currentIndex + 1);
+
+    const laneCount = getLaneCountForOrder(currentOrderIndex);
+
+    const minimumIndex =
+      laneCount === 1
+        ? 0
+        : laneCount === 2
+          ? 0
+          : 0;
+
+    workerY = levels[Math.max(minimumIndex, nextIndex)];
+
+    factoryWorker?.classList.add("worker-climbing");
+
+    managedTimeout(() => {
+      factoryWorker?.classList.remove("worker-climbing");
+    }, 300);
+
+    updateWorker();
+  }
+
+  /* =========================================================
+     INTERACTION
+  ========================================================= */
+
+  function useNearbyObject() {
+    if (!gameActive || paused) {
+      return;
+    }
+
+    if (carriedItem) {
+      const station = getNearbyStation();
+
+      if (station) {
+        placeCarriedItem(station);
+        return;
+      }
+    }
+
+    const nearbyPiece = getNearbyPiece();
+
+    if (nearbyPiece) {
+      pickUpPiece(nearbyPiece);
+      return;
+    }
+
+    const shelfPiece = getNearbyShelfPiece();
+
+    if (shelfPiece) {
+      pickUpShelfPiece(shelfPiece.index);
+      return;
+    }
+
+    const station = getNearbyStation();
+
+    if (station) {
+      useEmptyHandStation(station);
+      return;
+    }
 
     showFeedback({
-      correct: true,
-      icon: piece.data.unsafe ? "⚠️" : "✨",
-      title: `${piece.data.text} selected`,
-      message:
-        piece.data.unsafe
-          ? "Send it to the Nope Chute."
-          : "Route it into the mixer, save it, or let it pass.",
-      points: ""
+      correct: false,
+      icon: "✋",
+      title: "Nothing close enough",
+      message: "Move closer to a piece or machine and press E again.",
+      points: "+0"
     });
   }
 
-  function routeSelectedPiece(route) {
-    if (
-      !selectedPiece ||
-      selectedPiece.removed ||
-      selectedPiece.route !== route
-    ) {
-      showFeedback({
-        correct: false,
-        icon: "↘",
-        title: "Nothing selected on this route",
-        message:
-          "Choose a moving piece on this conveyor first.",
-        points: "+0"
-      });
-
-      return;
-    }
-
-    const piece = selectedPiece;
-
-    if (piece.data.unsafe) {
-      sendPieceToNopeChute(piece);
-      return;
-    }
-
-    sendPieceToMixer(piece);
-  }
-
-  function sendPieceToMixer(piece) {
-    const neededIndex =
-      currentOrder.categories.findIndex(
-        (category, index) =>
-          category === piece.data.category &&
-          !mixerPieces[index]
-      );
-
-    if (neededIndex === -1) {
-      breakCombo();
-      mistakes += 1;
-
-      showFeedback({
-        correct: false,
-        icon: "🔀",
-        title: "Wrong ingredient",
-        message:
-          `${piece.data.text} does not fit an empty slot in this order.`,
-        points: "+0"
-      });
-
-      animateRejectedPiece(piece);
-      return;
-    }
-
-    mixerPieces[neededIndex] = {
-      text: piece.data.text,
-      category: piece.data.category
+  function getWorkerLane() {
+    const distances = {
+      one: Math.abs(workerY - floorLevels.laneOne),
+      two: Math.abs(workerY - floorLevels.laneTwo),
+      three: Math.abs(workerY - floorLevels.laneThree)
     };
 
-    combo += 1;
-    bestCombo = Math.max(
-      bestCombo,
-      combo
-    );
-
-    correctActions += 1;
-
-    const earned =
-      10 *
-      getSettings().scoreMultiplier +
-      Math.min(30, combo * 2);
-
-    score += earned;
-
-    piece.element.classList.add(
-      "piece-routed-success"
-    );
-
-    createManagedTimeout(() => {
-      removePiece(piece);
-    }, 420);
-
-    selectedPiece = null;
-
-    updateMixer();
-
-    showFeedback({
-      correct: true,
-      icon: "⚙️",
-      title: "Piece routed!",
-      message:
-        `${piece.data.text} was added to the mixer.`,
-      points: `+${earned}`
-    });
-
-    showCombo();
-    updateHUD();
+    return Object.entries(distances).sort(
+      (a, b) => a[1] - b[1]
+    )[0][0];
   }
 
-  function sendPieceToNopeChute(piece) {
-    if (!piece.data.unsafe) {
-      breakCombo();
-      mistakes += 1;
+  function getNearbyPiece() {
+    const lane = getWorkerLane();
 
-      showFeedback({
-        correct: false,
-        icon: "🚫",
-        title: "That piece was safe",
-        message:
-          `${piece.data.text} was a creative word that could have been used.`,
-        points: "+0"
-      });
+    const range =
+      selectedControlMode === "assist"
+        ? 18
+        : 12;
 
-      animateRejectedPiece(piece);
+    return activePieces
+      .filter(
+        (piece) =>
+          !piece.removed &&
+          piece.lane === lane &&
+          Math.abs(piece.x - workerX) <= range
+      )
+      .sort(
+        (a, b) =>
+          Math.abs(a.x - workerX) -
+          Math.abs(b.x - workerX)
+      )[0];
+  }
+
+  function pickUpPiece(piece) {
+    if (carriedItem) {
       return;
     }
 
+    carriedItem = {
+      ...piece.data,
+      source: "belt"
+    };
+
+    removePiece(piece);
+    updateCarriedItem();
+
     combo += 1;
-    bestCombo = Math.max(
-      bestCombo,
-      combo
+    bestCombo = Math.max(bestCombo, combo);
+    correctActions += 1;
+
+    showFeedback({
+      correct: true,
+      icon: carriedItem.unsafe ? "⚠️" : "✨",
+      title: `${carriedItem.text} picked up!`,
+      message: carriedItem.unsafe
+        ? "Carry it to the Nope Chute."
+        : "Carry it to the mixer or Parts Shelf.",
+      points: "+5"
+    });
+
+    score += 5 * getSettings().scoreMultiplier;
+    updateHUD();
+
+    if (tutorialActive) {
+      if (
+        tutorialStep === 1 &&
+        carriedItem.text === "Wacky"
+      ) {
+        advanceTutorial();
+      }
+
+      if (
+        tutorialStep === 3 &&
+        carriedItem.text === "Home Address"
+      ) {
+        setText(
+          "tutorialStepMessage",
+          "Great. Now climb down and carry it to the Nope Chute."
+        );
+      }
+    }
+  }
+
+  function updateCarriedItem() {
+    if (!carriedItem) {
+      hide(carriedItemBubble);
+      return;
+    }
+
+    setText("carriedItemText", carriedItem.text);
+    setText(
+      "carriedItemIcon",
+      carriedItem.package
+        ? "📦"
+        : carriedItem.unsafe
+          ? "⚠️"
+          : "✨"
     );
 
-    correctActions += 1;
+    show(carriedItemBubble);
+  }
+
+  function getNearbyStation() {
+    if (Math.abs(workerY - floorLevels.ground) > 12) {
+      return null;
+    }
+
+    const range =
+      selectedControlMode === "assist"
+        ? 14
+        : 10;
+
+    return Object.entries(stationPositions)
+      .filter(([, x]) => Math.abs(workerX - x) <= range)
+      .sort(
+        (a, b) =>
+          Math.abs(workerX - a[1]) -
+          Math.abs(workerX - b[1])
+      )[0]?.[0] || null;
+  }
+
+  function placeCarriedItem(station) {
+    switch (station) {
+      case "nope":
+        placeInNopeChute();
+        break;
+
+      case "parts":
+        placeOnShelf();
+        break;
+
+      case "mixer":
+        placeInMixer();
+        break;
+
+      case "scanner":
+        placeInScanner();
+        break;
+
+      case "shipping":
+        placeInShipping();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  function placeInNopeChute() {
+    if (!carriedItem) {
+      return;
+    }
+
+    if (!carriedItem.unsafe) {
+      mistake(
+        "That piece was safe",
+        `${carriedItem.text} could have been used in a username.`
+      );
+      return;
+    }
+
     privateCluesBlocked += 1;
     orderPrivateBlocked += 1;
+    correctActions += 1;
 
-    const earned =
-      15 *
-      getSettings().scoreMultiplier +
-      Math.min(30, combo * 2);
+    score += 20 * getSettings().scoreMultiplier;
+    combo += 1;
+    bestCombo = Math.max(bestCombo, combo);
 
-    score += earned;
+    const removedText = carriedItem.text;
 
-    piece.element.classList.add(
-      "piece-nope-drop"
-    );
-
-    createManagedTimeout(() => {
-      removePiece(piece);
-    }, 430);
-
-    selectedPiece = null;
+    carriedItem = null;
+    updateCarriedItem();
 
     showFeedback({
       correct: true,
       icon: "🚫",
       title: "Private clue blocked!",
-      message: piece.data.reason,
-      points: `+${earned}`
+      message: `${removedText} went into the Nope Chute.`,
+      points: "+20"
     });
 
-    showCombo();
+    if (
+      tutorialActive &&
+      tutorialStep === 3
+    ) {
+      advanceTutorial();
+    }
+
     updateHUD();
   }
 
-  function animateRejectedPiece(piece) {
-    piece.element.classList.add(
-      "piece-rejected"
-    );
+  function placeOnShelf() {
+    if (!carriedItem) {
+      return;
+    }
 
-    createManagedTimeout(() => {
-      piece.element.classList.remove(
-        "piece-rejected"
+    if (carriedItem.unsafe || carriedItem.package) {
+      mistake(
+        "That cannot go on the shelf",
+        "The Parts Shelf only stores creative username pieces."
       );
+      return;
+    }
 
-      piece.selected = false;
-      piece.element.classList.remove(
-        "selected-piece"
-      );
+    const emptyIndex = shelfPieces.findIndex((piece) => !piece);
 
-      selectedPiece = null;
-    }, 450);
+    if (emptyIndex === -1) {
+      showFeedback({
+        correct: false,
+        icon: "🧰",
+        title: "Shelf full",
+        message: "Pick up a saved piece before storing another one.",
+        points: "+0"
+      });
+      return;
+    }
+
+    shelfPieces[emptyIndex] = carriedItem;
+
+    const savedText = carriedItem.text;
+
+    carriedItem = null;
+    updateCarriedItem();
+    updateShelf();
+
+    showFeedback({
+      correct: true,
+      icon: "🧰",
+      title: "Piece saved!",
+      message: `${savedText} is visible on the Parts Shelf.`,
+      points: "+5"
+    });
+
+    score += 5 * getSettings().scoreMultiplier;
+    updateHUD();
   }
 
+  function updateShelf() {
+    shelfSlotButtons.forEach((button, index) => {
+      const piece = shelfPieces[index];
 
-  /* =========================================================
-     MIXER
-  ========================================================= */
+      button.disabled = !piece;
+      button.textContent = piece ? piece.text : "Empty";
+      button.classList.toggle("filled-shelf-slot", Boolean(piece));
+    });
+  }
+
+  function getNearbyShelfPiece() {
+    if (
+      Math.abs(workerY - floorLevels.ground) > 12 ||
+      Math.abs(workerX - stationPositions.parts) > 12 ||
+      carriedItem
+    ) {
+      return null;
+    }
+
+    const index = shelfPieces.findIndex(Boolean);
+
+    return index >= 0
+      ? {
+          index,
+          piece: shelfPieces[index]
+        }
+      : null;
+  }
+
+  function pickUpShelfPiece(index) {
+    if (carriedItem || !shelfPieces[index]) {
+      return;
+    }
+
+    carriedItem = shelfPieces[index];
+    shelfPieces[index] = null;
+
+    updateCarriedItem();
+    updateShelf();
+
+    showFeedback({
+      correct: true,
+      icon: "🧰",
+      title: "Saved part retrieved!",
+      message: `You are carrying ${carriedItem.text}.`,
+      points: "+0"
+    });
+  }
+
+  function placeInMixer() {
+    if (!carriedItem) {
+      return;
+    }
+
+    if (carriedItem.unsafe || carriedItem.package) {
+      mistake(
+        "Mixer rejected the item",
+        "Only creative username pieces belong in the mixer."
+      );
+      return;
+    }
+
+    const matchingIndex = currentOrder.categories.findIndex(
+      (category, index) =>
+        category === carriedItem.category &&
+        !mixerPieces[index]
+    );
+
+    if (matchingIndex === -1) {
+      mistake(
+        "That ingredient does not fit",
+        `${carriedItem.text} does not match an empty recipe slot.`
+      );
+      return;
+    }
+
+    mixerPieces[matchingIndex] = carriedItem;
+
+    const placedText = carriedItem.text;
+
+    carriedItem = null;
+    updateCarriedItem();
+    updateMixer();
+
+    combo += 1;
+    bestCombo = Math.max(bestCombo, combo);
+    correctActions += 1;
+
+    score += 15 * getSettings().scoreMultiplier;
+
+    showFeedback({
+      correct: true,
+      icon: "⚙️",
+      title: "Mixer slot filled!",
+      message: `${placedText} was placed into the recipe.`,
+      points: "+15"
+    });
+
+    if (
+      tutorialActive &&
+      tutorialStep === 2 &&
+      placedText === "Wacky"
+    ) {
+      advanceTutorial();
+    }
+
+    if (
+      tutorialActive &&
+      tutorialStep === 4 &&
+      mixerPieces.every(Boolean)
+    ) {
+      advanceTutorial();
+    }
+
+    updateHUD();
+  }
 
   function updateMixer() {
-    const slotIds = [
+    const ids = [
       "mixerSlotOne",
       "mixerSlotTwo",
       "mixerSlotThree"
     ];
 
     mixerPieces.forEach((piece, index) => {
-      setText(
-        slotIds[index],
-        piece ? piece.text : "?"
-      );
-
-      byId(slotIds[index])?.classList.toggle(
+      setText(ids[index], piece ? piece.text : "?");
+      byId(ids[index])?.classList.toggle(
         "filled-slot",
         Boolean(piece)
       );
     });
 
-    const complete =
-      mixerPieces.every(Boolean);
-
-    mixUsernameButton.disabled = !complete;
-
-    if (complete) {
-      setText(
-        "mixerUsername",
-        mixerPieces
-          .map((piece) => piece.text)
-          .join("")
-      );
+    if (mixedPackage) {
+      setText("mixerStatus", mixedPackage.text);
+    } else if (mixerPieces.every(Boolean)) {
+      setText("mixerStatus", "Ready to mix — press E");
     } else {
-      setText(
-        "mixerUsername",
-        "Waiting for pieces..."
-      );
+      setText("mixerStatus", "Bring three pieces");
     }
   }
 
-  function resetMixer() {
-    const slotIds = [
-      "mixerSlotOne",
-      "mixerSlotTwo",
-      "mixerSlotThree"
-    ];
+  function useEmptyHandStation(station) {
+    switch (station) {
+      case "mixer":
+        mixUsername();
+        break;
 
-    slotIds.forEach((id) => {
-      setText(id, "?");
+      case "scanner":
+        collectApprovedPackage();
+        break;
 
-      byId(id)?.classList.remove(
-        "filled-slot"
-      );
-    });
-
-    setText(
-      "mixerUsername",
-      "Waiting for pieces..."
-    );
-
-    setText(
-      "scannerUsername",
-      "No package"
-    );
-
-    setText(
-      "scannerMessage",
-      "Finish mixing a username first."
-    );
-
-    mixUsernameButton.disabled = true;
-    scanUsernameButton.disabled = true;
-    shipItBin.disabled = true;
-
-    byId("usernameMixer")?.classList.remove(
-      "mixer-running",
-      "mixer-complete"
-    );
-
-    byId("factoryScanner")?.classList.remove(
-      "scanner-running",
-      "scanner-approved",
-      "scanner-rejected"
-    );
+      default:
+        break;
+    }
   }
 
   function mixUsername() {
-    if (
-      !mixerPieces.every(Boolean) ||
-      mixedUsername
-    ) {
+    if (carriedItem) {
       return;
     }
 
-    mixedUsername =
-      mixerPieces
-        .map((piece) => piece.text)
-        .join("");
+    if (!mixerPieces.every(Boolean)) {
+      showFeedback({
+        correct: false,
+        icon: "⚙️",
+        title: "Mixer not ready",
+        message: "Fill all three recipe slots first.",
+        points: "+0"
+      });
+      return;
+    }
 
-    const mixer =
-      byId("usernameMixer");
+    if (mixedPackage) {
+      carriedItem = mixedPackage;
+      mixedPackage = null;
 
-    mixer?.classList.add(
-      "mixer-running"
-    );
-
-    mixUsernameButton.disabled = true;
-
-    setText(
-      "mixerUsername",
-      "Mixing..."
-    );
-
-    createManagedTimeout(() => {
-      mixer?.classList.remove(
-        "mixer-running"
-      );
-
-      mixer?.classList.add(
-        "mixer-complete"
-      );
-
-      setText(
-        "mixerUsername",
-        mixedUsername
-      );
-
-      setText(
-        "scannerUsername",
-        mixedUsername
-      );
-
-      setText(
-        "scannerMessage",
-        "Package ready for final inspection."
-      );
-
-      scanUsernameButton.disabled = false;
+      updateCarriedItem();
+      updateMixer();
 
       showFeedback({
         correct: true,
-        icon: "⚙️",
-        title: "Username mixed!",
-        message:
-          `${mixedUsername} is ready for inspection.`,
-        points: "+20"
+        icon: "📦",
+        title: "Package collected!",
+        message: "Carry it to Final Inspection.",
+        points: "+0"
       });
 
-      score +=
-        20 *
-        getSettings().scoreMultiplier;
-
-      updateHUD();
-    }, 1350);
-  }
-
-
-  /* =========================================================
-     SCANNER
-  ========================================================= */
-
-  function scanUsername() {
-    if (
-      !mixedUsername ||
-      packageApproved
-    ) {
       return;
     }
 
-    const scanner =
-      byId("factoryScanner");
+    mixerStation?.classList.add("mixer-running");
 
-    scanner?.classList.remove(
-      "scanner-approved",
-      "scanner-rejected"
-    );
+    setText("mixerStatus", "Mixing...");
 
-    scanner?.classList.add(
-      "scanner-running"
-    );
+    managedTimeout(() => {
+      mixerStation?.classList.remove("mixer-running");
 
-    scanUsernameButton.disabled = true;
+      const username = mixerPieces
+        .map((piece) => piece.text)
+        .join("");
 
-    setText(
-      "scannerMessage",
-      "Checking privacy and recipe..."
-    );
+      mixedPackage = {
+        text: username,
+        package: true,
+        approved: false
+      };
 
-    createManagedTimeout(() => {
-      scanner?.classList.remove(
-        "scanner-running"
-      );
+      mixerPieces = [null, null, null];
 
-      const correctRecipe =
-        mixerPieces.every(
-          (piece, index) =>
-            piece.category ===
-            currentOrder.categories[index]
-        );
+      score += 25 * getSettings().scoreMultiplier;
+      correctActions += 1;
 
-      const containsPrivate =
-        unsafePieces.some((unsafe) =>
-          mixedUsername
-            .toLowerCase()
-            .includes(
-              unsafe.text.toLowerCase()
-            )
-        );
+      updateMixer();
 
-      packageApproved =
-        correctRecipe &&
-        !containsPrivate;
+      showFeedback({
+        correct: true,
+        icon: "📦",
+        title: `${username} created!`,
+        message: "Press E again to pick up the package.",
+        points: "+25"
+      });
 
-      if (packageApproved) {
-        scannedUsername = mixedUsername;
-
-        scanner?.classList.add(
-          "scanner-approved"
-        );
-
-        setText(
-          "scannerMessage",
-          "APPROVED! Safe, creative, and ready to ship."
-        );
-
-        shipItBin.disabled = false;
-
-        const earned =
-          30 *
-          getSettings().scoreMultiplier;
-
-        score += earned;
-        correctActions += 1;
-
-        showFeedback({
-          correct: true,
-          icon: "✅",
-          title: "Package approved!",
-          message:
-            "The username matches the order and contains no private clues.",
-          points: `+${earned}`
-        });
-      } else {
-        scanner?.classList.add(
-          "scanner-rejected"
-        );
-
-        setText(
-          "scannerMessage",
-          "REJECTED! This package does not match the order."
-        );
-
-        mistakes += 1;
-        breakCombo();
-
-        showFeedback({
-          correct: false,
-          icon: "❌",
-          title: "Inspection failed",
-          message:
-            "Return the pieces and rebuild the order.",
-          points: "+0"
-        });
-
-        createManagedTimeout(() => {
-          mixerPieces = [null, null, null];
-          mixedUsername = "";
-          scannedUsername = "";
-          packageApproved = false;
-
-          resetMixer();
-        }, 1200);
+      if (
+        tutorialActive &&
+        tutorialStep === 5
+      ) {
+        advanceTutorial();
       }
 
       updateHUD();
-    }, 1450);
+    }, 1000);
   }
 
-
-  /* =========================================================
-     BINS
-  ========================================================= */
-
-  function shipUsername() {
-    if (
-      !packageApproved ||
-      !scannedUsername
-    ) {
+  function placeInScanner() {
+    if (!carriedItem?.package) {
+      mistake(
+        "Scanner needs a package",
+        "Only a mixed username package can be inspected."
+      );
       return;
     }
 
-    orderActive = false;
-    pausedForOverlay = true;
+    const packageToScan = carriedItem;
 
-    stopLoops();
-    clearAllPieces();
+    carriedItem = null;
+    updateCarriedItem();
 
+    scannerStation?.classList.add("scanner-running");
+
+    setText("scannerPackage", packageToScan.text);
+    setText("scannerStatus", "Inspecting package...");
+
+    managedTimeout(() => {
+      scannerStation?.classList.remove("scanner-running");
+      scannerStation?.classList.add("scanner-approved");
+
+      approvedPackage = {
+        ...packageToScan,
+        approved: true
+      };
+
+      setText("scannerStatus", "APPROVED — press E to collect");
+
+      score += 30 * getSettings().scoreMultiplier;
+      correctActions += 1;
+
+      showFeedback({
+        correct: true,
+        icon: "✅",
+        title: "Package approved!",
+        message: "Press E at the scanner to collect it.",
+        points: "+30"
+      });
+
+      if (
+        tutorialActive &&
+        tutorialStep === 6
+      ) {
+        advanceTutorial();
+      }
+
+      updateHUD();
+    }, 1200);
+  }
+
+  function collectApprovedPackage() {
+    if (carriedItem || !approvedPackage) {
+      return;
+    }
+
+    carriedItem = approvedPackage;
+    approvedPackage = null;
+
+    setText("scannerPackage", "No package");
+    setText("scannerStatus", "Ready for inspection");
+
+    scannerStation?.classList.remove("scanner-approved");
+
+    updateCarriedItem();
+
+    showFeedback({
+      correct: true,
+      icon: "📦",
+      title: "Approved package collected!",
+      message: "Carry it to Ship It.",
+      points: "+0"
+    });
+  }
+
+  function placeInShipping() {
+    if (!carriedItem?.package || !carriedItem.approved) {
+      mistake(
+        "Shipping rejected the package",
+        "The username must pass Final Inspection first."
+      );
+      return;
+    }
+
+    const username = carriedItem.text;
+
+    carriedItem = null;
+    updateCarriedItem();
+
+    shippedUsernames.push(username);
     ordersShipped += 1;
 
-    const patienceBonus =
-      Math.round(orderPatience);
+    orderActive = false;
+
+    stopOrderLoops();
+    clearPieces();
 
     const orderScore =
-      50 *
-      getSettings().scoreMultiplier +
-      patienceBonus;
+      Math.round(75 * getSettings().scoreMultiplier);
 
     score += orderScore;
 
-    shippedUsernames.push(
-      scannedUsername
-    );
-
-    setText(
-      "orderCompleteHeading",
-      scannedUsername
-    );
-
+    setText("orderCompleteHeading", username);
     setText(
       "orderCompleteMessage",
       "Safe, creative, and ready for delivery!"
     );
+    setText("orderCompleteScore", orderScore);
+    setText("orderCompleteCombo", `${bestCombo}x`);
+    setText("orderPrivateBlocked", orderPrivateBlocked);
 
-    setText(
-      "orderCompleteScore",
-      orderScore
-    );
+    show(orderCompleteOverlay);
 
-    setText(
-      "orderCreativity",
-      getCreativityLabel(scannedUsername)
-    );
-
-    setText(
-      "orderPrivateBlocked",
-      orderPrivateBlocked
-    );
+    if (
+      tutorialActive &&
+      tutorialStep === 7
+    ) {
+      hide(orderCompleteOverlay);
+      completeTutorial();
+    }
 
     updateHUD();
-
-    showElement(orderCompleteOverlay);
   }
 
-  function saveSelectedPart() {
+  /* =========================================================
+     TIME FREEZE
+  ========================================================= */
+
+  function activateTimeFreeze() {
     if (
-      !selectedPiece ||
-      selectedPiece.removed
+      !gameActive ||
+      paused ||
+      timeFreezeActive ||
+      timeFreezeCharge < 100
     ) {
-      showFeedback({
-        correct: false,
-        icon: "🧰",
-        title: "No piece selected",
-        message:
-          "Choose a creative piece before using the Parts Box.",
-        points: "+0"
-      });
-
       return;
     }
 
-    if (selectedPiece.data.unsafe) {
-      showFeedback({
-        correct: false,
-        icon: "⚠️",
-        title: "Do not save private clues",
-        message:
-          "Private information belongs in the Nope Chute.",
-        points: "+0"
-      });
+    timeFreezeCharge = 0;
+    timeFreezeActive = true;
 
-      return;
-    }
+    handleFactory?.classList.add("time-freeze-active");
 
-    savedPart = {
-      text: selectedPiece.data.text,
-      category:
-        selectedPiece.data.category
-    };
+    show(timeFreezeEffect);
 
-    setText(
-      "partsBin",
-      "PART SAVED"
-    );
-
-    const piece = selectedPiece;
-
-    piece.element.classList.add(
-      "piece-saved"
-    );
-
-    createManagedTimeout(() => {
-      removePiece(piece);
-    }, 420);
-
-    selectedPiece = null;
+    managedTimeout(() => {
+      hide(timeFreezeEffect);
+    }, 1000);
 
     showFeedback({
       correct: true,
-      icon: "🧰",
-      title: "Part saved!",
-      message:
-        `${savedPart.text} is stored for the next matching slot.`,
-      points: "+5"
+      icon: "❄️",
+      title: "Time Freeze activated!",
+      message: "Every conveyor belt has slowed down.",
+      points: "+0"
     });
 
-    score +=
-      5 *
-      getSettings().scoreMultiplier;
+    managedTimeout(() => {
+      timeFreezeActive = false;
+      handleFactory?.classList.remove("time-freeze-active");
+    }, getSettings().freezeDuration);
 
     updateHUD();
   }
 
-  function useNopeChute() {
-    if (
-      !selectedPiece ||
-      selectedPiece.removed
-    ) {
-      showFeedback({
-        correct: false,
-        icon: "🚫",
-        title: "No piece selected",
-        message:
-          "Select a private clue before using the Nope Chute.",
-        points: "+0"
-      });
+  /* =========================================================
+     TIMER AND DAMAGE
+  ========================================================= */
 
+  function startTimer() {
+    window.clearInterval(timerInterval);
+
+    if (timeRemaining === null) {
       return;
     }
 
-    sendPieceToNopeChute(
-      selectedPiece
-    );
+    timerInterval = window.setInterval(() => {
+      if (
+        !gameActive ||
+        !orderActive ||
+        paused ||
+        tutorialActive
+      ) {
+        return;
+      }
+
+      timeRemaining -= 1;
+
+      updateHUD();
+
+      if (timeRemaining <= 0) {
+        damageFactory(
+          "Order expired!",
+          "The order waited too long."
+        );
+
+        if (health > 0) {
+          continueAfterFailedOrder();
+        }
+      }
+    }, 1000);
   }
-
-  function getCreativityLabel(username) {
-    const length = username.length;
-
-    if (length >= 20) {
-      return "Legendary";
-    }
-
-    if (length >= 16) {
-      return "Awesome";
-    }
-
-    if (length >= 12) {
-      return "Great";
-    }
-
-    return "Good";
-  }
-
-
-  /* =========================================================
-     FACTORY HEALTH AND FAILURE
-  ========================================================= */
 
   function damageFactory(title, message) {
-    factoryHealth -= 1;
+    health -= 1;
     mistakes += 1;
+    combo = 0;
 
-    breakCombo();
+    handleFactory?.classList.add("factory-damaged");
 
-    handleFactory?.classList.add(
-      "factory-damaged"
-    );
-
-    createManagedTimeout(() => {
-      handleFactory?.classList.remove(
-        "factory-damaged"
-      );
-    }, 430);
+    managedTimeout(() => {
+      handleFactory?.classList.remove("factory-damaged");
+    }, 450);
 
     showFeedback({
       correct: false,
@@ -1809,187 +2020,110 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateHUD();
 
-    if (factoryHealth <= 0) {
+    if (health <= 0) {
       finishGame(false);
     }
   }
 
-  function breakCombo() {
+  function mistake(title, message) {
+    mistakes += 1;
     combo = 0;
-    updateHUD();
-  }
-
-
-  /* =========================================================
-     FACTORY JAMS
-  ========================================================= */
-
-  function maybeTriggerJam() {
-    if (
-      factoryJamActive ||
-      Math.random() >=
-        getSettings().jamChance
-    ) {
-      return;
-    }
-
-    factoryJamActive = true;
-
-    jammedRoute = chooseRandom([
-      "top",
-      "middle",
-      "bottom"
-    ]);
-
-    const route =
-      routeElements[jammedRoute];
-
-    route.switch?.classList.add(
-      "jammed-switch"
-    );
-
-    route.gate?.classList.add(
-      "jammed-gate"
-    );
-
-    showElement(byId("factoryJamAlert"));
 
     showFeedback({
       correct: false,
-      icon: "⚠️",
-      title: "Factory jam!",
-      message:
-        `Repair the ${jammedRoute} route switch before production continues.`,
-      points: ""
+      icon: "❌",
+      title,
+      message,
+      points: "+0"
     });
 
-    createManagedTimeout(() => {
-      if (factoryJamActive) {
-        damageFactory(
-          "Jam not repaired",
-          "The factory lost health while the conveyor was blocked."
-        );
-
-        repairJam(false);
-      }
-    }, selectedHeat === "hot" ? 5000 : 7000);
+    updateHUD();
   }
 
-  function repairJam(reward = true) {
-    if (!factoryJamActive) {
+  function continueAfterFailedOrder() {
+    stopOrderLoops();
+    clearPieces();
+    resetOrderMachines();
+
+    currentOrderIndex += 1;
+
+    if (currentOrderIndex >= getSettings().totalOrders) {
+      finishGame(false);
+    } else {
+      beginNormalOrder(currentOrderIndex);
+    }
+  }
+
+  /* =========================================================
+     ORDER CONTINUATION
+  ========================================================= */
+
+  function continueOrder() {
+    hide(orderCompleteOverlay);
+
+    currentOrderIndex += 1;
+
+    if (
+      ordersShipped >= getSettings().totalOrders ||
+      currentOrderIndex >= getSettings().totalOrders
+    ) {
+      finishGame(true);
       return;
     }
 
-    const route =
-      routeElements[jammedRoute];
-
-    route.switch?.classList.remove(
-      "jammed-switch"
-    );
-
-    route.gate?.classList.remove(
-      "jammed-gate"
-    );
-
-    hideElement(byId("factoryJamAlert"));
-
-    factoryJamActive = false;
-    jammedRoute = null;
-
-    if (reward) {
-      combo += 1;
-      bestCombo = Math.max(
-        bestCombo,
-        combo
-      );
-
-      correctActions += 1;
-
-      const earned =
-        25 *
-        getSettings().scoreMultiplier;
-
-      score += earned;
-
-      showFeedback({
-        correct: true,
-        icon: "🔧",
-        title: "Jam repaired!",
-        message:
-          "The conveyor routes are moving again.",
-        points: `+${earned}`
-      });
-
-      updateHUD();
-    }
-
-    requestPieceAnimation();
+    beginNormalOrder(currentOrderIndex);
   }
 
+  function resetOrderMachines() {
+    carriedItem = null;
+    mixerPieces = [null, null, null];
+    shelfPieces = [null, null, null];
+
+    mixedPackage = null;
+    approvedPackage = null;
+
+    updateCarriedItem();
+    updateMixer();
+    updateShelf();
+
+    setText("scannerPackage", "No package");
+    setText("scannerStatus", "Mix a username first");
+    setText("shippingStatus", "Waiting for approval");
+
+    scannerStation?.classList.remove(
+      "scanner-running",
+      "scanner-approved"
+    );
+  }
 
   /* =========================================================
-     TIMER
+     ANNOUNCEMENTS AND FEEDBACK
   ========================================================= */
 
-  function startTimer() {
-    window.clearInterval(timerInterval);
+  function showAnnouncement(
+    icon,
+    label,
+    title,
+    message,
+    callback
+  ) {
+    const announcement = byId("factoryAnnouncement");
 
-    timerInterval = window.setInterval(() => {
-      if (
-        !gameActive ||
-        !orderActive ||
-        pausedForOverlay
-      ) {
-        return;
+    setText("announcementIcon", icon);
+    setText("announcementLabel", label);
+    setText("announcementTitle", title);
+    setText("announcementMessage", message);
+
+    show(announcement);
+
+    managedTimeout(() => {
+      hide(announcement);
+
+      if (typeof callback === "function") {
+        callback();
       }
-
-      timeRemaining -= 1;
-
-      orderPatience =
-        Math.max(
-          0,
-          orderPatience -
-            100 / getSettings().orderTime
-        );
-
-      updateHUD();
-
-      if (
-        timeRemaining <= 0 ||
-        orderPatience <= 0
-      ) {
-        damageFactory(
-          "Order expired!",
-          "The order waited too long and left the factory."
-        );
-
-        if (factoryHealth > 0) {
-          currentOrderIndex += 1;
-
-          if (
-            currentOrderIndex >= totalOrders
-          ) {
-            finishGame(false);
-          } else {
-            startOrder(currentOrderIndex);
-          }
-        }
-      }
-    }, 1000);
+    }, 1700);
   }
-
-  function stopLoops() {
-    window.clearInterval(spawnInterval);
-    window.clearInterval(timerInterval);
-
-    spawnInterval = null;
-    timerInterval = null;
-  }
-
-
-  /* =========================================================
-     FEEDBACK AND COMBOS
-  ========================================================= */
 
   function showFeedback({
     correct,
@@ -1998,19 +2132,12 @@ document.addEventListener("DOMContentLoaded", () => {
     message,
     points
   }) {
-    const feedback =
-      byId("handleFeedback");
+    const feedback = byId("handleFeedback");
 
     setText("handleFeedbackIcon", icon);
     setText("handleFeedbackTitle", title);
-    setText(
-      "handleFeedbackMessage",
-      message
-    );
-    setText(
-      "handleFeedbackPoints",
-      points
-    );
+    setText("handleFeedbackMessage", message);
+    setText("handleFeedbackPoints", points);
 
     feedback?.classList.remove(
       "correct-feedback",
@@ -2023,384 +2150,304 @@ document.addEventListener("DOMContentLoaded", () => {
         : "wrong-feedback"
     );
 
-    showElement(feedback);
+    show(feedback);
 
-    createManagedTimeout(() => {
-      hideElement(feedback);
-    }, 2100);
+    managedTimeout(() => {
+      hide(feedback);
+    }, 1900);
   }
-
-  function showCombo() {
-    if (combo < 2) {
-      return;
-    }
-
-    let title = "NICE ROUTE!";
-
-    if (combo >= 15) {
-      title = "FACTORY LEGEND!";
-    } else if (combo >= 10) {
-      title = "MACHINE MAYHEM!";
-    } else if (combo >= 6) {
-      title = "ROUTE RUSH!";
-    } else if (combo >= 4) {
-      title = "BELT BOSS!";
-    }
-
-    setText("comboTitle", title);
-    setText(
-      "comboMultiplier",
-      `${combo}x Combo`
-    );
-
-    const display =
-      byId("comboDisplay");
-
-    showElement(display);
-
-    display?.classList.remove(
-      "combo-pop"
-    );
-
-    void display?.offsetWidth;
-
-    display?.classList.add(
-      "combo-pop"
-    );
-
-    createManagedTimeout(() => {
-      hideElement(display);
-    }, 1100);
-  }
-
 
   /* =========================================================
-     ORDER PROGRESSION
+     TUTORIAL MOVEMENT CHECKS
   ========================================================= */
 
-  function continueToNextOrder() {
-    hideElement(orderCompleteOverlay);
-
-    currentOrderIndex += 1;
+  function checkTutorialMovement() {
+    if (!tutorialTargetPiece) {
+      return;
+    }
 
     if (
-      ordersShipped >= totalOrders ||
-      currentOrderIndex >= totalOrders
+      tutorialStep === 0 &&
+      Math.abs(workerX - tutorialTargetPiece.x) <= 14
     ) {
-      showElement(
-        factoryCompleteOverlay
-      );
+      advanceTutorial();
+    }
+  }
 
+  /* =========================================================
+     PAUSE AND HELP
+  ========================================================= */
+
+  function pauseGame() {
+    if (!gameActive || paused) {
       return;
     }
 
-    startOrder(currentOrderIndex);
+    paused = true;
+    show(pauseOverlay);
   }
 
-  function showResultsFromFactory() {
-    hideElement(factoryCompleteOverlay);
-    finishGame(true);
+  function resumeGame() {
+    paused = false;
+    hide(pauseOverlay);
   }
 
+  function openHelp() {
+    const wasPaused = paused;
+
+    if (gameActive) {
+      paused = true;
+    }
+
+    hide(pauseOverlay);
+    show(howToPlayOverlay);
+
+    howToPlayOverlay.dataset.resumeAfterClose =
+      wasPaused || gameActive
+        ? "true"
+        : "false";
+  }
+
+  function closeHelp() {
+    hide(howToPlayOverlay);
+
+    if (
+      howToPlayOverlay.dataset.resumeAfterClose === "true" &&
+      gameActive
+    ) {
+      paused = false;
+    }
+  }
+
+  function restartGame() {
+    hide(pauseOverlay);
+    startGame();
+  }
 
   /* =========================================================
-     PLAYER MOVEMENT
+     RESULTS
   ========================================================= */
 
-  function startWorkerLoop() {
-    lastWorkerTimestamp =
-      performance.now();
+  function calculateAccuracy() {
+    const total = correctActions + mistakes;
 
-    window.requestAnimationFrame(
-      updateWorker
+    if (total <= 0) {
+      return 100;
+    }
+
+    return Math.round(
+      (correctActions / total) * 100
     );
   }
 
-  function updateWorker(timestamp) {
+  function calculateStars(won) {
+    const accuracy = calculateAccuracy();
+
+    if (
+      won &&
+      accuracy >= 90 &&
+      ordersShipped >= getSettings().totalOrders
+    ) {
+      return 3;
+    }
+
+    if (won && accuracy >= 70) {
+      return 2;
+    }
+
+    return 1;
+  }
+
+  function calculateRank() {
+    const accuracy = calculateAccuracy();
+
+    if (score >= 1600 && accuracy >= 90) {
+      return "Factory Floor Legend";
+    }
+
+    if (score >= 1000 && accuracy >= 82) {
+      return "Conveyor Commander";
+    }
+
+    if (score >= 650) {
+      return "Route Master";
+    }
+
+    if (score >= 300) {
+      return "Mixer Manager";
+    }
+
+    return "Route Rookie";
+  }
+
+  function finishGame(won) {
     if (!gameActive) {
       return;
     }
 
-    const delta =
-      Math.min(
-        32,
-        timestamp - lastWorkerTimestamp
-      );
+    gameActive = false;
+    orderActive = false;
+    paused = false;
 
-    lastWorkerTimestamp = timestamp;
+    stopAllLoops();
+    clearManagedTimeouts();
+    clearPieces();
 
-    const speed =
-      selectedControlMode === "assist"
-        ? 0.026
-        : 0.034;
+    hide(playScreen);
+    hide(orderCompleteOverlay);
+    hide(pauseOverlay);
+    hide(howToPlayOverlay);
 
-    if (workerMovingLeft) {
-      workerX -= speed * delta;
-    }
+    show(resultScreen);
 
-    if (workerMovingRight) {
-      workerX += speed * delta;
-    }
+    const accuracy = calculateAccuracy();
+    const stars = calculateStars(won);
 
-    workerX = Math.max(
-      2,
-      Math.min(93, workerX)
+    setText(
+      "resultHeading",
+      won
+        ? "Factory Floor Mastered!"
+        : "The Factory Needs Repairs!"
     );
 
-    if (!workerGrounded) {
-      workerVelocityY +=
-        0.0026 * delta;
+    setText(
+      "resultMessage",
+      won
+        ? "You collected creative pieces, blocked private clues, and shipped every order."
+        : "You completed part of the shift. Try again and use Time Freeze when the factory gets busy."
+    );
 
-      workerY +=
-        workerVelocityY * delta;
+    setText("factoryRank", calculateRank());
+    setText("finalScore", Math.round(score));
 
-      const floor =
-        getNearestPlatformY(workerY);
+    setText(
+      "finalStars",
+      `${"★".repeat(stars)}${"☆".repeat(3 - stars)}`
+    );
 
-      if (
-        workerVelocityY > 0 &&
-        workerY >= floor
-      ) {
-        workerY = floor;
-        workerVelocityY = 0;
-        workerGrounded = true;
-      }
+    setText("finalOrdersShipped", ordersShipped);
+    setText("finalPrivateBlocked", privateCluesBlocked);
+    setText("finalBestCombo", `${bestCombo}x`);
+    setText("finalAccuracy", `${accuracy}%`);
+
+    renderShippedUsernames();
+
+    let bestScore = Number(
+      localStorage.getItem(BEST_SCORE_KEY) || 0
+    );
+
+    if (score > bestScore) {
+      bestScore = Math.round(score);
+      localStorage.setItem(BEST_SCORE_KEY, String(bestScore));
     }
+
+    setText("bestScore", bestScore);
+
+    let pointsEarned = Math.round(score);
 
     if (
-      selectedControlMode === "assist"
+      window.SafetiiArcade &&
+      typeof window.SafetiiArcade.finishRound === "function"
     ) {
-      autoClimbAssist();
-    }
+      try {
+        const result = window.SafetiiArcade.finishRound({
+          gameId: "handle-with-care",
+          heat: selectedDifficulty,
+          score: Math.round(score),
+          stars,
+          completed: won,
+          correctAnswers: correctActions,
+          totalQuestions: correctActions + mistakes
+        });
 
-    updateWorkerPosition();
-
-    window.requestAnimationFrame(
-      updateWorker
-    );
-  }
-
-  function getNearestPlatformY(y) {
-    const platforms = [
-      18,
-      39,
-      60,
-      78
-    ];
-
-    const below = platforms.filter(
-      (platform) => platform >= y
-    );
-
-    return below.length > 0
-      ? Math.min(...below)
-      : 78;
-  }
-
-  function updateWorkerPosition() {
-    if (!factoryWorker) {
-      return;
-    }
-
-    factoryWorker.style.left =
-      `${workerX}%`;
-
-    factoryWorker.style.top =
-      `${workerY}%`;
-
-    factoryWorker.classList.toggle(
-      "worker-moving",
-      workerMovingLeft ||
-        workerMovingRight
-    );
-
-    factoryWorker.classList.toggle(
-      "worker-facing-left",
-      workerMovingLeft
-    );
-  }
-
-  function jumpWorker() {
-    if (!workerGrounded) {
-      return;
-    }
-
-    workerGrounded = false;
-    workerVelocityY = -0.048;
-
-    factoryWorker?.classList.add(
-      "worker-jumping"
-    );
-
-    createManagedTimeout(() => {
-      factoryWorker?.classList.remove(
-        "worker-jumping"
-      );
-    }, 350);
-  }
-
-  function moveWorkerVertical(direction) {
-    const ladderZones = [
-      {
-        x: 22,
-        tolerance: 10
-      },
-
-      {
-        x: 77,
-        tolerance: 10
+        if (
+          result &&
+          typeof result.pointsEarned === "number"
+        ) {
+          pointsEarned = result.pointsEarned;
+        }
+      } catch (error) {
+        console.warn("Unable to finish arcade round:", error);
       }
-    ];
-
-    const nearLadder =
-      ladderZones.some(
-        (ladder) =>
-          Math.abs(workerX - ladder.x) <=
-          ladder.tolerance
+    } else {
+      const storedPoints = Number(
+        localStorage.getItem("safetiiGlobalPoints") || 0
       );
 
-    if (
-      !nearLadder &&
-      selectedControlMode !== "assist"
-    ) {
-      return;
+      localStorage.setItem(
+        "safetiiGlobalPoints",
+        String(storedPoints + pointsEarned)
+      );
     }
 
-    const levels = [
-      18,
-      39,
-      60,
-      78
-    ];
-
-    const currentIndex =
-      levels.reduce(
-        (closestIndex, level, index) => {
-          const currentDistance =
-            Math.abs(
-              levels[closestIndex] -
-                workerY
-            );
-
-          const nextDistance =
-            Math.abs(level - workerY);
-
-          return nextDistance <
-            currentDistance
-            ? index
-            : closestIndex;
-        },
-        0
-      );
-
-    const nextIndex =
-      direction === "up"
-        ? Math.max(0, currentIndex - 1)
-        : Math.min(
-            levels.length - 1,
-            currentIndex + 1
-          );
-
-    workerY = levels[nextIndex];
-    workerVelocityY = 0;
-    workerGrounded = true;
-
-    factoryWorker?.classList.add(
-      "worker-climbing"
-    );
-
-    createManagedTimeout(() => {
-      factoryWorker?.classList.remove(
-        "worker-climbing"
-      );
-    }, 350);
+    setText("globalPointsEarned", pointsEarned);
+    updateGlobalPoints();
   }
 
-  function autoClimbAssist() {
-    if (workerMovingUp) {
-      moveWorkerVertical("up");
-      workerMovingUp = false;
-    }
+  function renderShippedUsernames() {
+    const list = byId("shippedUsernameList");
 
-    if (workerMovingDown) {
-      moveWorkerVertical("down");
-      workerMovingDown = false;
-    }
-  }
-
-
-  /* =========================================================
-     NEARBY ACTION
-  ========================================================= */
-
-  function useNearbyControl() {
-    if (factoryJamActive) {
-      repairJam(true);
+    if (!list) {
       return;
     }
 
-    const routeYMap = {
-      top: 18,
-      middle: 39,
-      bottom: 60
-    };
+    list.innerHTML = "";
 
-    const nearbyRoute =
-      Object.entries(routeYMap).find(
-        ([, routeY]) =>
-          Math.abs(workerY - routeY) <= 10
-      );
-
-    if (nearbyRoute) {
-      routeSelectedPiece(
-        nearbyRoute[0]
-      );
-
+    if (!shippedUsernames.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "No usernames were shipped this shift.";
+      list.appendChild(empty);
       return;
     }
 
-    if (
-      Math.abs(workerY - 78) <= 12
-    ) {
-      if (workerX >= 68) {
-        shipUsername();
-        return;
-      }
+    shippedUsernames.forEach((username, index) => {
+      const card = document.createElement("article");
 
-      if (
-        workerX >= 45 &&
-        workerX < 68
-      ) {
-        mixUsername();
-        return;
-      }
+      card.innerHTML = `
+        <span>📦</span>
 
-      if (workerX < 28) {
-        useNopeChute();
-        return;
-      }
-    }
+        <div>
+          <small>Package ${index + 1}</small>
+          <strong>${username}</strong>
+        </div>
+      `;
 
-    showFeedback({
-      correct: false,
-      icon: "🎮",
-      title: "Nothing nearby",
-      message:
-        "Move closer to a route switch, machine, or factory bin.",
-      points: "+0"
+      list.appendChild(card);
     });
   }
 
+  /* =========================================================
+     LOOP CONTROL
+  ========================================================= */
+
+  function stopOrderLoops() {
+    window.clearInterval(spawnInterval);
+    window.clearInterval(timerInterval);
+
+    spawnInterval = null;
+    timerInterval = null;
+  }
+
+  function stopAllLoops() {
+    stopOrderLoops();
+
+    if (workerAnimationFrame) {
+      window.cancelAnimationFrame(workerAnimationFrame);
+      workerAnimationFrame = null;
+    }
+
+    if (pieceAnimationFrame) {
+      window.cancelAnimationFrame(pieceAnimationFrame);
+      pieceAnimationFrame = null;
+    }
+  }
 
   /* =========================================================
      KEYBOARD CONTROLS
   ========================================================= */
 
   function handleKeyDown(event) {
-    if (
-      !gameActive ||
-      pausedForOverlay
-    ) {
+    if (!gameActive || paused) {
       return;
     }
 
@@ -2419,24 +2466,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
       case "arrowup":
       case "w":
-        moveWorkerVertical("up");
+        moveVertical("up");
         event.preventDefault();
         break;
 
       case "arrowdown":
       case "s":
-        moveWorkerVertical("down");
-        event.preventDefault();
-        break;
-
-      case " ":
-        jumpWorker();
+        moveVertical("down");
         event.preventDefault();
         break;
 
       case "e":
       case "enter":
-        useNearbyControl();
+        useNearbyObject();
+        event.preventDefault();
+        break;
+
+      case "f":
+        activateTimeFreeze();
+        event.preventDefault();
+        break;
+
+      case "escape":
+        pauseGame();
         event.preventDefault();
         break;
 
@@ -2462,37 +2514,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
   /* =========================================================
-     MOBILE BUTTONS
+     SCREEN BUTTON CONTROLS
   ========================================================= */
 
-  function bindHoldButton(
-    button,
-    start,
-    stop
-  ) {
-    button?.addEventListener(
-      "pointerdown",
-      (event) => {
-        event.preventDefault();
-        start();
+  function bindHoldButton(button, begin, end) {
+    button?.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      begin();
+    });
+
+    ["pointerup", "pointercancel", "pointerleave"].forEach(
+      (eventName) => {
+        button?.addEventListener(eventName, end);
       }
-    );
-
-    button?.addEventListener(
-      "pointerup",
-      stop
-    );
-
-    button?.addEventListener(
-      "pointercancel",
-      stop
-    );
-
-    button?.addEventListener(
-      "pointerleave",
-      stop
     );
   }
 
@@ -2518,650 +2553,136 @@ document.addEventListener("DOMContentLoaded", () => {
 
   mobileButtons.up?.addEventListener(
     "click",
-    () => moveWorkerVertical("up")
+    () => moveVertical("up")
   );
 
   mobileButtons.down?.addEventListener(
     "click",
-    () => moveWorkerVertical("down")
-  );
-
-  mobileButtons.jump?.addEventListener(
-    "click",
-    jumpWorker
+    () => moveVertical("down")
   );
 
   mobileButtons.action?.addEventListener(
     "click",
-    useNearbyControl
+    useNearbyObject
   );
 
-
-  /* =========================================================
-     RESULTS
-  ========================================================= */
-
-  function calculateAccuracy() {
-    const total =
-      correctActions + mistakes;
-
-    if (total <= 0) {
-      return 100;
-    }
-
-    return Math.round(
-      (correctActions / total) * 100
-    );
-  }
-
-  function calculateStars(won) {
-    const accuracy =
-      calculateAccuracy();
-
-    if (
-      won &&
-      accuracy >= 92 &&
-      ordersShipped === totalOrders
-    ) {
-      return 3;
-    }
-
-    if (
-      won &&
-      accuracy >= 75
-    ) {
-      return 2;
-    }
-
-    return 1;
-  }
-
-  function calculateRank() {
-    const accuracy =
-      calculateAccuracy();
-
-    if (
-      score >= 1800 &&
-      accuracy >= 92
-    ) {
-      return "Factory Floor Legend";
-    }
-
-    if (
-      score >= 1200 &&
-      accuracy >= 85
-    ) {
-      return "Conveyor Commander";
-    }
-
-    if (
-      score >= 750 &&
-      accuracy >= 75
-    ) {
-      return "Route Master";
-    }
-
-    if (score >= 350) {
-      return "Mixer Manager";
-    }
-
-    return "Route Rookie";
-  }
-
-  function finishGame(won) {
-    if (!gameActive) {
-      return;
-    }
-
-    gameActive = false;
-    orderActive = false;
-    pausedForOverlay = false;
-
-    stopLoops();
-    clearManagedTimeouts();
-    clearAllPieces();
-
-    hideElement(playScreen);
-    hideElement(orderCompleteOverlay);
-    hideElement(factoryCompleteOverlay);
-    showElement(resultScreen);
-
-    const accuracy =
-      calculateAccuracy();
-
-    const stars =
-      calculateStars(won);
-
-    setText(
-      "resultHeading",
-      won
-        ? "Factory Floor Mastered!"
-        : "The Factory Needs Repairs!"
-    );
-
-    setText(
-      "resultMessage",
-      won
-        ? "You managed every route, blocked private clues, and shipped creative usernames."
-        : "You completed part of the shift. Try again and keep the routes under control."
-    );
-
-    setText(
-      "factoryRank",
-      calculateRank()
-    );
-
-    setText("finalScore", score);
-
-    setText(
-      "finalStars",
-      `${"★".repeat(stars)}${"☆".repeat(
-        3 - stars
-      )}`
-    );
-
-    setText(
-      "finalOrdersShipped",
-      ordersShipped
-    );
-
-    setText(
-      "finalPrivateBlocked",
-      privateCluesBlocked
-    );
-
-    setText(
-      "finalBestCombo",
-      `${bestCombo}x`
-    );
-
-    setText(
-      "finalAccuracy",
-      `${accuracy}%`
-    );
-
-    renderShippedUsernames();
-
-    let bestScore = Number(
-      localStorage.getItem(
-        "handleWithCareBestScore"
-      ) || 0
-    );
-
-    if (score > bestScore) {
-      bestScore = score;
-
-      localStorage.setItem(
-        "handleWithCareBestScore",
-        String(bestScore)
-      );
-    }
-
-    setText("bestScore", bestScore);
-
-    let pointsEarned = score;
-
-    if (
-      window.SafetiiArcade &&
-      typeof window.SafetiiArcade.finishRound === "function"
-    ) {
-      try {
-        const result =
-          window.SafetiiArcade.finishRound({
-            gameId: "handle-with-care",
-            heat: selectedHeat,
-            score,
-            stars,
-            completed: won,
-            correctAnswers:
-              correctActions,
-            totalQuestions:
-              correctActions + mistakes
-          });
-
-        if (
-          result &&
-          typeof result.pointsEarned === "number"
-        ) {
-          pointsEarned =
-            result.pointsEarned;
-        }
-      } catch (error) {
-        console.warn(
-          "Could not finish arcade round:",
-          error
-        );
-      }
-    } else {
-      const storedPoints = Number(
-        localStorage.getItem(
-          "safetiiGlobalPoints"
-        ) || 0
-      );
-
-      localStorage.setItem(
-        "safetiiGlobalPoints",
-        String(storedPoints + score)
-      );
-    }
-
-    setText(
-      "globalPointsEarned",
-      pointsEarned
-    );
-
-    updateGlobalPoints();
-  }
-
-  function renderShippedUsernames() {
-    const list =
-      byId("shippedUsernameList");
-
-    if (!list) {
-      return;
-    }
-
-    list.innerHTML = "";
-
-    if (shippedUsernames.length === 0) {
-      const empty =
-        document.createElement("p");
-
-      empty.textContent =
-        "No usernames were shipped this shift.";
-
-      list.appendChild(empty);
-      return;
-    }
-
-    shippedUsernames.forEach(
-      (username, index) => {
-        const packageCard =
-          document.createElement("article");
-
-        packageCard.innerHTML = `
-          <span>
-            📦
-          </span>
-
-          <div>
-            <small>
-              Package ${index + 1}
-            </small>
-
-            <strong>
-              ${username}
-            </strong>
-          </div>
-        `;
-
-        list.appendChild(packageCard);
-      }
-    );
-  }
-
+  mobileButtons.freeze?.addEventListener(
+    "click",
+    activateTimeFreeze
+  );
 
   /* =========================================================
      EVENT LISTENERS
   ========================================================= */
 
-  startGameButton?.addEventListener(
+  startGameButton?.addEventListener("click", startGame);
+
+  playAgainButton?.addEventListener("click", () => {
+    hide(resultScreen);
+    show(introScreen);
+    updateGlobalPoints();
+  });
+
+  beginTutorialButton?.addEventListener(
     "click",
-    startGame
+    beginTutorial
   );
 
-  playAgainButton?.addEventListener(
+  skipTutorialOpeningButton?.addEventListener(
     "click",
-    () => {
-      hideElement(resultScreen);
-      showElement(introScreen);
-      updateGlobalPoints();
-    }
+    skipTutorial
+  );
+
+  tutorialSkipButton?.addEventListener(
+    "click",
+    skipTutorial
   );
 
   continueOrderButton?.addEventListener(
     "click",
-    continueToNextOrder
+    continueOrder
   );
 
-  finishFactoryButton?.addEventListener(
+  pauseGameButton?.addEventListener(
     "click",
-    showResultsFromFactory
+    pauseGame
   );
 
-  mixUsernameButton?.addEventListener(
+  resumeGameButton?.addEventListener(
     "click",
-    mixUsername
+    resumeGame
   );
 
-  scanUsernameButton?.addEventListener(
+  restartGameButton?.addEventListener(
     "click",
-    scanUsername
+    restartGame
   );
 
-  shipItBin?.addEventListener(
+  howToPlayButton?.addEventListener(
     "click",
-    shipUsername
+    openHelp
   );
 
-  partsBin?.addEventListener(
+  gameHelpButton?.addEventListener(
     "click",
-    saveSelectedPart
+    openHelp
   );
 
-  nopeChute?.addEventListener(
+  pauseHelpButton?.addEventListener(
     "click",
-    useNopeChute
+    openHelp
   );
 
-  Object.entries(routeElements).forEach(
-    ([route, elements]) => {
-      elements.switch?.addEventListener(
-        "click",
-        () => {
-          if (
-            factoryJamActive &&
-            jammedRoute === route
-          ) {
-            repairJam(true);
-            return;
-          }
+  closeHowToPlayButton?.addEventListener(
+    "click",
+    closeHelp
+  );
 
-          routeSelectedPiece(route);
-        }
-      );
+  closeInstructionsButton?.addEventListener(
+    "click",
+    closeHelp
+  );
+
+  replayTutorialButton?.addEventListener("click", () => {
+    hide(howToPlayOverlay);
+
+    if (!gameActive) {
+      startGame();
     }
-  );
 
-  document.addEventListener(
-    "keydown",
-    handleKeyDown
-  );
+    beginTutorial();
+  });
 
-  document.addEventListener(
-    "keyup",
-    handleKeyUp
-  );
+  soundToggleButton?.addEventListener("click", () => {
+    soundEnabled = !soundEnabled;
+
+    soundToggleButton.textContent =
+      soundEnabled ? "🔊" : "🔇";
+
+    soundToggleButton.setAttribute(
+      "aria-pressed",
+      String(soundEnabled)
+    );
+  });
+
+  shelfSlotButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      if (
+        Math.abs(workerX - stationPositions.parts) <= 14 &&
+        Math.abs(workerY - floorLevels.ground) <= 12
+      ) {
+        pickUpShelfPiece(index);
+      }
+    });
+  });
+
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("keyup", handleKeyUp);
 
   window.addEventListener("blur", () => {
     workerMovingLeft = false;
     workerMovingRight = false;
-    workerMovingUp = false;
-    workerMovingDown = false;
   });
 
   updateGlobalPoints();
 });
-
-/* =========================================================
-   HANDLE WITH CARE - BOOT SCREEN + EASY TUTORIAL
-========================================================= */
-(function () {
-  const bootOverlay = document.getElementById("factoryBootOverlay");
-  const bootTypeLines = document.getElementById("bootTypeLines");
-  const bootReadyPanel = document.getElementById("bootReadyPanel");
-  const bootContinue = document.getElementById("bootContinue");
-  const bootSkip = document.getElementById("bootSkip");
-
-  const tutorialOverlay = document.getElementById("factoryTutorialOverlay");
-  const tutorialStepCount = document.getElementById("tutorialStepCount");
-  const tutorialStepTitle = document.getElementById("tutorialStepTitle");
-  const tutorialStepText = document.getElementById("tutorialStepText");
-  const tutorialPrev = document.getElementById("tutorialPrev");
-  const tutorialNext = document.getElementById("tutorialNext");
-  const tutorialFinish = document.getElementById("tutorialFinish");
-  const tutorialSkip = document.getElementById("tutorialSkip");
-
-  const startGameButton = document.getElementById("startGame");
-  const playScreen = document.getElementById("playScreen");
-
-  if (!bootOverlay || !tutorialOverlay) {
-    return;
-  }
-
-  const BOOT_SEEN_KEY = "safetii_handle_boot_seen_v1";
-  const TUTORIAL_SEEN_KEY = "safetii_handle_tutorial_seen_v1";
-
-  const tutorialSteps = [
-    {
-      title: "Welcome to the factory!",
-      text: "Information parts move through the factory lines. Your job is to spot what belongs in a safe username and what should not be used."
-    },
-    {
-      title: "Watch the three lines",
-      text: "The Style Line carries interests and aesthetics. The Character Line carries traits and personality words. The Power Line carries action or energy words."
-    },
-    {
-      title: "Build a safe username",
-      text: "Pick good pieces and combine them in the mixer. You want a fun username that does not reveal private details like exact age, address, or other identifying information."
-    },
-    {
-      title: "First try counts",
-      text: "In easy mode, learn the system and have fun. Returning players can skip this tutorial next time and jump straight into the challenge."
-    }
-  ];
-
-  let tutorialIndex = 0;
-
-  function addOverlayLock() {
-    document.body.classList.add("factory-overlay-open");
-  }
-
-  function removeOverlayLock() {
-    const bootHidden = bootOverlay.classList.contains("is-hidden");
-    const tutorialHidden = tutorialOverlay.classList.contains("is-hidden");
-    if (bootHidden && tutorialHidden) {
-      document.body.classList.remove("factory-overlay-open");
-    }
-  }
-
-  function typeBootLines(lines, done) {
-    if (!bootTypeLines) {
-      if (typeof done === "function") done();
-      return;
-    }
-
-    bootTypeLines.innerHTML = "";
-    let lineIndex = 0;
-
-    function typeLine() {
-      if (lineIndex >= lines.length) {
-        if (typeof done === "function") done();
-        return;
-      }
-
-      const lineElement = document.createElement("p");
-      lineElement.className = "factory-boot-line";
-      bootTypeLines.appendChild(lineElement);
-
-      const currentText = lines[lineIndex];
-      let charIndex = 0;
-
-      function typeChar() {
-        lineElement.textContent = currentText.slice(0, charIndex + 1);
-        charIndex += 1;
-
-        if (charIndex < currentText.length) {
-          setTimeout(typeChar, 28);
-        } else {
-          lineIndex += 1;
-          setTimeout(typeLine, 280);
-        }
-      }
-
-      typeChar();
-    }
-
-    typeLine();
-  }
-
-  function revealBootReady() {
-    if (bootReadyPanel) {
-      bootReadyPanel.classList.add("is-visible");
-    }
-  }
-
-  function hideBootOverlay() {
-    bootOverlay.classList.add("is-hidden");
-    localStorage.setItem(BOOT_SEEN_KEY, "yes");
-    removeOverlayLock();
-  }
-
-  function runBootAnimation() {
-    addOverlayLock();
-
-    const seenBoot = localStorage.getItem(BOOT_SEEN_KEY) === "yes";
-
-    if (seenBoot) {
-      if (bootTypeLines) {
-        bootTypeLines.innerHTML = `
-          <p class="factory-boot-line">WELCOME BACK, PLAYER.</p>
-          <p class="factory-boot-line">FACTORY SYSTEM ONLINE.</p>
-        `;
-      }
-      revealBootReady();
-      return;
-    }
-
-    typeBootLines(
-      [
-        "BOOTING SAFETII FACTORY...",
-        "SCANNING PLAYER PROFILE...",
-        "LOADING MEME ASSISTANT...",
-        "FACTORY SYSTEMS READY."
-      ],
-      revealBootReady
-    );
-  }
-
-  if (bootContinue) {
-    bootContinue.addEventListener("click", hideBootOverlay);
-  }
-
-  if (bootSkip) {
-    bootSkip.addEventListener("click", hideBootOverlay);
-  }
-
-  function updateTutorialStep() {
-    const step = tutorialSteps[tutorialIndex];
-    tutorialStepCount.textContent = `Step ${tutorialIndex + 1} of ${tutorialSteps.length}`;
-    tutorialStepTitle.textContent = step.title;
-    tutorialStepText.textContent = step.text;
-
-    tutorialPrev.disabled = tutorialIndex === 0;
-    tutorialPrev.style.opacity = tutorialIndex === 0 ? "0.45" : "1";
-
-    if (tutorialIndex === tutorialSteps.length - 1) {
-      tutorialNext.classList.add("hidden");
-      tutorialFinish.classList.remove("hidden");
-    } else {
-      tutorialNext.classList.remove("hidden");
-      tutorialFinish.classList.add("hidden");
-    }
-  }
-
-  function showTutorial() {
-    tutorialIndex = 0;
-    updateTutorialStep();
-    tutorialOverlay.classList.remove("is-hidden");
-    tutorialOverlay.setAttribute("aria-hidden", "false");
-    addOverlayLock();
-  }
-
-  function hideTutorial(markSeen) {
-    tutorialOverlay.classList.add("is-hidden");
-    tutorialOverlay.setAttribute("aria-hidden", "true");
-
-    if (markSeen) {
-      localStorage.setItem(TUTORIAL_SEEN_KEY, "yes");
-    }
-
-    removeOverlayLock();
-  }
-
-  if (tutorialPrev) {
-    tutorialPrev.addEventListener("click", function () {
-      if (tutorialIndex > 0) {
-        tutorialIndex -= 1;
-        updateTutorialStep();
-      }
-    });
-  }
-
-  if (tutorialNext) {
-    tutorialNext.addEventListener("click", function () {
-      if (tutorialIndex < tutorialSteps.length - 1) {
-        tutorialIndex += 1;
-        updateTutorialStep();
-      }
-    });
-  }
-
-  if (tutorialFinish) {
-    tutorialFinish.addEventListener("click", function () {
-      hideTutorial(true);
-    });
-  }
-
-  if (tutorialSkip) {
-    tutorialSkip.addEventListener("click", function () {
-      hideTutorial(true);
-    });
-  }
-
-  function getSelectedHeatLevel() {
-    const activeButton =
-      document.querySelector('.heat-choice.is-active') ||
-      document.querySelector('.heat-choice.active') ||
-      document.querySelector('.heat-choice[aria-pressed="true"]') ||
-      document.querySelector('.heat-choice.selected');
-
-    if (activeButton && activeButton.dataset.heat) {
-      return activeButton.dataset.heat.toLowerCase();
-    }
-
-    const selectedInput =
-      document.querySelector('input[name="heatLevel"]:checked') ||
-      document.getElementById("selectedHeat");
-
-    if (selectedInput) {
-      const value = selectedInput.value || selectedInput.textContent || "";
-      return String(value).trim().toLowerCase();
-    }
-
-    return "mild";
-  }
-
-  function isVisible(element) {
-    if (!element) return false;
-    const style = window.getComputedStyle(element);
-    return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
-  }
-
-  function maybeShowTutorialAfterStart() {
-    const alreadySeen = localStorage.getItem(TUTORIAL_SEEN_KEY) === "yes";
-    if (alreadySeen) return;
-
-    const heat = getSelectedHeatLevel();
-    if (heat !== "mild") return;
-
-    setTimeout(function () {
-      if (playScreen && isVisible(playScreen)) {
-        showTutorial();
-      }
-    }, 250);
-  }
-
-  if (startGameButton) {
-    startGameButton.addEventListener(
-      "click",
-      function () {
-        maybeShowTutorialAfterStart();
-      },
-      true
-    );
-  }
-
-  tutorialOverlay.classList.add("is-hidden");
-  runBootAnimation();
-})();
