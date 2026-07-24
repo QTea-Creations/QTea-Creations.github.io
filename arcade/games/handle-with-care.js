@@ -1663,7 +1663,23 @@ function getNearbyStation() {
     show(carriedItemBubble);
   }
 
- function placeCarriedItem(station) {
+function placeCarriedItem(station) {
+  if (!carriedItem) {
+    return;
+  }
+
+  /*
+    During the tutorial, do not allow an important
+    tutorial object to disappear into the wrong station.
+  */
+  if (
+    tutorialActive &&
+    isWrongTutorialDestination(station)
+  ) {
+    handleWrongTutorialDestination(station);
+    return;
+  }
+
   switch (station) {
     case "nope":
       placeInNopeChute();
@@ -1694,21 +1710,32 @@ function getNearbyStation() {
   }
 }
 
-function placeInGarbageCan() {
+   function placeInNopeChute() {
   if (!carriedItem) {
     return;
   }
 
-function placeInNopeChute() {
-  if (!carriedItem) {
-    return;
-  }
-
+  /*
+    Safe pieces should remain in the player's hands.
+  */
   if (!carriedItem.unsafe) {
-    mistake(
-      "That piece was safe",
-      `${carriedItem.text} is a creative word. Use the Garbage Can if you do not want it.`
-    );
+    combo = 0;
+    mistakes += 1;
+
+    showFeedback({
+      correct: false,
+      icon: "🚫",
+      title: "That piece is not private",
+      message:
+        `${carriedItem.text} is a safe creative piece. Keep carrying it to the Mixer, Parts Shelf, or Garbage Can.`,
+      points: "+0"
+    });
+
+    /*
+      Do not remove the safe piece.
+    */
+    updateCarriedItem();
+    updateHUD();
 
     return;
   }
@@ -1750,13 +1777,14 @@ function placeInNopeChute() {
     icon: "🚫",
     title: "Private clue blocked!",
     message:
-      `${removedText} went into the Nope Chute.`,
+      `${removedText} safely went into the Nope Chute.`,
     points: "+20"
   });
 
   if (
     tutorialActive &&
-    tutorialStep === 3
+    tutorialStep === 3 &&
+    removedText === "Home Address"
   ) {
     advanceTutorial();
   }
@@ -1764,21 +1792,57 @@ function placeInNopeChute() {
   updateHUD();
 }
    
+function placeInGarbageCan() {
+  if (!carriedItem) {
+    return;
+  }
+
+  /*
+    Never allow finished packages in the garbage.
+  */
   if (carriedItem.package) {
     showFeedback({
       correct: false,
       icon: "📦",
       title: "Do not trash the package",
       message:
-        "Take the finished package to Final Inspection or Shipping.",
+        carriedItem.approved
+          ? "Take the approved package to Ship It."
+          : "Take the package to Final Inspection.",
       points: "+0"
     });
 
     return;
   }
 
-  const discardedItem =
-    carriedItem;
+  /*
+    Tutorial protection:
+    important tutorial objects remain in the player's hands.
+  */
+  if (tutorialActive) {
+    const protectedTutorialItems = [
+      "Wacky",
+      "Home Address",
+      "Panda",
+      "Bounce"
+    ];
+
+    if (
+      protectedTutorialItems.includes(
+        carriedItem.text
+      )
+    ) {
+      handleWrongTutorialDestination(
+        "garbage"
+      );
+
+      return;
+    }
+  }
+
+  const discardedItem = {
+    ...carriedItem
+  };
 
   const neededForOrder =
     !discardedItem.unsafe &&
@@ -1810,10 +1874,11 @@ function placeInNopeChute() {
       icon: "🚫",
       title: "Private clue discarded",
       message:
-        `${discardedItem.text} is gone, but private clues belong in the Nope Chute.`,
+        `${discardedItem.text} was removed, but private clues should go into the Nope Chute.`,
       points: "+0"
     });
 
+    updateHUD();
     return;
   }
 
@@ -1831,9 +1896,22 @@ function placeInNopeChute() {
       icon: "🗑️",
       title: "Needed piece discarded",
       message:
-        `${discardedItem.text} matched an empty recipe slot.`,
+        `${discardedItem.text} matched an empty recipe slot. Another matching piece will appear.`,
       points: "−5"
     });
+
+    /*
+      Ensure the game produces a replacement.
+    */
+    if (
+      orderActive &&
+      !tutorialActive
+    ) {
+      managedTimeout(
+        spawnNeededPiece,
+        500
+      );
+    }
   } else {
     showFeedback({
       correct: true,
