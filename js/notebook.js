@@ -664,6 +664,23 @@
     );
   }
 
+   const pageHash =
+  pageId ===
+    "passwordNotebookPage"
+    ? "#password"
+    : "#identity";
+
+if (
+  window.location.hash !==
+  pageHash
+) {
+  history.replaceState(
+    null,
+    "",
+    pageHash
+  );
+}
+
 
   /* =====================================================
      IDENTITY PROTECTOR
