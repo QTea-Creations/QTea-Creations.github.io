@@ -319,11 +319,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  const laneCategoryPools = {
-    one: ["style", "space", "nature", "silly"],
-    two: ["animal", "hero", "silly"],
-    three: ["action", "hero", "nature"]
-  };
+const laneCategoryPools = {
+  one: [
+    "style",
+    "space",
+    "nature",
+    "silly"
+  ],
+
+  two: [
+    "animal",
+    "hero"
+  ],
+
+  three: [
+    "action"
+  ]
+};
 
   const stationElements = {
     nope: nopeChuteStation,
