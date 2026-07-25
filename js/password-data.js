@@ -4,13 +4,14 @@
    SAFETII NET — PASSWORD SAFE KEEPER
    Mission 2 Data
 
-   This file contains:
-   - Password comparison challenges
-   - Password habit sorting
-   - Code Keeper items
-   - Account Rescue steps
-   - Vault-door challenges
-   - Final-test questions
+   Curriculum-aligned skills:
+
+   1. Password Safety Lab
+   2. Password Cracker Challenge
+   3. Two-Factor Security Gate
+   4. Account Defense Simulator
+   5. Password Vault Practice
+   6. Final Test
 ========================================================= */
 
 (() => {
@@ -20,15 +21,14 @@
 
 
   /* =====================================================
-     PASSWORD COMPARISON CHALLENGES
-
-     Training 1, Part 1
+     TRAINING 1 — PASSWORD SAFETY LAB
+     PASSWORD COMPARISONS
   ===================================================== */
 
   const comparisonChallenges = [
     {
       prompt:
-        "Which pretend password is safer for a game account?",
+        "Which pretend password would be more difficult for an attacker to guess?",
 
       choices: [
         {
@@ -36,7 +36,7 @@
             "soccer123",
 
           note:
-            "Short, predictable, and based on a common interest."
+            "Short, common, and based on a popular interest."
         },
 
         {
@@ -44,7 +44,7 @@
             "PurpleRiverTaco88!",
 
           note:
-            "Longer, less predictable, and made from unrelated ideas."
+            "Longer and made from unrelated ideas."
         }
       ],
 
@@ -52,13 +52,13 @@
         1,
 
       explanation:
-        "PurpleRiverTaco88! is longer and less predictable. A short word followed by 123 is easier to guess."
+        "PurpleRiverTaco88! is longer and less predictable. Attackers often try common words followed by simple numbers."
     },
 
 
     {
       prompt:
-        "Which pretend password is safer?",
+        "Which pretend password better resists a dictionary attack?",
 
       choices: [
         {
@@ -66,7 +66,7 @@
             "password1",
 
           note:
-            "Uses a very common password word with one number."
+            "Uses one of the most commonly guessed password words."
         },
 
         {
@@ -74,7 +74,7 @@
             "CloudTigerLantern42",
 
           note:
-            "Uses a longer combination of unrelated words."
+            "Uses several unrelated words in a longer combination."
         }
       ],
 
@@ -82,13 +82,13 @@
         1,
 
       explanation:
-        "Adding one number to the word password does not make it secure. Longer, unusual word combinations are generally safer."
+        "A dictionary attack tries common words and common passwords. Adding one number to the word password does not make it secure."
     },
 
 
     {
       prompt:
-        "Which pretend password is safer?",
+        "Which pretend password better resists a pattern attack?",
 
       choices: [
         {
@@ -96,7 +96,7 @@
             "abcdef123",
 
           note:
-            "Uses simple letter and number sequences."
+            "Uses easy letter and number sequences."
         },
 
         {
@@ -104,7 +104,7 @@
             "MintRocketCactus7!",
 
           note:
-            "Longer and harder to predict."
+            "Uses unrelated words and avoids simple sequences."
         }
       ],
 
@@ -112,13 +112,13 @@
         1,
 
       explanation:
-        "Sequences such as abcdef and 123 are easy to guess because attackers test them often."
+        "Attackers often test sequences such as abcdef and 123456 early in an attack."
     },
 
 
     {
       prompt:
-        "Which pretend password protects personal information better?",
+        "Which pretend password reveals fewer personal clues?",
 
       choices: [
         {
@@ -126,7 +126,7 @@
             "Emma2014",
 
           note:
-            "Looks like a real name and a birth year."
+            "Looks like a real name combined with a year."
         },
 
         {
@@ -134,7 +134,7 @@
             "Sunbeam-Penguin-Race",
 
           note:
-            "Uses unrelated words instead of personal details."
+            "Uses unrelated words instead of personal information."
         }
       ],
 
@@ -142,7 +142,7 @@
         1,
 
       explanation:
-        "Real names, birthdays, and birth years can often be discovered or guessed. A longer phrase without personal information is safer."
+        "Names and birth years may be found in profiles, posts, school records, or conversations."
     },
 
 
@@ -164,7 +164,7 @@
             "MarblePlanetNoodle5",
 
           note:
-            "Uses several unrelated ideas and is much longer."
+            "Longer and much less predictable."
         }
       ],
 
@@ -172,15 +172,13 @@
         1,
 
       explanation:
-        "Symbols do not make a common keyboard pattern safe. Length and unpredictability matter."
+        "Adding symbols does not make a common keyboard pattern secure. Length and unpredictability matter."
     }
   ];
 
 
   /* =====================================================
      PASSWORD ANALYZER REFERENCE DATA
-
-     Training 1, Part 2
   ===================================================== */
 
   const commonPasswordWords = [
@@ -226,248 +224,955 @@
 
 
   /* =====================================================
-     UNIQUE PASSWORD HABITS
+     TRAINING 2 — PASSWORD CRACKER CHALLENGE
 
-     Training 2
+     Students learn how password attacks work:
+
+     - Dictionary attack
+     - Personal-clue attack
+     - Pattern attack
+     - Brute-force attack
+     - Password reuse attack
   ===================================================== */
 
-  const uniquePasswordHabits = [
+  const passwordAttackChallenges = [
     {
-      text:
-        "A student creates a different long password for their school account, game account, and email account.",
+      icon:
+        "📖",
 
-      category:
-        "unique",
+      attackName:
+        "Dictionary Attack",
+
+      password:
+        "Sunshine1",
+
+      attackDescription:
+        "The attacker checks a long list of common words and common password combinations.",
+
+      weaknesses: [
+        "Uses a common word",
+        "Adds only one simple number",
+        "Matches a common password pattern"
+      ],
+
+      resistance:
+        "low",
+
+      crackTime:
+        "Very quickly",
 
       explanation:
-        "Using a different password for each account helps prevent one stolen password from opening every account."
+        "Dictionary attacks test common words such as sunshine, password, welcome, and dragon. A single number does not add much protection."
     },
 
 
     {
-      text:
-        "A student uses BlueTiger47! for their game account, email account, and school account.",
+      icon:
+        "🔎",
 
-      category:
-        "reused",
+      attackName:
+        "Personal-Clue Attack",
+
+      password:
+        "Jordan2015",
+
+      attackDescription:
+        "The attacker uses information discovered from profiles, posts, school activities, and conversations.",
+
+      weaknesses: [
+        "May contain a real name",
+        "Looks like a birth year",
+        "Uses information that could be researched"
+      ],
+
+      resistance:
+        "low",
+
+      crackTime:
+        "Quickly after finding personal clues",
 
       explanation:
-        "This password is reused. If one account is compromised, the same password could be tried on the others."
+        "Names, birthdays, pets, teams, and schools can become password clues when they are shared online."
     },
 
 
     {
-      text:
-        "A student uses Basketball1 because basketball is their favorite sport.",
+      icon:
+        "⌨️",
 
-      category:
-        "predictable",
+      attackName:
+        "Pattern Attack",
+
+      password:
+        "qwerty123!",
+
+      attackDescription:
+        "The attacker checks common keyboard paths, number sequences, and repeated characters.",
+
+      weaknesses: [
+        "Uses a keyboard pattern",
+        "Uses a number sequence",
+        "A symbol was added to a predictable base"
+      ],
+
+      resistance:
+        "low",
+
+      crackTime:
+        "Very quickly",
 
       explanation:
-        "A favorite sport plus a simple number can be easy to guess, especially if the interest is visible online."
+        "Symbols do not repair a password built from common keyboard and number patterns."
     },
 
 
     {
-      text:
-        "A family uses a trusted password manager to create and store a different password for every account.",
+      icon:
+        "🤖",
 
-      category:
-        "unique",
+      attackName:
+        "Brute-Force Attack",
+
+      password:
+        "T7!pQ2",
+
+      attackDescription:
+        "A computer rapidly tries many possible combinations until it finds the correct one.",
+
+      weaknesses: [
+        "Uses several character types",
+        "But the password is still short",
+        "Short passwords require fewer combinations"
+      ],
+
+      resistance:
+        "medium",
+
+      crackTime:
+        "Slower than a common word, but still vulnerable",
 
       explanation:
-        "A password manager can help families keep track of long, unique passwords without reusing them."
+        "A short password can still be vulnerable even when it contains capitals, numbers, and symbols. More length creates many more possible combinations."
     },
 
 
     {
-      text:
-        "A student changes one password from Puppy123 to Puppy124 and uses it for a second account.",
+      icon:
+        "🧱",
 
-      category:
-        "reused",
+      attackName:
+        "Long-Passphrase Test",
+
+      password:
+        "Cactus-Moon-Rocket-Lantern-84",
+
+      attackDescription:
+        "The attacker tries dictionary words, personal clues, patterns, and many combinations.",
+
+      weaknesses: [],
+
+      strengths: [
+        "Long",
+        "Uses several unrelated words",
+        "Does not reveal obvious personal information",
+        "Avoids common sequences"
+      ],
+
+      resistance:
+        "high",
+
+      crackTime:
+        "Much more difficult",
 
       explanation:
-        "Changing only one number creates nearly the same password. It is still a reuse pattern."
+        "Long passphrases made from unrelated words create far more possible combinations than short predictable passwords."
     },
 
 
     {
-      text:
-        "A student uses their first name followed by their birth year.",
+      icon:
+        "🔁",
 
-      category:
-        "predictable",
+      attackName:
+        "Credential Reuse Attack",
+
+      password:
+        "BlueTiger47!",
+
+      attackDescription:
+        "A password stolen from one website is tested on email, gaming, school, and other accounts.",
+
+      weaknesses: [
+        "The same password is used on several accounts",
+        "One breach could expose every reused account"
+      ],
+
+      resistance:
+        "low",
+
+      crackTime:
+        "Immediate if the password was already stolen",
 
       explanation:
-        "Names and birth years are personal details that may be easy to discover or guess."
+        "Even a fairly strong password becomes dangerous when it is reused. Every important account should have a different password."
     },
 
 
     {
-      text:
-        "A student creates River-Moon-Cactus-27 for one account and Lantern-Panda-Cloud-84 for another.",
+      icon:
+        "🧩",
 
-      category:
-        "unique",
+      attackName:
+        "Obvious Substitution Attack",
+
+      password:
+        "P@ssw0rd!",
+
+      attackDescription:
+        "The attacker tests common letter replacements such as @ for a and 0 for o.",
+
+      weaknesses: [
+        "Built from the word password",
+        "Uses predictable substitutions",
+        "Matches a widely known pattern"
+      ],
+
+      resistance:
+        "low",
+
+      crackTime:
+        "Very quickly",
 
       explanation:
-        "The passwords are long, different from each other, and do not rely on obvious personal details."
+        "Attackers already know common substitutions. Replacing a few letters in a common word does not create a strong password."
     },
 
 
     {
-      text:
-        "A student uses School2026! for every school-related website.",
+      icon:
+        "🗝️",
 
-      category:
-        "reused",
+      attackName:
+        "Unique Password Defense",
+
+      password:
+        "Different password for every account",
+
+      attackDescription:
+        "An attacker steals one password and tries it on several other services.",
+
+      weaknesses: [],
+
+      strengths: [
+        "Only one account is affected",
+        "Other accounts use different passwords",
+        "The stolen password cannot unlock everything"
+      ],
+
+      resistance:
+        "high",
+
+      crackTime:
+        "The stolen password fails on other accounts",
 
       explanation:
-        "Even when several websites are school-related, each important account should have its own password."
+        "Unique passwords limit the damage caused by a breach."
     }
   ];
 
 
   /* =====================================================
-     CODE KEEPER ITEMS
+     TRAINING 3 — TWO-FACTOR SECURITY GATE
 
-     Training 3
+     Factor categories:
+
+     KNOW:
+     Password, passphrase, PIN
+
+     HAVE:
+     Trusted device, authenticator code,
+     physical security key
+
+     ARE:
+     Fingerprint, face scan
   ===================================================== */
 
-  const codeKeeperItems = [
+  const twoFactorScenarios = [
     {
-      icon:
-        "🔑",
-
-      text:
-        "A password for an online game account",
-
-      answer:
-        "secret",
-
-      explanation:
-        "Passwords belong in the Secret Vault. They should not be shared with friends or strangers."
-    },
-
-
-    {
-      icon:
-        "🔢",
-
-      text:
-        "A six-digit verification code sent during login",
-
-      answer:
-        "secret",
-
-      explanation:
-        "Verification codes can unlock accounts and must remain private."
-    },
-
-
-    {
-      icon:
-        "🎨",
-
-      text:
-        "A favorite color",
-
-      answer:
-        "share",
-
-      explanation:
-        "A favorite color is generally safe self-expression, as long as it is not being used as a password or security answer."
-    },
-
-
-    {
-      icon:
-        "📌",
-
-      text:
-        "The PIN used to unlock a tablet",
-
-      answer:
-        "secret",
-
-      explanation:
-        "A device PIN protects access and should stay private."
-    },
-
-
-    {
-      icon:
-        "🐼",
-
-      text:
-        "A favorite animal",
-
-      answer:
-        "share",
-
-      explanation:
-        "A favorite animal is generally okay to share unless it is being used as a secret security answer."
-    },
-
-
-    {
-      icon:
-        "🧾",
-
-      text:
-        "A list of backup recovery codes",
-
-      answer:
-        "secret",
-
-      explanation:
-        "Recovery codes can be used to enter an account and must be protected."
-    },
-
-
-    {
-      icon:
+      accountIcon:
         "🎮",
 
-      text:
-        "The name of a favorite video game",
+      accountName:
+        "Gaming Account",
 
-      answer:
-        "share",
+      scenario:
+        "The account already uses a password. Choose a different second factor.",
 
-      explanation:
-        "A favorite game is usually safe to share, but it should not be used by itself as a password."
+      firstFactor:
+        "Password",
+
+      choices: [
+        {
+          icon:
+            "📱",
+
+          label:
+            "Changing code from an authenticator app",
+
+          factorType:
+            "have",
+
+          correct:
+            true,
+
+          explanation:
+            "The password is something the user knows. The trusted-device code is something the user has."
+        },
+
+        {
+          icon:
+            "🔑",
+
+          label:
+            "Type the same password a second time",
+
+          factorType:
+            "know",
+
+          correct:
+            false,
+
+          explanation:
+            "Typing the same password twice does not create two different authentication factors."
+        },
+
+        {
+          icon:
+            "👤",
+
+          label:
+            "Enter the account username again",
+
+          factorType:
+            "identity",
+
+          correct:
+            false,
+
+          explanation:
+            "A username identifies the account, but it is not a second security factor."
+        }
+      ]
     },
 
 
     {
-      icon:
+      accountIcon:
         "📧",
 
-      text:
-        "A password-reset link received by email",
+      accountName:
+        "Email Account",
 
-      answer:
-        "secret",
+      scenario:
+        "The account uses a passphrase. What could add a second protection layer?",
+
+      firstFactor:
+        "Passphrase",
+
+      choices: [
+        {
+          icon:
+            "🫆",
+
+          label:
+            "Fingerprint approval",
+
+          factorType:
+            "are",
+
+          correct:
+            true,
+
+          explanation:
+            "The passphrase is something the user knows. A fingerprint is something the user is."
+        },
+
+        {
+          icon:
+            "📝",
+
+          label:
+            "A second security question",
+
+          factorType:
+            "know",
+
+          correct:
+            false,
+
+          explanation:
+            "A security answer is still something the user knows, so it does not create a different factor category."
+        },
+
+        {
+          icon:
+            "📅",
+
+          label:
+            "Enter a birth year",
+
+          factorType:
+            "know",
+
+          correct:
+            false,
+
+          explanation:
+            "A birth year may be easy to discover and is not a strong second factor."
+        }
+      ]
+    },
+
+
+    {
+      accountIcon:
+        "🎓",
+
+      accountName:
+        "School Account",
+
+      scenario:
+        "The student signs in with a password. Choose the strongest additional factor.",
+
+      firstFactor:
+        "Password",
+
+      choices: [
+        {
+          icon:
+            "🔐",
+
+          label:
+            "Physical security key",
+
+          factorType:
+            "have",
+
+          correct:
+            true,
+
+          explanation:
+            "The key is a physical object the approved user possesses."
+        },
+
+        {
+          icon:
+            "🔁",
+
+          label:
+            "Enter the password again",
+
+          factorType:
+            "know",
+
+          correct:
+            false,
+
+          explanation:
+            "Repeating one factor does not create two-factor authentication."
+        },
+
+        {
+          icon:
+            "🎨",
+
+          label:
+            "Answer with a favorite color",
+
+          factorType:
+            "know",
+
+          correct:
+            false,
+
+          explanation:
+            "A favorite color is another knowledge-based answer and may be easy to guess."
+        }
+      ]
+    },
+
+
+    {
+      accountIcon:
+        "📱",
+
+      accountName:
+        "Tablet Account",
+
+      scenario:
+        "The tablet already requires a PIN. What could be used as the second factor?",
+
+      firstFactor:
+        "Device PIN",
+
+      choices: [
+        {
+          icon:
+            "🙂",
+
+          label:
+            "Approved face scan",
+
+          factorType:
+            "are",
+
+          correct:
+            true,
+
+          explanation:
+            "The PIN is something the user knows. A face scan is something the user is."
+        },
+
+        {
+          icon:
+            "🔢",
+
+          label:
+            "A second PIN",
+
+          factorType:
+            "know",
+
+          correct:
+            false,
+
+          explanation:
+            "Two PINs are still two examples of the same factor type."
+        },
+
+        {
+          icon:
+            "👥",
+
+          label:
+            "Tell a friend the PIN",
+
+          factorType:
+            "unsafe",
+
+          correct:
+            false,
+
+          explanation:
+            "Sharing the PIN weakens security instead of adding protection."
+        }
+      ]
+    },
+
+
+    {
+      accountIcon:
+        "🛒",
+
+      accountName:
+        "Shopping Account",
+
+      scenario:
+        "A login screen asks for a password and then sends a changing code to the trusted account owner’s device.",
+
+      firstFactor:
+        "Password",
+
+      choices: [
+        {
+          icon:
+            "✅",
+
+          label:
+            "Use the changing code on the official login screen",
+
+          factorType:
+            "have",
+
+          correct:
+            true,
+
+          explanation:
+            "The changing code adds possession of the trusted device as a second factor."
+        },
+
+        {
+          icon:
+            "💬",
+
+          label:
+            "Send the code to someone who messages asking for it",
+
+          factorType:
+            "unsafe",
+
+          correct:
+            false,
+
+          explanation:
+            "Verification codes should never be sent to another person through a message."
+        },
+
+        {
+          icon:
+            "📢",
+
+          label:
+            "Post the code online",
+
+          factorType:
+            "unsafe",
+
+          correct:
+            false,
+
+          explanation:
+            "A verification code can help unlock an account and must stay private."
+        }
+      ]
+    },
+
+
+    {
+      accountIcon:
+        "🎥",
+
+      accountName:
+        "Video Account",
+
+      scenario:
+        "The account uses a password. Which choice is not true two-factor authentication?",
+
+      firstFactor:
+        "Password",
+
+      choices: [
+        {
+          icon:
+            "🔁",
+
+          label:
+            "Password plus the same password typed again",
+
+          factorType:
+            "know",
+
+          correct:
+            true,
+
+          explanation:
+            "This is not true two-factor authentication because both steps use the same proof."
+        },
+
+        {
+          icon:
+            "📱",
+
+          label:
+            "Password plus authenticator approval",
+
+          factorType:
+            "have",
+
+          correct:
+            false,
+
+          explanation:
+            "This does use two different factors: knowledge and possession."
+        },
+
+        {
+          icon:
+            "🫆",
+
+          label:
+            "Password plus fingerprint",
+
+          factorType:
+            "are",
+
+          correct:
+            false,
+
+          explanation:
+            "This uses knowledge plus a biometric factor."
+        }
+      ],
+
+      reverseQuestion:
+        true
+    },
+
+
+    {
+      accountIcon:
+        "☁️",
+
+      accountName:
+        "Cloud Storage Account",
+
+      scenario:
+        "A stranger claims to be technical support and asks for the verification code.",
+
+      firstFactor:
+        "Password",
+
+      choices: [
+        {
+          icon:
+            "🛑",
+
+          label:
+            "Do not send the code and tell a trusted adult",
+
+          factorType:
+            "safe-response",
+
+          correct:
+            true,
+
+          explanation:
+            "Verification codes are secret. A legitimate helper should not ask for one through a message."
+        },
+
+        {
+          icon:
+            "📨",
+
+          label:
+            "Send the code because the person said they are support",
+
+          factorType:
+            "unsafe",
+
+          correct:
+            false,
+
+          explanation:
+            "Attackers often impersonate support workers to steal changing login codes."
+        },
+
+        {
+          icon:
+            "➗",
+
+          label:
+            "Send only half of the code",
+
+          factorType:
+            "unsafe",
+
+          correct:
+            false,
+
+          explanation:
+            "No part of a verification code should be shared."
+        }
+      ]
+    },
+
+
+    {
+      accountIcon:
+        "🏆",
+
+      accountName:
+        "Competition Account",
+
+      scenario:
+        "Choose the login setup that provides two different protection factors.",
+
+      firstFactor:
+        "Choose the full setup",
+
+      choices: [
+        {
+          icon:
+            "🧠📱",
+
+          label:
+            "Passphrase plus trusted-device approval",
+
+          factorType:
+            "know-have",
+
+          correct:
+            true,
+
+          explanation:
+            "The passphrase is something the user knows, while device approval is something the user has."
+        },
+
+        {
+          icon:
+            "🧠🧠",
+
+          label:
+            "Password plus security answer",
+
+          factorType:
+            "know-know",
+
+          correct:
+            false,
+
+          explanation:
+            "Both are knowledge factors."
+        },
+
+        {
+          icon:
+            "👤🔑",
+
+          label:
+            "Username plus password",
+
+          factorType:
+            "identifier-know",
+
+          correct:
+            false,
+
+          explanation:
+            "A username identifies the account. It is not a second authentication factor."
+        }
+      ]
+    }
+  ];
+
+
+  /* =====================================================
+     TRAINING 4 — ACCOUNT DEFENSE SIMULATOR
+  ===================================================== */
+
+  const accountDefenseScenarios = [
+    {
+      icon:
+        "💬",
+
+      title:
+        "Suspicious Code Request",
+
+      alert:
+        "Someone messages, “Send me the six-digit code that just appeared on your device.”",
+
+      choices: [
+        "Send the code",
+        "Stop responding and tell a trusted adult",
+        "Post the code in a group chat",
+        "Ask why they need it and then send it"
+      ],
+
+      correctIndex:
+        1,
 
       explanation:
-        "Password-reset links can give someone control of an account and should not be forwarded."
+        "Verification codes are secret. Stop responding and involve a trusted adult."
     },
 
 
     {
       icon:
-        "🎵",
+        "📱",
 
-      text:
-        "A favorite type of music",
+      title:
+        "Unknown Device Login",
 
-      answer:
-        "share",
+      alert:
+        "The account shows a login from a device the user does not recognize.",
+
+      choices: [
+        "Ignore the alert",
+        "Use the official app with a trusted adult and review active sessions",
+        "Message the unknown device",
+        "Post the alert online"
+      ],
+
+      correctIndex:
+        1,
 
       explanation:
-        "A general music preference is typically safe to share."
+        "The account should be checked through the official service. Unknown sessions may need to be signed out."
+    },
+
+
+    {
+      icon:
+        "🔁",
+
+      title:
+        "Reused Password Exposed",
+
+      alert:
+        "A password used on several accounts appears in a data breach.",
+
+      choices: [
+        "Change only the breached account",
+        "Change every account that reused the password",
+        "Keep using the password because it was strong",
+        "Add one number to the same password everywhere"
+      ],
+
+      correctIndex:
+        1,
+
+      explanation:
+        "Every account using the exposed password needs a new and completely different password."
+    },
+
+
+    {
+      icon:
+        "🔗",
+
+      title:
+        "Unexpected Reset Link",
+
+      alert:
+        "An email says the account must be reset immediately using a link.",
+
+      choices: [
+        "Click the link immediately",
+        "Open the official app or website directly with a trusted adult",
+        "Forward the link to friends",
+        "Reply with the current password"
+      ],
+
+      correctIndex:
+        1,
+
+      explanation:
+        "Do not trust an unexpected link. Go directly to the official account service."
+    },
+
+
+    {
+      icon:
+        "🚨",
+
+      title:
+        "Repeated Failed Logins",
+
+      alert:
+        "The account reports many failed login attempts.",
+
+      choices: [
+        "Do nothing",
+        "Review security with a trusted adult and strengthen the account",
+        "Post the password so friends can test it",
+        "Turn off account alerts"
+      ],
+
+      correctIndex:
+        1,
+
+      explanation:
+        "Repeated attempts may mean someone is guessing the password. Review the account, change weak passwords, and enable additional protection."
     },
 
 
@@ -475,132 +1180,39 @@
       icon:
         "🛡️",
 
-      text:
-        "A secret answer used to recover an account",
+      title:
+        "Account Recovered",
 
-      answer:
-        "secret",
+      alert:
+        "The password has been changed and unknown sessions have been removed. What should happen next?",
+
+      choices: [
+        "Turn on multifactor authentication",
+        "Reuse the old password later",
+        "Share the new password with friends",
+        "Disable security alerts"
+      ],
+
+      correctIndex:
+        0,
 
       explanation:
-        "Security answers can help unlock accounts and should be treated like passwords."
+        "Multifactor authentication adds another protection layer after the password."
     }
   ];
 
 
   /* =====================================================
-     ACCOUNT RESCUE STEPS
-
-     Training 4
-
-     The order is designed for a child working with a
-     trusted adult.
-  ===================================================== */
-
-  const accountRescueSteps = [
-    {
-      id:
-        "stop",
-
-      order:
-        1,
-
-      label:
-        "Stop responding to the suspicious person or message.",
-
-      explanation:
-        "Stopping contact prevents the person from collecting more information."
-    },
-
-
-    {
-      id:
-        "tell",
-
-      order:
-        2,
-
-      label:
-        "Tell a trusted adult what happened.",
-
-      explanation:
-        "A trusted adult can help check the account and guide the next steps."
-    },
-
-
-    {
-      id:
-        "official",
-
-      order:
-        3,
-
-      label:
-        "Open the official app or website directly.",
-
-      explanation:
-        "Do not use a link from the suspicious message. Go to the official source."
-    },
-
-
-    {
-      id:
-        "change",
-
-      order:
-        4,
-
-      label:
-        "Change the password to a new, unique password.",
-
-      explanation:
-        "A new password can block someone who learned or guessed the old one."
-    },
-
-
-    {
-      id:
-        "sessions",
-
-      order:
-        5,
-
-      label:
-        "Sign out unfamiliar devices or other active sessions.",
-
-      explanation:
-        "Signing out other sessions can remove unauthorized access."
-    },
-
-
-    {
-      id:
-        "mfa",
-
-      order:
-        6,
-
-      label:
-        "Turn on multifactor authentication when available.",
-
-      explanation:
-        "Multifactor authentication adds another protection step after the password."
-    }
-  ];
-
-
-  /* =====================================================
-     VAULT-DOOR CHALLENGES
-
-     Mixed practice after all four training rooms.
+     PASSWORD VAULT PRACTICE
   ===================================================== */
 
   const vaultChallenges = [
     {
       title:
-        "Vault Door 1: Stronger Password",
+        "Vault Door 1: Resist the Attack",
 
       text:
-        "Which pretend password is the safest choice?",
+        "Which pretend password would best resist common words, personal clues, and simple patterns?",
 
       icon:
         "🔐",
@@ -616,125 +1228,117 @@
         2,
 
       explanation:
-        "Cactus-Moon-Rocket-48 is longer, less predictable, and does not appear to contain personal information."
+        "Cactus-Moon-Rocket-48 is long, unpredictable, and does not contain obvious personal information."
     },
 
 
     {
       title:
-        "Vault Door 2: Password Reuse",
+        "Vault Door 2: Stop Password Reuse",
 
       text:
-        "A student uses the same password for email and gaming. What is the safest improvement?",
+        "A password stolen from a game account is also used for email. What is the safest response?",
 
       icon:
         "🔁",
 
       answers: [
-        "Add one extra number to the gaming password",
+        "Add one number to the email password",
         "Create a completely different password for each account",
-        "Use the same password but write it on a sticky note",
-        "Share the password with a friend for backup"
+        "Keep using the password because it is long",
+        "Share it with a friend for backup"
       ],
 
       correctIndex:
         1,
 
       explanation:
-        "Each important account should have a completely different password."
+        "Every important account should have its own password."
     },
 
 
     {
       title:
-        "Vault Door 3: Verification Code",
+        "Vault Door 3: Build Two Factors",
 
       text:
-        "Someone messages, “Send me the code that just appeared on your phone.” What should you do?",
+        "Which login uses two different authentication factors?",
+
+      icon:
+        "🛡️",
+
+      answers: [
+        "Password plus the same password again",
+        "Password plus a trusted-device authenticator code",
+        "Username plus password",
+        "Password plus a security question"
+      ],
+
+      correctIndex:
+        1,
+
+      explanation:
+        "A password is something the user knows. A trusted-device code is something the user has."
+    },
+
+
+    {
+      title:
+        "Vault Door 4: Protect the Code",
+
+      text:
+        "Someone messages asking for the changing login code. What should the student do?",
 
       icon:
         "🔢",
 
       answers: [
-        "Send the code quickly",
-        "Post the code in a group chat",
+        "Send the code",
+        "Send only part of the code",
         "Keep the code private and tell a trusted adult",
-        "Ask the person why they need it, then send it"
+        "Post it in a group chat"
       ],
 
       correctIndex:
         2,
 
       explanation:
-        "Verification codes are secret. A legitimate helper should not ask you to send one through a message."
+        "Changing login codes are secret and should never be sent through messages."
     },
 
 
     {
       title:
-        "Vault Door 4: Suspicious Login",
+        "Vault Door 5: Defend the Account",
 
       text:
-        "An account shows a login from an unfamiliar device. What should happen first?",
+        "An account shows an unfamiliar login. What is the safest action?",
 
       icon:
         "🚨",
 
       answers: [
         "Ignore it",
-        "Tell a trusted adult and open the official app or site",
+        "Use the official service with a trusted adult and review security",
         "Reply to the unfamiliar device",
-        "Post the warning online"
+        "Post the alert publicly"
       ],
 
       correctIndex:
         1,
 
       explanation:
-        "A child should involve a trusted adult and check the account through the official app or website."
-    },
-
-
-    {
-      title:
-        "Vault Door 5: Recovery Codes",
-
-      text:
-        "Where should backup recovery codes be kept?",
-
-      icon:
-        "🧾",
-
-      answers: [
-        "In a public social-media post",
-        "In a shared group chat",
-        "In a secure place managed with a trusted adult",
-        "Inside the account username"
-      ],
-
-      correctIndex:
-        2,
-
-      explanation:
-        "Recovery codes can unlock an account and should be stored securely with trusted-adult guidance."
+        "The account should be checked through the official app or website, and unknown sessions should be removed."
     }
   ];
 
 
   /* =====================================================
-     FINAL TEST QUESTIONS
-
-     20 questions:
-     - 5 password-strength questions
-     - 5 password-reuse questions
-     - 5 secret-code questions
-     - 5 account-rescue questions
+     FINAL TEST — 20 QUESTIONS
   ===================================================== */
 
   const finalTestQuestions = [
-    /* -------------------------------------------------
-       PASSWORD STRENGTH — 5
-    ------------------------------------------------- */
+    /* PASSWORD STRENGTH */
 
     {
       category:
@@ -744,7 +1348,7 @@
         "🧪",
 
       question:
-        "Which pretend password is generally safer?",
+        "Which pretend password would generally be more difficult to guess?",
 
       choices: [
         "cat123",
@@ -757,7 +1361,7 @@
         1,
 
       explanation:
-        "The longer, less predictable combination is safer than short common words or keyboard patterns."
+        "Long, unrelated word combinations are usually harder to guess than common words and sequences."
     },
 
 
@@ -769,20 +1373,20 @@
         "📅",
 
       question:
-        "Why is using a real name and birth year in a password risky?",
+        "Why is a real name combined with a birth year risky in a password?",
 
       choices: [
         "It is too long",
-        "The information may be easy to discover or guess",
+        "The information may be researched or guessed",
         "It contains letters",
-        "Websites do not allow names"
+        "Websites do not allow years"
       ],
 
       correctIndex:
         1,
 
       explanation:
-        "Names and birth years may be visible in profiles, posts, or records and can make a password easier to guess."
+        "Personal information may be discovered through profiles, posts, and conversations."
     },
 
 
@@ -797,17 +1401,17 @@
         "Is qwerty! automatically strong because it contains a symbol?",
 
       choices: [
-        "Yes, every symbol makes a password strong",
+        "Yes",
         "No, qwerty is still a common keyboard pattern",
         "Yes, because it is easy to remember",
-        "Yes, because it has more than five characters"
+        "Yes, because it contains six letters"
       ],
 
       correctIndex:
         1,
 
       explanation:
-        "A symbol does not fix a common and predictable keyboard pattern."
+        "A symbol does not fix a common keyboard pattern."
     },
 
 
@@ -822,17 +1426,17 @@
         "What is one useful feature of a strong passphrase?",
 
       choices: [
-        "It uses several unrelated words",
-        "It contains a real home address",
-        "It is the same as the username",
-        "It is only four characters long"
+        "Several unrelated words",
+        "A home address",
+        "The account username",
+        "Only four characters"
       ],
 
       correctIndex:
         0,
 
       explanation:
-        "Several unrelated words can create a longer and less predictable passphrase."
+        "Several unrelated words can create a long and less predictable passphrase."
     },
 
 
@@ -849,7 +1453,7 @@
       choices: [
         "A real email password",
         "A real school password",
-        "A pretend password created only for practice",
+        "A pretend password made only for practice",
         "A parent’s password"
       ],
 
@@ -857,275 +1461,269 @@
         2,
 
       explanation:
-        "Students should never enter a real password into a practice activity."
+        "Real passwords should never be entered into a training activity."
     },
 
 
-    /* -------------------------------------------------
-       PASSWORD REUSE — 5
-    ------------------------------------------------- */
+    /* PASSWORD ATTACKS */
 
     {
       category:
-        "reuse",
+        "attacks",
+
+      icon:
+        "📖",
+
+      question:
+        "What does a dictionary attack try?",
+
+      choices: [
+        "Common words and common password combinations",
+        "Only fingerprints",
+        "Only usernames",
+        "Only account pictures"
+      ],
+
+      correctIndex:
+        0,
+
+      explanation:
+        "Dictionary attacks test lists of words and commonly used passwords."
+    },
+
+
+    {
+      category:
+        "attacks",
+
+      icon:
+        "🤖",
+
+      question:
+        "What happens during a brute-force attack?",
+
+      choices: [
+        "A computer tries many possible combinations",
+        "A trusted adult resets the account",
+        "A user writes a password down",
+        "A website changes its logo"
+      ],
+
+      correctIndex:
+        0,
+
+      explanation:
+        "Brute-force attacks systematically try many possible passwords."
+    },
+
+
+    {
+      category:
+        "attacks",
+
+      icon:
+        "🔎",
+
+      question:
+        "Which information could help an attacker perform a personal-clue attack?",
+
+      choices: [
+        "A real name, birthday, pet, or favorite team",
+        "A random unrelated phrase",
+        "A physical security key",
+        "A changing authenticator code"
+      ],
+
+      correctIndex:
+        0,
+
+      explanation:
+        "Public personal details can provide clues for guessing passwords."
+    },
+
+
+    {
+      category:
+        "attacks",
 
       icon:
         "🔁",
 
       question:
-        "Why is reusing one password across several accounts risky?",
+        "Why is password reuse dangerous?",
 
       choices: [
-        "It makes the password too long",
         "One stolen password could open several accounts",
-        "It prevents the account from loading",
-        "It changes the username"
+        "It makes usernames longer",
+        "It prevents the internet from working",
+        "It changes the device screen"
       ],
 
       correctIndex:
-        1,
+        0,
 
       explanation:
-        "If one website is compromised, attackers may try the stolen password on other accounts."
+        "Attackers may test a stolen password on other services."
     },
 
 
     {
       category:
-        "reuse",
+        "attacks",
 
       icon:
-        "🎮",
+        "🧩",
 
       question:
-        "A student uses Rocket77 for gaming and Rocket78 for email. What is the problem?",
+        "Why is P@ssw0rd! still weak?",
 
       choices: [
-        "The passwords are completely unrelated",
-        "The passwords follow nearly the same pattern",
-        "The passwords are too long",
-        "There is no problem"
+        "Attackers know common substitutions",
+        "It contains a symbol",
+        "It contains uppercase letters",
+        "It is impossible to type"
       ],
 
       correctIndex:
-        1,
+        0,
 
       explanation:
-        "Changing only one number creates nearly the same password and is not a strong unique-password habit."
+        "Replacing a few letters in a common word follows a predictable pattern."
     },
 
 
+    /* TWO-FACTOR AUTHENTICATION */
+
     {
       category:
-        "reuse",
+        "two-factor",
 
       icon:
-        "🗝️",
+        "🛡️",
 
       question:
-        "What is the safest password plan for three important accounts?",
+        "Which login uses two different factors?",
 
       choices: [
-        "Use one password for all three",
-        "Use three different passwords",
-        "Use the username as the password",
-        "Use the word password for all three"
+        "Password plus trusted-device approval",
+        "Password entered twice",
+        "Username plus password",
+        "Password plus a security answer"
       ],
 
       correctIndex:
-        1,
+        0,
 
       explanation:
-        "Each important account should use a different password."
+        "A password is knowledge. Trusted-device approval is possession."
     },
 
 
     {
       category:
-        "reuse",
+        "two-factor",
 
       icon:
-        "🧰",
+        "🧠",
 
       question:
-        "How can a trusted adult help manage many unique passwords?",
+        "A password belongs to which authentication category?",
 
       choices: [
-        "Post them online",
-        "Use a trusted password manager",
-        "Send them in group chats",
-        "Use one easy password everywhere"
+        "Something you know",
+        "Something you have",
+        "Something you are",
+        "Something you post"
       ],
 
       correctIndex:
-        1,
+        0,
 
       explanation:
-        "A trusted password manager can help families securely create and store unique passwords."
+        "Passwords, passphrases, and PINs are things the user knows."
     },
 
 
     {
       category:
-        "reuse",
+        "two-factor",
 
       icon:
-        "📄",
+        "📱",
 
       question:
-        "Where should passwords not be stored?",
+        "An authenticator app on a trusted device is usually what type of factor?",
 
       choices: [
-        "In a trusted password manager",
-        "In a secure place managed with an adult",
-        "On a public sticky note beside the computer",
-        "In an approved secure system"
+        "Something you have",
+        "Something you know",
+        "Something you post",
+        "Something public"
       ],
 
       correctIndex:
-        2,
+        0,
 
       explanation:
-        "A visible sticky note can expose passwords to anyone nearby."
+        "The trusted device is something the user possesses."
     },
 
 
-    /* -------------------------------------------------
-       SECRET CODES — 5
-    ------------------------------------------------- */
+    {
+      category:
+        "two-factor",
+
+      icon:
+        "🫆",
+
+      question:
+        "A fingerprint is which type of factor?",
+
+      choices: [
+        "Something you are",
+        "Something you know",
+        "Something you type twice",
+        "Something public"
+      ],
+
+      correctIndex:
+        0,
+
+      explanation:
+        "Biometric checks are based on something the user is."
+    },
+
 
     {
       category:
-        "codes",
+        "two-factor",
 
       icon:
         "🔢",
 
       question:
-        "Who should receive a verification code sent to your device?",
+        "What should happen when someone messages asking for a verification code?",
 
       choices: [
-        "A stranger claiming to be support",
-        "A friend in a game",
-        "No one through a message",
-        "Anyone who asks politely"
-      ],
-
-      correctIndex:
-        2,
-
-      explanation:
-        "Verification codes should not be sent to other people through messages."
-    },
-
-
-    {
-      category:
-        "codes",
-
-      icon:
-        "📌",
-
-      question:
-        "How should a device PIN be treated?",
-
-      choices: [
-        "Like public information",
-        "Like secret account information",
-        "Like a favorite color",
-        "Like a game score"
-      ],
-
-      correctIndex:
-        1,
-
-      explanation:
-        "A device PIN protects access and should remain private."
-    },
-
-
-    {
-      category:
-        "codes",
-
-      icon:
-        "🧾",
-
-      question:
-        "What can backup recovery codes do?",
-
-      choices: [
-        "Decorate a profile",
-        "Help unlock an account",
-        "Change a favorite color",
-        "Increase a game score"
-      ],
-
-      correctIndex:
-        1,
-
-      explanation:
-        "Recovery codes can provide account access and must be stored securely."
-    },
-
-
-    {
-      category:
-        "codes",
-
-      icon:
-        "📨",
-
-      question:
-        "A message says, “I work for the game company. Send your password so I can fix the account.” What should you do?",
-
-      choices: [
-        "Send the password",
-        "Send only half the password",
-        "Do not send it and tell a trusted adult",
-        "Post the password publicly"
-      ],
-
-      correctIndex:
-        2,
-
-      explanation:
-        "Legitimate support workers should not ask a child to send a password through a message."
-    },
-
-
-    {
-      category:
-        "codes",
-
-      icon:
-        "🔗",
-
-      question:
-        "How should a password-reset link be treated?",
-
-      choices: [
-        "Share it with friends",
+        "Keep it private and tell a trusted adult",
+        "Send it immediately",
         "Post it online",
-        "Keep it private and use it only through the official account process",
-        "Forward it to strangers"
+        "Send half of it"
       ],
 
       correctIndex:
-        2,
+        0,
 
       explanation:
-        "Password-reset links can provide control of an account and should remain private."
+        "Verification codes can unlock accounts and must remain private."
     },
 
 
-    /* -------------------------------------------------
-       ACCOUNT RESCUE — 5
-    ------------------------------------------------- */
+    /* ACCOUNT DEFENSE */
 
     {
       category:
-        "rescue",
+        "defense",
 
       icon:
         "🛑",
@@ -1134,73 +1732,73 @@
         "What should a child do first after receiving a suspicious request for a login code?",
 
       choices: [
-        "Send the code",
         "Stop responding",
-        "Delete the whole account immediately",
-        "Post the request online"
+        "Send the code",
+        "Post the request publicly",
+        "Disable all security alerts"
       ],
 
       correctIndex:
-        1,
+        0,
 
       explanation:
-        "Stopping the conversation prevents the person from gathering more information."
+        "Stopping contact prevents the suspicious person from collecting more information."
     },
 
 
     {
       category:
-        "rescue",
+        "defense",
 
       icon:
         "🤝",
 
       question:
-        "Who should help a child respond to a compromised account?",
+        "Who should help a child respond to a possibly compromised account?",
 
       choices: [
-        "An unknown online player",
         "A trusted adult",
+        "An unknown online player",
         "The suspicious account",
         "A random follower"
       ],
 
       correctIndex:
-        1,
+        0,
 
       explanation:
-        "A trusted adult can help verify the problem and guide recovery."
+        "A trusted adult can help verify the problem and guide account recovery."
     },
 
 
     {
       category:
-        "rescue",
+        "defense",
 
       icon:
         "🌐",
 
       question:
-        "How should you reach an account after receiving a suspicious link?",
+        "How should an account be checked after receiving a suspicious link?",
 
       choices: [
+        "Open the official app or website directly",
         "Use the suspicious link",
-        "Open the official app or type the official website address",
-        "Ask the stranger for another link",
+        "Ask the sender for another link",
         "Forward the link to friends"
       ],
 
       correctIndex:
-        1,
+        0,
 
       explanation:
-        "Going directly to the official app or website avoids using a potentially fake link."
+        "Going directly to the official service avoids a potentially fake link."
     },
 
 
     {
       category:
-        "rescue",
+        "defense",
 
       icon:
         "📱",
@@ -1210,47 +1808,47 @@
 
       choices: [
         "To remove devices that may have unauthorized access",
-        "To change the profile picture",
-        "To increase storage space",
-        "To make the password shorter"
+        "To make the username shorter",
+        "To increase game points",
+        "To change the profile picture"
       ],
 
       correctIndex:
         0,
 
       explanation:
-        "Signing out unfamiliar sessions can remove someone who is already inside the account."
+        "An unfamiliar session may represent someone already inside the account."
     },
 
 
     {
       category:
-        "rescue",
+        "defense",
 
       icon:
-        "🛡️",
+        "🔁",
 
       question:
-        "What does multifactor authentication add?",
+        "A reused password is exposed in a breach. What should happen?",
 
       choices: [
-        "A second protection step",
-        "A public password",
-        "A shorter username",
-        "A social-media post"
+        "Replace it everywhere it was reused",
+        "Keep using it",
+        "Add the same number to every copy",
+        "Share it with friends"
       ],
 
       correctIndex:
         0,
 
       explanation:
-        "Multifactor authentication requires another verification step in addition to the password."
+        "Every account using the exposed password needs a new and unique password."
     }
   ];
 
 
   /* =====================================================
-     PUBLIC DATA OBJECT
+     PUBLIC MISSION DATA
   ===================================================== */
 
   mission.data = {
@@ -1258,21 +1856,16 @@
 
     commonPasswordWords,
 
-    /*
-      Keep the older name too so either analyzer version
-      can read the same list.
-    */
-
     bannedWords:
       commonPasswordWords,
 
     weakSequences,
 
-    uniquePasswordHabits,
+    passwordAttackChallenges,
 
-    codeKeeperItems,
+    twoFactorScenarios,
 
-    accountRescueSteps,
+    accountDefenseScenarios,
 
     vaultChallenges,
 
@@ -1281,19 +1874,19 @@
 
 
   console.log(
-    "Password Safe Keeper data loaded:",
+    "Password Safe Keeper curriculum data loaded:",
     {
       comparisonChallenges:
         comparisonChallenges.length,
 
-      uniquePasswordHabits:
-        uniquePasswordHabits.length,
+      passwordAttackChallenges:
+        passwordAttackChallenges.length,
 
-      codeKeeperItems:
-        codeKeeperItems.length,
+      twoFactorScenarios:
+        twoFactorScenarios.length,
 
-      accountRescueSteps:
-        accountRescueSteps.length,
+      accountDefenseScenarios:
+        accountDefenseScenarios.length,
 
       vaultChallenges:
         vaultChallenges.length,
