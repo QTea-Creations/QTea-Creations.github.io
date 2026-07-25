@@ -4692,3 +4692,449 @@ body.handle-page button {
     margin-right: auto !important;
   }
 }
+
+/* =========================================================
+   FINAL FACTORY OVERLAP REPAIR
+   KEEP THIS AS THE LAST CODE IN handle-with-care.css
+========================================================= */
+
+/* ---------------------------------------------------------
+   FACTORY BASE
+--------------------------------------------------------- */
+
+.handle-factory {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.factory-background-grid,
+.factory-background-glow {
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   FACTORY LANES
+--------------------------------------------------------- */
+
+.factory-lane {
+  position: absolute !important;
+  overflow: visible !important;
+  z-index: 10 !important;
+}
+
+/*
+  Keep the purple lane title bar above the conveyor,
+  moving pieces, and ladder rails.
+*/
+
+.factory-lane > header {
+  position: relative !important;
+  z-index: 50 !important;
+
+  display: flex !important;
+  align-items: center !important;
+
+  min-height: 44px !important;
+
+  overflow: hidden !important;
+}
+
+
+/* ---------------------------------------------------------
+   CONVEYOR AREA
+--------------------------------------------------------- */
+
+.factory-conveyor {
+  position: relative !important;
+  z-index: 12 !important;
+
+  width: 100% !important;
+  height: calc(100% - 48px) !important;
+  min-height: 72px !important;
+
+  overflow: hidden !important;
+}
+
+.factory-belt-pattern {
+  position: absolute !important;
+  inset: 0 !important;
+
+  z-index: 1 !important;
+
+  pointer-events: none !important;
+}
+
+.lane-platform {
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   MOVING-PIECE LAYER
+--------------------------------------------------------- */
+
+/*
+  This layer must stay completely inside the conveyor.
+  It should not extend into the purple title bar.
+*/
+
+.factory-piece-layer {
+  position: absolute !important;
+
+  left: 0 !important;
+  right: 0 !important;
+
+  top: 0 !important;
+  bottom: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  z-index: 20 !important;
+
+  pointer-events: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   MOVING PIECES
+--------------------------------------------------------- */
+
+.factory-moving-piece {
+  position: absolute !important;
+
+  top: 50% !important;
+  bottom: auto !important;
+
+  transform:
+    translate(-50%, -50%) !important;
+
+  display: grid !important;
+  grid-template-columns: auto 1fr !important;
+  grid-template-rows: auto auto !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  column-gap: 7px !important;
+  row-gap: 1px !important;
+
+  width: max-content !important;
+  min-width: 118px !important;
+  max-width: 175px !important;
+
+  height: auto !important;
+  min-height: 54px !important;
+  max-height: 64px !important;
+
+  margin: 0 !important;
+  padding: 7px 12px !important;
+
+  border-radius: 13px !important;
+
+  overflow: hidden !important;
+
+  z-index: 22 !important;
+
+  pointer-events: auto !important;
+}
+
+.factory-moving-piece > span {
+  grid-column: 1 !important;
+  grid-row: 1 / 3 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 20px !important;
+  line-height: 1 !important;
+}
+
+.factory-moving-piece > strong {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.factory-moving-piece > small {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* ---------------------------------------------------------
+   SAFE AND PRIVATE PIECES
+--------------------------------------------------------- */
+
+.factory-moving-piece.creative-piece {
+  border: 4px solid #22d3ee !important;
+  background: #ffffff !important;
+  color: #172554 !important;
+}
+
+.factory-moving-piece.private-piece {
+  border: 4px solid #fb7185 !important;
+  background: #fff1f2 !important;
+  color: #881337 !important;
+}
+
+
+/* ---------------------------------------------------------
+   LADDERS
+--------------------------------------------------------- */
+
+/*
+  Ladders should appear behind the player and pieces.
+  They should never cover text or cards.
+*/
+
+.factory-ladder {
+  z-index: 8 !important;
+  pointer-events: none !important;
+}
+
+.factory-ladder span {
+  z-index: 8 !important;
+}
+
+
+/* ---------------------------------------------------------
+   PLAYER
+--------------------------------------------------------- */
+
+.factory-worker {
+  position: absolute !important;
+
+  z-index: 70 !important;
+
+  overflow: visible !important;
+}
+
+.factory-worker-character {
+  position: relative !important;
+
+  z-index: 72 !important;
+}
+
+
+/* ---------------------------------------------------------
+   CARRIED PIECES
+--------------------------------------------------------- */
+
+.factory-worker .carried-item-bubble {
+  position: absolute !important;
+
+  left: calc(100% + 12px) !important;
+  right: auto !important;
+
+  top: 50% !important;
+  bottom: auto !important;
+
+  transform:
+    translateY(-50%) !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+
+  width: max-content !important;
+  min-width: 0 !important;
+  max-width: 180px !important;
+
+  height: auto !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+
+  overflow: visible !important;
+
+  z-index: 90 !important;
+
+  pointer-events: none !important;
+}
+
+.factory-worker .carried-item-bubble.hidden {
+  display: none !important;
+}
+
+.factory-worker .carried-stack-list {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+
+  gap: 6px !important;
+
+  width: max-content !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.factory-worker .carried-stack-piece {
+  position: relative !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  gap: 6px !important;
+
+  width: max-content !important;
+  min-width: 112px !important;
+  max-width: 175px !important;
+
+  min-height: 34px !important;
+
+  margin: 0 !important;
+  padding: 7px 9px !important;
+
+  border: 2px solid #ffffff !important;
+  border-radius: 10px !important;
+
+  background: #ffffff !important;
+  color: #172554 !important;
+
+  box-shadow:
+    0 5px 12px rgba(15, 23, 42, 0.28) !important;
+
+  transform: none !important;
+
+  white-space: nowrap !important;
+}
+
+.factory-worker
+.carried-stack-piece
++
+.carried-stack-piece {
+  margin-top: 0 !important;
+  transform: none !important;
+}
+
+.factory-worker .active-carried-piece {
+  border-color: #facc15 !important;
+  background: #fffbea !important;
+
+  box-shadow:
+    0 0 0 3px rgba(250, 204, 21, 0.28),
+    0 5px 12px rgba(15, 23, 42, 0.28) !important;
+}
+
+.factory-worker .carried-stack-switch {
+  width: max-content !important;
+
+  margin: 5px 0 0 !important;
+  padding: 5px 8px !important;
+
+  border-radius: 999px !important;
+
+  background: #172554 !important;
+  color: #ffffff !important;
+
+  font-size: 8px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+
+  white-space: nowrap !important;
+}
+
+
+/* ---------------------------------------------------------
+   TUTORIAL CARD
+--------------------------------------------------------- */
+
+.factory-tutorial-card {
+  z-index: 120 !important;
+}
+
+
+/* ---------------------------------------------------------
+   MACHINE ROW
+--------------------------------------------------------- */
+
+.factory-machine-row {
+  position: absolute !important;
+  z-index: 30 !important;
+
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+
+/* ---------------------------------------------------------
+   NARROW-SCREEN POSITIONING
+--------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .factory-moving-piece {
+    min-width: 104px !important;
+    max-width: 145px !important;
+
+    min-height: 50px !important;
+
+    padding: 6px 9px !important;
+  }
+
+  .factory-moving-piece > strong {
+    font-size: 10px !important;
+  }
+
+  .factory-worker .carried-item-bubble {
+    left: 50% !important;
+    right: auto !important;
+
+    top: auto !important;
+    bottom: calc(100% + 8px) !important;
+
+    transform:
+      translateX(-50%) !important;
+  }
+
+  .factory-worker .carried-stack-list {
+    align-items: center !important;
+  }
+
+  .factory-worker .carried-stack-switch {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
