@@ -611,22 +611,44 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       beginNormalOrder(0);
     }
-     const tutorialSteps = [
+
+     
+const tutorialSteps = [
   {
-    title: "Walk to the Wacky piece",
-    message: "Use A and D or the left and right arrow keys.",
+    title: "Walk to Wacky",
+    message:
+      "Wacky is on the middle Character Line. Use A and D or the arrow keys to reach it.",
     control: "⬅️ ➡️"
   },
   {
-    title: "Pick it up",
-    message: "Stand close to Wacky and press E.",
+    title: "Pick up Wacky",
+    message:
+      "Stand close to Wacky and press E.",
     control: "E"
   },
   {
-    title: "Carry it to the mixer",
+    title: "Pick up Panda too",
     message:
-      "Climb down, walk to the Username Mixer, and press E.",
+      "Keep carrying Wacky. Walk to Panda and press E to stack a second piece.",
+    control: "E + E"
+  },
+  {
+    title: "Switch your active piece",
+    message:
+      "Press Q to switch which carried piece is placed first.",
+    control: "Q"
+  },
+  {
+    title: "Place both pieces",
+    message:
+      "Carry Wacky and Panda to the Username Mixer. Press E twice to place both.",
     control: "⚙️"
+  },
+  {
+    title: "Add Bounce",
+    message:
+      "Pick up Bounce from the Character Line and place it in the mixer.",
+    control: "✨"
   },
   {
     title: "Block private information",
@@ -635,21 +657,15 @@ document.addEventListener("DOMContentLoaded", () => {
     control: "🚫"
   },
   {
-    title: "Fill the remaining slots",
-    message:
-      "Collect Panda and Bounce and place them in the mixer.",
-    control: "✨"
-  },
-  {
     title: "Mix the username",
     message:
       "Stand at the mixer with empty hands and press E.",
     control: "⚙️"
   },
   {
-    title: "Collect and inspect the package",
+    title: "Collect and inspect",
     message:
-      "Press E at the mixer to collect the package. Carry it to Final Inspection and press E.",
+      "Collect the finished package from the mixer and take it to Final Inspection.",
     control: "📦 ➜ 🔍"
   },
   {
@@ -659,13 +675,12 @@ document.addEventListener("DOMContentLoaded", () => {
     control: "F ❄️"
   },
   {
-    title: "Collect and ship it",
+    title: "Collect and ship",
     message:
-      "Press E at Final Inspection to collect the approved package. Carry it to Ship It and press E.",
+      "Collect the approved package from Final Inspection and take it to Ship It.",
     control: "📦 ➜ 🚀"
   }
 ];
-  }
 
   function configureControls() {
     const usesButtons =
@@ -726,7 +741,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderOrder();
 
     workerX = 12;
-    workerY = floorLevels.laneOne;
+    workerY = floorLevels.laneTwo;
 
     updateWorker();
 
@@ -774,6 +789,11 @@ function pulseTutorialTarget(element) {
 function runTutorialStep() {
   const step = tutorialSteps[tutorialStep];
 
+  if (!step) {
+    completeTutorial();
+    return;
+  }
+
   clearTutorialTargetPulses();
 
   setText(
@@ -781,24 +801,42 @@ function runTutorialStep() {
     `Tutorial ${tutorialStep + 1} of ${tutorialSteps.length}`
   );
 
-  setText("tutorialStepTitle", step.title);
-  setText("tutorialStepMessage", step.message);
-  setText("tutorialControlIcon", step.control);
+  setText(
+    "tutorialStepTitle",
+    step.title
+  );
+
+  setText(
+    "tutorialStepMessage",
+    step.message
+  );
+
+  setText(
+    "tutorialControlIcon",
+    step.control
+  );
 
   switch (tutorialStep) {
-    case 0:
-      tutorialTargetPiece = createPiece("one", {
-        text: "Wacky",
-        category: "style",
-        unsafe: false,
-        fixedX: 54,
-        tutorial: true
-      });
+    case 0: {
+      clearPieces();
+
+      tutorialTargetPiece = createPiece(
+        "two",
+        {
+          text: "Wacky",
+          category: "style",
+          unsafe: false,
+          fixedX: 42,
+          tutorial: true
+        }
+      );
 
       pulseTutorialTarget(
         tutorialTargetPiece?.element
       );
+
       break;
+    }
 
     case 1:
       pulseTutorialTarget(
@@ -806,94 +844,110 @@ function runTutorialStep() {
       );
       break;
 
-    case 2:
-      pulseTutorialTarget(mixerStation);
-      break;
-
-    case 3:
-      tutorialTargetPiece = createPiece("one", {
-        text: "Home Address",
-        category: "unsafe",
-        unsafe: true,
-        reason:
-          "A home address is private location information.",
-        fixedX: 52,
-        tutorial: true
-      });
+    case 2: {
+      const pandaPiece = createPiece(
+        "two",
+        {
+          text: "Panda",
+          category: "animal",
+          unsafe: false,
+          fixedX: 62,
+          tutorial: true
+        }
+      );
 
       pulseTutorialTarget(
-        tutorialTargetPiece?.element
+        pandaPiece?.element
+      );
+
+      break;
+    }
+
+    case 3:
+      pulseTutorialTarget(
+        carriedItemBubble
       );
       break;
 
     case 4:
-      if (
-        !activePieces.some(
-          (piece) =>
-            piece.data.text === "Panda"
-        )
-      ) {
-        const pandaPiece = createPiece("two", {
-          text: "Panda",
-          category: "animal",
-          unsafe: false,
-          fixedX: 40,
-          tutorial: true
-        });
+      pulseTutorialTarget(
+        mixerStation
+      );
+      break;
 
-        const bouncePiece = createPiece("three", {
+    case 5: {
+      const bouncePiece = createPiece(
+        "two",
+        {
           text: "Bounce",
           category: "action",
           unsafe: false,
-          fixedX: 64,
+          fixedX: 52,
           tutorial: true
-        });
+        }
+      );
 
-        unlockLanes(3);
+      pulseTutorialTarget(
+        bouncePiece?.element
+      );
 
-        pulseTutorialTarget(
-          pandaPiece?.element
-        );
+      break;
+    }
 
-        pulseTutorialTarget(
-          bouncePiece?.element
-        );
-      }
+    case 6: {
+      const privatePiece = createPiece(
+        "two",
+        {
+          text: "Home Address",
+          category: "unsafe",
+          unsafe: true,
+          reason:
+            "A home address is private location information.",
+          fixedX: 52,
+          tutorial: true
+        }
+      );
+
+      pulseTutorialTarget(
+        privatePiece?.element
+      );
+
+      break;
+    }
+
+    case 7:
+      pulseTutorialTarget(
+        mixerStation
+      );
       break;
 
-    case 5:
-      pulseTutorialTarget(mixerStation);
+    case 8:
+      pulseTutorialTarget(
+        mixerStation
+      );
       break;
 
-    case 6:
-      /*
-        The mixer pulses first because the player
-        must collect the completed package there.
-      */
-      pulseTutorialTarget(mixerStation);
+    case 9: {
+      timeFreezeCharge = 100;
+      updateHUD();
+
+      const freezeTarget =
+        byId("freezeButton") ||
+        byId("timeFreezeFill")
+          ?.closest(".time-freeze-panel");
+
+      pulseTutorialTarget(
+        freezeTarget
+      );
+
       break;
+    }
 
-case 7: {
-  const freezeTarget =
-    byId("freezeButton") ||
-    byId("timeFreezeFill")
-      ?.closest(".time-freeze-panel");
-
-  timeFreezeCharge = 100;
-  updateHUD();
-
-  pulseTutorialTarget(
-    freezeTarget
-  );
-
-  break;
-}
-
-case 8:
-  pulseTutorialTarget(
-    scannerStation
-  );
-  break;
+    case 10:
+      pulseTutorialTarget(
+        scannerStation
+      );
+      break;
 
     default:
       break;
