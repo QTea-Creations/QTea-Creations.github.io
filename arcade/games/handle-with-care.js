@@ -2375,149 +2375,108 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  function updateCarriedItem() {
-    syncCarriedItem();
+ function updateCarriedItem() {
+  syncCarriedItem();
 
-    if (
-      !carriedItems.length
-    ) {
-      hide(
-        carriedItemBubble
-      );
-
-      return;
-    }
-
-    show(
-      carriedItemBubble
+  if (!carriedItems.length) {
+    hide(carriedItemBubble);
+    carriedItemBubble?.classList.remove(
+      "two-item-carry-stack"
     );
-
-    carriedItemBubble.style.zIndex =
-      "90";
-
-    carriedItemBubble.style.overflow =
-      "visible";
-
-    carriedItemBubble.setAttribute(
-      "aria-label",
-      `Carrying ${
-        carriedItems
-          .map(
-            (item) =>
-              item.text
-          )
-          .join(
-            " and "
-          )
-      }`
-    );
-
-    carriedItemBubble.innerHTML =
-      carriedItems
-        .map(
-          (
-            item,
-            index
-          ) => {
-            const active =
-              index ===
-              activeCarriedIndex;
-
-            const icon =
-              item.package
-                ? "📦"
-                : item.unsafe
-                  ? "⚠️"
-                  : "✨";
-
-            return `
-              <span
-                class="carried-stack-piece${
-                  active
-                    ? " active-carried-piece"
-                    : ""
-                }"
-                style="
-                  display:flex;
-                  align-items:center;
-                  justify-content:center;
-                  gap:5px;
-                  min-width:92px;
-                  padding:5px 8px;
-                  margin-top:${
-                    index === 0
-                      ? "0"
-                      : "-3px"
-                  };
-                  border:2px solid ${
-                    active
-                      ? "#facc15"
-                      : "rgba(255,255,255,.8)"
-                  };
-                  border-radius:10px;
-                  background:${
-                    active
-                      ? "#ffffff"
-                      : "#eef2ff"
-                  };
-                  color:#172554;
-                  box-shadow:0 5px 12px rgba(15,23,42,.25);
-                  transform:translateY(${
-                    -index * 4
-                  }px);
-                "
-              >
-                <span aria-hidden="true">
-                  ${icon}
-                </span>
-
-                <strong>
-                  ${item.text}
-                </strong>
-              </span>
-            `;
-          }
-        )
-        .join("");
-
-    if (
-      carriedItems.length ===
-      2
-    ) {
-      carriedItemBubble.insertAdjacentHTML(
-        "beforeend",
-        `
-          <small
-            style="
-              display:block;
-              margin-top:2px;
-              font-weight:800;
-            "
-          >
-            Q: switch active piece
-          </small>
-        `
-      );
-    }
-
-    if (
-      carriedItemText
-    ) {
-      carriedItemText.textContent =
-        carriedItem.text;
-    }
-
-    if (
-      carriedItemIcon
-    ) {
-      carriedItemIcon.textContent =
-        carriedItem.package
-          ? "📦"
-          : carriedItem.unsafe
-            ? "⚠️"
-            : "✨";
-    }
+    return;
   }
+
+  show(carriedItemBubble);
+
+  carriedItemBubble.classList.toggle(
+    "two-item-carry-stack",
+    carriedItems.length === 2
+  );
+
+  carriedItemBubble.setAttribute(
+    "aria-label",
+    `Carrying ${carriedItems
+      .map((item) => item.text)
+      .join(" and ")}`
+  );
+
+  carriedItemBubble.innerHTML = `
+    <div class="carried-stack-list">
+      ${carriedItems
+        .map((item, index) => {
+          const isActive =
+            index === activeCarriedIndex;
+
+          const icon =
+            item.package
+              ? "📦"
+              : item.unsafe
+                ? "⚠️"
+                : "✨";
+
+          return `
+            <div
+              class="carried-stack-piece ${
+                isActive
+                  ? "active-carried-piece"
+                  : ""
+              }"
+            >
+              <span
+                class="carried-stack-icon"
+                aria-hidden="true"
+              >
+                ${icon}
+              </span>
+
+              <strong>
+                ${item.text}
+              </strong>
+
+              ${
+                isActive
+                  ? `
+                    <small class="active-piece-label">
+                      ACTIVE
+                    </small>
+                  `
+                  : ""
+              }
+            </div>
+          `;
+        })
+        .join("")}
+    </div>
+
+    ${
+      carriedItems.length === 2
+        ? `
+          <div class="carried-stack-switch">
+            Q — Switch active piece
+          </div>
+        `
+        : ""
+    }
+  `;
+
+  carriedItem =
+    carriedItems[activeCarriedIndex];
+
+  if (carriedItemText) {
+    carriedItemText.textContent =
+      carriedItem.text;
+  }
+
+  if (carriedItemIcon) {
+    carriedItemIcon.textContent =
+      carriedItem.package
+        ? "📦"
+        : carriedItem.unsafe
+          ? "⚠️"
+          : "✨";
+  }
+}
+   
    function isWrongTutorialDestination(station) {
   if (
     !tutorialActive ||
