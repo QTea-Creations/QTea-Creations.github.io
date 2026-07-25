@@ -1659,10 +1659,10 @@ function bindNotebookTabs() {
     updatePasswordAction();
   }
 
+/* =====================================================
+   INITIALIZATION
+===================================================== */
 
-  /* =====================================================
-     INITIALIZATION
-  ===================================================== */
 function installBadgeImageFallbacks() {
   document
     .querySelectorAll(
@@ -1722,105 +1722,86 @@ function installBadgeImageFallbacks() {
       }
     );
 }
-  function initializeNotebook() {
-   installBadgeImageFallbacks();
-    bindNotebookTabs();
-window.addEventListener(
-  "hashchange",
-  () => {
-    if (
-      window.location.hash ===
-      "#password"
-    ) {
-      activateNotebookPage(
-        "passwordNotebookPage",
-        false
-      );
 
-      return;
-    }
 
-    if (
-      window.location.hash ===
-      "#identity"
-    ) {
-      activateNotebookPage(
-        "identityNotebookPage",
-        false
-      );
-    }
-  }
-);
-  () => {
-    if (
-      window.location.hash ===
-      "#password"
-    ) {
-      activateNotebookPage(
-        "passwordNotebookPage"
-      );
+function initializeNotebook() {
+  installBadgeImageFallbacks();
+  bindNotebookTabs();
+  bindReplayControls();
+  refreshNotebook();
 
-      return;
-    }
+  window.addEventListener(
+    "hashchange",
+    () => {
+      if (
+        window.location.hash ===
+        "#password"
+      ) {
+        activateNotebookPage(
+          "passwordNotebookPage",
+          false
+        );
 
-    if (
-      window.location.hash ===
-      "#identity"
-    ) {
-      activateNotebookPage(
-        "identityNotebookPage"
-      );
-    }
-  }
-);
-    bindReplayControls();
-    refreshNotebook();
-
-    /*
-      Refresh when returning from another tab or mission.
-    */
-
-    window.addEventListener(
-      "focus",
-      refreshNotebook
-    );
-
-    window.addEventListener(
-      "storage",
-      refreshNotebook
-    );
-
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        if (
-          document.visibilityState ===
-          "visible"
-        ) {
-          refreshNotebook();
-        }
+        return;
       }
-    );
 
-    console.log(
-      "Safetii Net Cyber Notebook loaded."
-    );
-  }
-
-
-  if (
-    document.readyState ===
-    "loading"
-  ) {
-    document.addEventListener(
-      "DOMContentLoaded",
-      initializeNotebook,
-      {
-        once:
-          true
+      if (
+        window.location.hash ===
+        "#identity"
+      ) {
+        activateNotebookPage(
+          "identityNotebookPage",
+          false
+        );
       }
-    );
-  } else {
-    initializeNotebook();
-  }
+    }
+  );
+
+  /*
+    Refresh when returning from another tab or mission.
+  */
+
+  window.addEventListener(
+    "focus",
+    refreshNotebook
+  );
+
+  window.addEventListener(
+    "storage",
+    refreshNotebook
+  );
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+      if (
+        document.visibilityState ===
+        "visible"
+      ) {
+        refreshNotebook();
+      }
+    }
+  );
+
+  console.log(
+    "Safetii Net Cyber Notebook loaded."
+  );
+}
+
+
+if (
+  document.readyState ===
+  "loading"
+) {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeNotebook,
+    {
+      once:
+        true
+    }
+  );
+} else {
+  initializeNotebook();
+}
 })();
