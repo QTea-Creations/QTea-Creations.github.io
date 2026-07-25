@@ -2390,3 +2390,173 @@ a.cancel-button {
     width: 100%;
   }
 }
+
+/* =========================================
+   NOTEBOOK COLOR / PANEL FULL-WIDTH FIX
+   Paste at very bottom of css/notebook.css
+========================================= */
+
+/* Make sure the big top banner fills completely */
+.notebook-hero,
+.notebook-banner,
+.notebook-top-banner,
+.notebook-header-panel {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  overflow: hidden;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #7a56ff 0%, #43c6ff 100%) !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+/* Make the notebook paper fill all the way across */
+.notebook-paper,
+.notebook-panel,
+.notebook-content,
+.notebook-mission-panel,
+.notebook-page,
+.notebook-page-shell,
+.notebook-sheet,
+.notebook-section-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  border-radius: 28px;
+  background-color: #fffdf6 !important;
+}
+
+/* Lined notebook background should cover the FULL inside area */
+.notebook-paper::before,
+.notebook-panel::before,
+.notebook-content::before,
+.notebook-mission-panel::before,
+.notebook-page::before,
+.notebook-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 29px,
+      #dbe9ff 30px,
+      #dbe9ff 32px
+    );
+  opacity: 0.95;
+  z-index: 0;
+}
+
+/* Keep real content above the notebook lines */
+.notebook-paper > *,
+.notebook-panel > *,
+.notebook-content > *,
+.notebook-mission-panel > *,
+.notebook-page > *,
+.notebook-sheet > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Add the red notebook margin line all the way down */
+.notebook-paper::after,
+.notebook-panel::after,
+.notebook-content::after,
+.notebook-mission-panel::after,
+.notebook-page::after,
+.notebook-sheet::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 92px;
+  width: 2px;
+  background: rgba(255, 111, 145, 0.5);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Make the tab content area also inherit the paper background correctly */
+.notebook-tab-panel,
+.mission-tab-panel,
+.tab-panel,
+.password-tab-panel,
+.identity-tab-panel {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 0 0 28px 28px;
+  background: #fffdf6 !important;
+}
+
+/* Fix any white gaps caused by inner wrappers being too narrow */
+.notebook-inner,
+.notebook-body,
+.notebook-main-panel,
+.notebook-mission-body,
+.notebook-tab-content,
+.notebook-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+/* Keep binder ring area visible without breaking width */
+.notebook-shell,
+.notebook-wrap,
+.notebook-layout {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* If the panel has padding, keep it from shrinking the background */
+.notebook-paper,
+.notebook-panel,
+.notebook-content,
+.notebook-mission-panel,
+.notebook-page,
+.notebook-sheet,
+.notebook-tab-panel,
+.mission-tab-panel {
+  box-sizing: border-box;
+}
+
+/* Optional: improve title contrast because it’s blending a bit */
+.notebook-hero h1,
+.notebook-banner h1,
+.notebook-top-banner h1,
+.notebook-header-panel h1 {
+  color: #ffffff !important;
+  text-shadow: 0 3px 10px rgba(61, 37, 120, 0.28);
+}
+
+/* Optional: improve hero stat cards so they read better on the banner */
+.notebook-hero .stat-card,
+.notebook-banner .stat-card,
+.notebook-top-banner .stat-card,
+.notebook-header-panel .stat-card {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 2px solid rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Mobile safety */
+@media (max-width: 768px) {
+  .notebook-paper::after,
+  .notebook-panel::after,
+  .notebook-content::after,
+  .notebook-mission-panel::after,
+  .notebook-page::after,
+  .notebook-sheet::after {
+    left: 56px;
+  }
+}
