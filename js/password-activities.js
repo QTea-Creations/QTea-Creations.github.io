@@ -2,16 +2,24 @@
 
 /* =========================================================
    SAFETII NET — PASSWORD SAFE KEEPER
-   Mission 2 Training Activities
+   MISSION 2 TRAINING ACTIVITIES
 
-   Training 1: Password Safety Lab
-   Training 2: One Account, One Password
-   Training 3: Code Keeper
-   Training 4: Account Rescue
+   Training 1:
+   Password Safety Lab
+
+   Training 2:
+   Password Cracker Challenge
+
+   Training 3:
+   Two-Factor Security Gate
+
+   Training 4:
+   Account Defense Simulator
 
    Important:
-   The pretend password typed by the student is analyzed
-   only in memory. Its value is never saved to localStorage.
+   Pretend passwords typed by students are analyzed only
+   while they are in the input field. They are never saved
+   to mission state or localStorage.
 ========================================================= */
 
 (() => {
@@ -38,20 +46,44 @@
   const data =
     mission.data;
 
-  let comparisonChallenges =
-    [];
 
-  let uniquePasswordHabits =
-    [];
+  /* =====================================================
+     ACTIVITY DATA
 
-  let codeKeeperItems =
-    [];
+     Keep the curriculum order stable so saved indexes
+     always restore the same activity.
+  ===================================================== */
 
-  let rescueSteps =
-    [];
+  const comparisonChallenges =
+    Array.isArray(
+      data.comparisonChallenges
+    )
+      ? data.comparisonChallenges
+      : [];
 
-  let selectedRescueIds =
-    [];
+
+  const passwordAttackChallenges =
+    Array.isArray(
+      data.passwordAttackChallenges
+    )
+      ? data.passwordAttackChallenges
+      : [];
+
+
+  const twoFactorScenarios =
+    Array.isArray(
+      data.twoFactorScenarios
+    )
+      ? data.twoFactorScenarios
+      : [];
+
+
+  const accountDefenseScenarios =
+    Array.isArray(
+      data.accountDefenseScenarios
+    )
+      ? data.accountDefenseScenarios
+      : [];
 
 
   /* =====================================================
@@ -74,29 +106,7 @@
   }
 
 
-  function getArray(
-    value
-  ) {
-    return Array.isArray(value)
-      ? value
-      : [];
-  }
-
-
-  function clearElement(
-    id
-  ) {
-    const element =
-      mission.byId(id);
-
-    if (element) {
-      element.innerHTML =
-        "";
-    }
-  }
-
-
-  function setProgress(
+  function setCounter(
     id,
     value
   ) {
@@ -111,35 +121,86 @@
   }
 
 
-  function unlockTypedPasswordPart() {
-    const typedPart =
-      mission.byId(
-        "typedPasswordPart"
-      );
+  function bindButton(
+    id,
+    callback
+  ) {
+    const button =
+      mission.byId(id);
 
-    if (!typedPart) {
+    if (
+      !button ||
+      button.dataset
+        .passwordActivityBound ===
+        "true"
+    ) {
       return;
     }
 
-    typedPart.classList.remove(
-      "locked-lab-part"
+    button.dataset.passwordActivityBound =
+      "true";
+
+    button.addEventListener(
+      "click",
+      callback
     );
+  }
 
-    typedPart.classList.add(
-      "unlocked"
+
+  function disableButtons(
+    selector
+  ) {
+    document
+      .querySelectorAll(
+        selector
+      )
+      .forEach(
+        (button) => {
+          button.disabled =
+            true;
+        }
+      );
+  }
+
+
+  function enableButtons(
+    selector
+  ) {
+    document
+      .querySelectorAll(
+        selector
+      )
+      .forEach(
+        (button) => {
+          button.disabled =
+            false;
+
+          button.classList.remove(
+            "correct",
+            "incorrect",
+            "selected",
+            "active-choice",
+            "shake"
+          );
+        }
+      );
+  }
+
+
+  function showNextButton(
+    id
+  ) {
+    mission.showElement(
+      mission.byId(id)
     );
+  }
 
-    typedPart.scrollIntoView({
-      behavior:
-        "smooth",
 
-      block:
-        "start"
-    });
-
-    mission.setMemeTip(
-      "Great comparison work! Now create a pretend password and improve it until the lab marks it as strong.",
-      "welcome"
+  function hideNextButton(
+    id
+  ) {
+    mission.hideElement(
+      mission.byId(id)
     );
   }
 
@@ -160,7 +221,7 @@
       mission.loadPasswordComparison();
 
       mission.setMemeTip(
-        "Start by comparing the two pretend passwords. Look for length, unpredictability, and personal information.",
+        "Begin in the Password Safety Lab. Compare each pretend password and look for length, unpredictability, and personal clues.",
         "welcome"
       );
 
@@ -169,27 +230,9 @@
 
 
   /* =====================================================
-     TRAINING 1 — PASSWORD COMPARISON
+     TRAINING 1 — PASSWORD SAFETY LAB
+     PART 1: PASSWORD COMPARISONS
   ===================================================== */
-
-  function prepareComparisonChallenges() {
-    comparisonChallenges =
-      mission.shuffleItems(
-        getArray(
-          data.comparisonChallenges
-        )
-      );
-
-    if (
-      comparisonChallenges.length ===
-      0
-    ) {
-      console.error(
-        "No password comparison challenges were found."
-      );
-    }
-  }
-
 
   function getCurrentComparison() {
     return comparisonChallenges[
@@ -200,6 +243,16 @@
 
   mission.loadPasswordComparison =
     function loadPasswordComparison() {
+      if (
+        state.comparisonComplete ||
+        state.comparisonIndex >=
+          comparisonChallenges.length
+      ) {
+        completePasswordComparisons();
+
+        return;
+      }
+
       const challenge =
         getCurrentComparison();
 
@@ -208,28 +261,19 @@
           "passphrasePrompt"
         );
 
-      const grid =
+      const choiceGrid =
         mission.byId(
           "passphraseChoiceGrid"
-        );
-
-      const nextButton =
-        mission.byId(
-          "nextPassphraseChallenge"
         );
 
       if (
         !challenge ||
         !prompt ||
-        !grid ||
-        !nextButton
+        !choiceGrid
       ) {
-        if (
-          state.comparisonIndex >=
-          comparisonChallenges.length
-        ) {
-          completePasswordComparisons();
-        }
+        console.error(
+          "Password comparison elements or data are missing."
+        );
 
         return;
       }
@@ -240,15 +284,20 @@
       prompt.textContent =
         challenge.prompt;
 
-      grid.innerHTML =
+      choiceGrid.innerHTML =
         "";
 
       mission.clearFeedback(
         "passphraseFeedback"
       );
 
-      mission.hideElement(
-        nextButton
+      hideNextButton(
+        "nextPassphraseChallenge"
+      );
+
+      setCounter(
+        "passwordLabProgress",
+        state.comparisonIndex
       );
 
       challenge.choices.forEach(
@@ -272,12 +321,12 @@
               choiceIndex
             );
 
-          const password =
+          const passwordText =
             document.createElement(
               "strong"
             );
 
-          password.textContent =
+          passwordText.textContent =
             choice.value;
 
           const note =
@@ -292,7 +341,7 @@
             choice.note;
 
           button.append(
-            password,
+            passwordText,
             note
           );
 
@@ -306,15 +355,10 @@
             }
           );
 
-          grid.appendChild(
+          choiceGrid.appendChild(
             button
           );
         }
-      );
-
-      setProgress(
-        "passwordLabProgress",
-        state.comparisonIndex
       );
     };
 
@@ -381,6 +425,10 @@
       state.comparisonCorrect +=
         1;
 
+      selectedButton?.classList.add(
+        "correct"
+      );
+
       mission.setFeedback({
         id:
           "passphraseFeedback",
@@ -393,7 +441,7 @@
       });
 
       mission.setMemeTip(
-        "Excellent! You recognized the safer password.",
+        "Excellent. You recognized the password that better resists guessing attacks.",
         "congrats"
       );
     } else {
@@ -413,15 +461,13 @@
       });
 
       mission.setMemeTip(
-        "Remember: symbols do not automatically make a short or predictable password strong.",
+        "Look beyond symbols. A short, common, or predictable password can still be weak.",
         "wrong"
       );
     }
 
-    mission.showElement(
-      mission.byId(
-        "nextPassphraseChallenge"
-      )
+    showNextButton(
+      "nextPassphraseChallenge"
     );
 
     saveProgressSoon();
@@ -457,9 +503,12 @@
     state.comparisonComplete =
       true;
 
-    setProgress(
+    state.comparisonIndex =
+      comparisonChallenges.length;
+
+    setCounter(
       "passwordLabProgress",
-      5
+      comparisonChallenges.length
     );
 
     mission.hideElement(
@@ -474,8 +523,34 @@
   }
 
 
+  function unlockTypedPasswordPart() {
+    const typedPart =
+      mission.byId(
+        "typedPasswordPart"
+      );
+
+    if (!typedPart) {
+      return;
+    }
+
+    typedPart.classList.remove(
+      "locked-lab-part"
+    );
+
+    typedPart.classList.add(
+      "unlocked"
+    );
+
+    mission.setMemeTip(
+      "Now create a pretend password and improve it until the analyzer marks it as strong.",
+      "welcome"
+    );
+  }
+
+
   /* =====================================================
-     TRAINING 1 — PRETEND PASSWORD ANALYZER
+     TRAINING 1 — PASSWORD SAFETY LAB
+     PART 2: PRETEND PASSWORD ANALYZER
   ===================================================== */
 
   function containsLowercase(
@@ -538,9 +613,14 @@
     const lowerValue =
       value.toLowerCase();
 
-    return getArray(
-      data.weakSequences
-    ).some(
+    const sequences =
+      Array.isArray(
+        data.weakSequences
+      )
+        ? data.weakSequences
+        : [];
+
+    return sequences.some(
       (sequence) => {
         return lowerValue.includes(
           String(
@@ -559,13 +639,15 @@
       value.toLowerCase();
 
     const words =
-      getArray(
+      Array.isArray(
         data.commonPasswordWords
-      ).length > 0
+      )
         ? data.commonPasswordWords
-        : getArray(
+        : Array.isArray(
             data.bannedWords
-          );
+          )
+          ? data.bannedWords
+          : [];
 
     return words.some(
       (word) => {
@@ -621,7 +703,7 @@
   }
 
 
-  function hasEnoughCharacterVariety(
+  function hasCharacterVariety(
     value
   ) {
     const groups = [
@@ -655,11 +737,11 @@
 
 
   function analyzePracticePassword(
-    password
+    pretendPassword
   ) {
     const value =
       String(
-        password
+        pretendPassword
       ).trim();
 
     const checks = [
@@ -672,7 +754,7 @@
           12,
 
         explanation:
-          "Longer passwords are generally harder to guess."
+          "Longer passwords create more possible combinations for an attacker to test."
       },
 
 
@@ -686,7 +768,7 @@
           ),
 
         explanation:
-          "Several unrelated words can create a memorable and harder-to-guess passphrase."
+          "Several unrelated words can create a longer and less predictable passphrase."
       },
 
 
@@ -695,18 +777,18 @@
           "Uses several character types",
 
         passed:
-          hasEnoughCharacterVariety(
+          hasCharacterVariety(
             value
           ),
 
         explanation:
-          "A mix of letters, numbers, spaces, or symbols adds variety."
+          "Letters, numbers, spaces, or symbols can add variety when the password is already long."
       },
 
 
       {
         label:
-          "Does not contain a common password word",
+          "Avoids common password words",
 
         passed:
           !containsCommonPasswordWord(
@@ -714,13 +796,13 @@
           ),
 
         explanation:
-          "Common password words are often tested first."
+          "Dictionary attacks test common words and commonly used passwords."
       },
 
 
       {
         label:
-          "Does not contain an easy sequence",
+          "Avoids easy sequences",
 
         passed:
           !containsWeakSequence(
@@ -728,13 +810,13 @@
           ),
 
         explanation:
-          "Patterns such as 123456, abcdef, and qwerty are easy to guess."
+          "Patterns such as 123456, abcdef, and qwerty are tested frequently."
       },
 
 
       {
         label:
-          "Does not repeat one character several times",
+          "Avoids repeated characters",
 
         passed:
           !containsRepeatedCharacters(
@@ -742,13 +824,13 @@
           ),
 
         explanation:
-          "Repeated letters or numbers do not add much protection."
+          "Repeated letters and numbers are predictable and add little protection."
       },
 
 
       {
         label:
-          "Does not look like a birthday or year",
+          "Does not look like a date or year",
 
         passed:
           !containsDatePattern(
@@ -756,7 +838,7 @@
           ),
 
         explanation:
-          "Birthdays and years may be discovered or guessed."
+          "Birthdays and years may be discovered through posts, profiles, or conversations."
       },
 
 
@@ -770,7 +852,7 @@
           ),
 
         explanation:
-          "Lowercase letters help create more possible combinations."
+          "Lowercase letters increase the possible combinations."
       },
 
 
@@ -784,7 +866,7 @@
           ),
 
         explanation:
-          "Uppercase letters can add variety to a passphrase."
+          "Uppercase letters can add variety to a longer passphrase."
       },
 
 
@@ -804,7 +886,7 @@
           ),
 
         explanation:
-          "Numbers, spaces, or symbols can add variety when the password is already long and unpredictable."
+          "Additional character types can strengthen a password that is already long and unpredictable."
       }
     ];
 
@@ -824,7 +906,7 @@
       "Unsafe";
 
     let message =
-      "This pretend password needs several improvements.";
+      "This pretend password would be vulnerable to several common guessing methods.";
 
     let percentage =
       25;
@@ -844,7 +926,7 @@
         "Strong";
 
       message =
-        "Excellent! This pretend password is long, varied, and difficult to predict.";
+        "Excellent. This pretend password is long, varied, and difficult to predict.";
 
       percentage =
         100;
@@ -864,7 +946,7 @@
         "Stronger";
 
       message =
-        "This pretend password is much safer, but it could still be improved.";
+        "This pretend password resists several attacks, but it could still be improved.";
 
       percentage =
         78;
@@ -884,7 +966,7 @@
         "Getting Safer";
 
       message =
-        "You are making progress. Review the suggestions and strengthen it again.";
+        "You are making progress. Review the failed checks and strengthen it again.";
 
       percentage =
         55;
@@ -914,13 +996,6 @@
       percentage,
       gradient,
       improvements,
-
-      /*
-        Students must pass at least eight of the
-        ten checks. They do not need every character
-        type if the password is already a strong,
-        long passphrase.
-      */
 
       successful:
         score >= 8
@@ -958,7 +1033,7 @@
       !strengthFill
     ) {
       console.error(
-        "Password-analysis elements are missing."
+        "Password analyzer HTML elements are missing."
       );
 
       return;
@@ -1055,7 +1130,7 @@
         );
 
       item.textContent =
-        "This pretend password already meets every Password Safety Lab goal.";
+        "This pretend password meets all Password Safety Lab goals.";
 
       improvementList.appendChild(
         item
@@ -1078,11 +1153,6 @@
       );
     }
 
-    const successPanel =
-      mission.byId(
-        "passwordBuilderSuccess"
-      );
-
     if (
       result.successful
     ) {
@@ -1090,7 +1160,9 @@
         true;
 
       mission.showElement(
-        successPanel
+        mission.byId(
+          "passwordBuilderSuccess"
+        )
       );
 
       mission.setButtonState({
@@ -1107,13 +1179,14 @@
           "Build a Strong Practice Password to Continue"
       });
 
-      setProgress(
+      setCounter(
         "passwordLabProgress",
-        6
+        comparisonChallenges.length +
+          1
       );
 
       mission.setMemeTip(
-        "Excellent! You built a strong pretend password without entering a real password.",
+        "Excellent. Your pretend password resists common words, simple patterns, and short-password attacks.",
         "congrats"
       );
     } else {
@@ -1121,7 +1194,9 @@
         false;
 
       mission.hideElement(
-        successPanel
+        mission.byId(
+          "passwordBuilderSuccess"
+        )
       );
 
       mission.setButtonState({
@@ -1139,7 +1214,7 @@
       });
 
       mission.setMemeTip(
-        "Review the red checks, change the pretend password, and analyze it again.",
+        "Review the red checks, revise the pretend password, and analyze it again.",
         "thinking"
       );
     }
@@ -1182,22 +1257,16 @@
 
       mission.setText(
         "passwordVerdictMessage",
-        "Create a made-up password for this activity. Never enter one you use on a real account."
+        "Create a made-up password for this activity. Never enter a password used on a real account."
       );
 
       mission.setMemeTip(
-        "Type a pretend password first. Do not use a real password.",
+        "Type a pretend password first. Never use a real password in the training lab.",
         "wrong"
       );
 
       return;
     }
-
-    /*
-      The password value is passed directly to the
-      analyzer and is not copied into mission.state
-      or localStorage.
-    */
 
     const result =
       analyzePracticePassword(
@@ -1268,11 +1337,6 @@
     state.passwordLabComplete =
       true;
 
-    /*
-      Clear the typed value before leaving the
-      activity. The mission does not need it again.
-    */
-
     const input =
       mission.byId(
         "practicePasswordInput"
@@ -1287,13 +1351,13 @@
     }
 
     mission.showSection(
-      "uniquePasswordZone"
+      "passwordAttackZone"
     );
 
-    mission.loadUniquePasswordHabit();
+    mission.loadPasswordAttack();
 
     mission.setMemeTip(
-      "Training 2 begins now. Decide whether each password habit is unique, reused, or too predictable.",
+      "Training 2 begins now. Investigate how attackers test common words, personal clues, patterns, and password reuse.",
       "welcome"
     );
 
@@ -1302,102 +1366,225 @@
 
 
   /* =====================================================
-     TRAINING 2 — ONE ACCOUNT, ONE PASSWORD
+     TRAINING 2 — PASSWORD CRACKER CHALLENGE
   ===================================================== */
 
-  function prepareUniquePasswordHabits() {
-    uniquePasswordHabits =
-      mission.shuffleItems(
-        getArray(
-          data.uniquePasswordHabits
-        )
-      );
-  }
-
-
-  function getCurrentUniqueHabit() {
-    return uniquePasswordHabits[
-      state.uniquePasswordIndex
+  function getCurrentPasswordAttack() {
+    return passwordAttackChallenges[
+      state.passwordAttackIndex
     ];
   }
 
 
-  mission.loadUniquePasswordHabit =
-    function loadUniquePasswordHabit() {
-      const habit =
-        getCurrentUniqueHabit();
+  function getResistanceSettings(
+    resistance
+  ) {
+    const settings = {
+      low: {
+        percent:
+          24,
 
-      if (!habit) {
-        completeUniquePasswordTraining();
+        label:
+          "Low Resistance",
+
+        status:
+          "The simulated attacker finds useful clues quickly.",
+
+        className:
+          "low-resistance"
+      },
+
+      medium: {
+        percent:
+          58,
+
+        label:
+          "Medium Resistance",
+
+        status:
+          "The attack takes longer, but the password still has weaknesses.",
+
+        className:
+          "medium-resistance"
+      },
+
+      high: {
+        percent:
+          94,
+
+        label:
+          "High Resistance",
+
+        status:
+          "The simulation struggles to find useful patterns or clues.",
+
+        className:
+          "high-resistance"
+      }
+    };
+
+    return (
+      settings[
+        resistance
+      ] ||
+      settings.low
+    );
+  }
+
+
+  mission.loadPasswordAttack =
+    function loadPasswordAttack() {
+      if (
+        state.passwordAttackComplete ||
+        state.passwordAttackIndex >=
+          passwordAttackChallenges.length
+      ) {
+        completePasswordAttackTraining();
 
         return;
       }
 
-      state.uniquePasswordAnswered =
+      const challenge =
+        getCurrentPasswordAttack();
+
+      if (!challenge) {
+        console.error(
+          "Password attack challenge data is missing."
+        );
+
+        return;
+      }
+
+      state.passwordAttackAnswered =
         false;
 
       mission.setText(
-        "uniquePasswordPrompt",
-        habit.text
+        "passwordAttackIcon",
+        challenge.icon ||
+          "🤖"
       );
 
-      setProgress(
-        "uniquePasswordProgress",
-        state.uniquePasswordIndex
+      mission.setText(
+        "passwordAttackName",
+        challenge.attackName
       );
 
-      mission.clearFeedback(
-        "uniquePasswordFeedback"
+      mission.setText(
+        "passwordAttackDescription",
+        challenge.attackDescription
       );
+
+      mission.setText(
+        "passwordAttackTarget",
+        challenge.password
+      );
+
+      mission.setText(
+        "passwordAttackResistanceBadge",
+        "Prediction Needed"
+      );
+
+      mission.setText(
+        "passwordAttackStatus",
+        "Study the simulated password and predict its resistance."
+      );
+
+      mission.setText(
+        "passwordAttackResistanceLabel",
+        "Not analyzed"
+      );
+
+      mission.setText(
+        "passwordAttackCrackTime",
+        "Unknown"
+      );
+
+      setCounter(
+        "passwordAttackProgress",
+        state.passwordAttackIndex
+      );
+
+      const meter =
+        mission.byId(
+          "passwordAttackMeter"
+        );
+
+      const meterFill =
+        mission.byId(
+          "passwordAttackMeterFill"
+        );
+
+      if (meter) {
+        meter.setAttribute(
+          "aria-valuenow",
+          "0"
+        );
+      }
+
+      if (meterFill) {
+        meterFill.style.width =
+          "0%";
+
+        meterFill.className =
+          "attack-resistance-fill";
+      }
 
       mission.hideElement(
         mission.byId(
-          "nextUniquePassword"
+          "passwordAttackAnalysis"
         )
       );
 
-      mission.enableButtons(
-        ".unique-password-choice"
+      hideNextButton(
+        "nextPasswordAttack"
+      );
+
+      mission.clearFeedback(
+        "passwordAttackFeedback"
+      );
+
+      enableButtons(
+        ".password-attack-choice"
       );
 
       mission.setMemeTip(
-        "Ask whether the password is truly different, copied across accounts, or easy to predict.",
+        "Read the attack description and predict whether the pretend password has low, medium, or high resistance.",
         "thinking"
       );
     };
 
 
-  function answerUniquePasswordHabit(
-    category,
-    button
+  function answerPasswordAttack(
+    selectedResistance,
+    selectedButton
   ) {
     if (
-      state.uniquePasswordAnswered
+      state.passwordAttackAnswered
     ) {
       return;
     }
 
-    const habit =
-      getCurrentUniqueHabit();
+    const challenge =
+      getCurrentPasswordAttack();
 
-    if (!habit) {
+    if (!challenge) {
       return;
     }
 
-    state.uniquePasswordAnswered =
+    state.passwordAttackAnswered =
       true;
 
-    mission.disableButtons(
-      ".unique-password-choice"
+    disableButtons(
+      ".password-attack-choice"
     );
 
     const correct =
-      category ===
-      habit.category;
+      selectedResistance ===
+      challenge.resistance;
 
     const correctButton =
       document.querySelector(
-        `[data-password-category="${habit.category}"]`
+        `[data-attack-answer="${challenge.resistance}"]`
       );
 
     correctButton?.classList.add(
@@ -1405,305 +1592,240 @@
     );
 
     if (correct) {
-      state.uniquePasswordCorrect +=
+      state.passwordAttackCorrect +=
         1;
 
-      button?.classList.add(
+      selectedButton?.classList.add(
         "correct"
       );
-
-      mission.setFeedback({
-        id:
-          "uniquePasswordFeedback",
-
-        message:
-          `Correct! ${habit.explanation}`,
-
-        correct:
-          true
-      });
-
-      mission.setMemeTip(
-        "Excellent password-habit judgment!",
-        "congrats"
-      );
     } else {
-      button?.classList.add(
+      selectedButton?.classList.add(
         "incorrect"
       );
+    }
 
-      mission.setFeedback({
-        id:
-          "uniquePasswordFeedback",
+    renderPasswordAttackResult(
+      challenge,
+      correct
+    );
 
-        message:
-          `Good try. ${habit.explanation}`,
+    saveProgressSoon();
+  }
 
-        correct:
-          false
-      });
 
-      mission.setMemeTip(
-        "Look for reuse patterns and personal information.",
-        "wrong"
+  function renderPasswordAttackResult(
+    challenge,
+    predictionCorrect
+  ) {
+    const settings =
+      getResistanceSettings(
+        challenge.resistance
       );
+
+    const meter =
+      mission.byId(
+        "passwordAttackMeter"
+      );
+
+    const meterFill =
+      mission.byId(
+        "passwordAttackMeterFill"
+      );
+
+    if (meter) {
+      meter.setAttribute(
+        "aria-valuenow",
+        String(
+          settings.percent
+        )
+      );
+    }
+
+    if (meterFill) {
+      meterFill.style.width =
+        `${settings.percent}%`;
+
+      meterFill.className =
+        `attack-resistance-fill ${settings.className}`;
+    }
+
+    mission.setText(
+      "passwordAttackResistanceBadge",
+      settings.label
+    );
+
+    mission.setText(
+      "passwordAttackResistanceLabel",
+      settings.label
+    );
+
+    mission.setText(
+      "passwordAttackStatus",
+      settings.status
+    );
+
+    mission.setText(
+      "passwordAttackCrackTime",
+      challenge.crackTime
+    );
+
+    mission.setText(
+      "passwordAttackExplanation",
+      challenge.explanation
+    );
+
+    const weaknessList =
+      mission.byId(
+        "passwordAttackWeaknessList"
+      );
+
+    if (weaknessList) {
+      weaknessList.innerHTML =
+        "";
+
+      const findings = [
+        ...(
+          Array.isArray(
+            challenge.weaknesses
+          )
+            ? challenge.weaknesses
+            : []
+        ),
+
+        ...(
+          Array.isArray(
+            challenge.strengths
+          )
+            ? challenge.strengths
+            : []
+        )
+      ];
+
+      findings.forEach(
+        (finding) => {
+          const item =
+            document.createElement(
+              "li"
+            );
+
+          item.textContent =
+            finding;
+
+          weaknessList.appendChild(
+            item
+          );
+        }
+      );
+
+      if (
+        findings.length ===
+        0
+      ) {
+        const item =
+          document.createElement(
+            "li"
+          );
+
+        item.textContent =
+          "The simulation found no obvious common-word, personal-clue, or pattern weakness.";
+
+        weaknessList.appendChild(
+          item
+        );
+      }
     }
 
     mission.showElement(
       mission.byId(
-        "nextUniquePassword"
+        "passwordAttackAnalysis"
       )
     );
 
-    saveProgressSoon();
-  }
-
-
-  function nextUniquePasswordHabit() {
-    if (
-      !state.uniquePasswordAnswered
-    ) {
-      return;
-    }
-
-    state.uniquePasswordIndex +=
-      1;
-
-    if (
-      state.uniquePasswordIndex >=
-      uniquePasswordHabits.length
-    ) {
-      completeUniquePasswordTraining();
-
-      return;
-    }
-
-    mission.loadUniquePasswordHabit();
-
-    saveProgressSoon();
-  }
-
-
-  function completeUniquePasswordTraining() {
-    state.uniquePasswordComplete =
-      true;
-
-    setProgress(
-      "uniquePasswordProgress",
-      uniquePasswordHabits.length
-    );
-
-    mission.showSection(
-      "codeKeeperZone"
-    );
-
-    mission.loadCodeKeeperItem();
-
-    mission.setMemeTip(
-      "Training 3 begins now. Protect passwords, PINs, login codes, recovery codes, and reset links.",
-      "welcome"
-    );
-
-    saveProgressSoon();
-  }
-
-
-  /* =====================================================
-     TRAINING 3 — CODE KEEPER
-  ===================================================== */
-
-  function prepareCodeKeeperItems() {
-    codeKeeperItems =
-      mission.shuffleItems(
-        getArray(
-          data.codeKeeperItems
-        )
-      );
-  }
-
-
-  function getCurrentCodeItem() {
-    return codeKeeperItems[
-      state.codeKeeperIndex
-    ];
-  }
-
-
-  mission.loadCodeKeeperItem =
-    function loadCodeKeeperItem() {
-      const item =
-        getCurrentCodeItem();
-
-      if (!item) {
-        completeCodeKeeperTraining();
-
-        return;
-      }
-
-      state.codeKeeperAnswered =
-        false;
-
-      mission.setText(
-        "codeItemIcon",
-        item.icon
-      );
-
-      mission.setText(
-        "codeItemText",
-        item.text
-      );
-
-      setProgress(
-        "codeKeeperProgress",
-        state.codeKeeperIndex
-      );
-
-      mission.clearFeedback(
-        "codeKeeperFeedback"
-      );
-
-      mission.enableButtons(
-        ".code-destination"
-      );
-
-      mission.setMemeTip(
-        "Decide whether this item is ordinary information or something that could unlock an account.",
-        "thinking"
-      );
-    };
-
-
-  function answerCodeKeeper(
-    answer,
-    button
-  ) {
-    if (
-      state.codeKeeperAnswered
-    ) {
-      return;
-    }
-
-    const item =
-      getCurrentCodeItem();
-
-    if (!item) {
-      return;
-    }
-
-    state.codeKeeperAnswered =
-      true;
-
-    mission.disableButtons(
-      ".code-destination"
-    );
-
-    const correct =
-      answer ===
-      item.answer;
-
-    if (correct) {
-      state.codeKeeperCorrect +=
-        1;
-
-      button?.classList.add(
-        "correct"
-      );
-
+    if (predictionCorrect) {
       mission.setFeedback({
         id:
-          "codeKeeperFeedback",
+          "passwordAttackFeedback",
 
         message:
-          `Correct! ${item.explanation}`,
+          `Correct prediction! ${challenge.explanation}`,
 
         correct:
           true
       });
 
       mission.setMemeTip(
-        item.answer ===
-          "secret"
-          ? "Correct! That information belongs in the Secret Vault."
-          : "Correct! That general preference is usually okay to share.",
+        "Excellent analysis. You correctly predicted how the password would resist the simulated attack.",
         "congrats"
       );
     } else {
-      button?.classList.add(
-        "incorrect"
-      );
-
-      const correctButton =
-        document.querySelector(
-          `[data-code-answer="${item.answer}"]`
-        );
-
-      correctButton?.classList.add(
-        "correct"
-      );
-
       mission.setFeedback({
         id:
-          "codeKeeperFeedback",
+          "passwordAttackFeedback",
 
         message:
-          `Good try. ${item.explanation}`,
+          `The correct result is ${settings.label}. ${challenge.explanation}`,
 
         correct:
           false
       });
 
       mission.setMemeTip(
-        "Anything that can unlock an account should be treated like a secret.",
+        "Study what the simulation found. Length, patterns, personal clues, and reuse all affect resistance.",
         "wrong"
       );
     }
 
-    setProgress(
-      "codeKeeperProgress",
-      state.codeKeeperIndex +
-        1
-    );
-
-    saveProgressSoon();
-
-    window.setTimeout(
-      () => {
-        state.codeKeeperIndex +=
-          1;
-
-        if (
-          state.codeKeeperIndex >=
-          codeKeeperItems.length
-        ) {
-          completeCodeKeeperTraining();
-
-          return;
-        }
-
-        mission.loadCodeKeeperItem();
-      },
-      1450
+    showNextButton(
+      "nextPasswordAttack"
     );
   }
 
 
-  function completeCodeKeeperTraining() {
-    state.codeKeeperComplete =
+  function nextPasswordAttack() {
+    if (
+      !state.passwordAttackAnswered
+    ) {
+      return;
+    }
+
+    state.passwordAttackIndex +=
+      1;
+
+    if (
+      state.passwordAttackIndex >=
+      passwordAttackChallenges.length
+    ) {
+      completePasswordAttackTraining();
+
+      return;
+    }
+
+    mission.loadPasswordAttack();
+
+    saveProgressSoon();
+  }
+
+
+  function completePasswordAttackTraining() {
+    state.passwordAttackComplete =
       true;
 
-    setProgress(
-      "codeKeeperProgress",
-      codeKeeperItems.length
+    state.passwordAttackIndex =
+      passwordAttackChallenges.length;
+
+    setCounter(
+      "passwordAttackProgress",
+      passwordAttackChallenges.length
     );
 
     mission.showSection(
-      "accountRescueZone"
+      "twoFactorZone"
     );
 
-    mission.loadAccountRescue();
+    mission.loadTwoFactorScenario();
 
     mission.setMemeTip(
-      "Final training room! Build the safest rescue plan for an account that may be compromised.",
+      "Training 3 begins now. Build two different protection layers for each account.",
       "welcome"
     );
 
@@ -1712,164 +1834,126 @@
 
 
   /* =====================================================
-     CODE KEEPER DRAG AND DROP
+     TRAINING 3 — TWO-FACTOR SECURITY GATE
   ===================================================== */
 
-  function setupCodeKeeperDragAndDrop() {
-    const draggableCard =
-      mission.byId(
-        "codeItemCard"
-      );
-
-    const destinations =
-      document.querySelectorAll(
-        ".code-destination"
-      );
-
-    if (!draggableCard) {
-      return;
-    }
-
-    draggableCard.addEventListener(
-      "dragstart",
-      (event) => {
-        if (
-          !event.dataTransfer
-        ) {
-          return;
-        }
-
-        event.dataTransfer.setData(
-          "text/plain",
-          "password-code-item"
-        );
-
-        event.dataTransfer.effectAllowed =
-          "move";
-
-        draggableCard.classList.add(
-          "is-dragging"
-        );
-      }
-    );
-
-    draggableCard.addEventListener(
-      "dragend",
-      () => {
-        draggableCard.classList.remove(
-          "is-dragging"
-        );
-
-        destinations.forEach(
-          (zone) => {
-            zone.classList.remove(
-              "drag-over"
-            );
-          }
-        );
-      }
-    );
-
-    destinations.forEach(
-      (zone) => {
-        zone.addEventListener(
-          "dragover",
-          (event) => {
-            event.preventDefault();
-
-            zone.classList.add(
-              "drag-over"
-            );
-          }
-        );
-
-        zone.addEventListener(
-          "dragleave",
-          () => {
-            zone.classList.remove(
-              "drag-over"
-            );
-          }
-        );
-
-        zone.addEventListener(
-          "drop",
-          (event) => {
-            event.preventDefault();
-
-            zone.classList.remove(
-              "drag-over"
-            );
-
-            answerCodeKeeper(
-              zone.dataset.codeAnswer,
-              zone
-            );
-          }
-        );
-      }
-    );
+  function getCurrentTwoFactorScenario() {
+    return twoFactorScenarios[
+      state.twoFactorIndex
+    ];
   }
 
 
-  /* =====================================================
-     TRAINING 4 — ACCOUNT RESCUE
-  ===================================================== */
+  mission.loadTwoFactorScenario =
+    function loadTwoFactorScenario() {
+      if (
+        state.twoFactorComplete ||
+        state.twoFactorIndex >=
+          twoFactorScenarios.length
+      ) {
+        completeTwoFactorTraining();
 
-  function prepareRescueSteps() {
-    rescueSteps =
-      mission.shuffleItems(
-        getArray(
-          data.accountRescueSteps
-        )
-      );
-  }
+        return;
+      }
 
+      const scenario =
+        getCurrentTwoFactorScenario();
 
-  mission.loadAccountRescue =
-    function loadAccountRescue() {
-      const bank =
+      const choiceGrid =
         mission.byId(
-          "rescueStepBank"
-        );
-
-      const orderList =
-        mission.byId(
-          "rescueOrderList"
+          "secondFactorChoiceGrid"
         );
 
       if (
-        !bank ||
-        !orderList
+        !scenario ||
+        !choiceGrid
       ) {
         console.error(
-          "Account Rescue elements are missing."
+          "Two-factor scenario data or HTML elements are missing."
         );
 
         return;
       }
 
-      selectedRescueIds =
-        Array.isArray(
-          state.selectedRescueSteps
-        )
-          ? [
-              ...state.selectedRescueSteps
-            ]
-          : [];
+      state.twoFactorAnswered =
+        false;
 
-      bank.innerHTML =
-        "";
-
-      orderList.innerHTML =
-        "";
-
-      mission.clearFeedback(
-        "accountRescueFeedback"
+      mission.setText(
+        "twoFactorAccountIcon",
+        scenario.accountIcon ||
+          "🔐"
       );
 
-      rescueSteps.forEach(
-        (step) => {
+      mission.setText(
+        "twoFactorAccountName",
+        scenario.accountName
+      );
+
+      mission.setText(
+        "twoFactorScenarioText",
+        scenario.scenario
+      );
+
+      mission.setText(
+        "firstFactorName",
+        scenario.firstFactor
+      );
+
+      mission.setText(
+        "firstFactorDescription",
+        scenario.firstFactor ===
+          "Choose the full setup"
+          ? "Identify the setup that uses two genuinely different factors."
+          : "This is the account’s first protection factor."
+      );
+
+      mission.setText(
+        "securityGateSecondFactor",
+        "Second Layer Needed"
+      );
+
+      setCounter(
+        "twoFactorProgress",
+        state.twoFactorIndex
+      );
+
+      mission.clearFeedback(
+        "twoFactorFeedback"
+      );
+
+      hideNextButton(
+        "nextTwoFactorScenario"
+      );
+
+      const secondLayer =
+        mission.byId(
+          "securityGateLayerTwo"
+        );
+
+      secondLayer?.classList.remove(
+        "active",
+        "correct",
+        "incorrect"
+      );
+
+      const gateDisplay =
+        mission.byId(
+          "securityGateDisplay"
+        );
+
+      gateDisplay?.classList.remove(
+        "security-gate-protected",
+        "security-gate-warning"
+      );
+
+      choiceGrid.innerHTML =
+        "";
+
+      scenario.choices.forEach(
+        (
+          choice,
+          choiceIndex
+        ) => {
           const button =
             document.createElement(
               "button"
@@ -1879,299 +1963,716 @@
             "button";
 
           button.className =
-            "rescue-step-button";
+            "second-factor-choice";
 
-          button.dataset.rescueId =
-            step.id;
-
-          button.textContent =
-            step.label;
-
-          if (
-            selectedRescueIds.includes(
-              step.id
-            )
-          ) {
-            button.classList.add(
-              "selected"
+          button.dataset.choiceIndex =
+            String(
+              choiceIndex
             );
 
-            button.disabled =
-              true;
-          }
+          const icon =
+            document.createElement(
+              "span"
+            );
+
+          icon.className =
+            "second-factor-choice-icon";
+
+          icon.setAttribute(
+            "aria-hidden",
+            "true"
+          );
+
+          icon.textContent =
+            choice.icon ||
+            "🔐";
+
+          const label =
+            document.createElement(
+              "strong"
+            );
+
+          label.textContent =
+            choice.label;
+
+          const type =
+            document.createElement(
+              "small"
+            );
+
+          type.textContent =
+            getFactorTypeLabel(
+              choice.factorType
+            );
+
+          button.append(
+            icon,
+            label,
+            type
+          );
 
           button.addEventListener(
             "click",
             () => {
-              selectRescueStep(
-                step.id
+              answerTwoFactorScenario(
+                choiceIndex,
+                button
               );
             }
           );
 
-          bank.appendChild(
+          choiceGrid.appendChild(
             button
           );
         }
       );
 
-      renderRescueOrder();
-
-      mission.setButtonState({
-        id:
-          "finishPasswordTraining",
-
-        unlocked:
-          state.rescueComplete,
-
-        unlockedText:
-          "Enter Password Vault Practice 🏰",
-
-        lockedText:
-          "Complete Account Rescue First"
-      });
+      mission.setMemeTip(
+        "Two-factor authentication uses two different kinds of proof—not the same password twice.",
+        "thinking"
+      );
     };
 
 
-  function selectRescueStep(
-    stepId
+  function getFactorTypeLabel(
+    factorType
+  ) {
+    const labels = {
+      know:
+        "Something you know",
+
+      have:
+        "Something you have",
+
+      are:
+        "Something you are",
+
+      identity:
+        "Account identifier",
+
+      unsafe:
+        "Unsafe action",
+
+      "safe-response":
+        "Safe security response",
+
+      "know-have":
+        "Knowledge + possession",
+
+      "know-know":
+        "Two knowledge steps",
+
+      "identifier-know":
+        "Identifier + knowledge"
+    };
+
+    return (
+      labels[
+        factorType
+      ] ||
+      "Security option"
+    );
+  }
+
+
+  function answerTwoFactorScenario(
+    selectedIndex,
+    selectedButton
   ) {
     if (
-      selectedRescueIds.includes(
-        stepId
-      )
+      state.twoFactorAnswered
     ) {
       return;
     }
 
-    selectedRescueIds.push(
-      stepId
-    );
+    const scenario =
+      getCurrentTwoFactorScenario();
 
-    state.selectedRescueSteps =
-      [
-        ...selectedRescueIds
+    const choice =
+      scenario?.choices?.[
+        selectedIndex
       ];
 
-    const button =
-      document.querySelector(
-        `[data-rescue-id="${stepId}"]`
-      );
-
-    if (button) {
-      button.disabled =
-        true;
-
-      button.classList.add(
-        "selected"
-      );
-    }
-
-    renderRescueOrder();
-
-    setProgress(
-      "accountRescueProgress",
-      selectedRescueIds.length
-    );
-
-    mission.clearFeedback(
-      "accountRescueFeedback"
-    );
-
-    saveProgressSoon();
-  }
-
-
-  function renderRescueOrder() {
-    const orderList =
-      mission.byId(
-        "rescueOrderList"
-      );
-
-    if (!orderList) {
+    if (
+      !scenario ||
+      !choice
+    ) {
       return;
     }
 
-    orderList.innerHTML =
-      "";
+    state.twoFactorAnswered =
+      true;
 
-    selectedRescueIds.forEach(
-      (stepId) => {
-        const step =
-          getArray(
-            data.accountRescueSteps
-          ).find(
-            (item) =>
-              item.id ===
-              stepId
+    disableButtons(
+      ".second-factor-choice"
+    );
+
+    const correct =
+      choice.correct ===
+      true;
+
+    const buttons =
+      document.querySelectorAll(
+        ".second-factor-choice"
+      );
+
+    buttons.forEach(
+      (
+        button,
+        index
+      ) => {
+        const option =
+          scenario.choices[
+            index
+          ];
+
+        if (
+          option?.correct
+        ) {
+          button.classList.add(
+            "correct"
           );
-
-        if (!step) {
-          return;
         }
 
-        const item =
-          document.createElement(
-            "li"
+        if (
+          index ===
+            selectedIndex &&
+          !correct
+        ) {
+          button.classList.add(
+            "incorrect"
           );
-
-        item.textContent =
-          step.label;
-
-        orderList.appendChild(
-          item
-        );
+        }
       }
     );
-  }
 
+    const correctChoice =
+      scenario.choices.find(
+        (option) =>
+          option.correct
+      );
 
-  function clearRescueOrder() {
-    selectedRescueIds =
-      [];
-
-    state.selectedRescueSteps =
-      [];
-
-    state.rescueComplete =
-      false;
-
-    setProgress(
-      "accountRescueProgress",
-      0
+    mission.setText(
+      "securityGateSecondFactor",
+      correctChoice?.label ||
+        "Second Factor"
     );
 
-    mission.loadAccountRescue();
+    const secondLayer =
+      mission.byId(
+        "securityGateLayerTwo"
+      );
 
-    mission.setMemeTip(
-      "The rescue plan was cleared. Start with the action that stops the immediate danger.",
-      "thinking"
+    secondLayer?.classList.add(
+      "active",
+      correct
+        ? "correct"
+        : "incorrect"
     );
 
-    saveProgressSoon();
-  }
+    const gateDisplay =
+      mission.byId(
+        "securityGateDisplay"
+      );
 
+    gateDisplay?.classList.add(
+      correct
+        ? "security-gate-protected"
+        : "security-gate-warning"
+    );
 
-  function checkRescueOrder() {
-    const correctOrder =
-      getArray(
-        data.accountRescueSteps
-      )
-        .slice()
-        .sort(
-          (
-            first,
-            second
-          ) =>
-            first.order -
-            second.order
-        )
-        .map(
-          (step) =>
-            step.id
-        );
+    if (correct) {
+      state.twoFactorCorrect +=
+        1;
 
-    if (
-      selectedRescueIds.length !==
-      correctOrder.length
-    ) {
+      selectedButton?.classList.add(
+        "correct"
+      );
+
       mission.setFeedback({
         id:
-          "accountRescueFeedback",
+          "twoFactorFeedback",
 
         message:
-          `Select all ${correctOrder.length} rescue actions before checking the plan.`,
+          `Security gate protected! ${choice.explanation}`,
+
+        correct:
+          true
+      });
+
+      mission.setMemeTip(
+        "Excellent. You added a different kind of proof to strengthen the account.",
+        "congrats"
+      );
+    } else {
+      selectedButton?.classList.add(
+        "incorrect"
+      );
+
+      mission.setFeedback({
+        id:
+          "twoFactorFeedback",
+
+        message:
+          `That does not create the safest second layer. ${choice.explanation} The correct choice is: ${correctChoice?.label || "the highlighted option"}.`,
 
         correct:
           false
       });
 
       mission.setMemeTip(
-        "Your rescue plan still needs every action.",
-        "thinking"
+        "Remember: repeating a knowledge factor does not create true two-factor authentication.",
+        "wrong"
       );
+    }
+
+    showNextButton(
+      "nextTwoFactorScenario"
+    );
+
+    saveProgressSoon();
+  }
+
+
+  function nextTwoFactorScenario() {
+    if (
+      !state.twoFactorAnswered
+    ) {
+      return;
+    }
+
+    state.twoFactorIndex +=
+      1;
+
+    if (
+      state.twoFactorIndex >=
+      twoFactorScenarios.length
+    ) {
+      completeTwoFactorTraining();
 
       return;
     }
 
-    const correct =
-      correctOrder.every(
+    mission.loadTwoFactorScenario();
+
+    saveProgressSoon();
+  }
+
+
+  function completeTwoFactorTraining() {
+    state.twoFactorComplete =
+      true;
+
+    state.twoFactorIndex =
+      twoFactorScenarios.length;
+
+    setCounter(
+      "twoFactorProgress",
+      twoFactorScenarios.length
+    );
+
+    mission.showElement(
+      mission.byId(
+        "twoFactorCompletion"
+      )
+    );
+
+    mission.setMemeTip(
+      "All security gates are protected. Next, defend accounts against real warning signs.",
+      "congrats"
+    );
+
+    window.setTimeout(
+      () => {
+        mission.showSection(
+          "accountDefenseZone"
+        );
+
+        mission.loadAccountDefenseScenario();
+      },
+      900
+    );
+
+    saveProgressSoon();
+  }
+
+
+  /* =====================================================
+     TRAINING 4 — ACCOUNT DEFENSE SIMULATOR
+  ===================================================== */
+
+  function getCurrentAccountDefenseScenario() {
+    return accountDefenseScenarios[
+      state.accountDefenseIndex
+    ];
+  }
+
+
+  mission.loadAccountDefenseScenario =
+    function loadAccountDefenseScenario() {
+      if (
+        state.accountDefenseComplete ||
+        state.accountDefenseIndex >=
+          accountDefenseScenarios.length
+      ) {
+        completeAccountDefenseTraining();
+
+        return;
+      }
+
+      const scenario =
+        getCurrentAccountDefenseScenario();
+
+      const choiceGrid =
+        mission.byId(
+          "accountDefenseChoiceGrid"
+        );
+
+      if (
+        !scenario ||
+        !choiceGrid
+      ) {
+        console.error(
+          "Account Defense scenario data or HTML elements are missing."
+        );
+
+        return;
+      }
+
+      state.accountDefenseAnswered =
+        false;
+
+      mission.setText(
+        "accountDefenseIcon",
+        scenario.icon ||
+          "🚨"
+      );
+
+      mission.setText(
+        "accountDefenseScenarioTitle",
+        scenario.title
+      );
+
+      mission.setText(
+        "accountDefenseScenarioText",
+        scenario.alert
+      );
+
+      mission.setText(
+        "accountDefenseStatusIcon",
+        "⏳"
+      );
+
+      mission.setText(
+        "accountDefenseStatusTitle",
+        "Waiting for your response"
+      );
+
+      mission.setText(
+        "accountDefenseStatusMessage",
+        "Review the alert before choosing an action."
+      );
+
+      setCounter(
+        "accountDefenseProgress",
+        state.accountDefenseIndex
+      );
+
+      mission.clearFeedback(
+        "accountDefenseFeedback"
+      );
+
+      hideNextButton(
+        "nextAccountDefenseScenario"
+      );
+
+      const statusPanel =
+        mission.byId(
+          "accountDefenseStatusPanel"
+        );
+
+      statusPanel?.classList.remove(
+        "defense-success",
+        "defense-warning"
+      );
+
+      choiceGrid.innerHTML =
+        "";
+
+      scenario.choices.forEach(
         (
-          stepId,
-          index
-        ) =>
-          selectedRescueIds[
-            index
-          ] ===
-          stepId
+          choice,
+          choiceIndex
+        ) => {
+          const button =
+            document.createElement(
+              "button"
+            );
+
+          button.type =
+            "button";
+
+          button.className =
+            "account-defense-choice";
+
+          button.dataset.choiceIndex =
+            String(
+              choiceIndex
+            );
+
+          button.textContent =
+            choice;
+
+          button.addEventListener(
+            "click",
+            () => {
+              answerAccountDefenseScenario(
+                choiceIndex,
+                button
+              );
+            }
+          );
+
+          choiceGrid.appendChild(
+            button
+          );
+        }
+      );
+
+      mission.setMemeTip(
+        "Choose a response that protects the account, avoids suspicious links, and involves a trusted adult when needed.",
+        "thinking"
+      );
+    };
+
+
+  function answerAccountDefenseScenario(
+    selectedIndex,
+    selectedButton
+  ) {
+    if (
+      state.accountDefenseAnswered
+    ) {
+      return;
+    }
+
+    const scenario =
+      getCurrentAccountDefenseScenario();
+
+    if (!scenario) {
+      return;
+    }
+
+    state.accountDefenseAnswered =
+      true;
+
+    disableButtons(
+      ".account-defense-choice"
+    );
+
+    const correct =
+      selectedIndex ===
+      scenario.correctIndex;
+
+    const buttons =
+      document.querySelectorAll(
+        ".account-defense-choice"
+      );
+
+    buttons.forEach(
+      (
+        button,
+        index
+      ) => {
+        if (
+          index ===
+          scenario.correctIndex
+        ) {
+          button.classList.add(
+            "correct"
+          );
+        }
+
+        if (
+          index ===
+            selectedIndex &&
+          !correct
+        ) {
+          button.classList.add(
+            "incorrect"
+          );
+        }
+      }
+    );
+
+    const statusPanel =
+      mission.byId(
+        "accountDefenseStatusPanel"
       );
 
     if (correct) {
-      state.rescueComplete =
-        true;
+      state.accountDefenseCorrect +=
+        1;
 
-      state.trainingComplete =
-        true;
+      selectedButton?.classList.add(
+        "correct"
+      );
+
+      statusPanel?.classList.add(
+        "defense-success"
+      );
+
+      mission.setText(
+        "accountDefenseStatusIcon",
+        "🛡️"
+      );
+
+      mission.setText(
+        "accountDefenseStatusTitle",
+        "Threat Defended"
+      );
+
+      mission.setText(
+        "accountDefenseStatusMessage",
+        scenario.explanation
+      );
 
       mission.setFeedback({
         id:
-          "accountRescueFeedback",
+          "accountDefenseFeedback",
 
         message:
-          "Correct! Stop contact, tell a trusted adult, use the official source, change the password, remove unfamiliar sessions, and add extra protection.",
+          `Correct! ${scenario.explanation}`,
 
         correct:
           true
       });
 
-      mission.setButtonState({
+      mission.setMemeTip(
+        "Excellent defense decision. That response protects the account without helping the attacker.",
+        "congrats"
+      );
+    } else {
+      selectedButton?.classList.add(
+        "incorrect"
+      );
+
+      statusPanel?.classList.add(
+        "defense-warning"
+      );
+
+      mission.setText(
+        "accountDefenseStatusIcon",
+        "⚠️"
+      );
+
+      mission.setText(
+        "accountDefenseStatusTitle",
+        "Account Still at Risk"
+      );
+
+      mission.setText(
+        "accountDefenseStatusMessage",
+        scenario.explanation
+      );
+
+      mission.setFeedback({
         id:
-          "finishPasswordTraining",
+          "accountDefenseFeedback",
 
-        unlocked:
-          true,
+        message:
+          `Review the highlighted safer response. ${scenario.explanation}`,
 
-        unlockedText:
-          "Enter Password Vault Practice 🏰",
-
-        lockedText:
-          "Complete Account Rescue First"
+        correct:
+          false
       });
 
       mission.setMemeTip(
-        "Excellent! You built the full Account Rescue plan.",
-        "congrats"
+        "Do not send codes, trust unexpected links, or ignore unfamiliar account activity.",
+        "wrong"
       );
+    }
 
-      saveProgressSoon();
+    showNextButton(
+      "nextAccountDefenseScenario"
+    );
+
+    saveProgressSoon();
+  }
+
+
+  function nextAccountDefenseScenario() {
+    if (
+      !state.accountDefenseAnswered
+    ) {
+      return;
+    }
+
+    state.accountDefenseIndex +=
+      1;
+
+    if (
+      state.accountDefenseIndex >=
+      accountDefenseScenarios.length
+    ) {
+      completeAccountDefenseTraining();
 
       return;
     }
 
-    state.rescueComplete =
-      false;
+    mission.loadAccountDefenseScenario();
 
-    mission.setFeedback({
+    saveProgressSoon();
+  }
+
+
+  function completeAccountDefenseTraining() {
+    state.accountDefenseComplete =
+      true;
+
+    state.trainingComplete =
+      true;
+
+    state.accountDefenseIndex =
+      accountDefenseScenarios.length;
+
+    setCounter(
+      "accountDefenseProgress",
+      accountDefenseScenarios.length
+    );
+
+    mission.showElement(
+      mission.byId(
+        "accountDefenseCompletion"
+      )
+    );
+
+    mission.setButtonState({
       id:
-        "accountRescueFeedback",
+        "finishPasswordTraining",
 
-      message:
-        "The plan includes the right actions, but the order needs adjustment. Begin by stopping contact and telling a trusted adult.",
+      unlocked:
+        true,
 
-      correct:
-        false
+      unlockedText:
+        "Enter Password Vault Practice 🏰",
+
+      lockedText:
+        "Complete Account Defense Training First"
     });
 
     mission.setMemeTip(
-      "Start by stopping the suspicious contact. Then involve a trusted adult before changing account settings.",
-      "wrong"
+      "All four training rooms are complete. Enter the Password Vault and apply everything you learned.",
+      "congrats"
     );
+
+    saveProgressSoon();
   }
 
 
   function finishAllPasswordTraining() {
     if (
-      !state.rescueComplete
+      !state.accountDefenseComplete
     ) {
       return;
     }
@@ -2192,8 +2693,8 @@
     }
 
     mission.setMemeTip(
-      "All four training rooms are complete. Secure the five Password Vault doors next!",
-      "congrats"
+      "Secure all five vault doors using password-strength, attack, two-factor, and account-defense skills.",
+      "welcome"
     );
 
     saveProgressSoon();
@@ -2201,34 +2702,8 @@
 
 
   /* =====================================================
-     EVENT BINDING
+     STATIC EVENT BINDING
   ===================================================== */
-
-  function bindButton(
-    id,
-    callback
-  ) {
-    const button =
-      mission.byId(id);
-
-    if (
-      !button ||
-      button.dataset
-        .passwordBound ===
-        "true"
-    ) {
-      return;
-    }
-
-    button.dataset.passwordBound =
-      "true";
-
-    button.addEventListener(
-      "click",
-      callback
-    );
-  }
-
 
   function bindStaticEvents() {
     bindButton(
@@ -2262,20 +2737,20 @@
 
 
     bindButton(
-      "nextUniquePassword",
-      nextUniquePasswordHabit
+      "nextPasswordAttack",
+      nextPasswordAttack
     );
 
 
     bindButton(
-      "clearRescueOrder",
-      clearRescueOrder
+      "nextTwoFactorScenario",
+      nextTwoFactorScenario
     );
 
 
     bindButton(
-      "checkRescueOrder",
-      checkRescueOrder
+      "nextAccountDefenseScenario",
+      nextAccountDefenseScenario
     );
 
 
@@ -2283,6 +2758,37 @@
       "finishPasswordTraining",
       finishAllPasswordTraining
     );
+
+
+    document
+      .querySelectorAll(
+        ".password-attack-choice"
+      )
+      .forEach(
+        (button) => {
+          if (
+            button.dataset
+              .passwordActivityBound ===
+            "true"
+          ) {
+            return;
+          }
+
+          button.dataset.passwordActivityBound =
+            "true";
+
+          button.addEventListener(
+            "click",
+            () => {
+              answerPasswordAttack(
+                button.dataset
+                  .attackAnswer,
+                button
+              );
+            }
+          );
+        }
+      );
 
 
     const practiceInput =
@@ -2293,10 +2799,10 @@
     if (
       practiceInput &&
       practiceInput.dataset
-        .passwordBound !==
+        .passwordActivityBound !==
         "true"
     ) {
-      practiceInput.dataset.passwordBound =
+      practiceInput.dataset.passwordActivityBound =
         "true";
 
       practiceInput.addEventListener(
@@ -2313,78 +2819,14 @@
         }
       );
     }
-
-
-    document
-      .querySelectorAll(
-        ".unique-password-choice"
-      )
-      .forEach(
-        (button) => {
-          if (
-            button.dataset
-              .passwordBound ===
-            "true"
-          ) {
-            return;
-          }
-
-          button.dataset.passwordBound =
-            "true";
-
-          button.addEventListener(
-            "click",
-            () => {
-              answerUniquePasswordHabit(
-                button.dataset
-                  .passwordCategory,
-                button
-              );
-            }
-          );
-        }
-      );
-
-
-    document
-      .querySelectorAll(
-        ".code-destination"
-      )
-      .forEach(
-        (button) => {
-          if (
-            button.dataset
-              .passwordBound ===
-            "true"
-          ) {
-            return;
-          }
-
-          button.dataset.passwordBound =
-            "true";
-
-          button.addEventListener(
-            "click",
-            () => {
-              answerCodeKeeper(
-                button.dataset
-                  .codeAnswer,
-                button
-              );
-            }
-          );
-        }
-      );
-
-    setupCodeKeeperDragAndDrop();
   }
 
 
   /* =====================================================
-     RESTORE ACTIVITY SCREEN
+     RESTORE TRAINING SECTION
 
-     password-progress.js can call this after loading
-     stored completion data.
+     password-progress.js calls this after restoring the
+     saved indexes and completion properties.
   ===================================================== */
 
   mission.restoreTrainingSection =
@@ -2414,63 +2856,72 @@
 
             unlockTypedPasswordPart();
 
-            setProgress(
+            setCounter(
               "passwordLabProgress",
               state.passwordBuilderComplete
-                ? 6
-                : 5
+                ? comparisonChallenges.length +
+                    1
+                : comparisonChallenges.length
             );
           } else {
+            mission.showElement(
+              mission.byId(
+                "passwordComparisonPart"
+              )
+            );
+
             mission.loadPasswordComparison();
           }
 
           break;
 
 
-        case "uniquePasswordZone":
+        case "passwordAttackZone":
           mission.showSection(
-            "uniquePasswordZone",
+            "passwordAttackZone",
             {
               scroll:
                 false
             }
           );
 
-          mission.loadUniquePasswordHabit();
+          mission.loadPasswordAttack();
 
           break;
 
 
-        case "codeKeeperZone":
+        case "twoFactorZone":
           mission.showSection(
-            "codeKeeperZone",
+            "twoFactorZone",
             {
               scroll:
                 false
             }
           );
 
-          mission.loadCodeKeeperItem();
+          mission.loadTwoFactorScenario();
 
           break;
 
 
-        case "accountRescueZone":
+        case "accountDefenseZone":
           mission.showSection(
-            "accountRescueZone",
+            "accountDefenseZone",
             {
               scroll:
                 false
             }
           );
 
-          mission.loadAccountRescue();
+          mission.loadAccountDefenseScenario();
 
           break;
 
 
         default:
-          break;
+          console.warn(
+            `Unknown Password Mission training section: ${sectionId}`
+          );
       }
     };
 
@@ -2480,11 +2931,6 @@
   ===================================================== */
 
   function initializeActivities() {
-    prepareComparisonChallenges();
-    prepareUniquePasswordHabits();
-    prepareCodeKeeperItems();
-    prepareRescueSteps();
-
     bindStaticEvents();
 
     mission.activitiesReady =
@@ -2497,7 +2943,20 @@
     );
 
     console.log(
-      "Password Safe Keeper training activities loaded."
+      "Password Safe Keeper curriculum activities loaded:",
+      {
+        comparisons:
+          comparisonChallenges.length,
+
+        passwordAttacks:
+          passwordAttackChallenges.length,
+
+        twoFactorScenarios:
+          twoFactorScenarios.length,
+
+        accountDefenseScenarios:
+          accountDefenseScenarios.length
+      }
     );
   }
 
