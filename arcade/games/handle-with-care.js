@@ -606,13 +606,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    if (selectedDifficulty === "easy") {
-      showTutorialChoice();
-    } else {
-      beginNormalOrder(0);
-    }
+if (selectedDifficulty === "easy") {
+  showTutorialChoice();
+} else {
+  beginNormalOrder(0);
+}
+}
 
-     
 const tutorialSteps = [
   {
     title: "Walk to Wacky",
