@@ -4405,3 +4405,290 @@ body.handle-page button {
 .factory-tutorial-card {
   z-index: 80 !important;
 }
+
+/* =========================================================
+   FINAL CARRY STACK OVERLAP FIX
+   Keep this as the LAST CSS in handle-with-care.css
+========================================================= */
+
+.handle-factory,
+.factory-worker,
+.factory-worker-character {
+  overflow: visible !important;
+}
+
+/* Keep the worker and carried items above the factory belts. */
+
+.factory-worker {
+  position: absolute !important;
+  z-index: 80 !important;
+  overflow: visible !important;
+}
+
+.factory-worker-character {
+  position: relative !important;
+  z-index: 82 !important;
+}
+
+/* Reset every older carried-bubble rule. */
+
+.factory-worker .carried-item-bubble {
+  position: absolute !important;
+
+  left: calc(100% + 12px) !important;
+  right: auto !important;
+
+  top: 50% !important;
+  bottom: auto !important;
+
+  transform: translateY(-50%) !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+
+  width: max-content !important;
+  min-width: 0 !important;
+  max-width: none !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+
+  overflow: visible !important;
+  z-index: 100 !important;
+
+  pointer-events: none !important;
+}
+
+/* Preserve the hidden state when nothing is carried. */
+
+.factory-worker .carried-item-bubble.hidden {
+  display: none !important;
+}
+
+/* Container for one or two carried pieces. */
+
+.factory-worker .carried-stack-list {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+
+  gap: 7px !important;
+
+  width: max-content !important;
+  min-width: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  transform: none !important;
+}
+
+/* Each block appears as its own separate card. */
+
+.factory-worker .carried-stack-piece {
+  position: relative !important;
+
+  display: grid !important;
+  grid-template-columns: auto auto auto !important;
+  align-items: center !important;
+  justify-content: start !important;
+
+  column-gap: 6px !important;
+
+  width: max-content !important;
+  min-width: 118px !important;
+  max-width: 190px !important;
+
+  min-height: 34px !important;
+
+  padding: 7px 9px !important;
+  margin: 0 !important;
+
+  border: 2px solid #ffffff !important;
+  border-radius: 10px !important;
+
+  background: #ffffff !important;
+  color: #172554 !important;
+
+  box-shadow:
+    0 5px 12px rgba(15, 23, 42, 0.28) !important;
+
+  transform: none !important;
+  opacity: 1 !important;
+
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+/* Do not allow either carried block to overlap the other. */
+
+.factory-worker .carried-stack-piece + .carried-stack-piece {
+  margin-top: 0 !important;
+  transform: none !important;
+}
+
+/* Text inside each carried block. */
+
+.factory-worker .carried-stack-piece strong {
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: #172554 !important;
+
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+
+  white-space: nowrap !important;
+}
+
+/* Piece icon. */
+
+.factory-worker .carried-stack-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 18px !important;
+  height: 18px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
+
+/* Active piece indicator. */
+
+.factory-worker .active-carried-piece {
+  border-color: #facc15 !important;
+
+  background: #fffbea !important;
+
+  box-shadow:
+    0 0 0 3px rgba(250, 204, 21, 0.3),
+    0 5px 12px rgba(15, 23, 42, 0.28) !important;
+}
+
+.factory-worker .active-piece-label {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 0 !important;
+  padding: 3px 5px !important;
+
+  border-radius: 999px !important;
+
+  background: #facc15 !important;
+  color: #422006 !important;
+
+  font-size: 7px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+
+  letter-spacing: 0.04em !important;
+  white-space: nowrap !important;
+}
+
+/* Q instruction sits beneath the blocks. */
+
+.factory-worker .carried-stack-switch {
+  display: block !important;
+
+  width: max-content !important;
+
+  margin: 6px 0 0 !important;
+  padding: 5px 8px !important;
+
+  border-radius: 999px !important;
+
+  background: #172554 !important;
+  color: #ffffff !important;
+
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.28) !important;
+
+  font-size: 8px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+
+  white-space: nowrap !important;
+}
+
+/* Factory layering. */
+
+.factory-background-grid,
+.factory-background-glow {
+  z-index: 0 !important;
+}
+
+.factory-lane {
+  z-index: 5 !important;
+}
+
+.factory-conveyor,
+.factory-belt-pattern,
+.lane-platform {
+  z-index: 6 !important;
+}
+
+.factory-piece-layer {
+  position: relative !important;
+  z-index: 12 !important;
+  overflow: visible !important;
+}
+
+.factory-moving-piece {
+  z-index: 14 !important;
+}
+
+.factory-worker {
+  z-index: 80 !important;
+}
+
+.factory-worker .carried-item-bubble {
+  z-index: 100 !important;
+}
+
+.factory-tutorial-card {
+  z-index: 120 !important;
+}
+
+/* Keep the stack inside the screen near the right edge. */
+
+@media (max-width: 900px) {
+  .factory-worker .carried-item-bubble {
+    left: 50% !important;
+    right: auto !important;
+
+    top: auto !important;
+    bottom: calc(100% + 8px) !important;
+
+    transform: translateX(-50%) !important;
+  }
+
+  .factory-worker .carried-stack-list {
+    align-items: center !important;
+  }
+
+  .factory-worker .carried-stack-switch {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
