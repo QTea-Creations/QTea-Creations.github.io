@@ -57,12 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const carriedItemText = byId("carriedItemText");
   const carriedItemIcon = byId("carriedItemIcon");
 
-   const mixerStation = byId("mixerStation");
-   const scannerStation = byId("scannerStation");
-   const shippingStation = byId("shippingStation");
-   const nopeChuteStation = byId("nopeChuteStation");
-   const garbageCanStation = byId("garbageCanStation");
-   const partsShelfStation = byId("partsShelfStation");
+  const mixerStation = byId("mixerStation");
+  const scannerStation = byId("scannerStation");
+  const shippingStation = byId("shippingStation");
+  const nopeChuteStation = byId("nopeChuteStation");
+  const garbageCanStation = byId("garbageCanStation");
+  const partsShelfStation = byId("partsShelfStation");
 
   const tutorialCard = byId("factoryTutorialCard");
   const tutorialHighlight = byId("tutorialHighlight");
@@ -325,38 +325,39 @@ document.addEventListener("DOMContentLoaded", () => {
     three: ["action", "hero", "nature"]
   };
 
- const stationElements = {
-  nope: nopeChuteStation,
-  garbage: garbageCanStation,
-  parts: partsShelfStation,
-  mixer: mixerStation,
-  scanner: scannerStation,
-  shipping: shippingStation
-};
+  const stationElements = {
+    nope: nopeChuteStation,
+    garbage: garbageCanStation,
+    parts: partsShelfStation,
+    mixer: mixerStation,
+    scanner: scannerStation,
+    shipping: shippingStation
+  };
 
-   function getStationCenterX(stationName) {
-  const station = stationElements[stationName];
+  function getStationCenterX(stationName) {
+    const station = stationElements[stationName];
 
-  if (!station || !handleFactory) {
-    return null;
+    if (!station || !handleFactory) {
+      return null;
+    }
+
+    const factoryRect =
+      handleFactory.getBoundingClientRect();
+
+    const stationRect =
+      station.getBoundingClientRect();
+
+    const stationCenter =
+      stationRect.left +
+      stationRect.width / 2;
+
+    return (
+      ((stationCenter - factoryRect.left) /
+        factoryRect.width) *
+      100
+    );
   }
 
-  const factoryRect =
-    handleFactory.getBoundingClientRect();
-
-  const stationRect =
-    station.getBoundingClientRect();
-
-  const stationCenter =
-    stationRect.left +
-    stationRect.width / 2;
-
-  return (
-    ((stationCenter - factoryRect.left) /
-      factoryRect.width) *
-    100
-  );
-}
   const floorLevels = {
     ground: 87,
     laneThree: 62,
@@ -398,7 +399,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let workerMovingLeft = false;
   let workerMovingRight = false;
 
+  const MAX_CARRIED_ITEMS = 2;
+  let carriedItems = [];
+  let activeCarriedIndex = 0;
   let carriedItem = null;
+
   let activePieces = [];
   let mixerPieces = [null, null, null];
   let shelfPieces = [null, null, null];
@@ -553,7 +558,10 @@ document.addEventListener("DOMContentLoaded", () => {
     workerMovingLeft = false;
     workerMovingRight = false;
 
+    carriedItems = [];
+    activeCarriedIndex = 0;
     carriedItem = null;
+
     mixerPieces = [null, null, null];
     shelfPieces = [null, null, null];
 
@@ -606,81 +614,81 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-if (selectedDifficulty === "easy") {
-  showTutorialChoice();
-} else {
-  beginNormalOrder(0);
-}
-}
-
-const tutorialSteps = [
-  {
-    title: "Walk to Wacky",
-    message:
-      "Wacky is on the middle Character Line. Use A and D or the arrow keys to reach it.",
-    control: "⬅️ ➡️"
-  },
-  {
-    title: "Pick up Wacky",
-    message:
-      "Stand close to Wacky and press E.",
-    control: "E"
-  },
-  {
-    title: "Pick up Panda too",
-    message:
-      "Keep carrying Wacky. Walk to Panda and press E to stack a second piece.",
-    control: "E + E"
-  },
-  {
-    title: "Switch your active piece",
-    message:
-      "Press Q to switch which carried piece is placed first.",
-    control: "Q"
-  },
-  {
-    title: "Place both pieces",
-    message:
-      "Carry Wacky and Panda to the Username Mixer. Press E twice to place both.",
-    control: "⚙️"
-  },
-  {
-    title: "Add Bounce",
-    message:
-      "Pick up Bounce from the Character Line and place it in the mixer.",
-    control: "✨"
-  },
-  {
-    title: "Block private information",
-    message:
-      "Pick up Home Address and carry it to the Nope Chute.",
-    control: "🚫"
-  },
-  {
-    title: "Mix the username",
-    message:
-      "Stand at the mixer with empty hands and press E.",
-    control: "⚙️"
-  },
-  {
-    title: "Collect and inspect",
-    message:
-      "Collect the finished package from the mixer and take it to Final Inspection.",
-    control: "📦 ➜ 🔍"
-  },
-  {
-    title: "Try Time Freeze",
-    message:
-      "Press F to activate Time Freeze.",
-    control: "F ❄️"
-  },
-  {
-    title: "Collect and ship",
-    message:
-      "Collect the approved package from Final Inspection and take it to Ship It.",
-    control: "📦 ➜ 🚀"
+    if (selectedDifficulty === "easy") {
+      showTutorialChoice();
+    } else {
+      beginNormalOrder(0);
+    }
   }
-];
+
+  const tutorialSteps = [
+    {
+      title: "Walk to Wacky",
+      message:
+        "Wacky is on the middle Character Line. Use A and D or the arrow keys to reach it.",
+      control: "⬅️ ➡️"
+    },
+    {
+      title: "Pick up Wacky",
+      message:
+        "Stand close to Wacky and press E.",
+      control: "E"
+    },
+    {
+      title: "Pick up Panda too",
+      message:
+        "Keep carrying Wacky. Walk to Panda and press E to stack a second piece.",
+      control: "E + E"
+    },
+    {
+      title: "Switch your active piece",
+      message:
+        "Press Q to switch which carried piece is placed first.",
+      control: "Q"
+    },
+    {
+      title: "Place both pieces",
+      message:
+        "Carry Wacky and Panda to the Username Mixer. Press E twice to place both.",
+      control: "⚙️"
+    },
+    {
+      title: "Add Bounce",
+      message:
+        "Pick up Bounce from the Character Line and place it in the mixer.",
+      control: "✨"
+    },
+    {
+      title: "Block private information",
+      message:
+        "Pick up Home Address and carry it to the Nope Chute.",
+      control: "🚫"
+    },
+    {
+      title: "Mix the username",
+      message:
+        "Stand at the mixer with empty hands and press E.",
+      control: "⚙️"
+    },
+    {
+      title: "Collect and inspect",
+      message:
+        "Collect the finished package from the mixer and take it to Final Inspection.",
+      control: "📦 ➜ 🔍"
+    },
+    {
+      title: "Try Time Freeze",
+      message:
+        "Press F to activate Time Freeze.",
+      control: "F ❄️"
+    },
+    {
+      title: "Collect and ship",
+      message:
+        "Collect the approved package from Final Inspection and take it to Ship It.",
+      control: "📦 ➜ 🚀"
+    }
+  ];
 
   function configureControls() {
     const usesButtons =
@@ -690,9 +698,14 @@ const tutorialSteps = [
     mobileControls?.classList.toggle("hidden", !usesButtons);
 
     const reminders = {
-      keyboard: "Move: WASD or Arrows · Use: E · Time Freeze: F",
-      buttons: "Move with the screen buttons · USE picks up and places",
-      assist: "Assist Mode · Larger interaction range · Easier climbing"
+      keyboard:
+        "Move: WASD or Arrows · Use: E · Switch stack: Q · Time Freeze: F",
+
+      buttons:
+        "Move with screen buttons · USE picks up and places · Q switches stacked pieces",
+
+      assist:
+        "Assist Mode · Larger interaction range · Easier climbing"
     };
 
     setText("controlReminder", reminders[selectedControlMode]);
@@ -748,103 +761,101 @@ const tutorialSteps = [
     runTutorialStep();
   }
 
-function skipTutorial() {
-  markTutorialComplete();
+  function skipTutorial() {
+    markTutorialComplete();
 
-  tutorialActive = false;
+    tutorialActive = false;
 
-  clearTutorialTargetPulses();
+    clearTutorialTargetPulses();
 
-  hide(tutorialOpeningOverlay);
-  hide(tutorialCard);
-  hide(tutorialSkipButton);
-  hide(tutorialHighlight);
+    hide(tutorialOpeningOverlay);
+    hide(tutorialCard);
+    hide(tutorialSkipButton);
+    hide(tutorialHighlight);
 
-  clearPieces();
-  resetOrderMachines();
+    clearPieces();
+    resetOrderMachines();
 
-  /*
-    Skipping training should also open every lane.
-  */
-  unlockLanes(3);
+    unlockLanes(3);
 
-  beginNormalOrder(0);
-}
-   function clearTutorialTargetPulses() {
-  document
-    .querySelectorAll(".tutorial-target-pulse")
-    .forEach((element) => {
-      element.classList.remove("tutorial-target-pulse");
-    });
-}
-
-function pulseTutorialTarget(element) {
-  if (!element) {
-    return;
+    beginNormalOrder(0);
   }
 
-  element.classList.add("tutorial-target-pulse");
-}
-
-function runTutorialStep() {
-  const step = tutorialSteps[tutorialStep];
-
-  if (!step) {
-    completeTutorial();
-    return;
+  function clearTutorialTargetPulses() {
+    document
+      .querySelectorAll(".tutorial-target-pulse")
+      .forEach((element) => {
+        element.classList.remove("tutorial-target-pulse");
+      });
   }
 
-  clearTutorialTargetPulses();
-
-  setText(
-    "tutorialStepLabel",
-    `Tutorial ${tutorialStep + 1} of ${tutorialSteps.length}`
-  );
-
-  setText(
-    "tutorialStepTitle",
-    step.title
-  );
-
-  setText(
-    "tutorialStepMessage",
-    step.message
-  );
-
-  setText(
-    "tutorialControlIcon",
-    step.control
-  );
-
-  switch (tutorialStep) {
-    case 0: {
-      clearPieces();
-
-      tutorialTargetPiece = createPiece(
-        "two",
-        {
-          text: "Wacky",
-          category: "style",
-          unsafe: false,
-          fixedX: 42,
-          tutorial: true
-        }
-      );
-
-      pulseTutorialTarget(
-        tutorialTargetPiece?.element
-      );
-
-      break;
+  function pulseTutorialTarget(element) {
+    if (!element) {
+      return;
     }
 
-    case 1:
-      pulseTutorialTarget(
-        tutorialTargetPiece?.element
-      );
-      break;
+    element.classList.add("tutorial-target-pulse");
+  }
 
-    case 2: {
+  function runTutorialStep() {
+    const step = tutorialSteps[tutorialStep];
+
+    if (!step) {
+      completeTutorial();
+      return;
+    }
+
+    clearTutorialTargetPulses();
+
+    setText(
+      "tutorialStepLabel",
+      `Tutorial ${tutorialStep + 1} of ${tutorialSteps.length}`
+    );
+
+    setText(
+      "tutorialStepTitle",
+      step.title
+    );
+
+    setText(
+      "tutorialStepMessage",
+      step.message
+    );
+
+    setText(
+      "tutorialControlIcon",
+      step.control
+    );
+
+    switch (tutorialStep) {
+      case 0: {
+        clearPieces();
+
+        tutorialTargetPiece = createPiece(
+          "two",
+          {
+            text: "Wacky",
+            category: "style",
+            unsafe: false,
+            fixedX: 42,
+            tutorial: true
+          }
+        );
+
+        pulseTutorialTarget(
+          tutorialTargetPiece?.element
+        );
+
+        break;
+      }
+
+      case 1:
+        pulseTutorialTarget(
+          tutorialTargetPiece?.element
+        );
+        break;
+
+         case 2: {
       const pandaPiece = createPiece(
         "two",
         {
@@ -953,6 +964,7 @@ function runTutorialStep() {
       break;
   }
 }
+
   function advanceTutorial() {
     tutorialStep += 1;
 
@@ -964,40 +976,36 @@ function runTutorialStep() {
     runTutorialStep();
   }
 
-function completeTutorial() {
-  markTutorialComplete();
+  function completeTutorial() {
+    markTutorialComplete();
 
-  tutorialActive = false;
+    tutorialActive = false;
 
-  clearTutorialTargetPulses();
+    clearTutorialTargetPulses();
 
-  hide(tutorialCard);
-  hide(tutorialSkipButton);
-  hide(tutorialHighlight);
+    hide(tutorialCard);
+    hide(tutorialSkipButton);
+    hide(tutorialHighlight);
 
-  score += 50;
+    score += 50;
 
-  showFeedback({
-    correct: true,
-    icon: "🎉",
-    title: "Training complete!",
-    message: "All three factory lines are now open!",
-    points: "+50"
-  });
+    showFeedback({
+      correct: true,
+      icon: "🎉",
+      title: "Training complete!",
+      message: "All three factory lines are now open!",
+      points: "+50"
+    });
 
-  managedTimeout(() => {
-    clearPieces();
-    resetOrderMachines();
+    managedTimeout(() => {
+      clearPieces();
+      resetOrderMachines();
 
-    /*
-      Explicitly unlock all lanes before starting
-      the first real order.
-    */
-    unlockLanes(3);
+      unlockLanes(3);
 
-    beginNormalOrder(0);
-  }, 1200);
-}
+      beginNormalOrder(0);
+    }, 1200);
+  }
 
   /* =========================================================
      ORDER SYSTEM
@@ -1023,13 +1031,10 @@ function completeTutorial() {
       timeRemaining = null;
     }
 
-/*
-  Every real order uses all three conveyor lines.
-*/
-unlockLanes(3);
+    unlockLanes(3);
 
-renderOrder();
-updateHUD();
+    renderOrder();
+    updateHUD();
 
     showAnnouncement(
       "📦",
@@ -1044,80 +1049,143 @@ updateHUD();
     );
   }
 
-function getLaneCountForOrder(index) {
-  /*
-    Every order can require pieces from all three lines.
-
-    Keep all three lanes open so the child can always collect:
-    - Style pieces
-    - Character or animal pieces
-    - Power or action pieces
-
-    Difficulty is controlled by speed, timers, health,
-    and private-piece frequency instead of locked lanes.
-  */
-  return 3;
-}
+  function getLaneCountForOrder() {
+    return 3;
+  }
 
   function unlockLanes(count) {
-    const laneNames = ["one", "two", "three"];
+    const laneNames = [
+      "one",
+      "two",
+      "three"
+    ];
 
-    laneNames.forEach((name, index) => {
-      const unlocked = index < count;
-      const lane = laneElements[name];
+    laneNames.forEach(
+      (name, index) => {
+        const unlocked =
+          index < count;
 
-      lane.element?.classList.toggle("locked-lane", !unlocked);
-      lane.lock?.classList.toggle("hidden", unlocked);
-    });
+        const lane =
+          laneElements[name];
+
+        lane.element?.classList.toggle(
+          "locked-lane",
+          !unlocked
+        );
+
+        lane.lock?.classList.toggle(
+          "hidden",
+          unlocked
+        );
+      }
+    );
   }
 
   function renderOrder() {
-    setText("currentOrderNumber", currentOrderIndex + 1);
-    setText("totalOrders", getSettings().totalOrders);
+    setText(
+      "currentOrderNumber",
+      currentOrderIndex + 1
+    );
 
-    setText("orderTitle", currentOrder.title);
-    setText("orderDescription", currentOrder.description);
+    setText(
+      "totalOrders",
+      getSettings().totalOrders
+    );
 
-    setText("recipeSlotOne", currentOrder.labels[0]);
-    setText("recipeSlotTwo", currentOrder.labels[1]);
-    setText("recipeSlotThree", currentOrder.labels[2]);
+    setText(
+      "orderTitle",
+      currentOrder.title
+    );
 
-setText(
-  "factoryStageName",
-  tutorialActive
-    ? "Training Floor — All Lines Open"
-    : "Full Factory Floor — All Lines Open"
-);
-}
+    setText(
+      "orderDescription",
+      currentOrder.description
+    );
+
+    setText(
+      "recipeSlotOne",
+      currentOrder.labels[0]
+    );
+
+    setText(
+      "recipeSlotTwo",
+      currentOrder.labels[1]
+    );
+
+    setText(
+      "recipeSlotThree",
+      currentOrder.labels[2]
+    );
+
+    setText(
+      "factoryStageName",
+      tutorialActive
+        ? "Training Floor — All Lines Open"
+        : "Full Factory Floor — All Lines Open"
+    );
+  }
 
   /* =========================================================
      HUD
   ========================================================= */
 
   function updateHUD() {
-    setText("currentScore", Math.round(score));
-    setText("comboCount", combo);
+    setText(
+      "currentScore",
+      Math.round(score)
+    );
+
+    setText(
+      "comboCount",
+      combo
+    );
 
     setText(
       "timeRemaining",
       timeRemaining === null
         ? "Practice"
-        : Math.max(0, Math.ceil(timeRemaining))
+        : Math.max(
+            0,
+            Math.ceil(
+              timeRemaining
+            )
+          )
     );
 
-    const settings = getSettings();
+    const settings =
+      getSettings();
 
     setText(
       "factoryHealthDisplay",
-      `${"❤️".repeat(Math.max(0, health))}${"🖤".repeat(
-        Math.max(0, settings.health - health)
-      )}`
+      `${
+        "❤️".repeat(
+          Math.max(
+            0,
+            health
+          )
+        )
+      }${
+        "🖤".repeat(
+          Math.max(
+            0,
+            settings.health -
+              health
+          )
+        )
+      }`
     );
 
-    const freezeFill = byId("timeFreezeFill");
+    const freezeFill =
+      byId(
+        "timeFreezeFill"
+      );
 
     if (freezeFill) {
-      freezeFill.style.width = `${Math.min(100, timeFreezeCharge)}%`;
+      freezeFill.style.width =
+        `${Math.min(
+          100,
+          timeFreezeCharge
+        )}%`;
     }
   }
 
@@ -1126,122 +1194,251 @@ setText(
   ========================================================= */
 
   function startSpawning() {
-    window.clearInterval(spawnInterval);
+    window.clearInterval(
+      spawnInterval
+    );
 
     spawnNeededPiece();
 
-    spawnInterval = window.setInterval(() => {
-      if (
-        !gameActive ||
-        !orderActive ||
-        paused ||
-        tutorialActive
-      ) {
-        return;
-      }
+    spawnInterval =
+      window.setInterval(
+        () => {
+          if (
+            !gameActive ||
+            !orderActive ||
+            paused ||
+            tutorialActive
+          ) {
+            return;
+          }
 
-      spawnNeededPiece();
+          spawnNeededPiece();
 
-      if (
-        selectedDifficulty !== "easy" &&
-        Math.random() < 0.22
-      ) {
-        managedTimeout(spawnNeededPiece, 450);
-      }
-    }, getSettings().spawnDelay);
+          if (
+            selectedDifficulty !==
+              "easy" &&
+            Math.random() <
+              0.22
+          ) {
+            managedTimeout(
+              spawnNeededPiece,
+              450
+            );
+          }
+        },
+        getSettings()
+          .spawnDelay
+      );
   }
 
   function spawnNeededPiece() {
-    const unlockedLanes = getUnlockedLanes();
+    const unlockedLanes =
+      getUnlockedLanes();
 
-    if (unlockedLanes.length === 0) {
+    if (
+      unlockedLanes.length ===
+      0
+    ) {
       return;
     }
 
-    const unsafe = Math.random() < getSettings().unsafeChance;
+    const unsafe =
+      Math.random() <
+      getSettings()
+        .unsafeChance;
 
     if (unsafe) {
-      const data = chooseRandom(unsafePieces);
+      const data =
+        chooseRandom(
+          unsafePieces
+        );
 
-      createPiece(chooseRandom(unlockedLanes), {
-        text: data.text,
-        category: "unsafe",
-        unsafe: true,
-        reason: data.reason
-      });
+      createPiece(
+        chooseRandom(
+          unlockedLanes
+        ),
+        {
+          text: data.text,
+          category:
+            "unsafe",
+          unsafe: true,
+          reason:
+            data.reason
+        }
+      );
 
       return;
     }
 
-    const missingCategories = currentOrder.categories.filter(
-      (category, index) => !mixerPieces[index]
-    );
+    const missingCategories =
+      currentOrder.categories.filter(
+        (
+          category,
+          index
+        ) =>
+          !mixerPieces[
+            index
+          ]
+      );
 
-    let category = chooseRandom(missingCategories);
+    let category =
+      chooseRandom(
+        missingCategories
+      );
 
-    const validLanes = unlockedLanes.filter((lane) =>
-      laneCategoryPools[lane].includes(category)
-    );
+    const validLanes =
+      unlockedLanes.filter(
+        (lane) =>
+          laneCategoryPools[
+            lane
+          ].includes(
+            category
+          )
+      );
 
-    let lane = validLanes.length
-      ? chooseRandom(validLanes)
-      : chooseRandom(unlockedLanes);
+    let lane =
+      validLanes.length
+        ? chooseRandom(
+            validLanes
+          )
+        : chooseRandom(
+            unlockedLanes
+          );
 
-    if (!laneCategoryPools[lane].includes(category)) {
-      category = chooseRandom(laneCategoryPools[lane]);
+    if (
+      !laneCategoryPools[
+        lane
+      ].includes(
+        category
+      )
+    ) {
+      category =
+        chooseRandom(
+          laneCategoryPools[
+            lane
+          ]
+        );
     }
 
-    createPiece(lane, {
-      text: chooseRandom(safeWords[category]),
-      category,
-      unsafe: false
-    });
+    createPiece(
+      lane,
+      {
+        text:
+          chooseRandom(
+            safeWords[
+              category
+            ]
+          ),
+
+        category,
+        unsafe: false
+      }
+    );
   }
 
   function getUnlockedLanes() {
-    return ["one", "two", "three"].filter(
+    return [
+      "one",
+      "two",
+      "three"
+    ].filter(
       (name) =>
-        !laneElements[name].element?.classList.contains("locked-lane")
+        !laneElements[
+          name
+        ].element
+          ?.classList
+          .contains(
+            "locked-lane"
+          )
     );
   }
 
-  function createPiece(lane, data) {
-    const layer = laneElements[lane]?.layer;
+  function createPiece(
+    lane,
+    data
+  ) {
+    const layer =
+      laneElements[
+        lane
+      ]?.layer;
 
     if (!layer) {
       return null;
     }
 
-    const element = document.createElement("button");
+    const element =
+      document.createElement(
+        "button"
+      );
 
-    element.type = "button";
-    element.className = `factory-moving-piece ${
-      data.unsafe ? "private-piece" : "creative-piece"
-    }`;
+    element.type =
+      "button";
+
+    element.className =
+      `factory-moving-piece ${
+        data.unsafe
+          ? "private-piece"
+          : "creative-piece"
+      }`;
 
     element.innerHTML = `
-      <span>${data.unsafe ? "⚠️" : "✨"}</span>
-      <strong>${data.text}</strong>
-      <small>${data.unsafe ? "PRIVATE" : data.category.toUpperCase()}</small>
+      <span>
+        ${
+          data.unsafe
+            ? "⚠️"
+            : "✨"
+        }
+      </span>
+
+      <strong>
+        ${data.text}
+      </strong>
+
+      <small>
+        ${
+          data.unsafe
+            ? "PRIVATE"
+            : data.category
+                .toUpperCase()
+        }
+      </small>
     `;
 
-    layer.appendChild(element);
+    layer.appendChild(
+      element
+    );
 
     const piece = {
       element,
       lane,
       data,
-      x: data.fixedX ?? -12,
+
+      x:
+        data.fixedX ??
+        -12,
+
       removed: false,
-      tutorial: Boolean(data.tutorial),
-      lastTimestamp: performance.now()
+
+      tutorial:
+        Boolean(
+          data.tutorial
+        ),
+
+      lastTimestamp:
+        performance.now()
     };
 
-    activePieces.push(piece);
+    activePieces.push(
+      piece
+    );
 
-    updatePiecePosition(piece);
+    updatePiecePosition(
+      piece
+    );
 
-    if (!piece.tutorial) {
+    if (
+      !piece.tutorial
+    ) {
       requestPieceAnimation();
     }
 
@@ -1249,83 +1446,147 @@ setText(
   }
 
   function requestPieceAnimation() {
-    if (pieceAnimationFrame) {
+    if (
+      pieceAnimationFrame
+    ) {
       return;
     }
 
-    pieceAnimationFrame = window.requestAnimationFrame(animatePieces);
+    pieceAnimationFrame =
+      window.requestAnimationFrame(
+        animatePieces
+      );
   }
 
-  function animatePieces(timestamp) {
-    pieceAnimationFrame = null;
+  function animatePieces(
+    timestamp
+  ) {
+    pieceAnimationFrame =
+      null;
 
     if (!gameActive) {
       return;
     }
 
-    activePieces.forEach((piece) => {
-      if (piece.removed || piece.tutorial) {
-        return;
-      }
+    activePieces.forEach(
+      (piece) => {
+        if (
+          piece.removed ||
+          piece.tutorial
+        ) {
+          return;
+        }
 
-      const delta = timestamp - piece.lastTimestamp;
-      piece.lastTimestamp = timestamp;
+        const delta =
+          timestamp -
+          piece.lastTimestamp;
 
-      if (!paused && orderActive) {
-        const speedFactor = timeFreezeActive
-          ? getSettings().freezeSpeed
-          : 1;
+        piece.lastTimestamp =
+          timestamp;
 
-        piece.x +=
-          (delta / getSettings().pieceDuration) *
-          124 *
-          speedFactor;
+        if (
+          !paused &&
+          orderActive
+        ) {
+          const speedFactor =
+            timeFreezeActive
+              ? getSettings()
+                  .freezeSpeed
+              : 1;
 
-        updatePiecePosition(piece);
+          piece.x +=
+            (
+              delta /
+              getSettings()
+                .pieceDuration
+            ) *
+            124 *
+            speedFactor;
 
-        if (piece.x >= 108) {
-          handleMissedPiece(piece);
+          updatePiecePosition(
+            piece
+          );
+
+          if (
+            piece.x >=
+            108
+          ) {
+            handleMissedPiece(
+              piece
+            );
+          }
         }
       }
-    });
+    );
 
-    activePieces = activePieces.filter((piece) => !piece.removed);
+    activePieces =
+      activePieces.filter(
+        (piece) =>
+          !piece.removed
+      );
 
-    if (activePieces.length) {
+    if (
+      activePieces.length
+    ) {
       requestPieceAnimation();
     }
   }
 
-  function updatePiecePosition(piece) {
-    piece.element.style.left = `${piece.x}%`;
+  function updatePiecePosition(
+    piece
+  ) {
+    piece.element.style.left =
+      `${piece.x}%`;
   }
 
-  function removePiece(piece) {
-    if (!piece || piece.removed) {
+  function removePiece(
+    piece
+  ) {
+    if (
+      !piece ||
+      piece.removed
+    ) {
       return;
     }
 
-    piece.removed = true;
+    piece.removed =
+      true;
+
     piece.element.remove();
   }
 
   function clearPieces() {
-    activePieces.forEach((piece) => {
-      piece.removed = true;
-      piece.element.remove();
-    });
+    activePieces.forEach(
+      (piece) => {
+        piece.removed =
+          true;
+
+        piece.element.remove();
+      }
+    );
 
     activePieces = [];
 
-    Object.values(laneElements).forEach((lane) => {
-      if (lane.layer) {
-        lane.layer.innerHTML = "";
+    Object.values(
+      laneElements
+    ).forEach(
+      (lane) => {
+        if (
+          lane.layer
+        ) {
+          lane.layer.innerHTML =
+            "";
+        }
       }
-    });
+    );
   }
 
-  function handleMissedPiece(piece) {
-    if (piece.data.unsafe) {
+  function handleMissedPiece(
+    piece
+  ) {
+    if (
+      piece.data.unsafe
+    ) {
       damageFactory(
         "Private clue escaped!",
         piece.data.reason
@@ -1336,13 +1597,19 @@ setText(
       showFeedback({
         correct: false,
         icon: "📦",
-        title: "Piece missed",
-        message: `${piece.data.text} rolled off the line.`,
+        title:
+          "Piece missed",
+
+        message:
+          `${piece.data.text} rolled off the line.`,
+
         points: "+0"
       });
     }
 
-    removePiece(piece);
+    removePiece(
+      piece
+    );
   }
 
   /* =========================================================
@@ -1350,51 +1617,86 @@ setText(
   ========================================================= */
 
   function startWorkerLoop() {
-    lastWorkerTimestamp = performance.now();
+    lastWorkerTimestamp =
+      performance.now();
 
     workerAnimationFrame =
-      window.requestAnimationFrame(workerLoop);
+      window.requestAnimationFrame(
+        workerLoop
+      );
   }
 
-  function workerLoop(timestamp) {
+  function workerLoop(
+    timestamp
+  ) {
     if (!gameActive) {
       return;
     }
 
-    const delta = Math.min(34, timestamp - lastWorkerTimestamp);
-    lastWorkerTimestamp = timestamp;
+    const delta =
+      Math.min(
+        34,
+        timestamp -
+          lastWorkerTimestamp
+      );
+
+    lastWorkerTimestamp =
+      timestamp;
 
     if (!paused) {
       const speed =
-        selectedControlMode === "assist"
+        selectedControlMode ===
+          "assist"
           ? 0.045
           : 0.038;
 
-      if (workerMovingLeft) {
-        workerX -= speed * delta;
+      if (
+        workerMovingLeft
+      ) {
+        workerX -=
+          speed *
+          delta;
       }
 
-      if (workerMovingRight) {
-        workerX += speed * delta;
+      if (
+        workerMovingRight
+      ) {
+        workerX +=
+          speed *
+          delta;
       }
 
-      workerX = Math.max(2, Math.min(98, workerX));
+      workerX =
+        Math.max(
+          2,
+          Math.min(
+            98,
+            workerX
+          )
+        );
 
-      timeFreezeCharge = Math.min(
-        100,
-        timeFreezeCharge + delta * 0.0038
-      );
+      timeFreezeCharge =
+        Math.min(
+          100,
+          timeFreezeCharge +
+            delta *
+              0.0038
+        );
 
       updateWorker();
       updateHUD();
 
-      if (tutorialActive) {
+      if (
+        tutorialActive
+      ) {
         checkTutorialMovement();
       }
     }
 
     workerAnimationFrame =
-      window.requestAnimationFrame(workerLoop);
+      window.requestAnimationFrame(
+        workerLoop
+      );
   }
 
   function updateWorker() {
@@ -1402,12 +1704,16 @@ setText(
       return;
     }
 
-    factoryWorker.style.left = `${workerX}%`;
-    factoryWorker.style.top = `${workerY}%`;
+    factoryWorker.style.left =
+      `${workerX}%`;
+
+    factoryWorker.style.top =
+      `${workerY}%`;
 
     factoryWorker.classList.toggle(
       "worker-moving",
-      workerMovingLeft || workerMovingRight
+      workerMovingLeft ||
+        workerMovingRight
     );
 
     factoryWorker.classList.toggle(
@@ -1416,7 +1722,9 @@ setText(
     );
   }
 
-  function moveVertical(direction) {
+  function moveVertical(
+    direction
+  ) {
     const levels = [
       floorLevels.laneOne,
       floorLevels.laneTwo,
@@ -1424,21 +1732,46 @@ setText(
       floorLevels.ground
     ];
 
-    const currentIndex = levels.reduce(
-      (closest, value, index) =>
-        Math.abs(value - workerY) <
-        Math.abs(levels[closest] - workerY)
-          ? index
-          : closest,
-      0
-    );
+    const currentIndex =
+      levels.reduce(
+        (
+          closest,
+          value,
+          index
+        ) =>
+          Math.abs(
+            value -
+              workerY
+          ) <
+          Math.abs(
+            levels[
+              closest
+            ] -
+              workerY
+          )
+            ? index
+            : closest,
+        0
+      );
 
     const nextIndex =
       direction === "up"
-        ? Math.max(0, currentIndex - 1)
-        : Math.min(levels.length - 1, currentIndex + 1);
+        ? Math.max(
+            0,
+            currentIndex -
+              1
+          )
+        : Math.min(
+            levels.length -
+              1,
+            currentIndex +
+              1
+          );
 
-    const laneCount = getLaneCountForOrder(currentOrderIndex);
+    const laneCount =
+      getLaneCountForOrder(
+        currentOrderIndex
+      );
 
     const minimumIndex =
       laneCount === 1
@@ -1447,315 +1780,745 @@ setText(
           ? 0
           : 0;
 
-    workerY = levels[Math.max(minimumIndex, nextIndex)];
+    workerY =
+      levels[
+        Math.max(
+          minimumIndex,
+          nextIndex
+        )
+      ];
 
-    factoryWorker?.classList.add("worker-climbing");
+    factoryWorker
+      ?.classList
+      .add(
+        "worker-climbing"
+      );
 
-    managedTimeout(() => {
-      factoryWorker?.classList.remove("worker-climbing");
-    }, 300);
+    managedTimeout(
+      () => {
+        factoryWorker
+          ?.classList
+          .remove(
+            "worker-climbing"
+          );
+      },
+      300
+    );
 
     updateWorker();
   }
-/* =========================================================
-   INTERACTION
-========================================================= */
 
-function useNearbyObject() {
-  if (!gameActive || paused) {
-    return;
+  /* =========================================================
+     TWO-PIECE CARRY STACK
+  ========================================================= */
+
+  function syncCarriedItem() {
+    if (
+      !carriedItems.length
+    ) {
+      activeCarriedIndex =
+        0;
+
+      carriedItem =
+        null;
+
+      return;
+    }
+
+    activeCarriedIndex =
+      Math.max(
+        0,
+        Math.min(
+          activeCarriedIndex,
+          carriedItems.length -
+            1
+        )
+      );
+
+    carriedItem =
+      carriedItems[
+        activeCarriedIndex
+      ];
   }
 
-  /*
-    When carrying an object, first try to place it
-    into the nearest ground-floor station.
-  */
-  if (carriedItem) {
+  function clearCarriedItems() {
+    carriedItems = [];
+
+    activeCarriedIndex =
+      0;
+
+    carriedItem =
+      null;
+
+    updateCarriedItem();
+  }
+
+  function canCarryItem(
+    item
+  ) {
+    if (!item) {
+      return false;
+    }
+
+    if (
+      carriedItems.length >=
+      MAX_CARRIED_ITEMS
+    ) {
+      return false;
+    }
+
+    if (
+      item.package
+    ) {
+      return (
+        carriedItems.length ===
+        0
+      );
+    }
+
+    return !carriedItems.some(
+      (entry) =>
+        entry.package
+    );
+  }
+
+  function addCarriedItem(
+    item
+  ) {
+    if (
+      !canCarryItem(
+        item
+      )
+    ) {
+      return false;
+    }
+
+    carriedItems.push(
+      item
+    );
+
+    activeCarriedIndex =
+      carriedItems.length -
+      1;
+
+    syncCarriedItem();
+    updateCarriedItem();
+
+    return true;
+  }
+
+  function removeActiveCarriedItem() {
+    if (
+      !carriedItems.length
+    ) {
+      return null;
+    }
+
+    const removed =
+      carriedItems.splice(
+        activeCarriedIndex,
+        1
+      )[0] ||
+      null;
+
+    if (
+      activeCarriedIndex >=
+      carriedItems.length
+    ) {
+      activeCarriedIndex =
+        Math.max(
+          0,
+          carriedItems.length -
+            1
+        );
+    }
+
+    syncCarriedItem();
+    updateCarriedItem();
+
+    return removed;
+  }
+
+  function switchActiveCarriedItem() {
+    if (
+      carriedItems.length <
+      2
+    ) {
+      showFeedback({
+        correct: false,
+        icon: "Q",
+
+        title:
+          "Only one piece carried",
+
+        message:
+          "Pick up a second piece before pressing Q to switch.",
+
+        points: "+0"
+      });
+
+      return;
+    }
+
+    activeCarriedIndex =
+      (
+        activeCarriedIndex +
+        1
+      ) %
+      carriedItems.length;
+
+    syncCarriedItem();
+    updateCarriedItem();
+
+    showFeedback({
+      correct: true,
+      icon: "🔄",
+
+      title:
+        `${carriedItem.text} is active`,
+
+      message:
+        "Press E at a station to place the highlighted piece first.",
+
+      points: "+0"
+    });
+
+    if (
+      tutorialActive &&
+      tutorialStep ===
+        3
+    ) {
+      advanceTutorial();
+    }
+  }
+
+  /* =========================================================
+     INTERACTION
+  ========================================================= */
+
+  function useNearbyObject() {
+    if (
+      !gameActive ||
+      paused
+    ) {
+      return;
+    }
+
+    if (carriedItem) {
+      const nearbyStation =
+        getNearbyStation();
+
+      if (
+        nearbyStation
+      ) {
+        placeCarriedItem(
+          nearbyStation
+        );
+
+        return;
+      }
+    }
+
+    const nearbyPiece =
+      getNearbyPiece();
+
+    if (
+      nearbyPiece
+    ) {
+      pickUpPiece(
+        nearbyPiece
+      );
+
+      return;
+    }
+
+    const shelfPiece =
+      getNearbyShelfPiece();
+
+    if (
+      shelfPiece
+    ) {
+      pickUpShelfPiece(
+        shelfPiece.index
+      );
+
+      return;
+    }
+
     const nearbyStation =
       getNearbyStation();
 
-    if (nearbyStation) {
-      placeCarriedItem(
+    if (
+      nearbyStation
+    ) {
+      useEmptyHandStation(
         nearbyStation
       );
 
       return;
     }
+
+    showFeedback({
+      correct: false,
+      icon: "✋",
+
+      title:
+        "Nothing close enough",
+
+      message:
+        "Move closer to a piece or machine and press E again.",
+
+      points: "+0"
+    });
   }
 
-  /*
-    With empty hands, first look for a nearby
-    conveyor piece.
-  */
-  const nearbyPiece =
-    getNearbyPiece();
+  function getWorkerLane() {
+    const distances = {
+      one:
+        Math.abs(
+          workerY -
+            floorLevels.laneOne
+        ),
 
-  if (nearbyPiece) {
-    pickUpPiece(
-      nearbyPiece
-    );
+      two:
+        Math.abs(
+          workerY -
+            floorLevels.laneTwo
+        ),
 
-    return;
-  }
+      three:
+        Math.abs(
+          workerY -
+            floorLevels.laneThree
+        )
+    };
 
-  /*
-    Then look for a saved Parts Shelf item.
-  */
-  const shelfPiece =
-    getNearbyShelfPiece();
-
-  if (shelfPiece) {
-    pickUpShelfPiece(
-      shelfPiece.index
-    );
-
-    return;
-  }
-
-  /*
-    Finally, operate a nearby machine with
-    empty hands.
-  */
-  const nearbyStation =
-    getNearbyStation();
-
-  if (nearbyStation) {
-    useEmptyHandStation(
-      nearbyStation
-    );
-
-    return;
-  }
-
-  showFeedback({
-    correct: false,
-    icon: "✋",
-    title: "Nothing close enough",
-    message:
-      "Move closer to a piece or machine and press E again.",
-    points: "+0"
-  });
-}
-
-
-function getWorkerLane() {
-  const distances = {
-    one:
-      Math.abs(
-        workerY -
-        floorLevels.laneOne
-      ),
-
-    two:
-      Math.abs(
-        workerY -
-        floorLevels.laneTwo
-      ),
-
-    three:
-      Math.abs(
-        workerY -
-        floorLevels.laneThree
+    return Object
+      .entries(
+        distances
       )
-  };
-
-  return Object
-    .entries(distances)
-    .sort(
-      (first, second) =>
-        first[1] - second[1]
-    )[0][0];
-}
-
-
-function getNearbyPiece() {
-  const workerLane =
-    getWorkerLane();
-
-  const interactionRange =
-    selectedControlMode === "assist"
-      ? 18
-      : 12;
-
-  const nearbyPieces =
-    activePieces
-      .filter((piece) => {
-        return (
-          piece &&
-          !piece.removed &&
-          piece.element &&
-          piece.lane === workerLane &&
-          Math.abs(
-            piece.x -
-            workerX
-          ) <= interactionRange
-        );
-      })
       .sort(
-        (first, second) =>
-          Math.abs(
-            first.x -
-            workerX
-          ) -
-          Math.abs(
-            second.x -
-            workerX
-          )
-      );
-
-  return nearbyPieces[0] || null;
-}
-
-
-function pickUpPiece(piece) {
-  if (
-    carriedItem ||
-    !piece ||
-    piece.removed
-  ) {
-    return;
+        (
+          first,
+          second
+        ) =>
+          first[1] -
+          second[1]
+      )[0][0];
   }
 
-  carriedItem = {
-    ...piece.data,
-    source: "belt"
-  };
+  function getNearbyPiece() {
+    const workerLane =
+      getWorkerLane();
 
-  removePiece(piece);
-  updateCarriedItem();
+    const interactionRange =
+      selectedControlMode ===
+        "assist"
+        ? 18
+        : 12;
 
-  combo += 1;
-
-  bestCombo = Math.max(
-    bestCombo,
-    combo
-  );
-
-  correctActions += 1;
-
-  score +=
-    5 *
-    getSettings().scoreMultiplier;
-
-  showFeedback({
-    correct: true,
-    icon:
-      carriedItem.unsafe
-        ? "⚠️"
-        : "✨",
-    title:
-      `${carriedItem.text} picked up!`,
-    message:
-      carriedItem.unsafe
-        ? "Carry it to the Nope Chute."
-        : "Carry it to the mixer, Parts Shelf, or Garbage Can.",
-    points: "+5"
-  });
-
-  if (tutorialActive) {
-    if (
-      tutorialStep === 1 &&
-      carriedItem.text === "Wacky"
-    ) {
-      advanceTutorial();
-    }
-
-    if (
-      tutorialStep === 3 &&
-      carriedItem.text === "Home Address"
-    ) {
-      clearTutorialTargetPulses();
-
-      pulseTutorialTarget(
-        nopeChuteStation
-      );
-
-      setText(
-        "tutorialStepMessage",
-        "Great! Climb down, walk to the pulsing Nope Chute, and press E."
-      );
-    }
-  }
-
-  updateHUD();
-}
-
-
-function getNearbyStation() {
-  if (
-    Math.abs(
-      workerY -
-      floorLevels.ground
-    ) > 12
-  ) {
-    return null;
-  }
-
-  const interactionRange =
-    selectedControlMode === "assist"
-      ? 12
-      : 8;
-
-  const nearbyStations =
-    Object
-      .keys(stationElements)
-      .map((stationName) => {
-        const stationX =
-          getStationCenterX(
-            stationName
-          );
-
-        if (stationX === null) {
-          return null;
-        }
-
-        return {
-          name: stationName,
-          distance:
+    const nearbyPieces =
+      activePieces
+        .filter(
+          (piece) => {
+            return (
+              piece &&
+              !piece.removed &&
+              piece.element &&
+              piece.lane ===
+                workerLane &&
+              Math.abs(
+                piece.x -
+                  workerX
+              ) <=
+                interactionRange
+            );
+          }
+        )
+        .sort(
+          (
+            first,
+            second
+          ) =>
             Math.abs(
-              workerX -
-              stationX
+              first.x -
+                workerX
+            ) -
+            Math.abs(
+              second.x -
+                workerX
             )
-        };
-      })
-      .filter(Boolean)
-      .filter(
-        (station) =>
-          station.distance <=
-          interactionRange
-      )
-      .sort(
-        (first, second) =>
-          first.distance -
-          second.distance
-      );
+        );
 
-  return (
-    nearbyStations[0]?.name ||
-    null
-  );
-}
+    return (
+      nearbyPieces[0] ||
+      null
+    );
+  }
 
-  function updateCarriedItem() {
-    if (!carriedItem) {
-      hide(carriedItemBubble);
+  function pickUpPiece(
+    piece
+  ) {
+    if (
+      !piece ||
+      piece.removed
+    ) {
       return;
     }
 
-    setText("carriedItemText", carriedItem.text);
-    setText(
-      "carriedItemIcon",
-      carriedItem.package
-        ? "📦"
-        : carriedItem.unsafe
-          ? "⚠️"
-          : "✨"
+    const item = {
+      ...piece.data,
+      source: "belt"
+    };
+
+    if (
+      !canCarryItem(
+        item
+      )
+    ) {
+      showFeedback({
+        correct: false,
+        icon: "📚",
+
+        title:
+          "Carry stack full",
+
+        message:
+          "You can carry two creative pieces at once. Place or discard one before picking up another.",
+
+        points: "+0"
+      });
+
+      return;
+    }
+
+    removePiece(
+      piece
     );
 
-    show(carriedItemBubble);
+    addCarriedItem(
+      item
+    );
+
+    combo += 1;
+
+    bestCombo =
+      Math.max(
+        bestCombo,
+        combo
+      );
+
+    correctActions +=
+      1;
+
+    score +=
+      5 *
+      getSettings()
+        .scoreMultiplier;
+
+    showFeedback({
+      correct: true,
+
+      icon:
+        item.unsafe
+          ? "⚠️"
+          : "✨",
+
+      title:
+        `${item.text} picked up!`,
+
+      message:
+        carriedItems.length ===
+          2
+          ? `${item.text} was stacked. Press Q to switch the active piece.`
+          : item.unsafe
+            ? "Carry it to the Nope Chute. You may still stack one more non-package item."
+            : "Pick up one more piece, or carry this one to a station.",
+
+      points: "+5"
+    });
+
+    if (
+      tutorialActive
+    ) {
+      if (
+        tutorialStep ===
+          1 &&
+        item.text ===
+          "Wacky"
+      ) {
+        advanceTutorial();
+      } else if (
+        tutorialStep ===
+          2 &&
+        item.text ===
+          "Panda" &&
+        carriedItems.some(
+          (entry) =>
+            entry.text ===
+            "Wacky"
+        ) &&
+        carriedItems.some(
+          (entry) =>
+            entry.text ===
+            "Panda"
+        )
+      ) {
+        advanceTutorial();
+      } else if (
+        tutorialStep ===
+          5 &&
+        item.text ===
+          "Bounce"
+      ) {
+        clearTutorialTargetPulses();
+
+        pulseTutorialTarget(
+          mixerStation
+        );
+
+        setText(
+          "tutorialStepMessage",
+          "Great! Take Bounce to the Username Mixer and press E."
+        );
+      } else if (
+        tutorialStep ===
+          6 &&
+        item.text ===
+          "Home Address"
+      ) {
+        clearTutorialTargetPulses();
+
+        pulseTutorialTarget(
+          nopeChuteStation
+        );
+
+        setText(
+          "tutorialStepMessage",
+          "Great! Climb down, walk to the pulsing Nope Chute, and press E."
+        );
+      }
+    }
+
+    updateHUD();
   }
 
-function isWrongTutorialDestination(station) {
+  function getNearbyStation() {
+    if (
+      Math.abs(
+        workerY -
+          floorLevels.ground
+      ) >
+      12
+    ) {
+      return null;
+    }
+
+    const interactionRange =
+      selectedControlMode ===
+        "assist"
+        ? 12
+        : 8;
+
+    const nearbyStations =
+      Object
+        .keys(
+          stationElements
+        )
+        .map(
+          (
+            stationName
+          ) => {
+            const stationX =
+              getStationCenterX(
+                stationName
+              );
+
+            if (
+              stationX ===
+              null
+            ) {
+              return null;
+            }
+
+            return {
+              name:
+                stationName,
+
+              distance:
+                Math.abs(
+                  workerX -
+                    stationX
+                )
+            };
+          }
+        )
+        .filter(Boolean)
+        .filter(
+          (station) =>
+            station.distance <=
+            interactionRange
+        )
+        .sort(
+          (
+            first,
+            second
+          ) =>
+            first.distance -
+            second.distance
+        );
+
+    return (
+      nearbyStations[0]
+        ?.name ||
+      null
+    );
+  }
+
+  function updateCarriedItem() {
+    syncCarriedItem();
+
+    if (
+      !carriedItems.length
+    ) {
+      hide(
+        carriedItemBubble
+      );
+
+      return;
+    }
+
+    show(
+      carriedItemBubble
+    );
+
+    carriedItemBubble.style.zIndex =
+      "90";
+
+    carriedItemBubble.style.overflow =
+      "visible";
+
+    carriedItemBubble.setAttribute(
+      "aria-label",
+      `Carrying ${
+        carriedItems
+          .map(
+            (item) =>
+              item.text
+          )
+          .join(
+            " and "
+          )
+      }`
+    );
+
+    carriedItemBubble.innerHTML =
+      carriedItems
+        .map(
+          (
+            item,
+            index
+          ) => {
+            const active =
+              index ===
+              activeCarriedIndex;
+
+            const icon =
+              item.package
+                ? "📦"
+                : item.unsafe
+                  ? "⚠️"
+                  : "✨";
+
+            return `
+              <span
+                class="carried-stack-piece${
+                  active
+                    ? " active-carried-piece"
+                    : ""
+                }"
+                style="
+                  display:flex;
+                  align-items:center;
+                  justify-content:center;
+                  gap:5px;
+                  min-width:92px;
+                  padding:5px 8px;
+                  margin-top:${
+                    index === 0
+                      ? "0"
+                      : "-3px"
+                  };
+                  border:2px solid ${
+                    active
+                      ? "#facc15"
+                      : "rgba(255,255,255,.8)"
+                  };
+                  border-radius:10px;
+                  background:${
+                    active
+                      ? "#ffffff"
+                      : "#eef2ff"
+                  };
+                  color:#172554;
+                  box-shadow:0 5px 12px rgba(15,23,42,.25);
+                  transform:translateY(${
+                    -index * 4
+                  }px);
+                "
+              >
+                <span aria-hidden="true">
+                  ${icon}
+                </span>
+
+                <strong>
+                  ${item.text}
+                </strong>
+              </span>
+            `;
+          }
+        )
+        .join("");
+
+    if (
+      carriedItems.length ===
+      2
+    ) {
+      carriedItemBubble.insertAdjacentHTML(
+        "beforeend",
+        `
+          <small
+            style="
+              display:block;
+              margin-top:2px;
+              font-weight:800;
+            "
+          >
+            Q: switch active piece
+          </small>
+        `
+      );
+    }
+
+    if (
+      carriedItemText
+    ) {
+      carriedItemText.textContent =
+        carriedItem.text;
+    }
+
+    if (
+      carriedItemIcon
+    ) {
+      carriedItemIcon.textContent =
+        carriedItem.package
+          ? "📦"
+          : carriedItem.unsafe
+            ? "⚠️"
+            : "✨";
+    }
+  }
+   function isWrongTutorialDestination(station) {
   if (
     !tutorialActive ||
     !carriedItem
@@ -1763,9 +2526,6 @@ function isWrongTutorialDestination(station) {
     return false;
   }
 
-  /*
-    Wacky belongs in the mixer.
-  */
   if (
     tutorialStep === 2 &&
     carriedItem.text === "Wacky"
@@ -1773,9 +2533,6 @@ function isWrongTutorialDestination(station) {
     return station !== "mixer";
   }
 
-  /*
-    Home Address belongs in the Nope Chute.
-  */
   if (
     tutorialStep === 3 &&
     carriedItem.text === "Home Address"
@@ -1783,9 +2540,6 @@ function isWrongTutorialDestination(station) {
     return station !== "nope";
   }
 
-  /*
-    Panda and Bounce belong in the mixer.
-  */
   if (
     tutorialStep === 4 &&
     (
@@ -1796,9 +2550,6 @@ function isWrongTutorialDestination(station) {
     return station !== "mixer";
   }
 
-  /*
-    Unapproved packages belong at Final Inspection.
-  */
   if (
     tutorialStep === 6 &&
     carriedItem.package &&
@@ -1807,9 +2558,6 @@ function isWrongTutorialDestination(station) {
     return station !== "scanner";
   }
 
-  /*
-    Approved packages belong at Shipping.
-  */
   if (
     tutorialStep === 7 &&
     carriedItem.package &&
@@ -1879,9 +2627,6 @@ function handleWrongTutorialDestination() {
     `You still have ${carriedItem.text}. Carry it to the pulsing ${correctStationName} and press E.`
   );
 
-  /*
-    The item stays in the player's hands.
-  */
   updateCarriedItem();
 }
 
@@ -1931,14 +2676,12 @@ function placeCarriedItem(station) {
   }
 }
 
-   function placeInNopeChute() {
+
+function placeInNopeChute() {
   if (!carriedItem) {
     return;
   }
 
-  /*
-    Safe pieces should remain in the player's hands.
-  */
   if (!carriedItem.unsafe) {
     combo = 0;
     mistakes += 1;
@@ -1948,21 +2691,19 @@ function placeCarriedItem(station) {
       icon: "🚫",
       title: "That piece is not private",
       message:
-        `${carriedItem.text} is a safe creative piece. Keep carrying it to the Mixer, Parts Shelf, or Garbage Can.`,
+        `${carriedItem.text} is safe. Press Q to select another carried piece, or take it to the Mixer, Shelf, or Garbage Can.`,
       points: "+0"
     });
 
-    /*
-      Do not remove the safe piece.
-    */
-    updateCarriedItem();
     updateHUD();
-
     return;
   }
 
+  const removed =
+    removeActiveCarriedItem();
+
   const removedText =
-    carriedItem.text;
+    removed.text;
 
   privateCluesBlocked += 1;
   orderPrivateBlocked += 1;
@@ -1970,62 +2711,68 @@ function placeCarriedItem(station) {
 
   score +=
     20 *
-    getSettings().scoreMultiplier;
+    getSettings()
+      .scoreMultiplier;
 
   combo += 1;
 
-  bestCombo = Math.max(
-    bestCombo,
-    combo
-  );
+  bestCombo =
+    Math.max(
+      bestCombo,
+      combo
+    );
 
-  carriedItem = null;
-
-  updateCarriedItem();
-
-  nopeChuteStation?.classList.add(
-    "nope-drop"
-  );
-
-  managedTimeout(() => {
-    nopeChuteStation?.classList.remove(
+  nopeChuteStation
+    ?.classList
+    .add(
       "nope-drop"
     );
-  }, 420);
+
+  managedTimeout(
+    () =>
+      nopeChuteStation
+        ?.classList
+        .remove(
+          "nope-drop"
+        ),
+    420
+  );
 
   showFeedback({
     correct: true,
     icon: "🚫",
     title: "Private clue blocked!",
     message:
-      `${removedText} safely went into the Nope Chute.`,
+      carriedItems.length
+        ? `${removedText} went into the Nope Chute. You are still carrying ${carriedItem.text}.`
+        : `${removedText} safely went into the Nope Chute.`,
     points: "+20"
   });
 
   if (
     tutorialActive &&
-    tutorialStep === 3 &&
-    removedText === "Home Address"
+    tutorialStep === 6 &&
+    removedText ===
+      "Home Address"
   ) {
     advanceTutorial();
   }
 
   updateHUD();
 }
-   
+
+
 function placeInGarbageCan() {
   if (!carriedItem) {
     return;
   }
 
-  /*
-    Never allow finished packages in the garbage.
-  */
   if (carriedItem.package) {
     showFeedback({
       correct: false,
       icon: "📦",
-      title: "Do not trash the package",
+      title:
+        "Do not trash the package",
       message:
         carriedItem.approved
           ? "Take the approved package to Ship It."
@@ -2036,78 +2783,79 @@ function placeInGarbageCan() {
     return;
   }
 
-  /*
-    Tutorial protection:
-    important tutorial objects remain in the player's hands.
-  */
-  if (tutorialActive) {
-    const protectedTutorialItems = [
+  if (
+    tutorialActive &&
+    [
       "Wacky",
       "Home Address",
       "Panda",
       "Bounce"
-    ];
+    ].includes(
+      carriedItem.text
+    )
+  ) {
+    handleWrongTutorialDestination(
+      "garbage"
+    );
 
-    if (
-      protectedTutorialItems.includes(
-        carriedItem.text
-      )
-    ) {
-      handleWrongTutorialDestination(
-        "garbage"
-      );
-
-      return;
-    }
+    return;
   }
 
-  const discardedItem = {
-    ...carriedItem
-  };
+  const discardedItem =
+    removeActiveCarriedItem();
 
   const neededForOrder =
     !discardedItem.unsafe &&
     currentOrder.categories.some(
-      (category, index) =>
+      (
+        category,
+        index
+      ) =>
         category ===
           discardedItem.category &&
-        !mixerPieces[index]
+        !mixerPieces[
+          index
+        ]
     );
 
-  carriedItem = null;
-  updateCarriedItem();
-
-  garbageCanStation?.classList.add(
-    "garbage-drop"
-  );
-
-  managedTimeout(() => {
-    garbageCanStation?.classList.remove(
+  garbageCanStation
+    ?.classList
+    .add(
       "garbage-drop"
     );
-  }, 420);
 
-  if (discardedItem.unsafe) {
+  managedTimeout(
+    () =>
+      garbageCanStation
+        ?.classList
+        .remove(
+          "garbage-drop"
+        ),
+    420
+  );
+
+  if (
+    discardedItem.unsafe
+  ) {
     combo = 0;
 
     showFeedback({
       correct: false,
       icon: "🚫",
-      title: "Private clue discarded",
+      title:
+        "Private clue discarded",
       message:
         `${discardedItem.text} was removed, but private clues should go into the Nope Chute.`,
       points: "+0"
     });
-
-    updateHUD();
-    return;
-  }
-
-  if (neededForOrder) {
-    score = Math.max(
-      0,
-      score - 5
-    );
+  } else if (
+    neededForOrder
+  ) {
+    score =
+      Math.max(
+        0,
+        score - 5
+      );
 
     combo = 0;
     mistakes += 1;
@@ -2115,15 +2863,13 @@ function placeInGarbageCan() {
     showFeedback({
       correct: false,
       icon: "🗑️",
-      title: "Needed piece discarded",
+      title:
+        "Needed piece discarded",
       message:
         `${discardedItem.text} matched an empty recipe slot. Another matching piece will appear.`,
       points: "−5"
     });
 
-    /*
-      Ensure the game produces a replacement.
-    */
     if (
       orderActive &&
       !tutorialActive
@@ -2137,445 +2883,749 @@ function placeInGarbageCan() {
     showFeedback({
       correct: true,
       icon: "🗑️",
-      title: "Unwanted piece removed",
+      title:
+        "Unwanted piece removed",
       message:
-        `${discardedItem.text} was safely cleared from your hands.`,
+        `${discardedItem.text} was safely cleared from your stack.`,
       points: "+0"
     });
   }
 
   updateHUD();
 }
-  function placeOnShelf() {
-    if (!carriedItem) {
-      return;
-    }
 
-    if (carriedItem.unsafe || carriedItem.package) {
-      mistake(
-        "That cannot go on the shelf",
-        "The Parts Shelf only stores creative username pieces."
-      );
-      return;
-    }
 
-    const emptyIndex = shelfPieces.findIndex((piece) => !piece);
+function placeOnShelf() {
+  if (!carriedItem) {
+    return;
+  }
 
-    if (emptyIndex === -1) {
-      showFeedback({
-        correct: false,
-        icon: "🧰",
-        title: "Shelf full",
-        message: "Pick up a saved piece before storing another one.",
-        points: "+0"
-      });
-      return;
-    }
+  if (
+    carriedItem.unsafe ||
+    carriedItem.package
+  ) {
+    mistake(
+      "That cannot go on the shelf",
+      "The Parts Shelf only stores creative username pieces. Press Q to choose a different carried piece."
+    );
 
-    shelfPieces[emptyIndex] = carriedItem;
+    return;
+  }
 
-    const savedText = carriedItem.text;
+  const emptyIndex =
+    shelfPieces.findIndex(
+      (piece) =>
+        !piece
+    );
 
-    carriedItem = null;
-    updateCarriedItem();
-    updateShelf();
-
+  if (
+    emptyIndex === -1
+  ) {
     showFeedback({
-      correct: true,
+      correct: false,
       icon: "🧰",
-      title: "Piece saved!",
-      message: `${savedText} is visible on the Parts Shelf.`,
-      points: "+5"
+      title: "Shelf full",
+      message:
+        "Pick up a saved piece before storing another one.",
+      points: "+0"
     });
 
-    score += 5 * getSettings().scoreMultiplier;
-    updateHUD();
+    return;
   }
 
-  function updateShelf() {
-    shelfSlotButtons.forEach((button, index) => {
-      const piece = shelfPieces[index];
+  const savedItem =
+    removeActiveCarriedItem();
 
-      button.disabled = !piece;
-      button.textContent = piece ? piece.text : "Empty";
-      button.classList.toggle("filled-shelf-slot", Boolean(piece));
-    });
-  }
+  shelfPieces[
+    emptyIndex
+  ] = savedItem;
+
+  updateShelf();
+
+  showFeedback({
+    correct: true,
+    icon: "🧰",
+    title: "Piece saved!",
+    message:
+      carriedItems.length
+        ? `${savedItem.text} is on the shelf. You are still carrying ${carriedItem.text}.`
+        : `${savedItem.text} is visible on the Parts Shelf.`,
+    points: "+5"
+  });
+
+  score +=
+    5 *
+    getSettings()
+      .scoreMultiplier;
+
+  updateHUD();
+}
+
+
+function updateShelf() {
+  shelfSlotButtons.forEach(
+    (
+      button,
+      index
+    ) => {
+      const piece =
+        shelfPieces[
+          index
+        ];
+
+      button.disabled =
+        !piece;
+
+      button.textContent =
+        piece
+          ? piece.text
+          : "Empty";
+
+      button.classList.toggle(
+        "filled-shelf-slot",
+        Boolean(
+          piece
+        )
+      );
+    }
+  );
+}
+
 
 function getNearbyShelfPiece() {
   const partsX =
-    getStationCenterX("parts");
+    getStationCenterX(
+      "parts"
+    );
 
   if (
     partsX === null ||
     Math.abs(
       workerY -
-      floorLevels.ground
-    ) > 12 ||
+        floorLevels.ground
+    ) >
+      12 ||
     Math.abs(
-      workerX - partsX
-    ) > 12 ||
-    carriedItem
+      workerX -
+        partsX
+    ) >
+      12 ||
+    carriedItems.length >=
+      MAX_CARRIED_ITEMS ||
+    carriedItems.some(
+      (item) =>
+        item.package
+    )
   ) {
     return null;
   }
 
   const index =
-    shelfPieces.findIndex(Boolean);
+    shelfPieces.findIndex(
+      Boolean
+    );
 
   return index >= 0
     ? {
         index,
-        piece: shelfPieces[index]
+        piece:
+          shelfPieces[
+            index
+          ]
       }
     : null;
 }
 
-  function pickUpShelfPiece(index) {
-    if (carriedItem || !shelfPieces[index]) {
-      return;
-    }
 
-    carriedItem = shelfPieces[index];
-    shelfPieces[index] = null;
-
-    updateCarriedItem();
-    updateShelf();
-
-    showFeedback({
-      correct: true,
-      icon: "🧰",
-      title: "Saved part retrieved!",
-      message: `You are carrying ${carriedItem.text}.`,
-      points: "+0"
-    });
-  }
-
-  function placeInMixer() {
-    if (!carriedItem) {
-      return;
-    }
-
-    if (carriedItem.unsafe || carriedItem.package) {
-      mistake(
-        "Mixer rejected the item",
-        "Only creative username pieces belong in the mixer."
-      );
-      return;
-    }
-
-    const matchingIndex = currentOrder.categories.findIndex(
-      (category, index) =>
-        category === carriedItem.category &&
-        !mixerPieces[index]
-    );
-
-    if (matchingIndex === -1) {
-      mistake(
-        "That ingredient does not fit",
-        `${carriedItem.text} does not match an empty recipe slot.`
-      );
-      return;
-    }
-
-    mixerPieces[matchingIndex] = carriedItem;
-
-    const placedText = carriedItem.text;
-
-    carriedItem = null;
-    updateCarriedItem();
-    updateMixer();
-
-    combo += 1;
-    bestCombo = Math.max(bestCombo, combo);
-    correctActions += 1;
-
-    score += 15 * getSettings().scoreMultiplier;
-
-    showFeedback({
-      correct: true,
-      icon: "⚙️",
-      title: "Mixer slot filled!",
-      message: `${placedText} was placed into the recipe.`,
-      points: "+15"
-    });
-
-    if (
-      tutorialActive &&
-      tutorialStep === 2 &&
-      placedText === "Wacky"
-    ) {
-      advanceTutorial();
-    }
-
-    if (
-      tutorialActive &&
-      tutorialStep === 4 &&
-      mixerPieces.every(Boolean)
-    ) {
-      advanceTutorial();
-    }
-
-    updateHUD();
-  }
-
-  function updateMixer() {
-    const ids = [
-      "mixerSlotOne",
-      "mixerSlotTwo",
-      "mixerSlotThree"
+function pickUpShelfPiece(index) {
+  const piece =
+    shelfPieces[
+      index
     ];
 
-    mixerPieces.forEach((piece, index) => {
-      setText(ids[index], piece ? piece.text : "?");
-      byId(ids[index])?.classList.toggle(
-        "filled-slot",
-        Boolean(piece)
-      );
-    });
-
-    if (mixedPackage) {
-      setText("mixerStatus", mixedPackage.text);
-    } else if (mixerPieces.every(Boolean)) {
-      setText("mixerStatus", "Ready to mix — press E");
-    } else {
-      setText("mixerStatus", "Bring three pieces");
-    }
-  }
-
-  function useEmptyHandStation(station) {
-    switch (station) {
-      case "mixer":
-        mixUsername();
-        break;
-
-      case "scanner":
-        collectApprovedPackage();
-        break;
-
-      default:
-        break;
-    }
-  }
-
-function mixUsername() {
-  if (carriedItem) {
+  if (
+    !piece ||
+    !canCarryItem(
+      piece
+    )
+  ) {
     return;
   }
 
-  /*
-    IMPORTANT:
-    Check for a completed package BEFORE checking the mixer slots.
-    The slots are emptied after the package is created.
-  */
-  if (mixedPackage) {
-    carriedItem = mixedPackage;
-    mixedPackage = null;
+  shelfPieces[
+    index
+  ] = null;
 
-    updateCarriedItem();
+  addCarriedItem(
+    piece
+  );
+
+  updateShelf();
+
+  showFeedback({
+    correct: true,
+    icon: "🧰",
+    title:
+      "Saved part retrieved!",
+    message:
+      carriedItems.length ===
+        2
+        ? `${piece.text} joined your carry stack. Press Q to switch.`
+        : `You are carrying ${piece.text}.`,
+    points: "+0"
+  });
+}
+
+
+function placeInMixer() {
+  if (!carriedItem) {
+    return;
+  }
+
+  if (
+    carriedItem.unsafe ||
+    carriedItem.package
+  ) {
+    mistake(
+      "Mixer rejected the item",
+      "Only creative username pieces belong in the mixer. Press Q to select another carried piece."
+    );
+
+    return;
+  }
+
+  const matchingIndex =
+    currentOrder.categories.findIndex(
+      (
+        category,
+        index
+      ) =>
+        category ===
+          carriedItem.category &&
+        !mixerPieces[
+          index
+        ]
+    );
+
+  if (
+    matchingIndex === -1
+  ) {
+    mistake(
+      "That ingredient does not fit",
+      `${carriedItem.text} does not match an empty recipe slot. Press Q to try the other carried piece.`
+    );
+
+    return;
+  }
+
+  const placedItem =
+    removeActiveCarriedItem();
+
+  mixerPieces[
+    matchingIndex
+  ] = placedItem;
+
+  updateMixer();
+
+  combo += 1;
+
+  bestCombo =
+    Math.max(
+      bestCombo,
+      combo
+    );
+
+  correctActions += 1;
+
+  score +=
+    15 *
+    getSettings()
+      .scoreMultiplier;
+
+  showFeedback({
+    correct: true,
+    icon: "⚙️",
+    title:
+      "Mixer slot filled!",
+    message:
+      carriedItems.length
+        ? `${placedItem.text} was placed. Press E again to place ${carriedItem.text}.`
+        : `${placedItem.text} was placed into the recipe.`,
+    points: "+15"
+  });
+
+  if (
+    tutorialActive &&
+    tutorialStep === 4 &&
+    mixerPieces.some(
+      (item) =>
+        item?.text ===
+        "Wacky"
+    ) &&
+    mixerPieces.some(
+      (item) =>
+        item?.text ===
+        "Panda"
+    ) &&
+    !carriedItems.length
+  ) {
+    advanceTutorial();
+  } else if (
+    tutorialActive &&
+    tutorialStep === 5 &&
+    placedItem.text ===
+      "Bounce" &&
+    mixerPieces.every(
+      Boolean
+    )
+  ) {
+    advanceTutorial();
+  }
+
+  updateHUD();
+}
+
+
+function updateMixer() {
+  const ids = [
+    "mixerSlotOne",
+    "mixerSlotTwo",
+    "mixerSlotThree"
+  ];
+
+  mixerPieces.forEach(
+    (
+      piece,
+      index
+    ) => {
+      setText(
+        ids[
+          index
+        ],
+        piece
+          ? piece.text
+          : "?"
+      );
+
+      byId(
+        ids[
+          index
+        ]
+      )?.classList.toggle(
+        "filled-slot",
+        Boolean(
+          piece
+        )
+      );
+    }
+  );
+
+  if (mixedPackage) {
+    setText(
+      "mixerStatus",
+      mixedPackage.text
+    );
+  } else if (
+    mixerPieces.every(
+      Boolean
+    )
+  ) {
+    setText(
+      "mixerStatus",
+      "Ready to mix — press E"
+    );
+  } else {
+    setText(
+      "mixerStatus",
+      "Bring three pieces"
+    );
+  }
+}
+
+
+function useEmptyHandStation(station) {
+  switch (station) {
+    case "mixer":
+      mixUsername();
+      break;
+
+    case "scanner":
+      collectApprovedPackage();
+      break;
+
+    default:
+      break;
+  }
+}
+
+
+function mixUsername() {
+  if (
+    carriedItems.length
+  ) {
+    showFeedback({
+      correct: false,
+      icon: "📚",
+      title:
+        "Hands must be empty",
+      message:
+        "Place both carried pieces before operating or collecting from the mixer.",
+      points: "+0"
+    });
+
+    return;
+  }
+
+  if (mixedPackage) {
+    addCarriedItem(
+      mixedPackage
+    );
+
+    mixedPackage =
+      null;
+
     updateMixer();
 
-    mixerStation?.classList.remove("tutorial-target-pulse");
-    scannerStation?.classList.add("tutorial-target-pulse");
+    mixerStation
+      ?.classList
+      .remove(
+        "tutorial-target-pulse"
+      );
+
+    scannerStation
+      ?.classList
+      .add(
+        "tutorial-target-pulse"
+      );
 
     showFeedback({
       correct: true,
       icon: "📦",
-      title: "Package collected!",
-      message: "Carry it to Final Inspection and press E.",
+      title:
+        "Package collected!",
+      message:
+        "Carry it to Final Inspection and press E.",
       points: "+0"
     });
 
     return;
   }
 
-  if (!mixerPieces.every(Boolean)) {
+  if (
+    !mixerPieces.every(
+      Boolean
+    )
+  ) {
     showFeedback({
       correct: false,
       icon: "⚙️",
-      title: "Mixer not ready",
-      message: "Fill all three recipe slots first.",
+      title:
+        "Mixer not ready",
+      message:
+        "Fill all three recipe slots first.",
       points: "+0"
     });
 
     return;
   }
 
-  mixerStation?.classList.add("mixer-running");
-
-  setText("mixerStatus", "Mixing...");
-
-  managedTimeout(() => {
-    mixerStation?.classList.remove("mixer-running");
-
-    const username = mixerPieces
-      .map((piece) => piece.text)
-      .join("");
-
-    mixedPackage = {
-      text: username,
-      package: true,
-      approved: false
-    };
-
-    mixerPieces = [null, null, null];
-
-    score += 25 * getSettings().scoreMultiplier;
-    correctActions += 1;
-
-    updateMixer();
-
-    setText(
-      "mixerStatus",
-      `${username} ready — press E to collect`
+  mixerStation
+    ?.classList
+    .add(
+      "mixer-running"
     );
 
-    mixerStation?.classList.add("tutorial-target-pulse");
+  setText(
+    "mixerStatus",
+    "Mixing..."
+  );
 
-    showFeedback({
-      correct: true,
-      icon: "📦",
-      title: `${username} created!`,
-      message:
-        "Press E at the mixer again to pick up the finished package.",
-      points: "+25"
-    });
+  managedTimeout(
+    () => {
+      mixerStation
+        ?.classList
+        .remove(
+          "mixer-running"
+        );
 
-    if (
-      tutorialActive &&
-      tutorialStep === 5
-    ) {
-      advanceTutorial();
-    }
+      const username =
+        mixerPieces
+          .map(
+            (piece) =>
+              piece.text
+          )
+          .join("");
 
-    updateHUD();
-  }, 1000);
+      mixedPackage = {
+        text:
+          username,
+        package: true,
+        approved: false
+      };
+
+      mixerPieces = [
+        null,
+        null,
+        null
+      ];
+
+      score +=
+        25 *
+        getSettings()
+          .scoreMultiplier;
+
+      correctActions += 1;
+
+      updateMixer();
+
+      setText(
+        "mixerStatus",
+        `${username} ready — press E to collect`
+      );
+
+      mixerStation
+        ?.classList
+        .add(
+          "tutorial-target-pulse"
+        );
+
+      showFeedback({
+        correct: true,
+        icon: "📦",
+        title:
+          `${username} created!`,
+        message:
+          "Press E at the mixer again to pick up the finished package.",
+        points: "+25"
+      });
+
+      if (
+        tutorialActive &&
+        tutorialStep === 7
+      ) {
+        advanceTutorial();
+      }
+
+      updateHUD();
+    },
+    1000
+  );
 }
 
-  function placeInScanner() {
-    if (!carriedItem?.package) {
-      mistake(
-        "Scanner needs a package",
-        "Only a mixed username package can be inspected."
-      );
-      return;
-    }
 
-    const packageToScan = carriedItem;
+function placeInScanner() {
+  if (
+    !carriedItem
+      ?.package
+  ) {
+    mistake(
+      "Scanner needs a package",
+      "Select the mixed username package before using Final Inspection."
+    );
 
-    carriedItem = null;
-    updateCarriedItem();
+    return;
+  }
 
-    scannerStation?.classList.add("scanner-running");
+  const packageToScan =
+    removeActiveCarriedItem();
 
-    setText("scannerPackage", packageToScan.text);
-    setText("scannerStatus", "Inspecting package...");
+  scannerStation
+    ?.classList
+    .add(
+      "scanner-running"
+    );
 
-    managedTimeout(() => {
-      scannerStation?.classList.remove("scanner-running");
-      scannerStation?.classList.add("scanner-approved");
+  setText(
+    "scannerPackage",
+    packageToScan.text
+  );
+
+  setText(
+    "scannerStatus",
+    "Inspecting package..."
+  );
+
+  managedTimeout(
+    () => {
+      scannerStation
+        ?.classList
+        .remove(
+          "scanner-running"
+        );
+
+      scannerStation
+        ?.classList
+        .add(
+          "scanner-approved"
+        );
 
       approvedPackage = {
         ...packageToScan,
         approved: true
       };
 
-      setText("scannerStatus", "APPROVED — press E to collect");
+      setText(
+        "scannerStatus",
+        "APPROVED — press E to collect"
+      );
 
-      score += 30 * getSettings().scoreMultiplier;
+      score +=
+        30 *
+        getSettings()
+          .scoreMultiplier;
+
       correctActions += 1;
 
       showFeedback({
         correct: true,
         icon: "✅",
-        title: "Package approved!",
-        message: "Press E at the scanner to collect it.",
+        title:
+          "Package approved!",
+        message:
+          "Press E at the scanner to collect it.",
         points: "+30"
       });
 
       if (
         tutorialActive &&
-        tutorialStep === 6
+        tutorialStep === 8
       ) {
         advanceTutorial();
       }
 
       updateHUD();
-    }, 1200);
+    },
+    1200
+  );
+}
+
+
+function collectApprovedPackage() {
+  if (
+    carriedItems.length ||
+    !approvedPackage
+  ) {
+    return;
   }
 
-  function collectApprovedPackage() {
-    if (carriedItem || !approvedPackage) {
-      return;
-    }
+  addCarriedItem(
+    approvedPackage
+  );
 
-    carriedItem = approvedPackage;
-    approvedPackage = null;
+  approvedPackage =
+    null;
 
-    setText("scannerPackage", "No package");
-    setText("scannerStatus", "Ready for inspection");
+  setText(
+    "scannerPackage",
+    "No package"
+  );
 
-    scannerStation?.classList.remove("scanner-approved");
+  setText(
+    "scannerStatus",
+    "Ready for inspection"
+  );
 
-    updateCarriedItem();
-
-    showFeedback({
-      correct: true,
-      icon: "📦",
-      title: "Approved package collected!",
-      message: "Carry it to Ship It.",
-      points: "+0"
-    });
-  }
-
-  function placeInShipping() {
-    if (!carriedItem?.package || !carriedItem.approved) {
-      mistake(
-        "Shipping rejected the package",
-        "The username must pass Final Inspection first."
-      );
-      return;
-    }
-
-    const username = carriedItem.text;
-
-    carriedItem = null;
-    updateCarriedItem();
-
-    shippedUsernames.push(username);
-    ordersShipped += 1;
-
-    orderActive = false;
-
-    stopOrderLoops();
-    clearPieces();
-
-    const orderScore =
-      Math.round(75 * getSettings().scoreMultiplier);
-
-    score += orderScore;
-
-    setText("orderCompleteHeading", username);
-    setText(
-      "orderCompleteMessage",
-      "Safe, creative, and ready for delivery!"
+  scannerStation
+    ?.classList
+    .remove(
+      "scanner-approved"
     );
-    setText("orderCompleteScore", orderScore);
-    setText("orderCompleteCombo", `${bestCombo}x`);
-    setText("orderPrivateBlocked", orderPrivateBlocked);
 
-    show(orderCompleteOverlay);
+  showFeedback({
+    correct: true,
+    icon: "📦",
+    title:
+      "Approved package collected!",
+    message:
+      "Carry it to Ship It.",
+    points: "+0"
+  });
+}
 
-    if (
-      tutorialActive &&
-      tutorialStep === 8
-    ) {
-      hide(orderCompleteOverlay);
-      completeTutorial();
-    }
 
-    updateHUD();
+function placeInShipping() {
+  if (
+    !carriedItem
+      ?.package ||
+    !carriedItem.approved
+  ) {
+    mistake(
+      "Shipping rejected the package",
+      "Select an approved package before using Ship It."
+    );
+
+    return;
   }
+
+  const shippedPackage =
+    removeActiveCarriedItem();
+
+  const username =
+    shippedPackage.text;
+
+  shippedUsernames.push(
+    username
+  );
+
+  ordersShipped += 1;
+  orderActive = false;
+
+  stopOrderLoops();
+  clearPieces();
+
+  const orderScore =
+    Math.round(
+      75 *
+      getSettings()
+        .scoreMultiplier
+    );
+
+  score +=
+    orderScore;
+
+  setText(
+    "orderCompleteHeading",
+    username
+  );
+
+  setText(
+    "orderCompleteMessage",
+    "Safe, creative, and ready for delivery!"
+  );
+
+  setText(
+    "orderCompleteScore",
+    orderScore
+  );
+
+  setText(
+    "orderCompleteCombo",
+    `${bestCombo}x`
+  );
+
+  setText(
+    "orderPrivateBlocked",
+    orderPrivateBlocked
+  );
+
+  show(
+    orderCompleteOverlay
+  );
+
+  if (
+    tutorialActive &&
+    tutorialStep === 10
+  ) {
+    hide(
+      orderCompleteOverlay
+    );
+
+    completeTutorial();
+  }
+
+  updateHUD();
+}
+
 
   /* =========================================================
      TIME FREEZE
@@ -2586,7 +3636,8 @@ function mixUsername() {
       !gameActive ||
       paused ||
       timeFreezeActive ||
-      timeFreezeCharge < 100
+      timeFreezeCharge <
+        100
     ) {
       return;
     }
@@ -2594,107 +3645,167 @@ function mixUsername() {
     timeFreezeCharge = 0;
     timeFreezeActive = true;
 
-    handleFactory?.classList.add("time-freeze-active");
+    handleFactory
+      ?.classList
+      .add(
+        "time-freeze-active"
+      );
 
-    show(timeFreezeEffect);
+    show(
+      timeFreezeEffect
+    );
 
-    managedTimeout(() => {
-      hide(timeFreezeEffect);
-    }, 1000);
+    managedTimeout(
+      () => {
+        hide(
+          timeFreezeEffect
+        );
+      },
+      1000
+    );
 
-showFeedback({
-  correct: true,
-  icon: "❄️",
-  title: "Time Freeze activated!",
-  message:
-    "Every conveyor belt has slowed down.",
-  points: "+0"
-});
+    showFeedback({
+      correct: true,
+      icon: "❄️",
+      title:
+        "Time Freeze activated!",
+      message:
+        "Every conveyor belt has slowed down.",
+      points: "+0"
+    });
 
-if (
-  tutorialActive &&
-  tutorialStep === 7
-) {
-  clearTutorialTargetPulses();
+    if (
+      tutorialActive &&
+      tutorialStep === 7
+    ) {
+      clearTutorialTargetPulses();
 
-  managedTimeout(() => {
-    advanceTutorial();
-  }, 700);
-}
+      managedTimeout(
+        () => {
+          advanceTutorial();
+        },
+        700
+      );
+    }
 
-managedTimeout(() => {
-      timeFreezeActive = false;
-      handleFactory?.classList.remove("time-freeze-active");
-    }, getSettings().freezeDuration);
+    managedTimeout(
+      () => {
+        timeFreezeActive =
+          false;
+
+        handleFactory
+          ?.classList
+          .remove(
+            "time-freeze-active"
+          );
+      },
+      getSettings()
+        .freezeDuration
+    );
 
     updateHUD();
   }
+
 
   /* =========================================================
      TIMER AND DAMAGE
   ========================================================= */
 
   function startTimer() {
-    window.clearInterval(timerInterval);
+    window.clearInterval(
+      timerInterval
+    );
 
-    if (timeRemaining === null) {
+    if (
+      timeRemaining ===
+      null
+    ) {
       return;
     }
 
-    timerInterval = window.setInterval(() => {
-      if (
-        !gameActive ||
-        !orderActive ||
-        paused ||
-        tutorialActive
-      ) {
-        return;
-      }
+    timerInterval =
+      window.setInterval(
+        () => {
+          if (
+            !gameActive ||
+            !orderActive ||
+            paused ||
+            tutorialActive
+          ) {
+            return;
+          }
 
-      timeRemaining -= 1;
+          timeRemaining -=
+            1;
 
-      updateHUD();
+          updateHUD();
 
-      if (timeRemaining <= 0) {
-        damageFactory(
-          "Order expired!",
-          "The order waited too long."
-        );
+          if (
+            timeRemaining <=
+            0
+          ) {
+            damageFactory(
+              "Order expired!",
+              "The order waited too long."
+            );
 
-        if (health > 0) {
-          continueAfterFailedOrder();
-        }
-      }
-    }, 1000);
+            if (
+              health > 0
+            ) {
+              continueAfterFailedOrder();
+            }
+          }
+        },
+        1000
+      );
   }
 
-  function damageFactory(title, message) {
+
+  function damageFactory(
+    title,
+    message
+  ) {
     health -= 1;
     mistakes += 1;
     combo = 0;
 
-    handleFactory?.classList.add("factory-damaged");
+    handleFactory
+      ?.classList
+      .add(
+        "factory-damaged"
+      );
 
-    managedTimeout(() => {
-      handleFactory?.classList.remove("factory-damaged");
-    }, 450);
+    managedTimeout(
+      () => {
+        handleFactory
+          ?.classList
+          .remove(
+            "factory-damaged"
+          );
+      },
+      450
+    );
 
     showFeedback({
       correct: false,
       icon: "💥",
       title,
       message,
-      points: "−1 health"
+      points:
+        "−1 health"
     });
 
     updateHUD();
 
-    if (health <= 0) {
-      finishGame(false);
+    if (
+      health <= 0
+    ) {
+      finishGame(
+        false
+      );
     }
   }
-
-  function mistake(title, message) {
+     function mistake(title, message) {
     mistakes += 1;
     combo = 0;
 
@@ -2716,10 +3827,15 @@ managedTimeout(() => {
 
     currentOrderIndex += 1;
 
-    if (currentOrderIndex >= getSettings().totalOrders) {
+    if (
+      currentOrderIndex >=
+      getSettings().totalOrders
+    ) {
       finishGame(false);
     } else {
-      beginNormalOrder(currentOrderIndex);
+      beginNormalOrder(
+        currentOrderIndex
+      );
     }
   }
 
@@ -2728,25 +3844,45 @@ managedTimeout(() => {
   ========================================================= */
 
   function continueOrder() {
-    hide(orderCompleteOverlay);
+    hide(
+      orderCompleteOverlay
+    );
 
     currentOrderIndex += 1;
 
     if (
-      ordersShipped >= getSettings().totalOrders ||
-      currentOrderIndex >= getSettings().totalOrders
+      ordersShipped >=
+        getSettings()
+          .totalOrders ||
+      currentOrderIndex >=
+        getSettings()
+          .totalOrders
     ) {
       finishGame(true);
       return;
     }
 
-    beginNormalOrder(currentOrderIndex);
+    beginNormalOrder(
+      currentOrderIndex
+    );
   }
 
   function resetOrderMachines() {
+    carriedItems = [];
+    activeCarriedIndex = 0;
     carriedItem = null;
-    mixerPieces = [null, null, null];
-    shelfPieces = [null, null, null];
+
+    mixerPieces = [
+      null,
+      null,
+      null
+    ];
+
+    shelfPieces = [
+      null,
+      null,
+      null
+    ];
 
     mixedPackage = null;
     approvedPackage = null;
@@ -2755,14 +3891,41 @@ managedTimeout(() => {
     updateMixer();
     updateShelf();
 
-    setText("scannerPackage", "No package");
-    setText("scannerStatus", "Mix a username first");
-    setText("shippingStatus", "Waiting for approval");
-
-    scannerStation?.classList.remove(
-      "scanner-running",
-      "scanner-approved"
+    setText(
+      "scannerPackage",
+      "No package"
     );
+
+    setText(
+      "scannerStatus",
+      "Mix a username first"
+    );
+
+    setText(
+      "shippingStatus",
+      "Waiting for approval"
+    );
+
+    scannerStation
+      ?.classList
+      .remove(
+        "scanner-running",
+        "scanner-approved",
+        "tutorial-target-pulse"
+      );
+
+    mixerStation
+      ?.classList
+      .remove(
+        "mixer-running",
+        "tutorial-target-pulse"
+      );
+
+    shippingStation
+      ?.classList
+      .remove(
+        "tutorial-target-pulse"
+      );
   }
 
   /* =========================================================
@@ -2776,22 +3939,50 @@ managedTimeout(() => {
     message,
     callback
   ) {
-    const announcement = byId("factoryAnnouncement");
+    const announcement =
+      byId(
+        "factoryAnnouncement"
+      );
 
-    setText("announcementIcon", icon);
-    setText("announcementLabel", label);
-    setText("announcementTitle", title);
-    setText("announcementMessage", message);
+    setText(
+      "announcementIcon",
+      icon
+    );
 
-    show(announcement);
+    setText(
+      "announcementLabel",
+      label
+    );
 
-    managedTimeout(() => {
-      hide(announcement);
+    setText(
+      "announcementTitle",
+      title
+    );
 
-      if (typeof callback === "function") {
-        callback();
-      }
-    }, 1700);
+    setText(
+      "announcementMessage",
+      message
+    );
+
+    show(
+      announcement
+    );
+
+    managedTimeout(
+      () => {
+        hide(
+          announcement
+        );
+
+        if (
+          typeof callback ===
+          "function"
+        ) {
+          callback();
+        }
+      },
+      1700
+    );
   }
 
   function showFeedback({
@@ -2801,29 +3992,58 @@ managedTimeout(() => {
     message,
     points
   }) {
-    const feedback = byId("handleFeedback");
+    const feedback =
+      byId(
+        "handleFeedback"
+      );
 
-    setText("handleFeedbackIcon", icon);
-    setText("handleFeedbackTitle", title);
-    setText("handleFeedbackMessage", message);
-    setText("handleFeedbackPoints", points);
-
-    feedback?.classList.remove(
-      "correct-feedback",
-      "wrong-feedback"
+    setText(
+      "handleFeedbackIcon",
+      icon
     );
 
-    feedback?.classList.add(
-      correct
-        ? "correct-feedback"
-        : "wrong-feedback"
+    setText(
+      "handleFeedbackTitle",
+      title
     );
 
-    show(feedback);
+    setText(
+      "handleFeedbackMessage",
+      message
+    );
 
-    managedTimeout(() => {
-      hide(feedback);
-    }, 1900);
+    setText(
+      "handleFeedbackPoints",
+      points
+    );
+
+    feedback
+      ?.classList
+      .remove(
+        "correct-feedback",
+        "wrong-feedback"
+      );
+
+    feedback
+      ?.classList
+      .add(
+        correct
+          ? "correct-feedback"
+          : "wrong-feedback"
+      );
+
+    show(
+      feedback
+    );
+
+    managedTimeout(
+      () => {
+        hide(
+          feedback
+        );
+      },
+      1900
+    );
   }
 
   /* =========================================================
@@ -2831,13 +4051,18 @@ managedTimeout(() => {
   ========================================================= */
 
   function checkTutorialMovement() {
-    if (!tutorialTargetPiece) {
+    if (
+      !tutorialTargetPiece
+    ) {
       return;
     }
 
     if (
       tutorialStep === 0 &&
-      Math.abs(workerX - tutorialTargetPiece.x) <= 14
+      Math.abs(
+        workerX -
+          tutorialTargetPiece.x
+      ) <= 14
     ) {
       advanceTutorial();
     }
@@ -2848,40 +4073,65 @@ managedTimeout(() => {
   ========================================================= */
 
   function pauseGame() {
-    if (!gameActive || paused) {
+    if (
+      !gameActive ||
+      paused
+    ) {
       return;
     }
 
     paused = true;
-    show(pauseOverlay);
+
+    show(
+      pauseOverlay
+    );
   }
 
   function resumeGame() {
     paused = false;
-    hide(pauseOverlay);
+
+    hide(
+      pauseOverlay
+    );
   }
 
   function openHelp() {
-    const wasPaused = paused;
+    const wasPaused =
+      paused;
 
-    if (gameActive) {
+    if (
+      gameActive
+    ) {
       paused = true;
     }
 
-    hide(pauseOverlay);
-    show(howToPlayOverlay);
+    hide(
+      pauseOverlay
+    );
 
-    howToPlayOverlay.dataset.resumeAfterClose =
-      wasPaused || gameActive
+    show(
+      howToPlayOverlay
+    );
+
+    howToPlayOverlay
+      .dataset
+      .resumeAfterClose =
+      wasPaused ||
+      gameActive
         ? "true"
         : "false";
   }
 
   function closeHelp() {
-    hide(howToPlayOverlay);
+    hide(
+      howToPlayOverlay
+    );
 
     if (
-      howToPlayOverlay.dataset.resumeAfterClose === "true" &&
+      howToPlayOverlay
+        .dataset
+        .resumeAfterClose ===
+        "true" &&
       gameActive
     ) {
       paused = false;
@@ -2889,7 +4139,10 @@ managedTimeout(() => {
   }
 
   function restartGame() {
-    hide(pauseOverlay);
+    hide(
+      pauseOverlay
+    );
+
     startGame();
   }
 
@@ -2898,29 +4151,45 @@ managedTimeout(() => {
   ========================================================= */
 
   function calculateAccuracy() {
-    const total = correctActions + mistakes;
+    const total =
+      correctActions +
+      mistakes;
 
-    if (total <= 0) {
+    if (
+      total <= 0
+    ) {
       return 100;
     }
 
     return Math.round(
-      (correctActions / total) * 100
+      (
+        correctActions /
+        total
+      ) *
+      100
     );
   }
 
-  function calculateStars(won) {
-    const accuracy = calculateAccuracy();
+  function calculateStars(
+    won
+  ) {
+    const accuracy =
+      calculateAccuracy();
 
     if (
       won &&
       accuracy >= 90 &&
-      ordersShipped >= getSettings().totalOrders
+      ordersShipped >=
+        getSettings()
+          .totalOrders
     ) {
       return 3;
     }
 
-    if (won && accuracy >= 70) {
+    if (
+      won &&
+      accuracy >= 70
+    ) {
       return 2;
     }
 
@@ -2928,29 +4197,44 @@ managedTimeout(() => {
   }
 
   function calculateRank() {
-    const accuracy = calculateAccuracy();
+    const accuracy =
+      calculateAccuracy();
 
-    if (score >= 1600 && accuracy >= 90) {
+    if (
+      score >= 1600 &&
+      accuracy >= 90
+    ) {
       return "Factory Floor Legend";
     }
 
-    if (score >= 1000 && accuracy >= 82) {
+    if (
+      score >= 1000 &&
+      accuracy >= 82
+    ) {
       return "Conveyor Commander";
     }
 
-    if (score >= 650) {
+    if (
+      score >= 650
+    ) {
       return "Route Master";
     }
 
-    if (score >= 300) {
+    if (
+      score >= 300
+    ) {
       return "Mixer Manager";
     }
 
     return "Route Rookie";
   }
 
-  function finishGame(won) {
-    if (!gameActive) {
+  function finishGame(
+    won
+  ) {
+    if (
+      !gameActive
+    ) {
       return;
     }
 
@@ -2962,15 +4246,33 @@ managedTimeout(() => {
     clearManagedTimeouts();
     clearPieces();
 
-    hide(playScreen);
-    hide(orderCompleteOverlay);
-    hide(pauseOverlay);
-    hide(howToPlayOverlay);
+    hide(
+      playScreen
+    );
 
-    show(resultScreen);
+    hide(
+      orderCompleteOverlay
+    );
 
-    const accuracy = calculateAccuracy();
-    const stars = calculateStars(won);
+    hide(
+      pauseOverlay
+    );
+
+    hide(
+      howToPlayOverlay
+    );
+
+    show(
+      resultScreen
+    );
+
+    const accuracy =
+      calculateAccuracy();
+
+    const stars =
+      calculateStars(
+        won
+      );
 
     setText(
       "resultHeading",
@@ -2986,103 +4288,238 @@ managedTimeout(() => {
         : "You completed part of the shift. Try again and use Time Freeze when the factory gets busy."
     );
 
-    setText("factoryRank", calculateRank());
-    setText("finalScore", Math.round(score));
+    setText(
+      "factoryRank",
+      calculateRank()
+    );
+
+    setText(
+      "finalScore",
+      Math.round(
+        score
+      )
+    );
 
     setText(
       "finalStars",
-      `${"★".repeat(stars)}${"☆".repeat(3 - stars)}`
+      `${
+        "★".repeat(
+          stars
+        )
+      }${
+        "☆".repeat(
+          3 -
+          stars
+        )
+      }`
     );
 
-    setText("finalOrdersShipped", ordersShipped);
-    setText("finalPrivateBlocked", privateCluesBlocked);
-    setText("finalBestCombo", `${bestCombo}x`);
-    setText("finalAccuracy", `${accuracy}%`);
+    setText(
+      "finalOrdersShipped",
+      ordersShipped
+    );
+
+    setText(
+      "finalPrivateBlocked",
+      privateCluesBlocked
+    );
+
+    setText(
+      "finalBestCombo",
+      `${bestCombo}x`
+    );
+
+    setText(
+      "finalAccuracy",
+      `${accuracy}%`
+    );
 
     renderShippedUsernames();
 
-    let bestScore = Number(
-      localStorage.getItem(BEST_SCORE_KEY) || 0
-    );
+    let bestScore =
+      Number(
+        localStorage
+          .getItem(
+            BEST_SCORE_KEY
+          ) ||
+        0
+      );
 
-    if (score > bestScore) {
-      bestScore = Math.round(score);
-      localStorage.setItem(BEST_SCORE_KEY, String(bestScore));
+    if (
+      score >
+      bestScore
+    ) {
+      bestScore =
+        Math.round(
+          score
+        );
+
+      localStorage
+        .setItem(
+          BEST_SCORE_KEY,
+          String(
+            bestScore
+          )
+        );
     }
 
-    setText("bestScore", bestScore);
+    setText(
+      "bestScore",
+      bestScore
+    );
 
-    let pointsEarned = Math.round(score);
+    let pointsEarned =
+      Math.round(
+        score
+      );
 
     if (
       window.SafetiiArcade &&
-      typeof window.SafetiiArcade.finishRound === "function"
+      typeof window
+        .SafetiiArcade
+        .finishRound ===
+        "function"
     ) {
       try {
-        const result = window.SafetiiArcade.finishRound({
-          gameId: "handle-with-care",
-          heat: selectedDifficulty,
-          score: Math.round(score),
-          stars,
-          completed: won,
-          correctAnswers: correctActions,
-          totalQuestions: correctActions + mistakes
-        });
+        const result =
+          window
+            .SafetiiArcade
+            .finishRound({
+              gameId:
+                "handle-with-care",
+
+              heat:
+                selectedDifficulty,
+
+              score:
+                Math.round(
+                  score
+                ),
+
+              stars,
+
+              completed:
+                won,
+
+              correctAnswers:
+                correctActions,
+
+              totalQuestions:
+                correctActions +
+                mistakes
+            });
 
         if (
           result &&
-          typeof result.pointsEarned === "number"
+          typeof result
+            .pointsEarned ===
+            "number"
         ) {
-          pointsEarned = result.pointsEarned;
+          pointsEarned =
+            result.pointsEarned;
         }
-      } catch (error) {
-        console.warn("Unable to finish arcade round:", error);
+      } catch (
+        error
+      ) {
+        console.warn(
+          "Unable to finish arcade round:",
+          error
+        );
       }
     } else {
-      const storedPoints = Number(
-        localStorage.getItem("safetiiGlobalPoints") || 0
-      );
+      const storedPoints =
+        Number(
+          localStorage
+            .getItem(
+              "safetiiGlobalPoints"
+            ) ||
+          0
+        );
 
-      localStorage.setItem(
-        "safetiiGlobalPoints",
-        String(storedPoints + pointsEarned)
-      );
+      localStorage
+        .setItem(
+          "safetiiGlobalPoints",
+          String(
+            storedPoints +
+            pointsEarned
+          )
+        );
     }
 
-    setText("globalPointsEarned", pointsEarned);
+    setText(
+      "globalPointsEarned",
+      pointsEarned
+    );
+
     updateGlobalPoints();
   }
 
   function renderShippedUsernames() {
-    const list = byId("shippedUsernameList");
+    const list =
+      byId(
+        "shippedUsernameList"
+      );
 
-    if (!list) {
+    if (
+      !list
+    ) {
       return;
     }
 
-    list.innerHTML = "";
+    list.innerHTML =
+      "";
 
-    if (!shippedUsernames.length) {
-      const empty = document.createElement("p");
-      empty.textContent = "No usernames were shipped this shift.";
-      list.appendChild(empty);
+    if (
+      !shippedUsernames.length
+    ) {
+      const empty =
+        document.createElement(
+          "p"
+        );
+
+      empty.textContent =
+        "No usernames were shipped this shift.";
+
+      list.appendChild(
+        empty
+      );
+
       return;
     }
 
-    shippedUsernames.forEach((username, index) => {
-      const card = document.createElement("article");
+    shippedUsernames.forEach(
+      (
+        username,
+        index
+      ) => {
+        const card =
+          document.createElement(
+            "article"
+          );
 
-      card.innerHTML = `
-        <span>📦</span>
+        card.innerHTML = `
+          <span>
+            📦
+          </span>
 
-        <div>
-          <small>Package ${index + 1}</small>
-          <strong>${username}</strong>
-        </div>
-      `;
+          <div>
+            <small>
+              Package ${
+                index + 1
+              }
+            </small>
 
-      list.appendChild(card);
-    });
+            <strong>
+              ${username}
+            </strong>
+          </div>
+        `;
+
+        list.appendChild(
+          card
+        );
+      }
+    );
   }
 
   /* =========================================================
@@ -3090,24 +4527,44 @@ managedTimeout(() => {
   ========================================================= */
 
   function stopOrderLoops() {
-    window.clearInterval(spawnInterval);
-    window.clearInterval(timerInterval);
+    window.clearInterval(
+      spawnInterval
+    );
 
-    spawnInterval = null;
-    timerInterval = null;
+    window.clearInterval(
+      timerInterval
+    );
+
+    spawnInterval =
+      null;
+
+    timerInterval =
+      null;
   }
 
   function stopAllLoops() {
     stopOrderLoops();
 
-    if (workerAnimationFrame) {
-      window.cancelAnimationFrame(workerAnimationFrame);
-      workerAnimationFrame = null;
+    if (
+      workerAnimationFrame
+    ) {
+      window.cancelAnimationFrame(
+        workerAnimationFrame
+      );
+
+      workerAnimationFrame =
+        null;
     }
 
-    if (pieceAnimationFrame) {
-      window.cancelAnimationFrame(pieceAnimationFrame);
-      pieceAnimationFrame = null;
+    if (
+      pieceAnimationFrame
+    ) {
+      window.cancelAnimationFrame(
+        pieceAnimationFrame
+      );
+
+      pieceAnimationFrame =
+        null;
     }
   }
 
@@ -3115,50 +4572,93 @@ managedTimeout(() => {
      KEYBOARD CONTROLS
   ========================================================= */
 
-  function handleKeyDown(event) {
-    if (!gameActive || paused) {
+  function handleKeyDown(
+    event
+  ) {
+    if (
+      !gameActive ||
+      paused
+    ) {
       return;
     }
 
-    switch (event.key.toLowerCase()) {
+    switch (
+      event.key
+        .toLowerCase()
+    ) {
       case "arrowleft":
       case "a":
-        workerMovingLeft = true;
-        event.preventDefault();
+        workerMovingLeft =
+          true;
+
+        event
+          .preventDefault();
+
         break;
 
       case "arrowright":
       case "d":
-        workerMovingRight = true;
-        event.preventDefault();
+        workerMovingRight =
+          true;
+
+        event
+          .preventDefault();
+
         break;
 
       case "arrowup":
       case "w":
-        moveVertical("up");
-        event.preventDefault();
+        moveVertical(
+          "up"
+        );
+
+        event
+          .preventDefault();
+
         break;
 
       case "arrowdown":
       case "s":
-        moveVertical("down");
-        event.preventDefault();
+        moveVertical(
+          "down"
+        );
+
+        event
+          .preventDefault();
+
         break;
 
       case "e":
       case "enter":
         useNearbyObject();
-        event.preventDefault();
+
+        event
+          .preventDefault();
+
+        break;
+
+      case "q":
+        switchActiveCarriedItem();
+
+        event
+          .preventDefault();
+
         break;
 
       case "f":
         activateTimeFreeze();
-        event.preventDefault();
+
+        event
+          .preventDefault();
+
         break;
 
       case "escape":
         pauseGame();
-        event.preventDefault();
+
+        event
+          .preventDefault();
+
         break;
 
       default:
@@ -3166,16 +4666,25 @@ managedTimeout(() => {
     }
   }
 
-  function handleKeyUp(event) {
-    switch (event.key.toLowerCase()) {
+  function handleKeyUp(
+    event
+  ) {
+    switch (
+      event.key
+        .toLowerCase()
+    ) {
       case "arrowleft":
       case "a":
-        workerMovingLeft = false;
+        workerMovingLeft =
+          false;
+
         break;
 
       case "arrowright":
       case "d":
-        workerMovingRight = false;
+        workerMovingRight =
+          false;
+
         break;
 
       default:
@@ -3187,188 +4696,292 @@ managedTimeout(() => {
      SCREEN BUTTON CONTROLS
   ========================================================= */
 
-  function bindHoldButton(button, begin, end) {
-    button?.addEventListener("pointerdown", (event) => {
-      event.preventDefault();
-      begin();
-    });
+  function bindHoldButton(
+    button,
+    begin,
+    end
+  ) {
+    button
+      ?.addEventListener(
+        "pointerdown",
+        (
+          event
+        ) => {
+          event
+            .preventDefault();
 
-    ["pointerup", "pointercancel", "pointerleave"].forEach(
-      (eventName) => {
-        button?.addEventListener(eventName, end);
+          begin();
+        }
+      );
+
+    [
+      "pointerup",
+      "pointercancel",
+      "pointerleave"
+    ].forEach(
+      (
+        eventName
+      ) => {
+        button
+          ?.addEventListener(
+            eventName,
+            end
+          );
       }
     );
   }
 
   bindHoldButton(
     mobileButtons.left,
+
     () => {
-      workerMovingLeft = true;
+      workerMovingLeft =
+        true;
     },
+
     () => {
-      workerMovingLeft = false;
+      workerMovingLeft =
+        false;
     }
   );
 
   bindHoldButton(
     mobileButtons.right,
+
     () => {
-      workerMovingRight = true;
+      workerMovingRight =
+        true;
     },
+
     () => {
-      workerMovingRight = false;
+      workerMovingRight =
+        false;
     }
   );
 
-  mobileButtons.up?.addEventListener(
-    "click",
-    () => moveVertical("up")
-  );
+  mobileButtons.up
+    ?.addEventListener(
+      "click",
+      () =>
+        moveVertical(
+          "up"
+        )
+    );
 
-  mobileButtons.down?.addEventListener(
-    "click",
-    () => moveVertical("down")
-  );
+  mobileButtons.down
+    ?.addEventListener(
+      "click",
+      () =>
+        moveVertical(
+          "down"
+        )
+    );
 
-  mobileButtons.action?.addEventListener(
-    "click",
-    useNearbyObject
-  );
+  mobileButtons.action
+    ?.addEventListener(
+      "click",
+      useNearbyObject
+    );
 
-  mobileButtons.freeze?.addEventListener(
-    "click",
-    activateTimeFreeze
-  );
+  mobileButtons.freeze
+    ?.addEventListener(
+      "click",
+      activateTimeFreeze
+    );
 
   /* =========================================================
      EVENT LISTENERS
   ========================================================= */
 
-  startGameButton?.addEventListener("click", startGame);
-
-  playAgainButton?.addEventListener("click", () => {
-    hide(resultScreen);
-    show(introScreen);
-    updateGlobalPoints();
-  });
-
-  beginTutorialButton?.addEventListener(
-    "click",
-    beginTutorial
-  );
-
-  skipTutorialOpeningButton?.addEventListener(
-    "click",
-    skipTutorial
-  );
-
-  tutorialSkipButton?.addEventListener(
-    "click",
-    skipTutorial
-  );
-
-  continueOrderButton?.addEventListener(
-    "click",
-    continueOrder
-  );
-
-  pauseGameButton?.addEventListener(
-    "click",
-    pauseGame
-  );
-
-  resumeGameButton?.addEventListener(
-    "click",
-    resumeGame
-  );
-
-  restartGameButton?.addEventListener(
-    "click",
-    restartGame
-  );
-
-  howToPlayButton?.addEventListener(
-    "click",
-    openHelp
-  );
-
-  gameHelpButton?.addEventListener(
-    "click",
-    openHelp
-  );
-
-  pauseHelpButton?.addEventListener(
-    "click",
-    openHelp
-  );
-
-  closeHowToPlayButton?.addEventListener(
-    "click",
-    closeHelp
-  );
-
-  closeInstructionsButton?.addEventListener(
-    "click",
-    closeHelp
-  );
-
-  replayTutorialButton?.addEventListener("click", () => {
-    hide(howToPlayOverlay);
-
-    if (!gameActive) {
-      startGame();
-    }
-
-    beginTutorial();
-  });
-
-  soundToggleButton?.addEventListener("click", () => {
-    soundEnabled = !soundEnabled;
-
-    soundToggleButton.textContent =
-      soundEnabled ? "🔊" : "🔇";
-
-    soundToggleButton.setAttribute(
-      "aria-pressed",
-      String(soundEnabled)
+  startGameButton
+    ?.addEventListener(
+      "click",
+      startGame
     );
-  });
 
-shelfSlotButtons.forEach(
-  (button, index) => {
-    button.addEventListener(
+  playAgainButton
+    ?.addEventListener(
       "click",
       () => {
-        const partsX =
-          getStationCenterX("parts");
+        hide(
+          resultScreen
+        );
 
-        if (
-          partsX !== null &&
-          Math.abs(
-            workerX -
-            partsX
-          ) <= 14 &&
-          Math.abs(
-            workerY -
-            floorLevels.ground
-          ) <= 12
-        ) {
-          pickUpShelfPiece(
-            index
-          );
-        }
+        show(
+          introScreen
+        );
+
+        updateGlobalPoints();
       }
     );
-  }
-);
 
-  document.addEventListener("keydown", handleKeyDown);
-  document.addEventListener("keyup", handleKeyUp);
+  beginTutorialButton
+    ?.addEventListener(
+      "click",
+      beginTutorial
+    );
 
-  window.addEventListener("blur", () => {
-    workerMovingLeft = false;
-    workerMovingRight = false;
-  });
+  skipTutorialOpeningButton
+    ?.addEventListener(
+      "click",
+      skipTutorial
+    );
+
+  tutorialSkipButton
+    ?.addEventListener(
+      "click",
+      skipTutorial
+    );
+
+  continueOrderButton
+    ?.addEventListener(
+      "click",
+      continueOrder
+    );
+
+  pauseGameButton
+    ?.addEventListener(
+      "click",
+      pauseGame
+    );
+
+  resumeGameButton
+    ?.addEventListener(
+      "click",
+      resumeGame
+    );
+
+  restartGameButton
+    ?.addEventListener(
+      "click",
+      restartGame
+    );
+
+  howToPlayButton
+    ?.addEventListener(
+      "click",
+      openHelp
+    );
+
+  gameHelpButton
+    ?.addEventListener(
+      "click",
+      openHelp
+    );
+
+  pauseHelpButton
+    ?.addEventListener(
+      "click",
+      openHelp
+    );
+
+  closeHowToPlayButton
+    ?.addEventListener(
+      "click",
+      closeHelp
+    );
+
+  closeInstructionsButton
+    ?.addEventListener(
+      "click",
+      closeHelp
+    );
+
+  replayTutorialButton
+    ?.addEventListener(
+      "click",
+      () => {
+        hide(
+          howToPlayOverlay
+        );
+
+        if (
+          !gameActive
+        ) {
+          startGame();
+        }
+
+        beginTutorial();
+      }
+    );
+
+  soundToggleButton
+    ?.addEventListener(
+      "click",
+      () => {
+        soundEnabled =
+          !soundEnabled;
+
+        soundToggleButton
+          .textContent =
+          soundEnabled
+            ? "🔊"
+            : "🔇";
+
+        soundToggleButton
+          .setAttribute(
+            "aria-pressed",
+            String(
+              soundEnabled
+            )
+          );
+      }
+    );
+
+  shelfSlotButtons.forEach(
+    (
+      button,
+      index
+    ) => {
+      button
+        .addEventListener(
+          "click",
+          () => {
+            const partsX =
+              getStationCenterX(
+                "parts"
+              );
+
+            if (
+              partsX !== null &&
+              Math.abs(
+                workerX -
+                  partsX
+              ) <= 14 &&
+              Math.abs(
+                workerY -
+                  floorLevels.ground
+              ) <= 12
+            ) {
+              pickUpShelfPiece(
+                index
+              );
+            }
+          }
+        );
+    }
+  );
+
+  document.addEventListener(
+    "keydown",
+    handleKeyDown
+  );
+
+  document.addEventListener(
+    "keyup",
+    handleKeyUp
+  );
+
+  window.addEventListener(
+    "blur",
+    () => {
+      workerMovingLeft =
+        false;
+
+      workerMovingRight =
+        false;
+    }
+  );
 
   updateGlobalPoints();
 });
