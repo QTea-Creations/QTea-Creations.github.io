@@ -502,197 +502,257 @@
      NOTEBOOK TABS
   ===================================================== */
 
-  function activateNotebookPage(
-    pageId
-  ) {
-    const pages =
-      document.querySelectorAll(
-        ".notebook-page"
-      );
+function activateNotebookPage(
+  pageId,
+  updateHash = true
+) {
+  const targetPage =
+    byId(pageId);
 
-    const tabs =
-      document.querySelectorAll(
-        ".notebook-tab"
-      );
-
-    pages.forEach(
-      (page) => {
-        const active =
-          page.id ===
-          pageId;
-
-        page.classList.toggle(
-          "active",
-          active
-        );
-
-        page.classList.toggle(
-          "hidden",
-          !active
-        );
-      }
+  if (!targetPage) {
+    console.error(
+      `Notebook page not found: ${pageId}`
     );
 
-    tabs.forEach(
-      (tab) => {
-        const active =
-          tab.dataset
-            .notebookPage ===
-          pageId;
-
-        tab.classList.toggle(
-          "active",
-          active
-        );
-
-        tab.setAttribute(
-          "aria-selected",
-          String(active)
-        );
-
-        tab.tabIndex =
-          active
-            ? 0
-            : -1;
-      }
-    );
-
-    try {
-      sessionStorage.setItem(
-        "safetiiNotebookPage",
-        pageId
-      );
-    } catch (error) {
-      console.error(
-        "Could not remember the active notebook page:",
-        error
-      );
-    }
+    return;
   }
 
+  const pages =
+    document.querySelectorAll(
+      ".notebook-page"
+    );
 
-  function bindNotebookTabs() {
-    const tabs =
-      Array.from(
-        document.querySelectorAll(
-          ".notebook-tab"
-        )
+  const tabs =
+    document.querySelectorAll(
+      ".notebook-tab"
+    );
+
+  pages.forEach(
+    (page) => {
+      const isActive =
+        page.id ===
+        pageId;
+
+      page.classList.toggle(
+        "active",
+        isActive
       );
 
-    tabs.forEach(
-      (
-        tab,
-        tabIndex
-      ) => {
-        tab.addEventListener(
-          "click",
-          () => {
-            activateNotebookPage(
-              tab.dataset
-                .notebookPage
-            );
+      page.classList.toggle(
+        "hidden",
+        !isActive
+      );
+
+      page.hidden =
+        !isActive;
+    }
+  );
+
+  tabs.forEach(
+    (tab) => {
+      const isActive =
+        tab.dataset.notebookPage ===
+        pageId;
+
+      tab.classList.toggle(
+        "active",
+        isActive
+      );
+
+      tab.setAttribute(
+        "aria-selected",
+        String(isActive)
+      );
+
+      tab.tabIndex =
+        isActive
+          ? 0
+          : -1;
+    }
+  );
+
+  try {
+    sessionStorage.setItem(
+      "safetiiNotebookPage",
+      pageId
+    );
+  } catch (error) {
+    console.error(
+      "Could not remember the active notebook page:",
+      error
+    );
+  }
+
+  if (!updateHash) {
+    return;
+  }
+
+  const pageHash =
+    pageId ===
+      "passwordNotebookPage"
+      ? "#password"
+      : "#identity";
+
+  if (
+    window.location.hash !==
+    pageHash
+  ) {
+    history.replaceState(
+      null,
+      "",
+      pageHash
+    );
+  }
+}
+
+function bindNotebookTabs() {
+  const tabs =
+    Array.from(
+      document.querySelectorAll(
+        ".notebook-tab"
+      )
+    );
+
+  tabs.forEach(
+    (
+      tab,
+      tabIndex
+    ) => {
+      tab.addEventListener(
+        "click",
+        () => {
+          const pageId =
+            tab.dataset.notebookPage;
+
+          activateNotebookPage(
+            pageId
+          );
+        }
+      );
+
+      tab.addEventListener(
+        "keydown",
+        (event) => {
+          const supportedKeys = [
+            "ArrowRight",
+            "ArrowLeft",
+            "Home",
+            "End"
+          ];
+
+          if (
+            !supportedKeys.includes(
+              event.key
+            )
+          ) {
+            return;
           }
-        );
 
+          event.preventDefault();
 
-        tab.addEventListener(
-          "keydown",
-          (event) => {
-            if (
-              event.key !==
-                "ArrowRight" &&
-              event.key !==
-                "ArrowLeft"
-            ) {
-              return;
-            }
+          let nextIndex =
+            tabIndex;
 
-            event.preventDefault();
-
-            const direction =
-              event.key ===
-                "ArrowRight"
-                ? 1
-                : -1;
-
-            const nextIndex =
+          if (
+            event.key ===
+            "ArrowRight"
+          ) {
+            nextIndex =
               (
                 tabIndex +
-                direction +
+                1
+              ) %
+              tabs.length;
+          }
+
+          if (
+            event.key ===
+            "ArrowLeft"
+          ) {
+            nextIndex =
+              (
+                tabIndex -
+                1 +
                 tabs.length
               ) %
               tabs.length;
-
-            const nextTab =
-              tabs[nextIndex];
-
-            nextTab.focus();
-
-            activateNotebookPage(
-              nextTab.dataset
-                .notebookPage
-            );
           }
-        );
-      }
-    );
 
+          if (
+            event.key ===
+            "Home"
+          ) {
+            nextIndex =
+              0;
+          }
 
-    let savedPage =
-      null;
+          if (
+            event.key ===
+            "End"
+          ) {
+            nextIndex =
+              tabs.length -
+              1;
+          }
 
-    try {
-      savedPage =
-        sessionStorage.getItem(
-          "safetiiNotebookPage"
-        );
-    } catch (error) {
-      console.error(
-        "Could not read the saved notebook page:",
-        error
+          const nextTab =
+            tabs[
+              nextIndex
+            ];
+
+          nextTab.focus();
+
+          activateNotebookPage(
+            nextTab.dataset.notebookPage
+          );
+        }
       );
     }
+  );
 
-const hashPage =
-  window.location.hash ===
-    "#password"
-    ? "passwordNotebookPage"
-    : window.location.hash ===
-        "#identity"
-      ? "identityNotebookPage"
-      : null;
+  let savedPage =
+    null;
 
-const validSavedPage =
-  savedPage &&
-  byId(savedPage);
-
-activateNotebookPage(
-  hashPage ||
-  (
-    validSavedPage
-      ? savedPage
-      : "identityNotebookPage"
-  )
-);
+  try {
+    savedPage =
+      sessionStorage.getItem(
+        "safetiiNotebookPage"
+      );
+  } catch (error) {
+    console.error(
+      "Could not read the saved notebook page:",
+      error
+    );
   }
 
-   const pageHash =
-  pageId ===
-    "passwordNotebookPage"
-    ? "#password"
-    : "#identity";
+  let startingPage =
+    "identityNotebookPage";
 
-if (
-  window.location.hash !==
-  pageHash
-) {
-  history.replaceState(
-    null,
-    "",
-    pageHash
+  if (
+    window.location.hash ===
+    "#password"
+  ) {
+    startingPage =
+      "passwordNotebookPage";
+  } else if (
+    window.location.hash ===
+    "#identity"
+  ) {
+    startingPage =
+      "identityNotebookPage";
+  } else if (
+    savedPage &&
+    byId(savedPage)
+  ) {
+    startingPage =
+      savedPage;
+  }
+
+  activateNotebookPage(
+    startingPage,
+    false
   );
 }
-
 
   /* =====================================================
      IDENTITY PROTECTOR
@@ -1665,8 +1725,32 @@ function installBadgeImageFallbacks() {
   function initializeNotebook() {
    installBadgeImageFallbacks();
     bindNotebookTabs();
-     window.addEventListener(
+window.addEventListener(
   "hashchange",
+  () => {
+    if (
+      window.location.hash ===
+      "#password"
+    ) {
+      activateNotebookPage(
+        "passwordNotebookPage",
+        false
+      );
+
+      return;
+    }
+
+    if (
+      window.location.hash ===
+      "#identity"
+    ) {
+      activateNotebookPage(
+        "identityNotebookPage",
+        false
+      );
+    }
+  }
+);
   () => {
     if (
       window.location.hash ===
