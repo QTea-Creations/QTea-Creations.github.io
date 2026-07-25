@@ -653,15 +653,27 @@
       );
     }
 
-    const validSavedPage =
-      savedPage &&
-      byId(savedPage);
+const hashPage =
+  window.location.hash ===
+    "#password"
+    ? "passwordNotebookPage"
+    : window.location.hash ===
+        "#identity"
+      ? "identityNotebookPage"
+      : null;
 
-    activateNotebookPage(
-      validSavedPage
-        ? savedPage
-        : "identityNotebookPage"
-    );
+const validSavedPage =
+  savedPage &&
+  byId(savedPage);
+
+activateNotebookPage(
+  hashPage ||
+  (
+    validSavedPage
+      ? savedPage
+      : "identityNotebookPage"
+  )
+);
   }
 
    const pageHash =
@@ -1594,6 +1606,30 @@ if (
 
   function initializeNotebook() {
     bindNotebookTabs();
+     window.addEventListener(
+  "hashchange",
+  () => {
+    if (
+      window.location.hash ===
+      "#password"
+    ) {
+      activateNotebookPage(
+        "passwordNotebookPage"
+      );
+
+      return;
+    }
+
+    if (
+      window.location.hash ===
+      "#identity"
+    ) {
+      activateNotebookPage(
+        "identityNotebookPage"
+      );
+    }
+  }
+);
     bindReplayControls();
     refreshNotebook();
 
