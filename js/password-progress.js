@@ -2,18 +2,21 @@
 
 /* =========================================================
    SAFETII NET — PASSWORD SAFE KEEPER
-   Mission 2 Progress System
+   MISSION 2 PROGRESS SYSTEM
 
-   This file saves and restores:
-   - Current mission section
-   - Training progress
-   - Vault progress
-   - Final-test progress
-   - Badge and completion status
+   Saves and restores:
+
+   1. Password Safety Lab
+   2. Password Cracker Challenge
+   3. Two-Factor Security Gate
+   4. Account Defense Simulator
+   5. Password Vault Practice
+   6. Final Test
+   7. Badge and mission completion
 
    Important:
    The pretend password typed into the Password Safety Lab
-   is never stored in this file or in localStorage.
+   is never saved or restored.
 ========================================================= */
 
 (() => {
@@ -40,20 +43,29 @@
     "safetiiPasswordProgress";
 
   const CURRENT_VERSION =
-    1;
+    2;
+
+
+  /* =====================================================
+     VALID MISSION SECTIONS
+  ===================================================== */
 
   const VALID_SECTIONS = [
     "passwordMissionAlert",
     "passphraseZone",
-    "uniquePasswordZone",
-    "codeKeeperZone",
-    "accountRescueZone",
+    "passwordAttackZone",
+    "twoFactorZone",
+    "accountDefenseZone",
     "passwordVaultZone",
     "passwordTestIntroZone",
     "passwordTestZone",
     "passwordMissionResult"
   ];
 
+
+  /* =====================================================
+     DEFAULT PROGRESS
+  ===================================================== */
 
   const DEFAULT_PROGRESS = {
     version:
@@ -69,7 +81,7 @@
       "passwordMissionAlert",
 
 
-    /* Training 1 */
+    /* Password Safety Lab */
 
     comparisonIndex:
       0,
@@ -87,36 +99,39 @@
       false,
 
 
-    /* Training 2 */
+    /* Password Cracker Challenge */
 
-    uniquePasswordIndex:
+    passwordAttackIndex:
       0,
 
-    uniquePasswordCorrect:
+    passwordAttackCorrect:
       0,
 
-    uniquePasswordComplete:
+    passwordAttackComplete:
       false,
 
 
-    /* Training 3 */
+    /* Two-Factor Security Gate */
 
-    codeKeeperIndex:
+    twoFactorIndex:
       0,
 
-    codeKeeperCorrect:
+    twoFactorCorrect:
       0,
 
-    codeKeeperComplete:
+    twoFactorComplete:
       false,
 
 
-    /* Training 4 */
+    /* Account Defense Simulator */
 
-    selectedRescueSteps:
-      [],
+    accountDefenseIndex:
+      0,
 
-    rescueComplete:
+    accountDefenseCorrect:
+      0,
+
+    accountDefenseComplete:
       false,
 
     trainingComplete:
@@ -173,10 +188,7 @@
 
   function cloneDefaultProgress() {
     return {
-      ...DEFAULT_PROGRESS,
-
-      selectedRescueSteps:
-        []
+      ...DEFAULT_PROGRESS
     };
   }
 
@@ -208,6 +220,42 @@
   }
 
 
+  function clamp(
+    value,
+    minimum,
+    maximum
+  ) {
+    return Math.min(
+      maximum,
+      Math.max(
+        minimum,
+        safeNumber(value)
+      )
+    );
+  }
+
+
+  function getDataLength(
+    key,
+    fallback
+  ) {
+    const collection =
+      mission.data?.[
+        key
+      ];
+
+    return Array.isArray(
+      collection
+    )
+      ? collection.length
+      : fallback;
+  }
+
+
+  /* =====================================================
+     READ SAVED PROGRESS
+  ===================================================== */
+
   function readSavedProgress() {
     try {
       const raw =
@@ -232,7 +280,7 @@
         return cloneDefaultProgress();
       }
 
-      return {
+      const progress = {
         ...cloneDefaultProgress(),
         ...parsed,
 
@@ -283,64 +331,51 @@
           ),
 
 
-        uniquePasswordIndex:
+        passwordAttackIndex:
           safeNumber(
-            parsed.uniquePasswordIndex
+            parsed.passwordAttackIndex
           ),
 
-        uniquePasswordCorrect:
+        passwordAttackCorrect:
           safeNumber(
-            parsed.uniquePasswordCorrect
+            parsed.passwordAttackCorrect
           ),
 
-        uniquePasswordComplete:
+        passwordAttackComplete:
           safeBoolean(
-            parsed.uniquePasswordComplete
+            parsed.passwordAttackComplete
           ),
 
 
-        codeKeeperIndex:
+        twoFactorIndex:
           safeNumber(
-            parsed.codeKeeperIndex
+            parsed.twoFactorIndex
           ),
 
-        codeKeeperCorrect:
+        twoFactorCorrect:
           safeNumber(
-            parsed.codeKeeperCorrect
+            parsed.twoFactorCorrect
           ),
 
-        codeKeeperComplete:
+        twoFactorComplete:
           safeBoolean(
-            parsed.codeKeeperComplete
+            parsed.twoFactorComplete
           ),
 
 
-        selectedRescueSteps:
-          Array.isArray(
-            parsed.selectedRescueSteps
-          )
-            ? parsed.selectedRescueSteps.filter(
-                (
-                  value,
-                  index,
-                  array
-                ) => {
-                  return (
-                    typeof value ===
-                      "string" &&
-                    value.trim() &&
-                    array.indexOf(
-                      value
-                    ) ===
-                      index
-                  );
-                }
-              )
-            : [],
+        accountDefenseIndex:
+          safeNumber(
+            parsed.accountDefenseIndex
+          ),
 
-        rescueComplete:
+        accountDefenseCorrect:
+          safeNumber(
+            parsed.accountDefenseCorrect
+          ),
+
+        accountDefenseComplete:
           safeBoolean(
-            parsed.rescueComplete
+            parsed.accountDefenseComplete
           ),
 
         trainingComplete:
@@ -391,6 +426,31 @@
             parsed.missionPointsEarned
           )
       };
+
+
+      /*
+        Migration protection:
+
+        Older Mission 2 versions used these sections:
+
+        uniquePasswordZone
+        codeKeeperZone
+        accountRescueZone
+
+        Those section names are no longer valid. The earliest
+        unfinished revised training activity will be chosen below.
+      */
+
+      if (
+        !VALID_SECTIONS.includes(
+          parsed.currentSection
+        )
+      ) {
+        progress.currentSection =
+          "passwordMissionAlert";
+      }
+
+      return progress;
     } catch (error) {
       console.error(
         "Could not read Password Safe Keeper progress:",
@@ -401,6 +461,10 @@
     }
   }
 
+
+  /* =====================================================
+     WRITE PROGRESS
+  ===================================================== */
 
   function writeProgress(
     progress
@@ -426,9 +490,9 @@
 
 
   /* =====================================================
-     SAVE CURRENT STATE
+     SAVE CURRENT MISSION STATE
 
-     No password-input value is included here.
+     The password input value is intentionally omitted.
   ===================================================== */
 
   function saveProgress() {
@@ -469,6 +533,8 @@
       currentSection,
 
 
+      /* Password Safety Lab */
+
       comparisonIndex:
         safeNumber(
           state.comparisonIndex
@@ -495,50 +561,57 @@
         ),
 
 
-      uniquePasswordIndex:
+      /* Password Cracker Challenge */
+
+      passwordAttackIndex:
         safeNumber(
-          state.uniquePasswordIndex
+          state.passwordAttackIndex
         ),
 
-      uniquePasswordCorrect:
+      passwordAttackCorrect:
         safeNumber(
-          state.uniquePasswordCorrect
+          state.passwordAttackCorrect
         ),
 
-      uniquePasswordComplete:
+      passwordAttackComplete:
         Boolean(
-          state.uniquePasswordComplete
+          state.passwordAttackComplete
         ),
 
 
-      codeKeeperIndex:
+      /* Two-Factor Security Gate */
+
+      twoFactorIndex:
         safeNumber(
-          state.codeKeeperIndex
+          state.twoFactorIndex
         ),
 
-      codeKeeperCorrect:
+      twoFactorCorrect:
         safeNumber(
-          state.codeKeeperCorrect
+          state.twoFactorCorrect
         ),
 
-      codeKeeperComplete:
+      twoFactorComplete:
         Boolean(
-          state.codeKeeperComplete
+          state.twoFactorComplete
         ),
 
 
-      selectedRescueSteps:
-        Array.isArray(
-          state.selectedRescueSteps
-        )
-          ? [
-              ...state.selectedRescueSteps
-            ]
-          : [],
+      /* Account Defense Simulator */
 
-      rescueComplete:
+      accountDefenseIndex:
+        safeNumber(
+          state.accountDefenseIndex
+        ),
+
+      accountDefenseCorrect:
+        safeNumber(
+          state.accountDefenseCorrect
+        ),
+
+      accountDefenseComplete:
         Boolean(
-          state.rescueComplete
+          state.accountDefenseComplete
         ),
 
       trainingComplete:
@@ -546,6 +619,8 @@
           state.trainingComplete
         ),
 
+
+      /* Vault Practice */
 
       vaultIndex:
         safeNumber(
@@ -562,6 +637,8 @@
           state.vaultComplete
         ),
 
+
+      /* Final Test */
 
       testIndex:
         safeNumber(
@@ -584,6 +661,8 @@
         ),
 
 
+      /* Rewards */
+
       missionPointsEarned:
         safeNumber(
           state.missionPointsEarned
@@ -596,8 +675,8 @@
 
 
     /*
-      These simpler keys make Mission 2 status
-      available to the dashboard and notebook.
+      Simplified completion keys used by other
+      Safetii Net pages.
     */
 
     localStorage.setItem(
@@ -630,7 +709,7 @@
 
 
   /* =====================================================
-     RESTORE STATE
+     RESTORE MISSION STATE
   ===================================================== */
 
   function restoreState(
@@ -645,6 +724,8 @@
     state.currentSection =
       progress.currentSection;
 
+
+    /* Password Safety Lab */
 
     state.comparisonIndex =
       progress.comparisonIndex;
@@ -665,43 +746,55 @@
       progress.passwordLabComplete;
 
 
-    state.uniquePasswordIndex =
-      progress.uniquePasswordIndex;
+    /* Password Cracker Challenge */
 
-    state.uniquePasswordCorrect =
-      progress.uniquePasswordCorrect;
+    state.passwordAttackIndex =
+      progress.passwordAttackIndex;
 
-    state.uniquePasswordAnswered =
+    state.passwordAttackCorrect =
+      progress.passwordAttackCorrect;
+
+    state.passwordAttackAnswered =
       false;
 
-    state.uniquePasswordComplete =
-      progress.uniquePasswordComplete;
+    state.passwordAttackComplete =
+      progress.passwordAttackComplete;
 
 
-    state.codeKeeperIndex =
-      progress.codeKeeperIndex;
+    /* Two-Factor Security Gate */
 
-    state.codeKeeperCorrect =
-      progress.codeKeeperCorrect;
+    state.twoFactorIndex =
+      progress.twoFactorIndex;
 
-    state.codeKeeperAnswered =
+    state.twoFactorCorrect =
+      progress.twoFactorCorrect;
+
+    state.twoFactorAnswered =
       false;
 
-    state.codeKeeperComplete =
-      progress.codeKeeperComplete;
+    state.twoFactorComplete =
+      progress.twoFactorComplete;
 
 
-    state.selectedRescueSteps =
-      [
-        ...progress.selectedRescueSteps
-      ];
+    /* Account Defense Simulator */
 
-    state.rescueComplete =
-      progress.rescueComplete;
+    state.accountDefenseIndex =
+      progress.accountDefenseIndex;
+
+    state.accountDefenseCorrect =
+      progress.accountDefenseCorrect;
+
+    state.accountDefenseAnswered =
+      false;
+
+    state.accountDefenseComplete =
+      progress.accountDefenseComplete;
 
     state.trainingComplete =
       progress.trainingComplete;
 
+
+    /* Vault Practice */
 
     state.vaultIndex =
       progress.vaultIndex;
@@ -715,6 +808,8 @@
     state.vaultComplete =
       progress.vaultComplete;
 
+
+    /* Final Test */
 
     state.testIndex =
       progress.testIndex;
@@ -732,70 +827,127 @@
       progress.badgeEarned;
 
 
+    /* Rewards */
+
     state.missionPointsEarned =
       progress.missionPointsEarned;
   }
 
 
   /* =====================================================
-     RESTORE COUNTERS AND BUTTONS
+     RESTORE COUNTERS
   ===================================================== */
 
   function restoreCounters(
     progress
   ) {
-    const comparisonCount =
+    const comparisonTotal =
+      getDataLength(
+        "comparisonChallenges",
+        5
+      );
+
+    const attackTotal =
+      getDataLength(
+        "passwordAttackChallenges",
+        8
+      );
+
+    const twoFactorTotal =
+      getDataLength(
+        "twoFactorScenarios",
+        8
+      );
+
+    const defenseTotal =
+      getDataLength(
+        "accountDefenseScenarios",
+        6
+      );
+
+    const vaultTotal =
+      getDataLength(
+        "vaultChallenges",
+        5
+      );
+
+    const testTotal =
+      getDataLength(
+        "finalTestQuestions",
+        20
+      );
+
+
+    let labProgress =
+      clamp(
+        progress.comparisonIndex,
+        0,
+        comparisonTotal
+      );
+
+    if (
       progress.comparisonComplete
-        ? 5
-        : Math.min(
-            progress.comparisonIndex,
-            5
-          );
+    ) {
+      labProgress =
+        comparisonTotal;
+    }
 
-    const passwordLabCount =
+    if (
       progress.passwordBuilderComplete
-        ? 6
-        : comparisonCount;
+    ) {
+      labProgress =
+        comparisonTotal + 1;
+    }
 
-    const values = {
+
+    const counters = {
       passwordLabProgress:
-        passwordLabCount,
+        labProgress,
 
-      uniquePasswordProgress:
-        Math.min(
-          progress.uniquePasswordIndex,
-          8
-        ),
+      passwordAttackProgress:
+        progress.passwordAttackComplete
+          ? attackTotal
+          : clamp(
+              progress.passwordAttackIndex,
+              0,
+              attackTotal
+            ),
 
-      codeKeeperProgress:
-        Math.min(
-          progress.codeKeeperIndex,
-          10
-        ),
+      twoFactorProgress:
+        progress.twoFactorComplete
+          ? twoFactorTotal
+          : clamp(
+              progress.twoFactorIndex,
+              0,
+              twoFactorTotal
+            ),
 
-      accountRescueProgress:
-        Math.min(
-          progress.selectedRescueSteps
-            .length,
-          6
-        ),
+      accountDefenseProgress:
+        progress.accountDefenseComplete
+          ? defenseTotal
+          : clamp(
+              progress.accountDefenseIndex,
+              0,
+              defenseTotal
+            ),
 
       vaultDoorsSecured:
-        Math.min(
+        clamp(
           progress.vaultDoorsSecured,
-          5
+          0,
+          vaultTotal
         ),
 
       vaultDoorNumber:
         Math.min(
           progress.vaultIndex + 1,
-          5
+          vaultTotal
         ),
 
       passwordTestNumber:
         Math.min(
           progress.testIndex + 1,
-          20
+          testTotal
         ),
 
       passwordFinalScore:
@@ -807,8 +959,9 @@
         progress.missionPointsEarned
     };
 
+
     Object.entries(
-      values
+      counters
     ).forEach(
       ([id, value]) => {
         mission.setText(
@@ -819,6 +972,12 @@
     );
   }
 
+
+  /* =====================================================
+     RESTORE PASSWORD SAFETY LAB
+
+     The typed pretend password is always cleared.
+  ===================================================== */
 
   function restorePasswordLab(
     progress
@@ -838,9 +997,14 @@
         "practicePasswordInput"
       );
 
+    const toggleButton =
+      mission.byId(
+        "togglePracticePassword"
+      );
+
+
     /*
-      Always clear the field during restoration.
-      The practice password is never restored.
+      Never restore or retain the typed password.
     */
 
     if (practiceInput) {
@@ -851,12 +1015,6 @@
         "password";
     }
 
-
-    const toggleButton =
-      mission.byId(
-        "togglePracticePassword"
-      );
-
     if (toggleButton) {
       toggleButton.textContent =
         "👁️ Show";
@@ -864,6 +1022,11 @@
       toggleButton.setAttribute(
         "aria-pressed",
         "false"
+      );
+
+      toggleButton.setAttribute(
+        "aria-label",
+        "Show pretend password"
       );
     }
 
@@ -915,15 +1078,19 @@
 
 
     /*
-      Even if the student previously completed the
-      builder, they must type a new pretend password
-      after refreshing because the original value
-      was intentionally never saved.
+      A completed lab can resume forward without requiring
+      the original pretend password to be restored.
     */
 
     if (
       progress.passwordLabComplete
     ) {
+      mission.showElement(
+        mission.byId(
+          "passwordBuilderSuccess"
+        )
+      );
+
       mission.setButtonState({
         id:
           "finishPasswordSafetyLab",
@@ -932,20 +1099,25 @@
           true,
 
         unlockedText:
-          "Continue to One Account, One Password ✅",
+          "Continue to Password Cracker Challenge ✅",
 
         lockedText:
           "Build a Strong Practice Password to Continue"
       });
 
-      mission.showElement(
-        mission.byId(
-          "passwordBuilderSuccess"
-        )
-      );
-    } else if (
+      return;
+    }
+
+
+    if (
       progress.passwordBuilderComplete
     ) {
+      mission.showElement(
+        mission.byId(
+          "passwordBuilderSuccess"
+        )
+      );
+
       mission.setButtonState({
         id:
           "finishPasswordSafetyLab",
@@ -960,28 +1132,29 @@
           "Build a Strong Practice Password to Continue"
       });
 
-      mission.showElement(
-        mission.byId(
-          "passwordBuilderSuccess"
-        )
-      );
-    } else {
-      mission.setButtonState({
-        id:
-          "finishPasswordSafetyLab",
-
-        unlocked:
-          false,
-
-        unlockedText:
-          "Complete Password Safety Lab ✅",
-
-        lockedText:
-          "Build a Strong Practice Password to Continue"
-      });
+      return;
     }
+
+
+    mission.setButtonState({
+      id:
+        "finishPasswordSafetyLab",
+
+      unlocked:
+        false,
+
+      unlockedText:
+        "Complete Password Safety Lab ✅",
+
+      lockedText:
+        "Build a Strong Practice Password to Continue"
+    });
   }
 
+
+  /* =====================================================
+     RESTORE TRAINING COMPLETION BUTTONS
+  ===================================================== */
 
   function restoreTrainingButtons(
     progress
@@ -991,13 +1164,13 @@
         "finishPasswordTraining",
 
       unlocked:
-        progress.rescueComplete,
+        progress.accountDefenseComplete,
 
       unlockedText:
         "Enter Password Vault Practice 🏰",
 
       lockedText:
-        "Complete Account Rescue First"
+        "Complete Account Defense Training First"
     });
 
 
@@ -1014,6 +1187,40 @@
       lockedText:
         "Secure All 5 Doors to Unlock the Final Test"
     });
+
+
+    if (
+      progress.twoFactorComplete
+    ) {
+      mission.showElement(
+        mission.byId(
+          "twoFactorCompletion"
+        )
+      );
+    } else {
+      mission.hideElement(
+        mission.byId(
+          "twoFactorCompletion"
+        )
+      );
+    }
+
+
+    if (
+      progress.accountDefenseComplete
+    ) {
+      mission.showElement(
+        mission.byId(
+          "accountDefenseCompletion"
+        )
+      );
+    } else {
+      mission.hideElement(
+        mission.byId(
+          "accountDefenseCompletion"
+        )
+      );
+    }
   }
 
 
@@ -1045,21 +1252,21 @@
     }
 
     if (
-      !progress.uniquePasswordComplete
+      !progress.passwordAttackComplete
     ) {
-      return "uniquePasswordZone";
+      return "passwordAttackZone";
     }
 
     if (
-      !progress.codeKeeperComplete
+      !progress.twoFactorComplete
     ) {
-      return "codeKeeperZone";
+      return "twoFactorZone";
     }
 
     if (
-      !progress.rescueComplete
+      !progress.accountDefenseComplete
     ) {
-      return "accountRescueZone";
+      return "accountDefenseZone";
     }
 
     if (
@@ -1101,7 +1308,10 @@
           "passwordMissionAlert",
           {
             scroll:
-              false
+              false,
+
+            behavior:
+              "auto"
           }
         );
         break;
@@ -1129,13 +1339,12 @@
             }
           );
         }
-
         break;
 
 
-      case "uniquePasswordZone":
-      case "codeKeeperZone":
-      case "accountRescueZone":
+      case "passwordAttackZone":
+      case "twoFactorZone":
+      case "accountDefenseZone":
         if (
           typeof mission
             .restoreTrainingSection ===
@@ -1153,7 +1362,6 @@
             }
           );
         }
-
         break;
 
 
@@ -1173,7 +1381,6 @@
         ) {
           mission.loadVaultChallenge();
         }
-
         break;
 
 
@@ -1206,7 +1413,6 @@
         ) {
           mission.loadPasswordTestQuestion();
         }
-
         break;
 
 
@@ -1226,7 +1432,6 @@
         ) {
           mission.renderPasswordMissionResult();
         }
-
         break;
 
 
@@ -1243,7 +1448,7 @@
 
 
   /* =====================================================
-     RESTORE COMPLETE MISSION
+     RESTORE ALL PROGRESS
   ===================================================== */
 
   function restoreProgress() {
@@ -1311,6 +1516,10 @@
     readSavedProgress;
 
 
+  mission.restorePasswordProgress =
+    restoreProgress;
+
+
   mission.clearPasswordProgress =
     function clearPasswordProgress() {
       localStorage.removeItem(
@@ -1333,19 +1542,16 @@
     };
 
 
-  mission.restorePasswordProgress =
-    restoreProgress;
-
-
   /* =====================================================
      INITIALIZATION
 
      Wait until:
-     - password-core.js is ready
-     - password-activities.js is ready
-     - password.js is ready
 
-     password.js will set mission.controllerReady.
+     password-core.js
+     password-activities.js
+     password.js
+
+     have all completed initialization.
   ===================================================== */
 
   function initializeProgressSystem() {
@@ -1375,13 +1581,6 @@
 
     document.addEventListener(
       "click",
-      scheduleSave,
-      true
-    );
-
-
-    document.addEventListener(
-      "drop",
       scheduleSave,
       true
     );
@@ -1421,7 +1620,7 @@
     );
 
     console.log(
-      "Password Safe Keeper progress system loaded."
+      "Password Safe Keeper revised progress system loaded."
     );
   }
 
