@@ -877,8 +877,104 @@ case 6: {
     element.classList.add("tutorial-target-pulse");
   }
 
+  function skipTutorial() {
+    markTutorialComplete();
+
+    tutorialActive = false;
+
+    clearTutorialTargetPulses();
+
+    hide(tutorialOpeningOverlay);
+    hide(tutorialCard);
+    hide(tutorialSkipButton);
+    hide(tutorialHighlight);
+
+    clearPieces();
+    resetOrderMachines();
+
+    unlockLanes(3);
+
+    beginNormalOrder(0);
+  }
+
+
+  function clearTutorialTargetPulses() {
+    document
+      .querySelectorAll(".tutorial-target-pulse")
+      .forEach((element) => {
+        element.classList.remove("tutorial-target-pulse");
+      });
+  }
+
+
+  function pulseTutorialTarget(element) {
+    if (!element) {
+      return;
+    }
+
+    element.classList.add("tutorial-target-pulse");
+  }
+
+
+  function ensureTutorialPiece({
+    text,
+    category,
+    lane,
+    fixedX,
+    unsafe = false,
+    reason = ""
+  }) {
+    const onBelt =
+      activePieces.some(
+        (piece) =>
+          !piece.removed &&
+          piece.data.text === text
+      );
+
+    const beingCarried =
+      carriedItems.some(
+        (item) =>
+          item.text === text
+      );
+
+    const inMixer =
+      mixerPieces.some(
+        (item) =>
+          item?.text === text
+      );
+
+    const onShelf =
+      shelfPieces.some(
+        (item) =>
+          item?.text === text
+      );
+
+    if (
+      onBelt ||
+      beingCarried ||
+      inMixer ||
+      onShelf
+    ) {
+      return null;
+    }
+
+    return createPiece(
+      lane,
+      {
+        text,
+        category,
+        unsafe,
+        reason,
+        fixedX,
+        tutorial: true
+      }
+    );
+  }
+
+
   function runTutorialStep() {
-    const step = tutorialSteps[tutorialStep];
+    const step =
+      tutorialSteps[tutorialStep];
 
     if (!step) {
       completeTutorial();
@@ -911,16 +1007,13 @@ case 6: {
       case 0: {
         clearPieces();
 
-        tutorialTargetPiece = createPiece(
-          "two",
-          {
+        tutorialTargetPiece =
+          ensureTutorialPiece({
             text: "Wacky",
             category: "style",
-            unsafe: false,
-            fixedX: 42,
-            tutorial: true
-          }
-        );
+            lane: "one",
+            fixedX: 52
+          });
 
         pulseTutorialTarget(
           tutorialTargetPiece?.element
@@ -929,122 +1022,146 @@ case 6: {
         break;
       }
 
-      case 1:
+
+      case 1: {
+        const wackyPiece =
+          activePieces.find(
+            (piece) =>
+              !piece.removed &&
+              piece.data.text === "Wacky"
+          );
+
+        tutorialTargetPiece =
+          wackyPiece ||
+          tutorialTargetPiece;
+
         pulseTutorialTarget(
           tutorialTargetPiece?.element
         );
+
+        break;
+      }
+
+
+      case 2: {
+        const pandaPiece =
+          ensureTutorialPiece({
+            text: "Panda",
+            category: "animal",
+            lane: "two",
+            fixedX: 62
+          });
+
+        pulseTutorialTarget(
+          pandaPiece?.element
+        );
+
+        break;
+      }
+
+
+      case 3:
+        pulseTutorialTarget(
+          carriedItemBubble
+        );
         break;
 
-         case 2: {
-      const pandaPiece = createPiece(
-        "two",
-        {
-          text: "Panda",
-          category: "animal",
-          unsafe: false,
-          fixedX: 62,
-          tutorial: true
-        }
-      );
 
-      pulseTutorialTarget(
-        pandaPiece?.element
-      );
+      case 4:
+        pulseTutorialTarget(
+          mixerStation
+        );
+        break;
 
-      break;
+
+      case 5: {
+        const bouncePiece =
+          ensureTutorialPiece({
+            text: "Bounce",
+            category: "action",
+            lane: "three",
+            fixedX: 52
+          });
+
+        pulseTutorialTarget(
+          bouncePiece?.element
+        );
+
+        break;
+      }
+
+
+      case 6: {
+        const privatePiece =
+          ensureTutorialPiece({
+            text: "Home Address",
+            category: "unsafe",
+            lane: "one",
+            fixedX: 52,
+            unsafe: true,
+            reason:
+              "A home address is private location information."
+          });
+
+        pulseTutorialTarget(
+          privatePiece?.element
+        );
+
+        break;
+      }
+
+
+      case 7:
+        pulseTutorialTarget(
+          mixerStation
+        );
+        break;
+
+
+      case 8: {
+        const target =
+          mixedPackage
+            ? mixerStation
+            : scannerStation;
+
+        pulseTutorialTarget(
+          target
+        );
+
+        break;
+      }
+
+
+      case 9: {
+        timeFreezeCharge = 100;
+        updateHUD();
+
+        const freezeTarget =
+          byId("freezeButton") ||
+          byId("timeFreezeFill")
+            ?.closest(".time-freeze-panel");
+
+        pulseTutorialTarget(
+          freezeTarget
+        );
+
+        break;
+      }
+
+
+      case 10:
+        pulseTutorialTarget(
+          approvedPackage
+            ? scannerStation
+            : shippingStation
+        );
+        break;
+
+
+      default:
+        break;
     }
-
-    case 3:
-      pulseTutorialTarget(
-        carriedItemBubble
-      );
-      break;
-
-    case 4:
-      pulseTutorialTarget(
-        mixerStation
-      );
-      break;
-
-    case 5: {
-      const bouncePiece = createPiece(
-        "two",
-        {
-          text: "Bounce",
-          category: "action",
-          unsafe: false,
-          fixedX: 52,
-          tutorial: true
-        }
-      );
-
-      pulseTutorialTarget(
-        bouncePiece?.element
-      );
-
-      break;
-    }
-
-    case 6: {
-      const privatePiece = createPiece(
-        "two",
-        {
-          text: "Home Address",
-          category: "unsafe",
-          unsafe: true,
-          reason:
-            "A home address is private location information.",
-          fixedX: 52,
-          tutorial: true
-        }
-      );
-
-      pulseTutorialTarget(
-        privatePiece?.element
-      );
-
-      break;
-    }
-
-    case 7:
-      pulseTutorialTarget(
-        mixerStation
-      );
-      break;
-
-    case 8:
-      pulseTutorialTarget(
-        mixerStation
-      );
-      break;
-
-    case 9: {
-      timeFreezeCharge = 100;
-      updateHUD();
-
-      const freezeTarget =
-        byId("freezeButton") ||
-        byId("timeFreezeFill")
-          ?.closest(".time-freeze-panel");
-
-      pulseTutorialTarget(
-        freezeTarget
-      );
-
-      break;
-    }
-
-    case 10:
-      pulseTutorialTarget(
-        scannerStation
-      );
-      break;
-
-    default:
-      break;
   }
-}
-
   function advanceTutorial() {
     tutorialStep += 1;
 
