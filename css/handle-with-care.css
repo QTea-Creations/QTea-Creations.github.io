@@ -4365,3 +4365,43 @@ body.handle-page button {
 .factory-tutorial-card {
   z-index: 110 !important;
 }
+
+/* =========================================================
+   FACTORY LAYER ORDER
+========================================================= */
+
+.factory-lane {
+  z-index: 5;
+}
+
+.factory-conveyor {
+  z-index: 6;
+}
+
+.factory-piece-layer {
+  z-index: 12;
+  overflow: visible;
+}
+
+.factory-moving-piece {
+  z-index: 14 !important;
+}
+
+.factory-worker {
+  z-index: 40 !important;
+  overflow: visible !important;
+}
+
+.factory-worker-character {
+  position: relative;
+  z-index: 42;
+}
+
+.carried-item-bubble {
+  z-index: 60 !important;
+  bottom: calc(100% + 14px) !important;
+}
+
+.factory-tutorial-card {
+  z-index: 80 !important;
+}
