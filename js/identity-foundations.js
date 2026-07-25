@@ -2072,10 +2072,6 @@ if (finishButton) {
     handleFoundationClick
   );
 
-  window.setTimeout(
-    restoreVisibleFoundation,
-    300
-  );
 
   game.identityFoundationsReady =
     true;
