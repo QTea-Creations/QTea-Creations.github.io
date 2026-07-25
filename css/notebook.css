@@ -1,0 +1,1914 @@
+"use strict";
+
+/* =========================================================
+   SAFETII NET — CYBER NOTEBOOK
+
+   Visual design:
+   - Real ruled notebook paper
+   - Red vertical margin
+   - Spiral binding
+   - Mission tabs
+   - Taped badges
+   - Sticky-note status labels
+   - Handwritten-style notes
+   - Replay dialog
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL NOTEBOOK PAGE
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0 !important;
+  overflow-x: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(125, 76, 255, 0.1),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(46, 190, 209, 0.11),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #edf9ff,
+      #f8fbff 48%,
+      #f3f0ff
+    );
+
+  color: #1f3152;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 4px solid #ffd84d;
+  outline-offset: 4px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.site-header {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+
+  width: 100%;
+  z-index: 20;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-bottom:
+    1px solid
+    #dce6f2;
+
+  box-shadow:
+    0 5px 18px
+    rgba(35, 50, 77, 0.08);
+}
+
+.navbar {
+  width:
+    min(
+      1460px,
+      calc(100% - 40px)
+    );
+
+  min-height: 112px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.navbar-logo-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  text-decoration: none;
+}
+
+.navbar-logo {
+  width: auto;
+  height: 88px;
+
+  object-fit: contain;
+}
+
+.nav-links {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 18px 30px;
+
+  list-style: none;
+}
+
+.nav-links a {
+  color: #26385c;
+
+  font-weight: 800;
+  text-decoration: none;
+
+  transition:
+    color
+    160ms ease,
+    transform
+    160ms ease;
+}
+
+.nav-links a:hover {
+  color: #7d4cff;
+
+  transform:
+    translateY(-2px);
+}
+
+.nav-links a[aria-current="page"] {
+  color: #7d4cff;
+
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+
+
+/* =========================================================
+   MAIN PAGE LAYOUT
+========================================================= */
+
+.notebook-main {
+  width:
+    min(
+      1280px,
+      calc(100% - 32px)
+    );
+
+  margin: 0 auto;
+  padding: 0 0 80px;
+}
+
+
+/* =========================================================
+   NOTEBOOK COVER
+========================================================= */
+
+.notebook-cover {
+  position: relative;
+  overflow: hidden;
+
+  width: 100%;
+  min-height: 285px;
+  padding:
+    38px
+    44px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(190px, 280px);
+
+  align-items: center;
+  gap: 34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7d4cff 0%,
+      #8f5cff 42%,
+      #36bfd4 100%
+    );
+
+  border:
+    7px solid
+    #ffffff;
+
+  border-top: 0;
+
+  border-radius:
+    0
+    0
+    42px
+    42px;
+
+  box-shadow:
+    0 22px 45px
+    rgba(47, 44, 100, 0.18);
+}
+
+.notebook-cover::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      -28deg,
+      rgba(255, 255, 255, 0.04) 0,
+      rgba(255, 255, 255, 0.04) 9px,
+      transparent 9px,
+      transparent 22px
+    );
+
+  pointer-events: none;
+}
+
+.notebook-cover::after {
+  content: "";
+
+  position: absolute;
+  right: -90px;
+  bottom: -110px;
+
+  width: 320px;
+  height: 320px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+}
+
+.notebook-cover-content,
+.notebook-cover-mascot {
+  position: relative;
+  z-index: 2;
+}
+
+.notebook-eyebrow {
+  margin: 0 0 10px;
+
+  color: #fff4a8;
+
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.notebook-title {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      2.2rem,
+      5vw,
+      3.7rem
+    );
+
+  line-height: 1.05;
+
+  text-shadow:
+    0 4px 0
+    rgba(47, 28, 113, 0.24);
+}
+
+.notebook-description {
+  max-width: 760px;
+  margin: 16px 0 0;
+
+  color: #f8fbff;
+
+  font-size: 1.07rem;
+  line-height: 1.65;
+}
+
+.notebook-cover-stats {
+  margin-top: 25px;
+
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.cover-stat {
+  min-width: 150px;
+  padding: 13px 17px;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.17);
+
+  border:
+    2px solid
+    rgba(255, 255, 255, 0.37);
+
+  border-radius: 18px;
+
+  color: #ffffff;
+
+  backdrop-filter:
+    blur(6px);
+}
+
+.cover-stat-icon {
+  font-size: 1.8rem;
+}
+
+.cover-stat-label {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #e9edff;
+
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cover-stat strong {
+  font-size: 1.3rem;
+}
+
+.notebook-cover-mascot {
+  width:
+    min(
+      100%,
+      245px
+    );
+
+  margin: 0 auto;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 18px 12px
+      rgba(31, 34, 75, 0.24)
+    );
+}
+
+
+/* =========================================================
+   NOTEBOOK PAPER
+========================================================= */
+
+.notebook-paper {
+  position: relative;
+
+  width:
+    calc(100% - 24px);
+
+  min-height: 800px;
+  margin:
+    42px auto
+    0;
+
+  padding:
+    0
+    34px
+    55px
+    96px;
+
+  background-color: #fffef8;
+
+  background-image:
+    linear-gradient(
+      to right,
+      transparent 0,
+      transparent 72px,
+      rgba(229, 88, 103, 0.62) 72px,
+      rgba(229, 88, 103, 0.62) 75px,
+      transparent 75px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      rgba(91, 157, 210, 0.27) 31px,
+      rgba(91, 157, 210, 0.27) 33px
+    );
+
+  border:
+    3px solid
+    #d9d6ca;
+
+  border-radius:
+    22px
+    34px
+    34px
+    22px;
+
+  box-shadow:
+    0 22px 50px
+    rgba(57, 57, 86, 0.16),
+    inset
+    0 0 60px
+    rgba(181, 169, 128, 0.08);
+}
+
+.notebook-paper::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(255, 255, 255, 0.85),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(255, 247, 198, 0.14),
+      transparent 24%
+    );
+
+  border-radius: inherit;
+
+  pointer-events: none;
+}
+
+.notebook-paper::after {
+  content: "";
+
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  bottom: 18px;
+
+  width: 7px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.04),
+      rgba(255, 255, 255, 0.6),
+      rgba(0, 0, 0, 0.04)
+    );
+
+  border-radius: 999px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   SPIRAL BINDING
+========================================================= */
+
+.notebook-spiral {
+  position: absolute;
+  top: 22px;
+  left: -25px;
+  bottom: 22px;
+
+  width: 65px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  z-index: 6;
+
+  pointer-events: none;
+}
+
+.notebook-spiral span {
+  position: relative;
+
+  width: 62px;
+  height: 25px;
+
+  border:
+    6px solid
+    #4a4d5f;
+
+  border-right-color: transparent;
+
+  border-radius:
+    20px
+    0
+    0
+    20px;
+
+  background: transparent;
+
+  filter:
+    drop-shadow(
+      0 3px 2px
+      rgba(0, 0, 0, 0.2)
+    );
+}
+
+.notebook-spiral span::after {
+  content: "";
+
+  position: absolute;
+  top: 3px;
+  right: -7px;
+
+  width: 12px;
+  height: 12px;
+
+  background: #c8c3b7;
+
+  border:
+    3px solid
+    #555867;
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   MISSION TABS
+========================================================= */
+
+.notebook-tabs {
+  position: relative;
+  z-index: 4;
+
+  margin:
+    0
+    -18px
+    20px;
+
+  padding:
+    0
+    26px;
+
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+
+  border-bottom:
+    3px solid
+    rgba(82, 72, 136, 0.17);
+}
+
+.notebook-tab {
+  min-width: 125px;
+  min-height: 52px;
+  padding:
+    12px
+    18px;
+
+  border:
+    3px solid
+    transparent;
+
+  border-bottom: 0;
+
+  border-radius:
+    16px
+    16px
+    0
+    0;
+
+  cursor: pointer;
+
+  color: #493976;
+
+  font-weight: 900;
+
+  transform-origin: bottom;
+
+  transition:
+    transform
+    0.18s ease,
+    filter
+    0.18s ease;
+}
+
+.notebook-tab:hover {
+  transform:
+    translateY(-3px);
+}
+
+.identity-tab {
+  background: #fff3a6;
+
+  border-color: #dcbf43;
+}
+
+.password-tab {
+  background: #d9eaff;
+
+  border-color: #6da4d9;
+}
+
+.notebook-tab.active {
+  min-height: 60px;
+
+  transform:
+    translateY(3px);
+
+  filter:
+    drop-shadow(
+      0 -4px 5px
+      rgba(45, 43, 87, 0.08)
+    );
+}
+
+.identity-tab.active {
+  background: #fff8ca;
+}
+
+.password-tab.active {
+  background: #e8f2ff;
+}
+
+
+/* =========================================================
+   NOTEBOOK PAGE CONTENT
+========================================================= */
+
+.notebook-page {
+  position: relative;
+  z-index: 3;
+
+  padding:
+    24px
+    12px
+    10px;
+}
+
+.notebook-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin-bottom: 28px;
+  padding:
+    4px
+    8px
+    20px;
+
+  border-bottom:
+    3px dashed
+    rgba(107, 97, 158, 0.32);
+}
+
+.page-number {
+  margin: 0 0 4px;
+
+  color: #d04f68;
+
+  font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.notebook-page-header h2 {
+  margin: 0;
+
+  color: #2f2960;
+
+  font-family:
+    "Comic Sans MS",
+    "Segoe Print",
+    cursive;
+
+  font-size:
+    clamp(
+      1.9rem,
+      4vw,
+      2.7rem
+    );
+
+  line-height: 1.1;
+}
+
+.notebook-page-header p:last-child {
+  max-width: 760px;
+  margin: 12px 0 0;
+
+  color: #2b3e5d;
+
+  line-height: 1.65;
+}
+
+.mission-status {
+  margin: 0;
+}
+
+.sticky-status {
+  flex: 0 0 auto;
+
+  min-width: 145px;
+  padding:
+    13px
+    18px;
+
+  background: #fff08e;
+
+  border:
+    2px solid
+    #d5b933;
+
+  box-shadow:
+    0 7px 12px
+    rgba(81, 71, 31, 0.12);
+
+  color: #594b12;
+
+  font-family:
+    "Comic Sans MS",
+    "Segoe Print",
+    cursive;
+
+  font-weight: 900;
+  text-align: center;
+
+  transform:
+    rotate(1.4deg);
+}
+
+.password-status {
+  background: #cfe7ff;
+
+  border-color: #69a0d5;
+
+  color: #245179;
+
+  transform:
+    rotate(-1.4deg);
+}
+
+
+/* =========================================================
+   NOTEBOOK ENTRIES
+========================================================= */
+
+.notebook-entry {
+  position: relative;
+
+  margin-top: 28px;
+  padding:
+    24px
+    25px;
+
+  background:
+    rgba(255, 255, 255, 0.76);
+
+  border:
+    2px solid
+    rgba(117, 106, 162, 0.18);
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 9px 18px
+    rgba(58, 53, 96, 0.08);
+
+  backdrop-filter:
+    blur(2px);
+}
+
+.notebook-entry::after {
+  content: "";
+
+  position: absolute;
+  inset: 8px;
+
+  border:
+    1px dashed
+    rgba(114, 102, 158, 0.17);
+
+  border-radius: 12px;
+
+  pointer-events: none;
+}
+
+.notebook-entry > * {
+  position: relative;
+  z-index: 1;
+}
+
+.notebook-entry-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.notebook-entry-heading > span {
+  font-size: 1.75rem;
+}
+
+.notebook-entry-heading h3 {
+  margin: 0;
+
+  color: #3c316f;
+
+  font-family:
+    "Comic Sans MS",
+    "Segoe Print",
+    cursive;
+
+  font-size: 1.4rem;
+}
+
+.badge-entry {
+  background:
+    rgba(255, 251, 224, 0.88);
+}
+
+.notes-entry {
+  background:
+    rgba(245, 252, 255, 0.87);
+}
+
+.sticker-entry {
+  background:
+    rgba(255, 244, 253, 0.85);
+}
+
+.checklist-entry {
+  background:
+    rgba(243, 255, 246, 0.87);
+}
+
+
+/* =========================================================
+   BADGE LAYOUT
+========================================================= */
+
+.badge-paper-layout {
+  display: grid;
+  grid-template-columns:
+    190px
+    minmax(0, 1fr);
+
+  align-items: center;
+  gap: 30px;
+}
+
+.badge-tape-wrap {
+  position: relative;
+
+  min-height: 175px;
+
+  display: grid;
+  place-items: center;
+}
+
+.paper-tape {
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  width: 90px;
+  height: 30px;
+
+  background:
+    rgba(255, 231, 139, 0.75);
+
+  border:
+    1px solid
+    rgba(166, 132, 45, 0.2);
+
+  transform:
+    translateX(-50%)
+    rotate(-4deg);
+
+  box-shadow:
+    0 3px 4px
+    rgba(80, 65, 31, 0.08);
+
+  z-index: 2;
+}
+
+.password-tape {
+  background:
+    rgba(179, 221, 255, 0.78);
+
+  border-color:
+    rgba(66, 126, 175, 0.18);
+
+  transform:
+    translateX(-50%)
+    rotate(4deg);
+}
+
+.notebook-badge {
+  width: 140px;
+  height: 140px;
+
+  object-fit: contain;
+
+  transition:
+    opacity
+    0.2s ease,
+    filter
+    0.2s ease,
+    transform
+    0.2s ease;
+}
+
+.notebook-badge.locked {
+  opacity: 0.3;
+
+  filter:
+    grayscale(1)
+    drop-shadow(
+      0 8px 8px
+      rgba(35, 50, 77, 0.13)
+    );
+}
+
+.notebook-badge.earned {
+  opacity: 1;
+
+  filter:
+    drop-shadow(
+      0 12px 10px
+      rgba(125, 76, 255, 0.22)
+    );
+
+  transform:
+    rotate(-2deg)
+    scale(1.05);
+}
+
+.badge-paper-details p {
+  margin:
+    0
+    0
+    17px;
+
+  line-height: 1.65;
+}
+
+.mission-details-list {
+  margin: 0;
+
+  display: grid;
+  gap: 10px;
+}
+
+.mission-details-list > div {
+  display: grid;
+  grid-template-columns:
+    minmax(
+      120px,
+      0.7fr
+    )
+    minmax(
+      0,
+      1.3fr
+    );
+
+  gap: 14px;
+
+  padding:
+    10px
+    12px;
+
+  background:
+    rgba(255, 255, 255, 0.67);
+
+  border-left:
+    5px solid
+    #8d71d8;
+
+  border-radius:
+    4px
+    10px
+    10px
+    4px;
+}
+
+.mission-details-list dt {
+  color: #4f4671;
+
+  font-weight: 900;
+}
+
+.mission-details-list dd {
+  margin: 0;
+
+  color: #263b5d;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   HANDWRITTEN LEARNING NOTES
+========================================================= */
+
+.handwritten-list {
+  margin: 0;
+  padding-left: 30px;
+
+  color: #244461;
+
+  font-family:
+    "Comic Sans MS",
+    "Segoe Print",
+    cursive;
+
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.handwritten-list li {
+  padding-left: 6px;
+}
+
+.handwritten-list li::marker {
+  color: #da536c;
+
+  font-size: 1.1em;
+}
+
+
+/* =========================================================
+   STICKER BOOK
+========================================================= */
+
+.sticker-book {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(
+        110px,
+        1fr
+      )
+    );
+
+  gap: 17px;
+}
+
+.notebook-sticker {
+  position: relative;
+
+  min-height: 118px;
+  padding:
+    15px
+    10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff4a2,
+      #ffe776
+    );
+
+  border:
+    4px solid
+    #7d4cff;
+
+  border-radius:
+    47%
+    53%
+    45%
+    55% /
+    52%
+    45%
+    55%
+    48%;
+
+  color: #263653;
+
+  text-align: center;
+  font-size: 0.84rem;
+  font-weight: 900;
+
+  box-shadow:
+    0 8px 0
+    rgba(125, 76, 255, 0.15);
+
+  transform:
+    rotate(-1.5deg);
+}
+
+.notebook-sticker:nth-child(even) {
+  transform:
+    rotate(1.7deg);
+}
+
+.notebook-sticker:nth-child(3n) {
+  background:
+    linear-gradient(
+      145deg,
+      #d7f7ff,
+      #aeeaf7
+    );
+}
+
+.notebook-sticker-symbol {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.notebook-sticker.locked {
+  background: #edf1f6;
+
+  border-color: #b7c0cd;
+
+  color: #737d8d;
+
+  filter:
+    grayscale(1);
+
+  opacity: 0.7;
+
+  box-shadow:
+    0 8px 0
+    rgba(111, 120, 132, 0.12);
+}
+
+.empty-sticker-message {
+  grid-column:
+    1 / -1;
+
+  margin: 0;
+  padding: 20px;
+
+  background:
+    rgba(238, 232, 255, 0.8);
+
+  border:
+    2px dashed
+    #9c86d5;
+
+  border-radius: 14px;
+
+  color: #5d48a2;
+
+  text-align: center;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   PASSWORD MISSION CHECKLIST
+========================================================= */
+
+.mission-checklist {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap: 14px;
+}
+
+.checklist-item {
+  min-height: 100px;
+  padding:
+    15px
+    16px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  border:
+    2px solid
+    #ccd7c9;
+
+  border-radius: 14px;
+
+  transition:
+    background
+    0.2s ease,
+    border-color
+    0.2s ease,
+    transform
+    0.2s ease;
+}
+
+.checklist-item > span {
+  flex: 0 0 auto;
+
+  color: #8e95a0;
+
+  font-size: 1.6rem;
+}
+
+.checklist-item strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #34455f;
+}
+
+.checklist-item p {
+  margin: 0;
+
+  color: #52617a;
+
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.checklist-item.completed {
+  background:
+    linear-gradient(
+      135deg,
+      #e1fff0,
+      #d6fbff
+    );
+
+  border-color: #3abd7e;
+
+  transform:
+    rotate(-0.5deg);
+}
+
+.checklist-item.completed > span {
+  color: #23a567;
+}
+
+.checklist-item.current {
+  background:
+    linear-gradient(
+      135deg,
+      #fff7cd,
+      #fff0a8
+    );
+
+  border-color: #d3b13c;
+
+  box-shadow:
+    0 6px 0
+    rgba(193, 155, 32, 0.12);
+}
+
+
+/* =========================================================
+   NOTEBOOK ACTIONS
+========================================================= */
+
+.notebook-actions {
+  margin-top: 30px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.notebook-button {
+  min-height: 50px;
+  padding:
+    13px
+    24px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  font-weight: 900;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    transform
+    0.16s ease,
+    box-shadow
+    0.16s ease,
+    opacity
+    0.16s ease;
+}
+
+.notebook-button:hover {
+  transform:
+    translateY(-3px);
+}
+
+.primary-notebook-button {
+  background:
+    linear-gradient(
+      135deg,
+      #7d4cff,
+      #9e6cff
+    );
+
+  border:
+    3px solid
+    #5d35bd;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 0
+    #5630b3;
+}
+
+.primary-notebook-button:hover {
+  box-shadow:
+    0 5px 0
+    #5630b3;
+}
+
+.password-action-button {
+  background:
+    linear-gradient(
+      135deg,
+      #297ebd,
+      #3cbfd0
+    );
+
+  border-color: #236b9e;
+
+  box-shadow:
+    0 8px 0
+    #1f648f;
+}
+
+.password-action-button:hover {
+  box-shadow:
+    0 5px 0
+    #1f648f;
+}
+
+.replay-notebook-button {
+  background: #fff0a9;
+
+  border:
+    3px solid
+    #d3aa2d;
+
+  color: #554312;
+
+  box-shadow:
+    0 8px 0
+    #b88d18;
+}
+
+.replay-notebook-button:hover {
+  box-shadow:
+    0 5px 0
+    #b88d18;
+}
+
+.dialog-cancel-button {
+  background: #eef1f6;
+
+  border:
+    3px solid
+    #aeb7c4;
+
+  color: #36445a;
+
+  box-shadow:
+    0 7px 0
+    #9099a6;
+}
+
+
+/* =========================================================
+   REPLAY DIALOG
+========================================================= */
+
+.notebook-dialog {
+  width:
+    min(
+      520px,
+      calc(100% - 30px)
+    );
+
+  padding: 0;
+
+  overflow: hidden;
+
+  background: #fffef6;
+
+  border:
+    4px solid
+    #7d4cff;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 28px 80px
+    rgba(34, 30, 77, 0.35);
+}
+
+.notebook-dialog::backdrop {
+  background:
+    rgba(25, 29, 53, 0.66);
+
+  backdrop-filter:
+    blur(3px);
+}
+
+.notebook-dialog form {
+  padding:
+    30px
+    28px;
+
+  text-align: center;
+}
+
+.dialog-icon {
+  width: 76px;
+  height: 76px;
+  margin:
+    0 auto
+    15px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eee7ff,
+      #d7f5ff
+    );
+
+  border:
+    3px solid
+    #8b70d4;
+
+  border-radius: 22px;
+
+  font-size: 2.5rem;
+}
+
+.notebook-dialog h2 {
+  margin:
+    0
+    0
+    12px;
+
+  color: #392f6d;
+
+  font-family:
+    "Comic Sans MS",
+    "Segoe Print",
+    cursive;
+}
+
+.notebook-dialog p {
+  margin:
+    0
+    auto
+    24px;
+
+  max-width: 420px;
+
+  color: #43526b;
+
+  line-height: 1.6;
+}
+
+.dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+
+/* =========================================================
+   SMALL VISUAL STATUS HELPERS
+========================================================= */
+
+.mission-status.completed-status {
+  background: #d9f8e8;
+
+  border-color: #37b978;
+
+  color: #1b6845;
+}
+
+.mission-status.progress-status {
+  background: #fff1a8;
+
+  border-color: #d1ae31;
+
+  color: #574812;
+}
+
+.mission-status.not-started-status {
+  background: #edf0f5;
+
+  border-color: #aeb8c5;
+
+  color: #566274;
+}
+
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (
+  max-width: 950px
+) {
+  .navbar {
+    min-height: auto;
+    padding:
+      16px
+      0;
+
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .navbar-logo {
+    height: 78px;
+  }
+
+  .nav-links {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .notebook-cover {
+    grid-template-columns:
+      1fr;
+
+    padding:
+      34px
+      28px;
+
+    text-align: center;
+  }
+
+  .notebook-description {
+    margin-inline: auto;
+  }
+
+  .notebook-cover-stats {
+    justify-content: center;
+  }
+
+  .notebook-cover-mascot {
+    width: 190px;
+  }
+
+  .badge-paper-layout {
+    grid-template-columns:
+      1fr;
+
+    text-align: center;
+  }
+
+  .mission-details-list {
+    text-align: left;
+  }
+
+  .mission-checklist {
+    grid-template-columns:
+      1fr;
+  }
+}
+
+
+@media (
+  max-width: 720px
+) {
+  .notebook-main {
+    width:
+      min(
+        100% - 18px,
+        720px
+      );
+  }
+
+  .notebook-paper {
+    width:
+      calc(100% - 8px);
+
+    padding:
+      0
+      18px
+      40px
+      60px;
+
+    background-image:
+      linear-gradient(
+        to right,
+        transparent 0,
+        transparent 44px,
+        rgba(229, 88, 103, 0.58) 44px,
+        rgba(229, 88, 103, 0.58) 47px,
+        transparent 47px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 31px,
+        rgba(91, 157, 210, 0.26) 31px,
+        rgba(91, 157, 210, 0.26) 33px
+      );
+  }
+
+  .notebook-spiral {
+    left: -21px;
+
+    width: 46px;
+  }
+
+  .notebook-spiral span {
+    width: 45px;
+    height: 22px;
+
+    border-width: 5px;
+  }
+
+  .notebook-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sticky-status {
+    align-self: flex-start;
+  }
+
+  .mission-details-list > div {
+    grid-template-columns:
+      1fr;
+    gap: 4px;
+  }
+
+  .notebook-actions {
+    display: grid;
+    grid-template-columns:
+      1fr;
+  }
+
+  .notebook-button {
+    width: 100%;
+  }
+}
+
+
+@media (
+  max-width: 520px
+) {
+  .navbar {
+    width:
+      min(
+        100% - 20px,
+        500px
+      );
+  }
+
+  .navbar-logo {
+    height: 66px;
+  }
+
+  .nav-links {
+    gap:
+      12px
+      17px;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem;
+  }
+
+  .notebook-cover {
+    min-height: 250px;
+    padding:
+      27px
+      18px;
+
+    border-radius:
+      0
+      0
+      28px
+      28px;
+  }
+
+  .notebook-cover-stats {
+    display: grid;
+    grid-template-columns:
+      1fr;
+  }
+
+  .cover-stat {
+    justify-content: center;
+  }
+
+  .notebook-paper {
+    margin-top: 26px;
+
+    padding:
+      0
+      10px
+      34px
+      45px;
+
+    border-radius:
+      14px
+      22px
+      22px
+      14px;
+
+    background-image:
+      linear-gradient(
+        to right,
+        transparent 0,
+        transparent 34px,
+        rgba(229, 88, 103, 0.55) 34px,
+        rgba(229, 88, 103, 0.55) 37px,
+        transparent 37px
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 31px,
+        rgba(91, 157, 210, 0.24) 31px,
+        rgba(91, 157, 210, 0.24) 33px
+      );
+  }
+
+  .notebook-spiral {
+    left: -18px;
+
+    width: 36px;
+  }
+
+  .notebook-spiral span {
+    width: 36px;
+    height: 20px;
+
+    border-width: 4px;
+  }
+
+  .notebook-tabs {
+    margin:
+      0
+      -3px
+      17px;
+
+    padding:
+      0
+      5px;
+
+    gap: 5px;
+  }
+
+  .notebook-tab {
+    min-width: 0;
+    flex: 1;
+
+    padding:
+      10px
+      7px;
+
+    font-size: 0.84rem;
+  }
+
+  .notebook-page {
+    padding:
+      18px
+      4px
+      8px;
+  }
+
+  .notebook-entry {
+    padding:
+      20px
+      14px;
+  }
+
+  .notebook-entry-heading {
+    align-items: flex-start;
+  }
+
+  .badge-tape-wrap {
+    min-height: 150px;
+  }
+
+  .notebook-badge {
+    width: 120px;
+    height: 120px;
+  }
+
+  .handwritten-list {
+    padding-left: 24px;
+
+    font-size: 0.93rem;
+    line-height: 1.85;
+  }
+
+  .sticker-book {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+  }
+
+  .dialog-actions {
+    display: grid;
+    grid-template-columns:
+      1fr;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .nav-links a,
+  .notebook-tab,
+  .notebook-button,
+  .notebook-badge,
+  .checklist-item {
+    transition: none;
+  }
+
+  .notebook-tab:hover,
+  .notebook-button:hover,
+  .notebook-badge.earned {
+    transform: none;
+  }
+}
