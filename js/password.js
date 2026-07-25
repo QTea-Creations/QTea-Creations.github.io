@@ -2,15 +2,23 @@
 
 /* =========================================================
    SAFETII NET — PASSWORD SAFE KEEPER
-   Mission 2 Main Controller
+   MISSION 2 MAIN CONTROLLER
 
-   This file controls:
+   Controls:
+
    - Five Password Vault challenges
    - Twenty-question final test
-   - Final score
-   - Badge completion
-   - One-time mission reward
+   - Final score and passing requirement
+   - Password Safe Keeper badge
+   - One-time mission points
    - Mission replay
+
+   Curriculum areas:
+
+   1. Password strength
+   2. Password attacks
+   3. Two-factor authentication
+   4. Account defense
 ========================================================= */
 
 (() => {
@@ -25,7 +33,7 @@
       "function"
   ) {
     console.error(
-      "password.js could not start. Check that password-data.js, password-core.js, and password-activities.js load first."
+      "password.js could not start. Check that the Mission 2 data, core, and activities files load first."
     );
 
     return;
@@ -62,8 +70,12 @@
      GENERAL HELPERS
   ===================================================== */
 
-  function getArray(value) {
-    return Array.isArray(value)
+  function getArray(
+    value
+  ) {
+    return Array.isArray(
+      value
+    )
       ? value
       : [];
   }
@@ -111,22 +123,7 @@
   }
 
 
-  function setProgress(
-    id,
-    value
-  ) {
-    mission.setText(
-      id,
-      Math.max(
-        0,
-        Number(value) ||
-          0
-      )
-    );
-  }
-
-
-  function disableButtonGroup(
+  function disableButtons(
     selector
   ) {
     document
@@ -139,6 +136,37 @@
             true;
         }
       );
+  }
+
+
+  function enableButtons(
+    selector
+  ) {
+    document
+      .querySelectorAll(
+        selector
+      )
+      .forEach(
+        (button) => {
+          button.disabled =
+            false;
+        }
+      );
+  }
+
+
+  function setCounter(
+    id,
+    value
+  ) {
+    mission.setText(
+      id,
+      Math.max(
+        0,
+        Number(value) ||
+          0
+      )
+    );
   }
 
 
@@ -165,30 +193,25 @@
       const challenges =
         getVaultChallenges();
 
-      const challenge =
-        getCurrentVaultChallenge();
+      if (
+        state.vaultComplete
+      ) {
+        showCompletedVault();
 
-      /*
-        All five doors have already been completed.
-      */
+        return;
+      }
 
       if (
-        state.vaultComplete ||
         state.vaultIndex >=
-          challenges.length
+        challenges.length
       ) {
-        finishVaultPractice();
+        completeVaultPractice();
 
         return;
       }
 
-      if (!challenge) {
-        console.error(
-          "The current Password Vault challenge could not be found."
-        );
-
-        return;
-      }
+      const challenge =
+        getCurrentVaultChallenge();
 
       const answerGrid =
         mission.byId(
@@ -201,11 +224,12 @@
         );
 
       if (
+        !challenge ||
         !answerGrid ||
         !nextButton
       ) {
         console.error(
-          "Password Vault HTML elements are missing."
+          "Password Vault challenge data or HTML elements are missing."
         );
 
         return;
@@ -216,7 +240,8 @@
 
       mission.setText(
         "vaultDoorNumber",
-        state.vaultIndex + 1
+        state.vaultIndex +
+          1
       );
 
       mission.setText(
@@ -229,7 +254,7 @@
         challenge.text
       );
 
-      setProgress(
+      setCounter(
         "vaultDoorsSecured",
         state.vaultDoorsSecured
       );
@@ -262,7 +287,9 @@
             "vault-answer-button";
 
           button.dataset.answerIndex =
-            String(answerIndex);
+            String(
+              answerIndex
+            );
 
           button.textContent =
             answer;
@@ -294,7 +321,7 @@
       );
 
       mission.setMemeTip(
-        `Vault Door ${state.vaultIndex + 1}: choose the safest answer.`,
+        `Vault Door ${state.vaultIndex + 1}: apply what you learned about passwords, attacks, two-factor authentication, and account defense.`,
         "thinking"
       );
     };
@@ -317,13 +344,6 @@
       return;
     }
 
-    state.vaultAnswered =
-      true;
-
-    disableButtonGroup(
-      ".vault-answer-button"
-    );
-
     const correct =
       selectedIndex ===
       challenge.correctIndex;
@@ -333,55 +353,64 @@
         ".vault-answer-button"
       );
 
-    buttons.forEach(
-      (
-        button,
-        index
-      ) => {
-        if (
-          index ===
-          challenge.correctIndex
-        ) {
-          button.classList.add(
-            "correct"
-          );
-        }
-
-        if (
-          index ===
-            selectedIndex &&
-          !correct
-        ) {
-          button.classList.add(
-            "incorrect"
-          );
-        }
-      }
-    );
-
     const vaultDoor =
       mission.byId(
         "passwordVaultDoor"
       );
 
+
+    /* -------------------------------------------------
+       CORRECT ANSWER
+
+       The vault door opens only after a correct answer.
+    ------------------------------------------------- */
+
     if (correct) {
-      state.vaultDoorsSecured =
-        Math.max(
-          state.vaultDoorsSecured,
-          state.vaultIndex + 1
-        );
+      state.vaultAnswered =
+        true;
+
+      disableButtons(
+        ".vault-answer-button"
+      );
+
+      buttons.forEach(
+        (
+          button,
+          index
+        ) => {
+          if (
+            index ===
+            challenge.correctIndex
+          ) {
+            button.classList.add(
+              "correct"
+            );
+          }
+        }
+      );
 
       selectedButton?.classList.add(
         "correct"
       );
 
-      vaultDoor?.classList.add(
-        "vault-door-open"
-      );
+      state.vaultDoorsSecured =
+        Math.max(
+          state.vaultDoorsSecured,
+          state.vaultIndex +
+            1
+        );
 
-      setProgress(
+      setCounter(
         "vaultDoorsSecured",
         state.vaultDoorsSecured
+      );
+
+      vaultDoor?.classList.remove(
+        "vault-door-wrong"
+      );
+
+      vaultDoor?.classList.add(
+        "vault-door-open"
       );
 
       mission.setFeedback({
@@ -396,54 +425,80 @@
       });
 
       mission.setMemeTip(
-        "Excellent! That vault door is secure.",
+        "Excellent. The vault door is secure.",
         "congrats"
       );
-    } else {
-      selectedButton?.classList.add(
-        "incorrect"
-      );
 
-      vaultDoor?.classList.add(
-        "vault-door-wrong"
-      );
+      const nextButton =
+        mission.byId(
+          "nextVaultDoor"
+        );
 
-      mission.setFeedback({
-        id:
-          "vaultChallengeFeedback",
+      if (nextButton) {
+        nextButton.textContent =
+          state.vaultIndex >=
+            getVaultChallenges()
+              .length -
+              1
+            ? "Finish Vault Practice"
+            : "Continue to Next Door";
 
-        message:
-          `Review the safer answer. ${challenge.explanation}`,
+        mission.showElement(
+          nextButton
+        );
+      }
 
-        correct:
-          false
-      });
+      saveProgressSoon();
 
-      mission.setMemeTip(
-        "That choice could leave the account vulnerable. Read the explanation before continuing.",
-        "wrong"
-      );
+      return;
     }
 
-    const nextButton =
-      mission.byId(
-        "nextVaultDoor"
-      );
 
-    if (nextButton) {
-      nextButton.textContent =
-        state.vaultIndex >=
-          getVaultChallenges().length -
-            1
-          ? "Finish Vault Practice"
-          : "Continue to Next Door";
+    /* -------------------------------------------------
+       INCORRECT ANSWER
 
-      mission.showElement(
-        nextButton
-      );
-    }
+       The student may try again. The door remains locked.
+    ------------------------------------------------- */
 
-    saveProgressSoon();
+    selectedButton.classList.add(
+      "incorrect"
+    );
+
+    selectedButton.disabled =
+      true;
+
+    vaultDoor?.classList.remove(
+      "vault-door-open"
+    );
+
+    vaultDoor?.classList.add(
+      "vault-door-wrong"
+    );
+
+    mission.setFeedback({
+      id:
+        "vaultChallengeFeedback",
+
+      message:
+        "That response would not fully secure this vault door. Review the choices and try again.",
+
+      correct:
+        false
+    });
+
+    mission.setMemeTip(
+      "The door is still locked. Apply the password-safety rule and try another answer.",
+      "wrong"
+    );
+
+    window.setTimeout(
+      () => {
+        vaultDoor?.classList.remove(
+          "vault-door-wrong"
+        );
+      },
+      600
+    );
   }
 
 
@@ -451,6 +506,11 @@
     if (
       !state.vaultAnswered
     ) {
+      mission.setMemeTip(
+        "Select the correct response before moving to the next vault door.",
+        "thinking"
+      );
+
       return;
     }
 
@@ -459,9 +519,10 @@
 
     if (
       state.vaultIndex >=
-      getVaultChallenges().length
+      getVaultChallenges()
+        .length
     ) {
-      finishVaultPractice();
+      completeVaultPractice();
 
       return;
     }
@@ -472,7 +533,7 @@
   }
 
 
-  function finishVaultPractice() {
+  function completeVaultPractice() {
     state.vaultComplete =
       true;
 
@@ -484,7 +545,7 @@
       getVaultChallenges()
         .length;
 
-    setProgress(
+    setCounter(
       "vaultDoorsSecured",
       state.vaultDoorsSecured
     );
@@ -515,11 +576,79 @@
     });
 
     mission.setMemeTip(
-      "All five doors are secure. You are ready for the Password Safe Keeper final test!",
+      "You secured all five vault doors. The final inspection is ready.",
       "congrats"
     );
 
     saveProgressSoon();
+  }
+
+
+  function showCompletedVault() {
+    setCounter(
+      "vaultDoorsSecured",
+      getVaultChallenges()
+        .length
+    );
+
+    mission.setText(
+      "vaultChallengeTitle",
+      "All Password Vault Doors Secured"
+    );
+
+    mission.setText(
+      "vaultChallengeText",
+      "You completed the Password Vault practice and may continue to the final inspection."
+    );
+
+    const answerGrid =
+      mission.byId(
+        "vaultAnswerGrid"
+      );
+
+    if (answerGrid) {
+      answerGrid.innerHTML =
+        "";
+    }
+
+    mission.hideElement(
+      mission.byId(
+        "nextVaultDoor"
+      )
+    );
+
+    mission.setButtonState({
+      id:
+        "goPasswordFinalTest",
+
+      unlocked:
+        true,
+
+      unlockedText:
+        "Begin Final Vault Inspection 🛡️",
+
+      lockedText:
+        "Secure All 5 Doors to Unlock the Final Test"
+    });
+
+    mission.setFeedback({
+      id:
+        "vaultChallengeFeedback",
+
+      message:
+        "Vault Practice complete.",
+
+      correct:
+        true
+    });
+
+    mission
+      .byId(
+        "passwordVaultDoor"
+      )
+      ?.classList.add(
+        "vault-door-open"
+      );
   }
 
 
@@ -528,7 +657,7 @@
       !state.vaultComplete
     ) {
       mission.setMemeTip(
-        "Secure all five Password Vault doors before beginning the final test.",
+        "Secure all five Password Vault doors before beginning the final inspection.",
         "thinking"
       );
 
@@ -542,7 +671,7 @@
     );
 
     mission.setMemeTip(
-      "The final inspection contains 20 questions. Score at least 80% to earn the badge.",
+      "The final inspection contains 20 questions about password strength, attacks, two-factor authentication, and account defense. Score at least 80 percent to earn the badge.",
       "welcome"
     );
 
@@ -569,11 +698,6 @@
 
 
   function beginPasswordFinalTest() {
-    /*
-      Starting from the introduction begins a fresh
-      test attempt.
-    */
-
     state.testIndex =
       0;
 
@@ -589,6 +713,9 @@
     state.badgeEarned =
       false;
 
+    state.missionCompleted =
+      false;
+
     mission.showSection(
       "passwordTestZone"
     );
@@ -596,7 +723,7 @@
     mission.loadPasswordTestQuestion();
 
     mission.setMemeTip(
-      "Read every answer carefully. Choose the safest response.",
+      "Read each question carefully and choose the safest cybersecurity response.",
       "welcome"
     );
 
@@ -608,10 +735,6 @@
     function loadPasswordTestQuestion() {
       const questions =
         getTestQuestions();
-
-      /*
-        A restored test might already be at the end.
-      */
 
       if (
         state.testIndex >=
@@ -641,7 +764,7 @@
         !nextButton
       ) {
         console.error(
-          "Password final-test elements are missing."
+          "Password final-test data or HTML elements are missing."
         );
 
         return;
@@ -652,7 +775,8 @@
 
       mission.setText(
         "passwordTestNumber",
-        state.testIndex + 1
+        state.testIndex +
+          1
       );
 
       mission.setText(
@@ -694,7 +818,9 @@
             "password-test-choice";
 
           button.dataset.answerIndex =
-            String(choiceIndex);
+            String(
+              choiceIndex
+            );
 
           button.textContent =
             choice;
@@ -737,7 +863,7 @@
     state.testAnswered =
       true;
 
-    disableButtonGroup(
+    disableButtons(
       ".password-test-choice"
     );
 
@@ -796,7 +922,7 @@
       });
 
       mission.setMemeTip(
-        "Correct! That choice protects the password or account.",
+        "Correct. That answer applies the safer cybersecurity practice.",
         "congrats"
       );
     } else {
@@ -809,14 +935,14 @@
           "passwordTestFeedback",
 
         message:
-          `Review this one carefully. ${question.explanation}`,
+          `Review this rule: ${question.explanation}`,
 
         correct:
           false
       });
 
       mission.setMemeTip(
-        "Read the explanation and remember the safer response.",
+        "Study the highlighted answer and explanation before continuing.",
         "wrong"
       );
     }
@@ -829,7 +955,8 @@
     if (nextButton) {
       nextButton.textContent =
         state.testIndex >=
-          getTestQuestions().length -
+          getTestQuestions()
+            .length -
             1
           ? "View Final Results"
           : "Next Question";
@@ -855,7 +982,8 @@
 
     if (
       state.testIndex >=
-      getTestQuestions().length
+      getTestQuestions()
+        .length
     ) {
       finishPasswordFinalTest();
 
@@ -894,27 +1022,29 @@
     state.finalScore =
       calculateFinalScore();
 
-    const passed =
+    if (
       state.finalScore >=
-      PASSING_PERCENTAGE;
-
-    if (passed) {
+      PASSING_PERCENTAGE
+    ) {
       completePasswordMission();
-    } else {
-      showFailedTestResult();
+
+      return;
     }
+
+    showFailedTestResult();
   }
 
 
   /* =====================================================
-     PASSING RESULT AND BADGE
+     POINTS AND BADGE
   ===================================================== */
 
   function rewardAlreadyAwarded() {
     return (
       localStorage.getItem(
         REWARD_KEY
-      ) === "true"
+      ) ===
+      "true"
     );
   }
 
@@ -945,34 +1075,7 @@
   }
 
 
-  function completePasswordMission() {
-    state.badgeEarned =
-      true;
-
-    state.missionCompleted =
-      true;
-
-    state.testIndex =
-      getTestQuestions()
-        .length;
-
-    awardMissionPoints();
-
-    localStorage.setItem(
-      COMPLETED_KEY,
-      "true"
-    );
-
-    localStorage.setItem(
-      BADGE_KEY,
-      "true"
-    );
-
-    /*
-      A general badge list can be read by the
-      notebook or dashboard later.
-    */
-
+  function saveBadge() {
     const badgeName =
       "Password Safe Keeper";
 
@@ -988,32 +1091,62 @@
         );
 
       earnedBadges =
-        Array.isArray(stored)
+        Array.isArray(
+          stored
+        )
           ? stored
           : [];
     } catch (error) {
       console.error(
-        "Could not read Safetii Net badges:",
+        "Could not read the Safetii Net badge list:",
         error
       );
     }
 
     if (
-      !earnedBadges.includes(
+      earnedBadges.includes(
         badgeName
       )
     ) {
-      earnedBadges.push(
-        badgeName
-      );
-
-      localStorage.setItem(
-        "safetiiBadges",
-        JSON.stringify(
-          earnedBadges
-        )
-      );
+      return;
     }
+
+    earnedBadges.push(
+      badgeName
+    );
+
+    localStorage.setItem(
+      "safetiiBadges",
+      JSON.stringify(
+        earnedBadges
+      )
+    );
+  }
+
+
+  function completePasswordMission() {
+    state.badgeEarned =
+      true;
+
+    state.missionCompleted =
+      true;
+
+    state.testIndex =
+      getTestQuestions()
+        .length;
+
+    awardMissionPoints();
+    saveBadge();
+
+    localStorage.setItem(
+      COMPLETED_KEY,
+      "true"
+    );
+
+    localStorage.setItem(
+      BADGE_KEY,
+      "true"
+    );
 
     mission.renderPasswordMissionResult();
 
@@ -1030,12 +1163,28 @@
   }
 
 
+  /* =====================================================
+     RESULT SCREEN
+  ===================================================== */
+
   mission.renderPasswordMissionResult =
     function renderPasswordMissionResult() {
       const passed =
+        state.badgeEarned &&
         state.finalScore >=
-        PASSING_PERCENTAGE &&
-        state.badgeEarned;
+          PASSING_PERCENTAGE;
+
+      mission.setText(
+        "passwordFinalScore",
+        `${Math.round(
+          state.finalScore
+        )}%`
+      );
+
+      mission.setText(
+        "passwordPointsEarned",
+        state.missionPointsEarned
+      );
 
       const title =
         mission.byId(
@@ -1057,17 +1206,6 @@
           "replayPasswordMission"
         );
 
-      mission.setText(
-        "passwordFinalScore",
-        `${Math.round(
-          state.finalScore
-        )}%`
-      );
-
-      mission.setText(
-        "passwordPointsEarned",
-        state.missionPointsEarned
-      );
 
       if (passed) {
         if (title) {
@@ -1077,7 +1215,7 @@
 
         if (message) {
           message.textContent =
-            `You answered ${state.testCorrect} of ${getTestQuestions().length} questions correctly. You proved that you can recognize stronger passwords, avoid password reuse, protect secret codes, and respond to account threats.`;
+            `You answered ${state.testCorrect} of ${getTestQuestions().length} questions correctly. You demonstrated password-strength analysis, recognized common password attacks, built two-factor protection, and defended threatened accounts.`;
         }
 
         badge?.classList.remove(
@@ -1092,6 +1230,7 @@
         return;
       }
 
+
       if (title) {
         title.textContent =
           "More Password Training Needed";
@@ -1099,7 +1238,7 @@
 
       if (message) {
         message.textContent =
-          `You answered ${state.testCorrect} of ${getTestQuestions().length} questions correctly and scored ${state.finalScore}%. Review the explanations and try the final inspection again. You need 80% to earn the badge.`;
+          `You answered ${state.testCorrect} of ${getTestQuestions().length} questions correctly and scored ${state.finalScore}%. Review the training and try the final inspection again. You need 80% to earn the badge.`;
       }
 
       badge?.classList.add(
@@ -1112,10 +1251,6 @@
       }
     };
 
-
-  /* =====================================================
-     FAILED TEST RESULT
-  ===================================================== */
 
   function showFailedTestResult() {
     state.badgeEarned =
@@ -1144,13 +1279,17 @@
     );
 
     mission.setMemeTip(
-      `You scored ${state.finalScore}%. Review the explanations and try again. You need 80% to earn the badge.`,
+      `You scored ${state.finalScore}%. Review the curriculum and try again. You need 80% to earn the badge.`,
       "thinking"
     );
 
     saveProgressSoon();
   }
 
+
+  /* =====================================================
+     RETRY AND REPLAY
+  ===================================================== */
 
   function retryFailedFinalTest() {
     state.testIndex =
@@ -1176,7 +1315,7 @@
     );
 
     mission.setMemeTip(
-      "Take another look at the safety rules, then begin a fresh final-test attempt.",
+      "Begin a fresh final-test attempt when you are ready.",
       "welcome"
     );
 
@@ -1184,16 +1323,7 @@
   }
 
 
-  /* =====================================================
-     FULL MISSION REPLAY
-  ===================================================== */
-
   function replayPasswordMission() {
-    /*
-      A failed test uses this button as a test retry.
-      A completed mission uses it as a full replay.
-    */
-
     if (
       !state.badgeEarned
     ) {
@@ -1205,21 +1335,19 @@
     const confirmed =
       window.confirm(
         "Replay Password Safe Keeper from the beginning?\n\n" +
-        "Your mission progress will reset. Previously earned reward points will not be awarded again."
+        "Mission progress will reset. Previously earned points will not be awarded again."
       );
 
     if (!confirmed) {
       return;
     }
 
-    const keysToReset = [
+    [
       "safetiiPasswordProgress",
       "passwordMissionCompleted",
       "passwordBadgeEarned",
       "passwordReplayRequested"
-    ];
-
-    keysToReset.forEach(
+    ].forEach(
       (key) => {
         localStorage.removeItem(
           key
@@ -1228,8 +1356,8 @@
     );
 
     /*
-      Do not remove passwordMissionRewardAwarded.
-      That prevents repeated point farming.
+      Keep passwordMissionRewardAwarded so students
+      cannot earn the same 100 points repeatedly.
     */
 
     localStorage.setItem(
@@ -1243,10 +1371,6 @@
   }
 
 
-  /* =====================================================
-     REPLAY REQUEST HANDLING
-  ===================================================== */
-
   function checkReplayRequest() {
     const parameters =
       new URLSearchParams(
@@ -1256,38 +1380,31 @@
     const replayRequested =
       parameters.get(
         "replay"
-      ) === "true" ||
+      ) ===
+        "true" ||
       localStorage.getItem(
         "passwordReplayRequested"
-      ) === "true";
+      ) ===
+        "true";
 
     if (!replayRequested) {
       return;
     }
 
-    localStorage.removeItem(
-      "safetiiPasswordProgress"
-    );
-
-    localStorage.removeItem(
-      "passwordMissionCompleted"
-    );
-
-    localStorage.removeItem(
-      "passwordBadgeEarned"
-    );
-
-    localStorage.removeItem(
+    [
+      "safetiiPasswordProgress",
+      "passwordMissionCompleted",
+      "passwordBadgeEarned",
       "passwordReplayRequested"
+    ].forEach(
+      (key) => {
+        localStorage.removeItem(
+          key
+        );
+      }
     );
 
     mission.resetState();
-
-    /*
-      The typed practice password is also cleared
-      by resetPageDisplay().
-    */
-
     mission.resetPageDisplay();
 
     state.currentSection =
@@ -1328,19 +1445,13 @@
 
 
   /* =====================================================
-     CONTROLLER INITIALIZATION
+     INITIALIZATION
   ===================================================== */
 
   function initializeMainController() {
     checkReplayRequest();
 
     bindMainEvents();
-
-    /*
-      Keep all sections hidden except the introduction
-      until password-progress.js restores the correct
-      saved location.
-    */
 
     if (
       !state.missionStarted
@@ -1367,7 +1478,7 @@
     );
 
     console.log(
-      "Password Safe Keeper main controller loaded."
+      "Password Safe Keeper revised main controller loaded."
     );
   }
 
