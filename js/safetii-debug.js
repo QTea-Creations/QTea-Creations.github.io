@@ -1615,4 +1615,679 @@
   } else {
     initializeDebugger();
   }
+
+   /* =========================================================
+   SAFETII NET — DETAILED ARCADE DIAGNOSTICS
+========================================================= */
+
+function runDetailedArcadeDiagnostics() {
+  const diagnosticResults = {
+    problems: [],
+    warnings: [],
+    passed: [],
+    details: []
+  };
+
+  const addProblem = (message, details = "") => {
+    diagnosticResults.problems.push({
+      message,
+      details
+    });
+  };
+
+  const addWarning = (message, details = "") => {
+    diagnosticResults.warnings.push({
+      message,
+      details
+    });
+  };
+
+  const addPassed = (message, details = "") => {
+    diagnosticResults.passed.push({
+      message,
+      details
+    });
+  };
+
+  const addDetail = (label, value) => {
+    diagnosticResults.details.push({
+      label,
+      value
+    });
+  };
+
+  /* -------------------------------------------------------
+     PAGE INFORMATION
+  ------------------------------------------------------- */
+
+  addDetail(
+    "Page path",
+    window.location.pathname
+  );
+
+  addDetail(
+    "Page title",
+    document.title || "No title"
+  );
+
+  addDetail(
+    "Viewport",
+    `${window.innerWidth} × ${window.innerHeight}`
+  );
+
+  addDetail(
+    "Device pixel ratio",
+    String(window.devicePixelRatio || 1)
+  );
+
+  addDetail(
+    "Online status",
+    navigator.onLine ? "Online" : "Offline"
+  );
+
+  addDetail(
+    "Document ready state",
+    document.readyState
+  );
+
+  /* -------------------------------------------------------
+     INVALID HTML STRUCTURE
+  ------------------------------------------------------- */
+
+  const body = document.body;
+  const head = document.head;
+
+  if (body) {
+    addPassed("The page contains a <body> element.");
+  } else {
+    addProblem("The page is missing its <body> element.");
+  }
+
+  if (head) {
+    addPassed("The page contains a <head> element.");
+  } else {
+    addProblem("The page is missing its <head> element.");
+  }
+
+  const bodyBeforeHead =
+    document.documentElement &&
+    [...document.documentElement.children].findIndex(
+      (element) => element.tagName === "BODY"
+    ) <
+    [...document.documentElement.children].findIndex(
+      (element) => element.tagName === "HEAD"
+    );
+
+  if (bodyBeforeHead) {
+    addProblem(
+      "The <body> appears before the <head>.",
+      "Check for misplaced HTML between </head> and <body>."
+    );
+  }
+
+  const invalidHeadChildren = head
+    ? [...head.children].filter((element) => {
+        return ![
+          "BASE",
+          "LINK",
+          "META",
+          "NOSCRIPT",
+          "SCRIPT",
+          "STYLE",
+          "TEMPLATE",
+          "TITLE"
+        ].includes(element.tagName);
+      })
+    : [];
+
+  if (invalidHeadChildren.length) {
+    addProblem(
+      "Visible page elements were found inside <head>.",
+      invalidHeadChildren
+        .map((element) => {
+          return `<${element.tagName.toLowerCase()}>`;
+        })
+        .join(", ")
+    );
+  } else {
+    addPassed(
+      "No visible page elements were found inside <head>."
+    );
+  }
+
+  /* -------------------------------------------------------
+     DUPLICATE IDS
+  ------------------------------------------------------- */
+
+  const allIdElements = [
+    ...document.querySelectorAll("[id]")
+  ];
+
+  const idCounts = {};
+
+  allIdElements.forEach((element) => {
+    idCounts[element.id] =
+      (idCounts[element.id] || 0) + 1;
+  });
+
+  const duplicateIds = Object
+    .entries(idCounts)
+    .filter(([, count]) => count > 1);
+
+  if (duplicateIds.length) {
+    duplicateIds.forEach(([id, count]) => {
+      addProblem(
+        `Duplicate ID: #${id}`,
+        `${count} elements use this ID.`
+      );
+    });
+  } else {
+    addPassed("No duplicate IDs detected.");
+  }
+
+  /* -------------------------------------------------------
+     BROKEN IMAGES
+  ------------------------------------------------------- */
+
+  const images = [
+    ...document.querySelectorAll("img")
+  ];
+
+  if (!images.length) {
+    addWarning("No images were found on this page.");
+  }
+
+  images.forEach((image) => {
+    const source =
+      image.currentSrc ||
+      image.getAttribute("src") ||
+      "";
+
+    if (!source) {
+      addWarning(
+        "An image has no source.",
+        image.outerHTML.slice(0, 180)
+      );
+
+      return;
+    }
+
+    if (
+      image.complete &&
+      image.naturalWidth === 0
+    ) {
+      addProblem(
+        "Broken image detected.",
+        source
+      );
+    }
+  });
+
+  const workingImages = images.filter((image) => {
+    return (
+      image.complete &&
+      image.naturalWidth > 0
+    );
+  });
+
+  addDetail(
+    "Images",
+    `${workingImages.length}/${images.length} loaded`
+  );
+
+  /* -------------------------------------------------------
+     LINKS
+  ------------------------------------------------------- */
+
+  const links = [
+    ...document.querySelectorAll("a[href]")
+  ];
+
+  links.forEach((link) => {
+    const href = link.getAttribute("href");
+
+    if (!href || href.trim() === "#") {
+      addWarning(
+        "Empty or placeholder link found.",
+        link.textContent.trim() || link.outerHTML.slice(0, 120)
+      );
+
+      return;
+    }
+
+    if (
+      href.includes("././") ||
+      href.includes(".././")
+    ) {
+      addWarning(
+        "Suspicious link path found.",
+        href
+      );
+    }
+  });
+
+  addDetail(
+    "Links checked",
+    String(links.length)
+  );
+
+  /* -------------------------------------------------------
+     JAVASCRIPT AND CSS VERSIONS
+  ------------------------------------------------------- */
+
+  const scriptSources = [
+    ...document.scripts
+  ]
+    .map((script) => script.src)
+    .filter(Boolean);
+
+  const stylesheetSources = [
+    ...document.querySelectorAll(
+      'link[rel="stylesheet"]'
+    )
+  ]
+    .map((link) => link.href)
+    .filter(Boolean);
+
+  const versionPattern = /[?&]v=([^&]+)/;
+
+  scriptSources.forEach((source) => {
+    const match = source.match(versionPattern);
+
+    addDetail(
+      "JavaScript",
+      match
+        ? `${source} — version ${match[1]}`
+        : `${source} — no cache version`
+    );
+  });
+
+  stylesheetSources.forEach((source) => {
+    const match = source.match(versionPattern);
+
+    addDetail(
+      "Stylesheet",
+      match
+        ? `${source} — version ${match[1]}`
+        : `${source} — no cache version`
+    );
+  });
+
+  const gameScript = scriptSources.find((source) => {
+    return source.includes(
+      "handle-with-care.js"
+    );
+  });
+
+  if (
+    window.location.pathname.includes(
+      "handle-with-care"
+    )
+  ) {
+    if (gameScript) {
+      addPassed(
+        "Handle With Care JavaScript is included.",
+        gameScript
+      );
+    } else {
+      addProblem(
+        "Handle With Care JavaScript is missing."
+      );
+    }
+  }
+
+  /* -------------------------------------------------------
+     VISIBILITY AND SCREEN STATES
+  ------------------------------------------------------- */
+
+  const visibleScreens = [
+    ...document.querySelectorAll(
+      ".handle-screen, .game-screen, .rescue-screen"
+    )
+  ].filter((element) => {
+    const style =
+      window.getComputedStyle(element);
+
+    return (
+      !element.classList.contains("hidden") &&
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      Number(style.opacity) !== 0
+    );
+  });
+
+  if (visibleScreens.length === 1) {
+    addPassed(
+      "Exactly one game screen is visible.",
+      `#${visibleScreens[0].id || "no-id"}`
+    );
+  } else if (visibleScreens.length === 0) {
+    addProblem(
+      "No game screen is visible."
+    );
+  } else {
+    addWarning(
+      "Multiple game screens are visible.",
+      visibleScreens
+        .map((screen) => {
+          return `#${screen.id || "no-id"}`;
+        })
+        .join(", ")
+    );
+  }
+
+  /* -------------------------------------------------------
+     ARCADE GAME CARDS
+  ------------------------------------------------------- */
+
+  const arcadeCards = [
+    ...document.querySelectorAll(
+      ".arcade-game-card"
+    )
+  ];
+
+  if (
+    window.location.pathname.includes(
+      "/arcade/"
+    ) &&
+    !window.location.pathname.includes(
+      "/games/"
+    )
+  ) {
+    if (arcadeCards.length) {
+      addPassed(
+        `${arcadeCards.length} arcade game card(s) detected.`
+      );
+    } else {
+      addProblem(
+        "No arcade game cards were found."
+      );
+    }
+
+    const gameIds = {};
+
+    arcadeCards.forEach((card, index) => {
+      const gameId =
+        card.dataset.gameId;
+
+      const gameName =
+        card.dataset.gameName;
+
+      const link =
+        card.querySelector(
+          ".play-game-button"
+        );
+
+      if (!gameId) {
+        addProblem(
+          `Arcade card ${index + 1} is missing data-game-id.`
+        );
+      } else {
+        gameIds[gameId] =
+          (gameIds[gameId] || 0) + 1;
+      }
+
+      if (!gameName) {
+        addWarning(
+          `Arcade card ${index + 1} is missing data-game-name.`
+        );
+      }
+
+      if (!link) {
+        addProblem(
+          `${gameName || gameId || `Card ${index + 1}`} has no Play Game link.`
+        );
+      } else {
+        const href =
+          link.getAttribute("href");
+
+        if (!href) {
+          addProblem(
+            `${gameName || gameId} has an empty Play Game link.`
+          );
+        }
+
+        if (
+          href &&
+          !href.endsWith(".html")
+        ) {
+          addWarning(
+            `${gameName || gameId} does not link to an HTML game page.`,
+            href
+          );
+        }
+      }
+    });
+
+    Object
+      .entries(gameIds)
+      .filter(([, count]) => count > 1)
+      .forEach(([gameId, count]) => {
+        addProblem(
+          `Duplicate arcade game ID: ${gameId}`,
+          `${count} cards use this game ID.`
+        );
+      });
+
+    const handleWithCareCard =
+      document.querySelector(
+        '[data-game-id="handle-with-care"]'
+      );
+
+    if (handleWithCareCard) {
+      addPassed(
+        "Handle With Care appears on the Cyber Arcade page."
+      );
+
+      const handleLink =
+        handleWithCareCard.querySelector(
+          'a[href*="handle-with-care.html"]'
+        );
+
+      if (handleLink) {
+        addPassed(
+          "Handle With Care links to its game page.",
+          handleLink.getAttribute("href")
+        );
+      } else {
+        addProblem(
+          "Handle With Care does not link to handle-with-care.html."
+        );
+      }
+    } else {
+      addProblem(
+        "Handle With Care is missing from the Cyber Arcade page."
+      );
+    }
+  }
+
+  /* -------------------------------------------------------
+     HANDLE WITH CARE-SPECIFIC CHECKS
+  ------------------------------------------------------- */
+
+  if (
+    window.location.pathname.includes(
+      "handle-with-care"
+    )
+  ) {
+    const requiredIds = [
+      "introScreen",
+      "playScreen",
+      "resultScreen",
+      "startGame",
+      "handleFactory",
+      "factoryWorker",
+      "laneOnePieces",
+      "laneTwoPieces",
+      "laneThreePieces",
+      "nopeChuteStation",
+      "garbageCanStation",
+      "partsShelfStation",
+      "mixerStation",
+      "scannerStation",
+      "shippingStation",
+      "factoryTutorialCard",
+      "timeFreezeFill"
+    ];
+
+    requiredIds.forEach((id) => {
+      if (document.getElementById(id)) {
+        addPassed(
+          `Required element exists: #${id}`
+        );
+      } else {
+        addProblem(
+          `Required element is missing: #${id}`
+        );
+      }
+    });
+
+    const laneTwo =
+      document.getElementById(
+        "factoryLaneTwo"
+      );
+
+    const laneThree =
+      document.getElementById(
+        "factoryLaneThree"
+      );
+
+    if (
+      laneTwo &&
+      laneThree &&
+      !laneTwo.classList.contains(
+        "locked-lane"
+      ) &&
+      !laneThree.classList.contains(
+        "locked-lane"
+      )
+    ) {
+      addPassed(
+        "All three factory lanes are currently open."
+      );
+    } else {
+      addWarning(
+        "One or more factory lanes are currently locked.",
+        "This is a problem if a real order or tutorial requires pieces from those lanes."
+      );
+    }
+
+    const movingPieces = [
+      ...document.querySelectorAll(
+        ".factory-moving-piece"
+      )
+    ];
+
+    addDetail(
+      "Visible factory pieces",
+      String(movingPieces.length)
+    );
+
+    const tutorialCard =
+      document.getElementById(
+        "factoryTutorialCard"
+      );
+
+    const tutorialTitle =
+      document.getElementById(
+        "tutorialStepTitle"
+      );
+
+    if (
+      tutorialCard &&
+      !tutorialCard.classList.contains(
+        "hidden"
+      )
+    ) {
+      addDetail(
+        "Tutorial step",
+        tutorialTitle?.textContent.trim() ||
+        "Tutorial is visible, but no title was found."
+      );
+
+      if (
+        tutorialTitle?.textContent
+          .toLowerCase()
+          .includes("wacky")
+      ) {
+        const wackyPiece =
+          [...movingPieces].find((piece) => {
+            return piece.textContent
+              .toLowerCase()
+              .includes("wacky");
+          });
+
+        if (wackyPiece) {
+          addPassed(
+            "The tutorial asks for Wacky and the Wacky piece exists."
+          );
+        } else {
+          addProblem(
+            "The tutorial asks for Wacky, but no Wacky piece exists."
+          );
+        }
+      }
+    }
+
+    const freezeMeter =
+      document.getElementById(
+        "timeFreezeFill"
+      );
+
+    if (freezeMeter) {
+      addDetail(
+        "Time Freeze meter width",
+        freezeMeter.style.width ||
+        window.getComputedStyle(
+          freezeMeter
+        ).width
+      );
+    }
+
+    const worker =
+      document.getElementById(
+        "factoryWorker"
+      );
+
+    if (worker) {
+      addDetail(
+        "Worker position",
+        `left: ${worker.style.left || "unset"}, top: ${worker.style.top || "unset"}`
+      );
+    }
+  }
+
+  /* -------------------------------------------------------
+     LOCAL STORAGE
+  ------------------------------------------------------- */
+
+  const relevantStorageKeys = Object
+    .keys(localStorage)
+    .filter((key) => {
+      return (
+        key.toLowerCase().includes("safetii") ||
+        key.toLowerCase().includes("arcade") ||
+        key.toLowerCase().includes("handle")
+      );
+    });
+
+  addDetail(
+    "Relevant saved values",
+    relevantStorageKeys.length
+      ? relevantStorageKeys
+          .map((key) => {
+            return `${key}: ${localStorage.getItem(key)}`;
+          })
+          .join(" | ")
+      : "None"
+  );
+
+  return diagnosticResults;
+}
+
+/*
+  Make the detailed report available to the existing debugger.
+*/
+window.SafetiiDetailedDiagnostics =
+  runDetailedArcadeDiagnostics;
 })();
