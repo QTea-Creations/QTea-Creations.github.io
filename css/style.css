@@ -7769,3 +7769,77 @@ body.page-home
 
   line-height: 1.45;
 }
+
+/* =========================================================
+   MISSION RESULT ACTION BUTTONS
+========================================================= */
+
+.mission-result-actions,
+.password-result-actions {
+  width: 100%;
+  margin-top: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.mission-result-actions .button,
+.mission-result-actions .small-button,
+.password-result-actions .button,
+.password-result-actions .small-button {
+  min-height: 50px;
+  margin: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  text-decoration: none;
+}
+
+.mission-result-actions a[href*="notebook"],
+.password-result-actions a[href*="notebook"] {
+  background:
+    linear-gradient(
+      135deg,
+      #2ebed1,
+      #7d4cff
+    );
+
+  border-color: #5030ad;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 0
+    #4c2ba8;
+}
+
+.mission-result-actions a[href*="notebook"]:hover,
+.password-result-actions a[href*="notebook"]:hover {
+  box-shadow:
+    0 5px 0
+    #4c2ba8;
+
+  transform:
+    translateY(-3px);
+}
+
+@media (max-width: 650px) {
+  .mission-result-actions,
+  .password-result-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .mission-result-actions .button,
+  .mission-result-actions .small-button,
+  .password-result-actions .button,
+  .password-result-actions .small-button {
+    width: 100%;
+  }
+}
