@@ -773,6 +773,74 @@ const laneCategoryPools = {
     runTutorialStep();
   }
 
+   case 0: {
+  clearPieces();
+
+  tutorialTargetPiece =
+    ensureTutorialPiece({
+      text: "Wacky",
+      category: "style",
+      lane: "one",
+      fixedX: 52
+    });
+
+  pulseTutorialTarget(
+    tutorialTargetPiece?.element
+  );
+
+  break;
+}
+
+   case 2: {
+  const pandaPiece =
+    ensureTutorialPiece({
+      text: "Panda",
+      category: "animal",
+      lane: "two",
+      fixedX: 62
+    });
+
+  pulseTutorialTarget(
+    pandaPiece?.element
+  );
+
+  break;
+}
+
+   case 5: {
+  const bouncePiece =
+    ensureTutorialPiece({
+      text: "Bounce",
+      category: "action",
+      lane: "three",
+      fixedX: 52
+    });
+
+  pulseTutorialTarget(
+    bouncePiece?.element
+  );
+
+  break;
+}
+case 6: {
+  const privatePiece =
+    ensureTutorialPiece({
+      text: "Home Address",
+      category: "unsafe",
+      lane: "one",
+      fixedX: 52,
+      unsafe: true,
+      reason:
+        "A home address is private location information."
+    });
+
+  pulseTutorialTarget(
+    privatePiece?.element
+  );
+
+  break;
+}
+   
   function skipTutorial() {
     markTutorialComplete();
 
@@ -1018,6 +1086,65 @@ const laneCategoryPools = {
       beginNormalOrder(0);
     }, 1200);
   }
+
+   function ensureTutorialPiece({
+  text,
+  category,
+  lane,
+  fixedX,
+  unsafe = false,
+  reason = ""
+}) {
+  const onBelt =
+    activePieces.some(
+      (piece) =>
+        !piece.removed &&
+        piece.data.text ===
+          text
+    );
+
+  const beingCarried =
+    carriedItems.some(
+      (item) =>
+        item.text ===
+          text
+    );
+
+  const inMixer =
+    mixerPieces.some(
+      (item) =>
+        item?.text ===
+          text
+    );
+
+  const onShelf =
+    shelfPieces.some(
+      (item) =>
+        item?.text ===
+          text
+    );
+
+  if (
+    onBelt ||
+    beingCarried ||
+    inMixer ||
+    onShelf
+  ) {
+    return null;
+  }
+
+  return createPiece(
+    lane,
+    {
+      text,
+      category,
+      unsafe,
+      reason,
+      fixedX,
+      tutorial: true
+    }
+  );
+}
 
   /* =========================================================
      ORDER SYSTEM
@@ -2738,6 +2865,46 @@ function placeInGarbageCan() {
     return;
   }
 
+   if (
+  tutorialActive &&
+  [
+    "Wacky",
+    "Panda",
+    "Bounce",
+    "Home Address"
+  ].includes(carriedItem.text)
+) {
+  const protectedItem =
+    carriedItem.text;
+
+  showFeedback({
+    correct: false,
+    icon: "🛟",
+    title: "Training piece protected",
+    message:
+      `${protectedItem} is needed for this tutorial. Keep carrying it to the highlighted station.`,
+    points: "+0"
+  });
+
+  clearTutorialTargetPulses();
+
+  if (
+    protectedItem ===
+    "Home Address"
+  ) {
+    pulseTutorialTarget(
+      nopeChuteStation
+    );
+  } else {
+    pulseTutorialTarget(
+      mixerStation
+    );
+  }
+
+  updateCarriedItem();
+  return;
+}
+
   if (carriedItem.package) {
     showFeedback({
       correct: false,
@@ -3645,19 +3812,21 @@ function placeInShipping() {
       points: "+0"
     });
 
-    if (
-      tutorialActive &&
-      tutorialStep === 7
-    ) {
-      clearTutorialTargetPulses();
+if (
+  tutorialActive &&
+  tutorialStep === 9
+) {
+  clearTutorialTargetPulses();
 
-      managedTimeout(
-        () => {
-          advanceTutorial();
-        },
-        700
-      );
-    }
+  setText(
+    "tutorialStepMessage",
+    "Great! Time Freeze is working."
+  );
+
+  managedTimeout(() => {
+    advanceTutorial();
+  }, 700);
+}
 
     managedTimeout(
       () => {
