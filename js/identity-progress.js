@@ -2,121 +2,501 @@
 
 /* =========================================================
    SAFETII NET — IDENTITY ISLAND
-   Progress Saving, Restoration, and Testing Tools
+   STABLE PROGRESS, MIGRATION, AND RESTORATION
+
+   This controller makes the newer Identity Foundations
+   lessons mandatory before the Username Lab.
+
+   Mission order:
+
+   1. Mission Alert
+   2. Explore Zone
+   3. Pieces of Me
+   4. Trust Circle
+   5. Clue Collector
+   6. Impostor Alert
+   7. Username Lab
+   8. Backpack Rescue
+   9. Identity Card Repair
+   10. Final Test Introduction
+   11. Final Test
+   12. Mission Result
 ========================================================= */
 
 (() => {
-  const game = window.IdentityGame;
+  const game =
+    window.IdentityGame;
 
-  if (!game || !game.state) {
+  if (
+    !game ||
+    !game.state
+  ) {
     console.error(
-      "Identity progress could not load. Check the script order."
+      "Identity progress could not load. Check that identity-core.js loads first."
     );
 
     return;
   }
 
+  /* =====================================================
+     STORAGE
+  ===================================================== */
+
   const STORAGE_KEY =
     "safetiiIdentityProgress";
 
-const VALID_SECTIONS = [
-  "missionAlert",
-  "exploreZone",
+  const FOUNDATIONS_KEY =
+    "safetiiIdentityFoundationsV1";
 
-  "piecesOfMeZone",
-  "trustCircleZone",
-  "clueCollectorZone",
-  "impostorZone",
+  const CURRENT_VERSION = 3;
 
-  "usernameZone",
-  "practiceZone",
-  "identityCardZone",
-  "testIntroZone",
-  "testZone",
-  "missionResult"
-];
+  const SECTION_IDS = [
+    "missionAlert",
+    "exploreZone",
+
+    "piecesOfMeZone",
+    "trustCircleZone",
+    "clueCollectorZone",
+    "impostorZone",
+
+    "usernameZone",
+    "practiceZone",
+    "identityCardZone",
+
+    "testIntroZone",
+    "testZone",
+    "missionResult"
+  ];
+
+  const FOUNDATION_SECTIONS = [
+    "piecesOfMeZone",
+    "trustCircleZone",
+    "clueCollectorZone",
+    "impostorZone"
+  ];
 
   const DEFAULT_PROGRESS = {
-    version: 2,
+    version:
+      CURRENT_VERSION,
 
-    started: false,
-    completed: false,
+    started:
+      false,
+
+    completed:
+      false,
 
     currentSection:
       "missionAlert",
 
-    foundObjects: [],
-    foundStickers: [],
+    foundObjects:
+      [],
 
-    usernamesChecked: 0,
+    foundStickers:
+      [],
 
-    practiceIndex: 0,
-    practiceCorrect: 0,
+    usernamesChecked:
+      0,
 
-    identityProfileIndex: 0,
-    profilesProtected: 0,
+    practiceIndex:
+      0,
 
-    testIndex: 0,
-    testCorrect: 0,
-    testAnswered: false
+    practiceCorrect:
+      0,
+
+    identityProfileIndex:
+      0,
+
+    profilesProtected:
+      0,
+
+    testIndex:
+      0,
+
+    testCorrect:
+      0,
+
+    testAnswered:
+      false
   };
 
-  let restorationComplete = false;
-  let saveTimer = null;
+  let restorationComplete =
+    false;
+
+  let restorationStarted =
+    false;
+
+  let saveTimer =
+    null;
+
+
+  /* =====================================================
+     GENERAL HELPERS
+  ===================================================== */
 
   function cloneDefaultProgress() {
     return {
       ...DEFAULT_PROGRESS,
-      foundObjects: [],
-      foundStickers: []
+
+      foundObjects:
+        [],
+
+      foundStickers:
+        []
     };
   }
 
-  function readSavedProgress() {
+
+  function safeNumber(
+    value,
+    fallback = 0
+  ) {
+    const number =
+      Number(value);
+
+    return Number.isFinite(number)
+      ? Math.max(0, number)
+      : fallback;
+  }
+
+
+  function readJson(
+    key,
+    fallback
+  ) {
     try {
-      const rawProgress =
+      const raw =
         localStorage.getItem(
-          STORAGE_KEY
+          key
         );
 
-      if (!rawProgress) {
-        return cloneDefaultProgress();
+      if (!raw) {
+        return fallback;
       }
 
-      const parsedProgress =
-        JSON.parse(rawProgress);
+      const parsed =
+        JSON.parse(raw);
 
-      return {
-        ...cloneDefaultProgress(),
-        ...parsedProgress,
-
-        foundObjects:
-          Array.isArray(
-            parsedProgress.foundObjects
-          )
-            ? parsedProgress.foundObjects
-            : [],
-
-        foundStickers:
-          Array.isArray(
-            parsedProgress.foundStickers
-          )
-            ? parsedProgress.foundStickers
-            : []
-      };
+      return parsed;
     } catch (error) {
       console.error(
-        "Could not read Identity Island progress:",
+        `Could not read ${key}:`,
         error
       );
 
-      return cloneDefaultProgress();
+      return fallback;
     }
   }
 
+
+  function writeJson(
+    key,
+    value
+  ) {
+    try {
+      localStorage.setItem(
+        key,
+        JSON.stringify(value)
+      );
+    } catch (error) {
+      console.error(
+        `Could not save ${key}:`,
+        error
+      );
+    }
+  }
+
+
+  /* =====================================================
+     FOUNDATION PROGRESS
+  ===================================================== */
+
+  function getFoundationProgress() {
+    const stored =
+      readJson(
+        FOUNDATIONS_KEY,
+        null
+      );
+
+    if (
+      !stored ||
+      typeof stored !==
+        "object"
+    ) {
+      return {
+        piecesIndex: 0,
+        piecesCorrect: 0,
+
+        trustIndex: 0,
+        trustCorrect: 0,
+
+        clueIndex: 0,
+        clueCorrect: 0,
+
+        impostorComplete: false,
+        academyComplete: false
+      };
+    }
+
+    return {
+      piecesIndex:
+        safeNumber(
+          stored.piecesIndex
+        ),
+
+      piecesCorrect:
+        safeNumber(
+          stored.piecesCorrect
+        ),
+
+      trustIndex:
+        safeNumber(
+          stored.trustIndex
+        ),
+
+      trustCorrect:
+        safeNumber(
+          stored.trustCorrect
+        ),
+
+      clueIndex:
+        safeNumber(
+          stored.clueIndex
+        ),
+
+      clueCorrect:
+        safeNumber(
+          stored.clueCorrect
+        ),
+
+      impostorComplete:
+        Boolean(
+          stored.impostorComplete
+        ),
+
+      academyComplete:
+        Boolean(
+          stored.academyComplete
+        )
+    };
+  }
+
+
+  function foundationsComplete() {
+    return Boolean(
+      getFoundationProgress()
+        .academyComplete
+    );
+  }
+
+
+  function chooseFoundationSection() {
+    const foundation =
+      getFoundationProgress();
+
+    /*
+      Pieces of Me has eight prompts.
+    */
+
+    if (
+      foundation.piecesIndex <
+      8
+    ) {
+      return "piecesOfMeZone";
+    }
+
+    /*
+      Trust Circle has eight people.
+    */
+
+    if (
+      foundation.trustIndex <
+      8
+    ) {
+      return "trustCircleZone";
+    }
+
+    /*
+      Clue Collector has four profiles.
+    */
+
+    if (
+      foundation.clueIndex <
+      4
+    ) {
+      return "clueCollectorZone";
+    }
+
+    if (
+      !foundation.impostorComplete ||
+      !foundation.academyComplete
+    ) {
+      return "impostorZone";
+    }
+
+    return "usernameZone";
+  }
+
+
+  /* =====================================================
+     OVERALL PROGRESS
+  ===================================================== */
+
+  function readSavedProgress() {
+    const stored =
+      readJson(
+        STORAGE_KEY,
+        null
+      );
+
+    if (
+      !stored ||
+      typeof stored !==
+        "object"
+    ) {
+      return cloneDefaultProgress();
+    }
+
+    const progress = {
+      ...cloneDefaultProgress(),
+      ...stored,
+
+      version:
+        CURRENT_VERSION,
+
+      foundObjects:
+        Array.isArray(
+          stored.foundObjects
+        )
+          ? stored.foundObjects
+          : [],
+
+      foundStickers:
+        Array.isArray(
+          stored.foundStickers
+        )
+          ? stored.foundStickers
+          : [],
+
+      usernamesChecked:
+        safeNumber(
+          stored.usernamesChecked
+        ),
+
+      practiceIndex:
+        safeNumber(
+          stored.practiceIndex
+        ),
+
+      practiceCorrect:
+        safeNumber(
+          stored.practiceCorrect
+        ),
+
+      identityProfileIndex:
+        safeNumber(
+          stored.identityProfileIndex
+        ),
+
+      profilesProtected:
+        safeNumber(
+          stored.profilesProtected
+        ),
+
+      testIndex:
+        safeNumber(
+          stored.testIndex
+        ),
+
+      testCorrect:
+        safeNumber(
+          stored.testCorrect
+        ),
+
+      testAnswered:
+        Boolean(
+          stored.testAnswered
+        ),
+
+      started:
+        Boolean(
+          stored.started
+        ),
+
+      completed:
+        Boolean(
+          stored.completed
+        )
+    };
+
+    /*
+      Migration rule:
+
+      Older players may have reached the Username Lab
+      before Identity Foundations was added.
+
+      Once all six island objects have been found,
+      Foundation Academy becomes mandatory unless its
+      own saved progress says it was completed.
+    */
+
+    if (
+      progress.foundObjects.length >=
+        6 &&
+      !foundationsComplete() &&
+      [
+        "usernameZone",
+        "practiceZone",
+        "identityCardZone",
+        "testIntroZone",
+        "testZone"
+      ].includes(
+        progress.currentSection
+      )
+    ) {
+      progress.currentSection =
+        chooseFoundationSection();
+
+      progress.usernamesChecked =
+        0;
+
+      progress.practiceIndex =
+        0;
+
+      progress.practiceCorrect =
+        0;
+
+      progress.identityProfileIndex =
+        0;
+
+      progress.profilesProtected =
+        0;
+
+      progress.testIndex =
+        0;
+
+      progress.testCorrect =
+        0;
+
+      progress.testAnswered =
+        false;
+
+      writeJson(
+        STORAGE_KEY,
+        progress
+      );
+
+      console.log(
+        "Identity progress migrated to the new Foundation Academy."
+      );
+    }
+
+    return progress;
+  }
+
+
   function getVisibleSectionId() {
-    const visibleSection =
-      VALID_SECTIONS.find(
+    const visible =
+      SECTION_IDS.find(
         (sectionId) => {
           const section =
             document.getElementById(
@@ -133,32 +513,59 @@ const VALID_SECTIONS = [
       );
 
     return (
-      visibleSection ||
+      visible ||
       "missionAlert"
     );
   }
 
+
   function saveProgress() {
-    if (!restorationComplete) {
+    if (
+      !restorationComplete
+    ) {
       return;
     }
 
-    const state = game.state;
+    const state =
+      game.state;
+
     const previous =
       readSavedProgress();
 
-    const currentSection =
+    let currentSection =
       getVisibleSectionId();
+
+    /*
+      Never allow the overall progress file to
+      bypass unfinished Foundation Academy lessons.
+    */
+
+    if (
+      state.foundObjects.size >=
+        6 &&
+      !foundationsComplete() &&
+      !FOUNDATION_SECTIONS.includes(
+        currentSection
+      )
+    ) {
+      currentSection =
+        chooseFoundationSection();
+    }
 
     const started =
       previous.started ||
       currentSection !==
         "missionAlert" ||
-      state.foundObjects.size > 0 ||
-      state.usernamesChecked > 0 ||
-      state.practiceIndex > 0 ||
-      state.profilesProtected > 0 ||
-      state.testIndex > 0;
+      state.foundObjects.size >
+        0 ||
+      state.usernamesChecked >
+        0 ||
+      state.practiceIndex >
+        0 ||
+      state.profilesProtected >
+        0 ||
+      state.testIndex >
+        0;
 
     const completed =
       localStorage.getItem(
@@ -166,7 +573,8 @@ const VALID_SECTIONS = [
       ) === "true";
 
     const progress = {
-      version: 2,
+      version:
+        CURRENT_VERSION,
 
       started,
       completed,
@@ -184,57 +592,80 @@ const VALID_SECTIONS = [
         ),
 
       usernamesChecked:
-        state.usernamesChecked,
+        safeNumber(
+          state.usernamesChecked
+        ),
 
       practiceIndex:
-        state.practiceIndex,
+        safeNumber(
+          state.practiceIndex
+        ),
 
       practiceCorrect:
-        state.practiceCorrect,
+        safeNumber(
+          state.practiceCorrect
+        ),
 
       identityProfileIndex:
-        state.identityProfileIndex,
+        safeNumber(
+          state.identityProfileIndex
+        ),
 
       profilesProtected:
-        state.profilesProtected,
+        safeNumber(
+          state.profilesProtected
+        ),
 
       testIndex:
-        state.testIndex,
+        safeNumber(
+          state.testIndex
+        ),
 
       testCorrect:
-        state.testCorrect,
+        safeNumber(
+          state.testCorrect
+        ),
 
       testAnswered:
-        state.testAnswered
+        Boolean(
+          state.testAnswered
+        )
     };
 
-    localStorage.setItem(
+    writeJson(
       STORAGE_KEY,
-      JSON.stringify(progress)
+      progress
     );
 
-    /*
-      The notebook reads this key too.
-    */
-    localStorage.setItem(
+    writeJson(
       "identityStickers",
-      JSON.stringify(
-        progress.foundStickers
-      )
+      progress.foundStickers
     );
   }
+
 
   function scheduleSave() {
-    window.clearTimeout(saveTimer);
-
-    saveTimer = window.setTimeout(
-      saveProgress,
-      150
+    window.clearTimeout(
+      saveTimer
     );
+
+    saveTimer =
+      window.setTimeout(
+        saveProgress,
+        120
+      );
   }
 
-  function restoreMissionState(progress) {
-    const state = game.state;
+
+  /* =====================================================
+     RESTORE CORE STATE
+  ===================================================== */
+
+  function restoreMissionState(
+    progress
+  ) {
+    const state =
+      game.state;
 
     state.foundObjects =
       new Set(
@@ -247,78 +678,70 @@ const VALID_SECTIONS = [
       );
 
     state.usernamesChecked =
-      Math.max(
-        0,
-        Number(
-          progress.usernamesChecked
-        ) || 0
+      safeNumber(
+        progress.usernamesChecked
       );
 
     state.practiceIndex =
-      Math.max(
-        0,
-        Number(
-          progress.practiceIndex
-        ) || 0
+      safeNumber(
+        progress.practiceIndex
       );
 
     state.practiceCorrect =
-      Math.max(
-        0,
-        Number(
-          progress.practiceCorrect
-        ) || 0
+      safeNumber(
+        progress.practiceCorrect
       );
 
+    state.practiceAnswered =
+      false;
+
     state.identityProfileIndex =
-      Math.max(
-        0,
-        Number(
-          progress.identityProfileIndex
-        ) || 0
+      safeNumber(
+        progress.identityProfileIndex
       );
 
     state.profilesProtected =
-      Math.max(
-        0,
-        Number(
-          progress.profilesProtected
-        ) || 0
+      safeNumber(
+        progress.profilesProtected
       );
 
+    state.selectedRepairBlocks =
+      [];
+
+    state.profileRepairComplete =
+      false;
+
     state.testIndex =
-      Math.max(
-        0,
-        Number(
-          progress.testIndex
-        ) || 0
+      safeNumber(
+        progress.testIndex
       );
 
     state.testCorrect =
-      Math.max(
-        0,
-        Number(
-          progress.testCorrect
-        ) || 0
+      safeNumber(
+        progress.testCorrect
       );
 
     state.testAnswered =
-      Boolean(
-        progress.testAnswered
-      );
+      false;
 
-    /*
-      Temporary interaction state should not
-      be restored halfway through a click.
-    */
-    state.practiceAnswered = false;
-    state.usernameAwaitingApproval = false;
-    state.selectedRepairBlocks = [];
-    state.profileRepairComplete = false;
+    state.generatedUsername =
+      "";
+
+    state.generatedUsernameReason =
+      "";
+
+    state.generatedUsernameIsSafe =
+      true;
+
+    state.usernameAwaitingApproval =
+      false;
   }
 
-  function restoreCounters(progress) {
-    const counterValues = {
+
+  function restoreCounters(
+    progress
+  ) {
+    const values = {
       objectsFound:
         progress.foundObjects.length,
 
@@ -333,17 +756,22 @@ const VALID_SECTIONS = [
     };
 
     Object.entries(
-      counterValues
-    ).forEach(([id, value]) => {
-      const element =
-        document.getElementById(id);
+      values
+    ).forEach(
+      ([id, value]) => {
+        const element =
+          document.getElementById(
+            id
+          );
 
-      if (element) {
-        element.textContent =
-          String(value);
+        if (element) {
+          element.textContent =
+            String(value);
+        }
       }
-    });
+    );
   }
+
 
   function restoreIslandObjects(
     progress
@@ -352,514 +780,521 @@ const VALID_SECTIONS = [
       .querySelectorAll(
         ".island-object"
       )
-      .forEach((button) => {
-        const wasFound =
-          progress.foundObjects.includes(
-            button.dataset.object
-          );
+      .forEach(
+        (button) => {
+          const discovered =
+            progress.foundObjects.includes(
+              button.dataset.object
+            );
 
-        button.classList.toggle(
-          "discovered",
-          wasFound
-        );
-      });
+          button.classList.toggle(
+            "discovered",
+            discovered
+          );
+        }
+      );
 
     document
-      .querySelectorAll(".sticker")
-      .forEach((button) => {
-        const wasFound =
-          progress.foundStickers.includes(
-            button.dataset.sticker
+      .querySelectorAll(
+        ".sticker"
+      )
+      .forEach(
+        (button) => {
+          const collected =
+            progress.foundStickers.includes(
+              button.dataset.sticker
+            );
+
+          button.classList.toggle(
+            "collected",
+            collected
           );
 
-        button.classList.toggle(
-          "collected",
-          wasFound
-        );
+          button.textContent =
+            collected
+              ? "✨"
+              : "⭐";
 
-        button.textContent =
-          wasFound ? "✨" : "⭐";
-      });
+          button.disabled =
+            collected;
+        }
+      );
   }
+
+
+  function setButtonState(
+    button,
+    unlocked,
+    unlockedText,
+    lockedText
+  ) {
+    if (!button) {
+      return;
+    }
+
+    button.disabled =
+      !unlocked;
+
+    button.classList.toggle(
+      "locked-action",
+      !unlocked
+    );
+
+    button.setAttribute(
+      "aria-disabled",
+      String(!unlocked)
+    );
+
+    button.textContent =
+      unlocked
+        ? unlockedText
+        : lockedText;
+  }
+
 
   function restoreUnlockedButtons(
     progress
   ) {
+    const explorationComplete =
+      progress.foundObjects.length >=
+      6;
+
+    const academyComplete =
+      foundationsComplete();
+
     const usernameButton =
       document.getElementById(
         "goUsernameLab"
       );
 
-    if (usernameButton) {
-      const isUnlocked =
-        progress.foundObjects.length >=
-        6;
+    setButtonState(
+      usernameButton,
+      explorationComplete,
 
-      usernameButton.disabled =
-        !isUnlocked;
+      academyComplete
+        ? "Open Safe Username Lab 🧪"
+        : "Begin Identity Foundations Academy 🧩",
 
-      usernameButton.classList.toggle(
-        "locked-action",
-        !isUnlocked
-      );
-
-      usernameButton.textContent =
-        isUnlocked
-          ? "Open Safe Username Lab 🧪"
-          : "Unlock Safe Username Lab";
-    }
+      "Unlock Safe Username Lab"
+    );
 
     const backpackButton =
       document.getElementById(
         "goBackpackRescue"
       );
 
-    if (backpackButton) {
-      const isUnlocked =
-        progress.usernamesChecked >= 3;
+    setButtonState(
+      backpackButton,
+      academyComplete &&
+        progress.usernamesChecked >=
+          3,
 
-      backpackButton.disabled =
-        !isUnlocked;
-
-      backpackButton.classList.toggle(
-        "locked-action",
-        !isUnlocked
-      );
-
-      backpackButton.textContent =
-        isUnlocked
-          ? "Start Backpack Rescue 🎒"
-          : "Complete 3 Username Scans First";
-    }
+      "Start Backpack Rescue 🎒",
+      "Complete 3 Username Scans First"
+    );
 
     const finalButton =
       document.getElementById(
         "goFinalTest"
       );
 
-    if (finalButton) {
-      const requiredProfiles =
-        game.data.identityProfiles.length;
+    const profileTotal =
+      game.data
+        ?.identityProfiles
+        ?.length ||
+      5;
 
-      const isUnlocked =
+    setButtonState(
+      finalButton,
+      academyComplete &&
         progress.profilesProtected >=
-        requiredProfiles;
+          profileTotal,
 
-      finalButton.disabled =
-        !isUnlocked;
-
-      finalButton.classList.toggle(
-        "locked-action",
-        !isUnlocked
-      );
-
-      finalButton.textContent =
-        isUnlocked
-          ? "Begin Identity Protector Final Test 🛡️"
-          : "Protect All 5 Profiles to Unlock the Final Test";
-    }
+      "Begin Identity Protector Final Test 🛡️",
+      `Protect All ${profileTotal} Profiles to Unlock the Final Test`
+    );
   }
+
+
+  /* =====================================================
+     CHOOSE RESUME LOCATION
+  ===================================================== */
 
   function chooseResumeSection(
     progress
   ) {
-    if (progress.completed) {
+    if (
+      progress.completed
+    ) {
       return "missionResult";
     }
 
-    if (!progress.started) {
+    if (
+      !progress.started
+    ) {
       return "missionAlert";
     }
 
     if (
-      VALID_SECTIONS.includes(
+      progress.foundObjects.length <
+      6
+    ) {
+      return "exploreZone";
+    }
+
+    /*
+      This is the key protection:
+
+      After exploration, unfinished Foundation Academy
+      always comes before Username Lab.
+    */
+
+    if (
+      !foundationsComplete()
+    ) {
+      return chooseFoundationSection();
+    }
+
+    /*
+      Once Foundation Academy is complete, a valid
+      saved section can be resumed.
+    */
+
+    if (
+      SECTION_IDS.includes(
         progress.currentSection
       ) &&
-      progress.currentSection !==
+      ![
+        "missionAlert",
+        "exploreZone",
+        ...FOUNDATION_SECTIONS,
         "missionResult"
+      ].includes(
+        progress.currentSection
+      )
     ) {
       return progress.currentSection;
     }
 
     if (
-      progress.testIndex > 0
+      progress.testIndex >
+      0
     ) {
       return "testZone";
     }
 
+    const profileTotal =
+      game.data
+        ?.identityProfiles
+        ?.length ||
+      5;
+
     if (
       progress.profilesProtected >=
-      game.data.identityProfiles.length
+      profileTotal
     ) {
       return "testIntroZone";
     }
 
+    const practiceTotal =
+      game.data
+        ?.practiceQuestions
+        ?.length ||
+      10;
+
     if (
       progress.practiceIndex >=
-      game.data.practiceQuestions.length
+      practiceTotal
     ) {
       return "identityCardZone";
     }
 
     if (
-      progress.usernamesChecked >= 3
+      progress.usernamesChecked >=
+      3
     ) {
       return "practiceZone";
     }
 
-    if (
-      progress.foundObjects.length >= 6
-    ) {
-      return "usernameZone";
-    }
-
-    return "exploreZone";
+    return "usernameZone";
   }
+
+
+  /* =====================================================
+     LOAD ACTIVE SECTION
+  ===================================================== */
 
   function loadRestoredSection(
     sectionId
   ) {
-    game.showSection(sectionId);
-
     if (
-      sectionId === "practiceZone" &&
-      typeof game.loadPractice ===
-        "function"
+      typeof game.showSection !==
+      "function"
     ) {
-      const maximumIndex =
-        game.data.practiceQuestions.length -
-        1;
+      console.error(
+        "IdentityGame.showSection() is unavailable during restoration."
+      );
 
-      game.state.practiceIndex =
-        Math.min(
-          game.state.practiceIndex,
-          maximumIndex
-        );
-
-      game.loadPractice();
+      return;
     }
 
-    if (
-      sectionId ===
-        "identityCardZone" &&
-      typeof game.loadIdentityProfile ===
-        "function"
-    ) {
-      const maximumIndex =
-        game.data.identityProfiles.length -
-        1;
+    game.showSection(
+      sectionId
+    );
 
-      game.state.identityProfileIndex =
-        Math.min(
-          game.state.identityProfileIndex,
-          maximumIndex
-        );
+    switch (sectionId) {
+      case "piecesOfMeZone":
+        if (
+          typeof game.loadPiecesOfMe ===
+          "function"
+        ) {
+          game.loadPiecesOfMe();
+        }
+        break;
 
-      game.loadIdentityProfile();
-    }
 
-    if (
-      sectionId ===
-        "testIntroZone" &&
-      typeof game.loadFinalTestHeroName ===
-        "function"
-    ) {
-      game.loadFinalTestHeroName();
-    }
+      case "trustCircleZone":
+        if (
+          typeof game.loadTrustCircle ===
+          "function"
+        ) {
+          game.loadTrustCircle();
+        }
+        break;
 
-    if (
-      sectionId === "testZone" &&
-      typeof game.loadTest ===
-        "function"
-    ) {
-      const maximumIndex =
-        game.data.testQuestions.length -
-        1;
 
-      game.state.testIndex =
-        Math.min(
-          game.state.testIndex,
-          maximumIndex
-        );
+      case "clueCollectorZone":
+        if (
+          typeof game.loadClueProfile ===
+          "function"
+        ) {
+          game.loadClueProfile();
+        }
+        break;
 
-      game.loadTest();
+
+      case "impostorZone":
+        if (
+          typeof game.loadImpostorGame ===
+          "function"
+        ) {
+          game.loadImpostorGame();
+        }
+        break;
+
+
+      case "usernameZone":
+        if (
+          typeof game.updateMissionPointsDisplay ===
+          "function"
+        ) {
+          game.updateMissionPointsDisplay();
+        }
+        break;
+
+
+      case "practiceZone": {
+        if (
+          typeof game.loadPractice !==
+          "function"
+        ) {
+          break;
+        }
+
+        const total =
+          game.data
+            ?.practiceQuestions
+            ?.length ||
+          1;
+
+        game.state.practiceIndex =
+          Math.min(
+            game.state.practiceIndex,
+            Math.max(
+              0,
+              total - 1
+            )
+          );
+
+        game.loadPractice();
+        break;
+      }
+
+
+      case "identityCardZone": {
+        if (
+          typeof game.loadIdentityProfile !==
+          "function"
+        ) {
+          break;
+        }
+
+        const total =
+          game.data
+            ?.identityProfiles
+            ?.length ||
+          1;
+
+        game.state.identityProfileIndex =
+          Math.min(
+            game.state.identityProfileIndex,
+            Math.max(
+              0,
+              total - 1
+            )
+          );
+
+        game.loadIdentityProfile();
+        break;
+      }
+
+
+      case "testIntroZone":
+        if (
+          typeof game.loadFinalTestHeroName ===
+          "function"
+        ) {
+          game.loadFinalTestHeroName();
+        }
+        break;
+
+
+      case "testZone": {
+        if (
+          typeof game.loadTest !==
+          "function"
+        ) {
+          break;
+        }
+
+        const total =
+          game.data
+            ?.testQuestions
+            ?.length ||
+          1;
+
+        game.state.testIndex =
+          Math.min(
+            game.state.testIndex,
+            Math.max(
+              0,
+              total - 1
+            )
+          );
+
+        game.loadTest();
+        break;
+      }
+
+
+      default:
+        break;
     }
   }
 
+
+  /* =====================================================
+     RESTORE
+  ===================================================== */
+
   function restoreProgress() {
+    if (
+      restorationStarted
+    ) {
+      return;
+    }
+
+    restorationStarted =
+      true;
+
     const progress =
       readSavedProgress();
 
-    restoreMissionState(progress);
-    restoreCounters(progress);
-    restoreIslandObjects(progress);
-    restoreUnlockedButtons(progress);
+    restoreMissionState(
+      progress
+    );
+
+    restoreCounters(
+      progress
+    );
+
+    restoreIslandObjects(
+      progress
+    );
+
+    restoreUnlockedButtons(
+      progress
+    );
 
     const resumeSection =
-      chooseResumeSection(progress);
+      chooseResumeSection(
+        progress
+      );
 
     loadRestoredSection(
       resumeSection
     );
 
-    restorationComplete = true;
+    restorationComplete =
+      true;
 
-    /*
-      Save once after restoration so older
-      progress formats are updated safely.
-    */
     scheduleSave();
 
     console.log(
-      `Identity Island progress restored at: ${resumeSection}`
+      `Identity Island restored at: ${resumeSection}`
     );
   }
 
-  function createDeveloperToolbar() {
-    const searchParams =
-      new URLSearchParams(
-        window.location.search
-      );
 
-    const developerMode =
-      searchParams.get("dev") === "1";
-
-    if (!developerMode) {
-      return;
-    }
-
-    const toolbar =
-      document.createElement("aside");
-
-    toolbar.className =
-      "identity-dev-toolbar";
-
-    toolbar.innerHTML = `
-      <strong>🛠 Mission Tester</strong>
-
-      <button type="button" data-dev-section="missionAlert">
-        Intro
-      </button>
-
-      <button type="button" data-dev-section="exploreZone">
-        Explore
-      </button>
-
-      <button type="button" data-dev-section="usernameZone">
-        Username Lab
-      </button>
-
-      <button type="button" data-dev-section="practiceZone">
-        Backpack
-      </button>
-
-      <button type="button" data-dev-section="identityCardZone">
-        ID Cards
-      </button>
-
-      <button type="button" data-dev-section="testIntroZone">
-        Test Instructions
-      </button>
-
-      <button type="button" data-dev-section="testZone">
-        Test Questions
-      </button>
-
-      <button type="button" id="resetDeveloperMission">
-        Reset Mission
-      </button>
-    `;
-
-    document.body.appendChild(
-      toolbar
-    );
-
-    toolbar
-      .querySelectorAll(
-        "[data-dev-section]"
-      )
-      .forEach((button) => {
-        button.addEventListener(
-          "click",
-          () => {
-            const sectionId =
-              button.dataset.devSection;
-
-            const state =
-              game.state;
-
-            if (
-              sectionId ===
-                "usernameZone" ||
-              sectionId ===
-                "practiceZone" ||
-              sectionId ===
-                "identityCardZone" ||
-              sectionId ===
-                "testIntroZone" ||
-              sectionId ===
-                "testZone"
-            ) {
-              state.foundObjects =
-                new Set([
-                  "house",
-                  "school",
-                  "phone",
-                  "backpack",
-                  "pizza",
-                  "controller"
-                ]);
-            }
-
-            if (
-              sectionId ===
-                "practiceZone" ||
-              sectionId ===
-                "identityCardZone" ||
-              sectionId ===
-                "testIntroZone" ||
-              sectionId ===
-                "testZone"
-            ) {
-              state.usernamesChecked = 3;
-            }
-
-            if (
-              sectionId ===
-                "identityCardZone" ||
-              sectionId ===
-                "testIntroZone" ||
-              sectionId ===
-                "testZone"
-            ) {
-              state.practiceIndex =
-                game.data.practiceQuestions.length;
-
-              state.practiceCorrect =
-                game.data.practiceQuestions.length;
-            }
-
-            if (
-              sectionId ===
-                "testIntroZone" ||
-              sectionId ===
-                "testZone"
-            ) {
-              state.identityProfileIndex =
-                game.data.identityProfiles.length;
-
-              state.profilesProtected =
-                game.data.identityProfiles.length;
-            }
-
-            if (
-              sectionId ===
-              "practiceZone"
-            ) {
-              state.practiceIndex = 0;
-              state.practiceCorrect = 0;
-            }
-
-            if (
-              sectionId ===
-              "identityCardZone"
-            ) {
-              state.identityProfileIndex = 0;
-              state.profilesProtected = 0;
-            }
-
-            if (
-              sectionId ===
-              "testZone"
-            ) {
-              state.testIndex = 0;
-              state.testCorrect = 0;
-              state.testAnswered = false;
-            }
-
-            restoreCounters({
-              foundObjects:
-                Array.from(
-                  state.foundObjects
-                ),
-
-              usernamesChecked:
-                state.usernamesChecked,
-
-              practiceCorrect:
-                state.practiceCorrect,
-
-              profilesProtected:
-                state.profilesProtected
-            });
-
-            restoreIslandObjects({
-              foundObjects:
-                Array.from(
-                  state.foundObjects
-                ),
-
-              foundStickers:
-                Array.from(
-                  state.foundStickers
-                )
-            });
-
-            restoreUnlockedButtons({
-              foundObjects:
-                Array.from(
-                  state.foundObjects
-                ),
-
-              usernamesChecked:
-                state.usernamesChecked,
-
-              profilesProtected:
-                state.profilesProtected
-            });
-
-            loadRestoredSection(
-              sectionId
-            );
-
-            scheduleSave();
-          }
-        );
-      });
-
-    toolbar
-      .querySelector(
-        "#resetDeveloperMission"
-      )
-      ?.addEventListener(
-        "click",
-        () => {
-          game.clearIdentityProgress();
-
-          localStorage.removeItem(
-            "identityMissionCompleted"
-          );
-
-          localStorage.removeItem(
-            "identityBadgeEarned"
-          );
-
-          localStorage.removeItem(
-            "identityStickers"
-          );
-
-          window.location.reload();
-        }
-      );
-  }
+  /* =====================================================
+     PUBLIC METHODS
+  ===================================================== */
 
   function clearProgress() {
     localStorage.removeItem(
       STORAGE_KEY
     );
 
-    restorationComplete = false;
+    restorationComplete =
+      false;
+
+    restorationStarted =
+      false;
   }
+
+
+  function clearAllMissionProgress() {
+    const keys = [
+      STORAGE_KEY,
+      FOUNDATIONS_KEY,
+
+      "identityCurrentStep",
+      "identityFoundObjects",
+      "identityUsernameProgress",
+      "identityBackpackProgress",
+      "identityProfileProgress",
+      "identityTestProgress",
+      "identityStickers",
+
+      "identityMissionCompleted",
+      "identityBadgeEarned"
+    ];
+
+    keys.forEach(
+      (key) => {
+        localStorage.removeItem(
+          key
+        );
+      }
+    );
+
+    restorationComplete =
+      false;
+
+    restorationStarted =
+      false;
+  }
+
 
   game.saveIdentityProgress =
     saveProgress;
@@ -870,43 +1305,48 @@ const VALID_SECTIONS = [
   game.clearIdentityProgress =
     clearProgress;
 
+  game.clearAllIdentityProgress =
+    clearAllMissionProgress;
+
+  game.restoreIdentitySection =
+    loadRestoredSection;
+
+
+  /* =====================================================
+     INITIALIZATION
+
+     There is no competing 300ms restoration timer here.
+     Restoration waits until the main controller announces
+     that all event listeners have been installed.
+  ===================================================== */
+
   function initializeProgressSystem() {
-    /*
-      The main controller sends this event
-      after all click and drag listeners exist.
-    */
-    const startRestoration = () => {
-      if (restorationComplete) {
-        return;
-      }
+    const beginRestoration =
+      () => {
+        /*
+          Foundation functions must exist before we restore
+          a Foundation Academy section.
+        */
 
-      restoreProgress();
-      createDeveloperToolbar();
-    };
+        if (
+          game.identityFoundationsReady !==
+            true ||
+          game.controllerReady !==
+            true
+        ) {
+          window.setTimeout(
+            beginRestoration,
+            50
+          );
 
-    if (game.controllerReady) {
-      startRestoration();
-    } else {
-      document.addEventListener(
-        "identityControllerReady",
-        startRestoration,
-        { once: true }
-      );
+          return;
+        }
 
-      /*
-        Safety fallback in case a browser misses
-        the custom event.
-      */
-      window.setTimeout(
-        startRestoration,
-        300
-      );
-    }
+        restoreProgress();
+      };
 
-    /*
-      Capture game activity without replacing
-      showSection or removing button listeners.
-    */
+    beginRestoration();
+
     document.addEventListener(
       "click",
       scheduleSave,
@@ -922,26 +1362,37 @@ const VALID_SECTIONS = [
     window.addEventListener(
       "beforeunload",
       () => {
-        if (restorationComplete) {
+        if (
+          restorationComplete
+        ) {
           saveProgress();
         }
       }
     );
 
-    window.setInterval(() => {
-      if (restorationComplete) {
-        saveProgress();
-      }
-    }, 2000);
+    window.setInterval(
+      () => {
+        if (
+          restorationComplete
+        ) {
+          saveProgress();
+        }
+      },
+      2500
+    );
   }
 
+
   if (
-    document.readyState === "loading"
+    document.readyState ===
+    "loading"
   ) {
     document.addEventListener(
       "DOMContentLoaded",
       initializeProgressSystem,
-      { once: true }
+      {
+        once: true
+      }
     );
   } else {
     initializeProgressSystem();
