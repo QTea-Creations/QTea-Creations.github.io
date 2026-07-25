@@ -4208,3 +4208,160 @@ body.handle-page button {
       rotate(2deg);
   }
 }
+
+/* =========================================================
+   TWO-PIECE CARRY STACK
+========================================================= */
+
+.factory-worker {
+  overflow: visible !important;
+  z-index: 70 !important;
+}
+
+.carried-item-bubble {
+  position: absolute !important;
+
+  left: 50% !important;
+  right: auto !important;
+
+  top: auto !important;
+  bottom: calc(100% + 8px) !important;
+
+  transform: translateX(-50%) !important;
+
+  width: max-content !important;
+  min-width: 110px !important;
+  max-width: 180px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  overflow: visible !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+
+  z-index: 95 !important;
+
+  pointer-events: none;
+}
+
+.carried-stack-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 6px;
+
+  width: max-content;
+  min-width: 110px;
+}
+
+.carried-stack-piece {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  width: max-content;
+  min-width: 110px;
+  max-width: 170px;
+
+  padding: 7px 10px;
+
+  margin: 0 !important;
+
+  border: 2px solid #ffffff;
+  border-radius: 11px;
+
+  background: #ffffff;
+  color: #172554;
+
+  box-shadow:
+    0 5px 12px
+    rgba(15, 23, 42, 0.3);
+
+  transform: none !important;
+}
+
+.carried-stack-piece strong {
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.carried-stack-icon {
+  flex: 0 0 auto;
+}
+
+.carried-stack-piece.active-carried-piece {
+  border-color: #facc15;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(250, 204, 21, 0.25),
+    0 5px 12px
+    rgba(15, 23, 42, 0.3);
+}
+
+.active-piece-label {
+  padding: 2px 4px;
+
+  border-radius: 5px;
+
+  background: #facc15;
+  color: #422006;
+
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.carried-stack-switch {
+  width: max-content;
+
+  margin: 4px auto 0;
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  background: #172554;
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+
+  box-shadow:
+    0 4px 10px
+    rgba(15, 23, 42, 0.3);
+}
+
+/*
+  Keep conveyor belts behind the player
+  and carried pieces.
+*/
+
+.factory-lane,
+.factory-conveyor,
+.factory-belt-pattern,
+.lane-platform {
+  z-index: 1;
+}
+
+.factory-moving-piece {
+  z-index: 12 !important;
+}
+
+.factory-worker {
+  z-index: 70 !important;
+}
+
+.factory-tutorial-card {
+  z-index: 110 !important;
+}
