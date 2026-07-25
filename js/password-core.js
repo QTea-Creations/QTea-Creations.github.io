@@ -2,16 +2,20 @@
 
 /* =========================================================
    SAFETII NET — PASSWORD SAFE KEEPER
-   Mission 2 Core
+   MISSION 2 CORE
 
-   This file creates:
-   - Shared mission state
-   - Section switching
-   - Meme help system
-   - Hero-name loading
-   - Points display
-   - Progress helpers
-   - Mission reset helpers
+   Curriculum-aligned mission flow:
+
+   1. Password Safety Lab
+   2. Password Cracker Challenge
+   3. Two-Factor Security Gate
+   4. Account Defense Simulator
+   5. Password Vault Practice
+   6. Final Test
+
+   Important:
+   Pretend passwords typed into the Password Safety Lab
+   are never stored in mission state or localStorage.
 ========================================================= */
 
 (() => {
@@ -21,17 +25,27 @@
 
 
   /* =====================================================
-     SECTION ORDER
+     MISSION SECTION ORDER
 
-     Only one mission section should be visible at a time.
+     The matching HTML sections will be:
+
+     passwordMissionAlert
+     passphraseZone
+     passwordAttackZone
+     twoFactorZone
+     accountDefenseZone
+     passwordVaultZone
+     passwordTestIntroZone
+     passwordTestZone
+     passwordMissionResult
   ===================================================== */
 
   const SECTION_IDS = [
     "passwordMissionAlert",
     "passphraseZone",
-    "uniquePasswordZone",
-    "codeKeeperZone",
-    "accountRescueZone",
+    "passwordAttackZone",
+    "twoFactorZone",
+    "accountDefenseZone",
     "passwordVaultZone",
     "passwordTestIntroZone",
     "passwordTestZone",
@@ -53,7 +67,10 @@
     currentSection:
       "passwordMissionAlert",
 
-    /* Training 1 */
+
+    /* -------------------------------------------------
+       TRAINING 1 — PASSWORD SAFETY LAB
+    ------------------------------------------------- */
 
     comparisonIndex:
       0,
@@ -74,54 +91,71 @@
       false,
 
     /*
-      The password typed into the practice field is
-      intentionally never stored here.
+      Never add a password-value property here.
+
+      The pretend password entered by a student
+      should exist only inside the input field
+      while the analyzer checks it.
     */
 
 
-    /* Training 2 */
+    /* -------------------------------------------------
+       TRAINING 2 — PASSWORD CRACKER CHALLENGE
+    ------------------------------------------------- */
 
-    uniquePasswordIndex:
+    passwordAttackIndex:
       0,
 
-    uniquePasswordCorrect:
+    passwordAttackCorrect:
       0,
 
-    uniquePasswordAnswered:
+    passwordAttackAnswered:
       false,
 
-    uniquePasswordComplete:
-      false,
-
-
-    /* Training 3 */
-
-    codeKeeperIndex:
-      0,
-
-    codeKeeperCorrect:
-      0,
-
-    codeKeeperAnswered:
-      false,
-
-    codeKeeperComplete:
+    passwordAttackComplete:
       false,
 
 
-    /* Training 4 */
+    /* -------------------------------------------------
+       TRAINING 3 — TWO-FACTOR SECURITY GATE
+    ------------------------------------------------- */
 
-    selectedRescueSteps:
-      [],
+    twoFactorIndex:
+      0,
 
-    rescueComplete:
+    twoFactorCorrect:
+      0,
+
+    twoFactorAnswered:
+      false,
+
+    twoFactorComplete:
+      false,
+
+
+    /* -------------------------------------------------
+       TRAINING 4 — ACCOUNT DEFENSE SIMULATOR
+    ------------------------------------------------- */
+
+    accountDefenseIndex:
+      0,
+
+    accountDefenseCorrect:
+      0,
+
+    accountDefenseAnswered:
+      false,
+
+    accountDefenseComplete:
       false,
 
     trainingComplete:
       false,
 
 
-    /* Vault Practice */
+    /* -------------------------------------------------
+       PASSWORD VAULT PRACTICE
+    ------------------------------------------------- */
 
     vaultIndex:
       0,
@@ -136,7 +170,9 @@
       false,
 
 
-    /* Final Test */
+    /* -------------------------------------------------
+       FINAL TEST
+    ------------------------------------------------- */
 
     testIndex:
       0,
@@ -154,7 +190,9 @@
       false,
 
 
-    /* Rewards */
+    /* -------------------------------------------------
+       REWARDS
+    ------------------------------------------------- */
 
     missionPointsEarned:
       0
@@ -303,6 +341,21 @@
     };
 
 
+  mission.setHtml =
+    function setHtml(
+      id,
+      value
+    ) {
+      const element =
+        mission.byId(id);
+
+      if (element) {
+        element.innerHTML =
+          String(value);
+      }
+    };
+
+
   /* =====================================================
      SECTION SWITCHING
   ===================================================== */
@@ -350,7 +403,8 @@
       if (scroll) {
         activeSection.scrollIntoView({
           behavior,
-          block: "start"
+          block:
+            "start"
         });
       }
 
@@ -368,7 +422,7 @@
 
   mission.getVisibleSectionId =
     function getVisibleSectionId() {
-      const visible =
+      const visibleSection =
         SECTION_IDS.find(
           (id) => {
             const section =
@@ -384,7 +438,7 @@
         );
 
       return (
-        visible ||
+        visibleSection ||
         "passwordMissionAlert"
       );
     };
@@ -392,7 +446,9 @@
 
   mission.getSectionIds =
     function getSectionIds() {
-      return [...SECTION_IDS];
+      return [
+        ...SECTION_IDS
+      ];
     };
 
 
@@ -502,37 +558,26 @@
             savedHero
           );
 
-        if (
-          typeof hero?.name ===
-            "string" &&
-          hero.name.trim()
-        ) {
-          return hero.name.trim();
-        }
+        const possibleNames = [
+          hero?.name,
+          hero?.heroName,
+          hero?.username
+        ];
 
-        /*
-          Support older hero formats.
-        */
+        const validName =
+          possibleNames.find(
+            (value) => {
+              return (
+                typeof value ===
+                  "string" &&
+                value.trim()
+              );
+            }
+          );
 
-        if (
-          typeof hero
-            ?.heroName ===
-            "string" &&
-          hero.heroName.trim()
-        ) {
-          return hero.heroName.trim();
-        }
-
-        if (
-          typeof hero
-            ?.username ===
-            "string" &&
-          hero.username.trim()
-        ) {
-          return hero.username.trim();
-        }
-
-        return fallback;
+        return validName
+          ? validName.trim()
+          : fallback;
       } catch (error) {
         console.error(
           "Could not load the saved hero name:",
@@ -546,7 +591,7 @@
 
   mission.loadHeroNames =
     function loadHeroNames() {
-      const name =
+      const heroName =
         mission.getSavedHeroName();
 
       [
@@ -556,7 +601,7 @@
         (id) => {
           mission.setText(
             id,
-            name
+            heroName
           );
         }
       );
@@ -569,15 +614,15 @@
 
   mission.getTotalPoints =
     function getTotalPoints() {
-      const keys = [
+      const possibleKeys = [
         "safetiiPoints",
         "safetiiGlobalPoints"
       ];
 
       for (
-        const key of keys
+        const key of possibleKeys
       ) {
-        const stored =
+        const value =
           Number(
             localStorage.getItem(
               key
@@ -586,12 +631,12 @@
 
         if (
           Number.isFinite(
-            stored
+            value
           )
         ) {
           return Math.max(
             0,
-            stored
+            value
           );
         }
       }
@@ -610,11 +655,6 @@
           Number(points) ||
             0
         );
-
-      /*
-        Keep both keys synchronized because older
-        Safetii Net pages may use either one.
-      */
 
       localStorage.setItem(
         "safetiiPoints",
@@ -744,8 +784,9 @@
             button.classList.remove(
               "correct",
               "incorrect",
+              "selected",
               "shake",
-              "selected"
+              "active-choice"
             );
           }
         );
@@ -825,7 +866,7 @@
 
 
   /* =====================================================
-     RESET STATE
+     STATE RESET
   ===================================================== */
 
   mission.resetState =
@@ -842,6 +883,8 @@
       state.currentSection =
         "passwordMissionAlert";
 
+
+      /* Password Safety Lab */
 
       state.comparisonIndex =
         0;
@@ -862,41 +905,55 @@
         false;
 
 
-      state.uniquePasswordIndex =
+      /* Password Cracker */
+
+      state.passwordAttackIndex =
         0;
 
-      state.uniquePasswordCorrect =
+      state.passwordAttackCorrect =
         0;
 
-      state.uniquePasswordAnswered =
+      state.passwordAttackAnswered =
         false;
 
-      state.uniquePasswordComplete =
-        false;
-
-
-      state.codeKeeperIndex =
-        0;
-
-      state.codeKeeperCorrect =
-        0;
-
-      state.codeKeeperAnswered =
-        false;
-
-      state.codeKeeperComplete =
+      state.passwordAttackComplete =
         false;
 
 
-      state.selectedRescueSteps =
-        [];
+      /* Two-Factor Gate */
 
-      state.rescueComplete =
+      state.twoFactorIndex =
+        0;
+
+      state.twoFactorCorrect =
+        0;
+
+      state.twoFactorAnswered =
+        false;
+
+      state.twoFactorComplete =
+        false;
+
+
+      /* Account Defense */
+
+      state.accountDefenseIndex =
+        0;
+
+      state.accountDefenseCorrect =
+        0;
+
+      state.accountDefenseAnswered =
+        false;
+
+      state.accountDefenseComplete =
         false;
 
       state.trainingComplete =
         false;
 
+
+      /* Vault */
 
       state.vaultIndex =
         0;
@@ -910,6 +967,8 @@
       state.vaultComplete =
         false;
 
+
+      /* Final Test */
 
       state.testIndex =
         0;
@@ -926,28 +985,31 @@
       state.badgeEarned =
         false;
 
+
+      /* Rewards */
+
       state.missionPointsEarned =
         0;
     };
 
 
   /* =====================================================
-     CLEAR PAGE ELEMENTS FOR REPLAY
+     RESET PAGE DISPLAY
   ===================================================== */
 
   mission.resetPageDisplay =
     function resetPageDisplay() {
-      const values = {
+      const counters = {
         passwordLabProgress:
           0,
 
-        uniquePasswordProgress:
+        passwordAttackProgress:
           0,
 
-        codeKeeperProgress:
+        twoFactorProgress:
           0,
 
-        accountRescueProgress:
+        accountDefenseProgress:
           0,
 
         vaultDoorsSecured:
@@ -967,7 +1029,7 @@
       };
 
       Object.entries(
-        values
+        counters
       ).forEach(
         ([id, value]) => {
           mission.setText(
@@ -980,9 +1042,9 @@
 
       [
         "passphraseFeedback",
-        "uniquePasswordFeedback",
-        "codeKeeperFeedback",
-        "accountRescueFeedback",
+        "passwordAttackFeedback",
+        "twoFactorFeedback",
+        "accountDefenseFeedback",
         "vaultChallengeFeedback",
         "passwordTestFeedback"
       ].forEach(
@@ -994,17 +1056,14 @@
       );
 
 
+      /* Clear the pretend-password field */
+
       const practiceInput =
         mission.byId(
           "practicePasswordInput"
         );
 
       if (practiceInput) {
-        /*
-          Never preserve or restore the typed
-          practice password.
-        */
-
         practiceInput.value =
           "";
 
@@ -1066,11 +1125,66 @@
           false,
 
         unlockedText:
-          "Complete Password Safety Lab",
+          "Complete Password Safety Lab ✅",
 
         lockedText:
           "Build a Strong Practice Password to Continue"
       });
+
+
+      /* Password Cracker */
+
+      mission.hideElement(
+        mission.byId(
+          "nextPasswordAttack"
+        )
+      );
+
+
+      /* Two-Factor Gate */
+
+      mission.hideElement(
+        mission.byId(
+          "nextTwoFactorScenario"
+        )
+      );
+
+      mission.hideElement(
+        mission.byId(
+          "twoFactorCompletion"
+        )
+      );
+
+      const layerTwo =
+        mission.byId(
+          "securityGateLayerTwo"
+        );
+
+      layerTwo?.classList.remove(
+        "active",
+        "correct",
+        "incorrect"
+      );
+
+      mission.setText(
+        "securityGateSecondFactor",
+        "Second Layer Needed"
+      );
+
+
+      /* Account Defense */
+
+      mission.hideElement(
+        mission.byId(
+          "nextAccountDefenseScenario"
+        )
+      );
+
+      mission.hideElement(
+        mission.byId(
+          "accountDefenseCompletion"
+        )
+      );
 
 
       mission.setButtonState({
@@ -1081,10 +1195,10 @@
           false,
 
         unlockedText:
-          "Enter Password Vault Practice",
+          "Enter Password Vault Practice 🏰",
 
         lockedText:
-          "Complete Account Rescue First"
+          "Complete Account Defense Training First"
       });
 
 
@@ -1103,22 +1217,13 @@
       });
 
 
-      const rescueList =
-        mission.byId(
-          "rescueOrderList"
-        );
-
-      if (rescueList) {
-        rescueList.innerHTML =
-          "";
-      }
-
-
       [
         "passphraseChoiceGrid",
         "passwordCheckGrid",
         "passwordImprovementList",
-        "rescueStepBank",
+        "passwordAttackWeaknessList",
+        "secondFactorChoiceGrid",
+        "accountDefenseChoiceGrid",
         "vaultAnswerGrid",
         "passwordTestChoiceGrid"
       ].forEach(
@@ -1136,7 +1241,7 @@
 
 
   /* =====================================================
-     CLEAR SAVED PROGRESS
+     SAVED-PROGRESS RESET
   ===================================================== */
 
   mission.clearSavedProgress =
@@ -1181,7 +1286,7 @@
       );
 
       mission.setMemeTip(
-        "The Password Vault is ready for a new training mission.",
+        "The Password Vault is ready for a new cybersecurity mission.",
         "welcome"
       );
 
@@ -1193,7 +1298,7 @@
   /* =====================================================
      SAFE STORAGE HELPERS
 
-     These helpers never receive or store the value typed
+     These helpers must never receive the value typed
      into #practicePasswordInput.
   ===================================================== */
 
@@ -1261,7 +1366,7 @@
     mission.installHelpButtons();
 
     mission.setMemeTip(
-      "Welcome to the Password Vault. Complete each training room to earn the Password Safe Keeper badge.",
+      "Welcome to the Password Vault. Learn how attackers guess passwords and how defenders protect accounts.",
       "welcome"
     );
 
@@ -1275,7 +1380,7 @@
     );
 
     console.log(
-      "Password Safe Keeper core loaded."
+      "Password Safe Keeper curriculum core loaded."
     );
   }
 
@@ -1288,7 +1393,8 @@
       "DOMContentLoaded",
       initializeCore,
       {
-        once: true
+        once:
+          true
       }
     );
   } else {
