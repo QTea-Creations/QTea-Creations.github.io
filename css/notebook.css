@@ -1955,3 +1955,438 @@ a:focus-visible {
   font-size: 0.78rem;
   line-height: 1.3;
 }
+
+/* =====================================================
+   SAFETII NOTEBOOK DESIGN CLEANUP
+   Paste at the VERY BOTTOM of css/notebook.css
+===================================================== */
+
+:root {
+  --sn-ink: #24345c;
+  --sn-purple: #7554f6;
+  --sn-purple-dark: #5a3ed8;
+  --sn-blue: #49b8ff;
+  --sn-teal: #27c7d9;
+  --sn-gold: #f4d35e;
+  --sn-gold-dark: #d4ad2f;
+  --sn-paper: #fffdf6;
+  --sn-paper-soft: #fffaf0;
+  --sn-line: #d8e7ff;
+  --sn-border: #d7cff6;
+  --sn-shadow: 0 8px 0 rgba(70, 56, 140, 0.14);
+  --sn-shadow-soft: 0 12px 24px rgba(36, 52, 92, 0.12);
+  --sn-radius: 22px;
+}
+
+/* -------------------------------------
+   PAGE / NOTEBOOK LAYOUT
+------------------------------------- */
+
+body {
+  color: var(--sn-ink);
+}
+
+main,
+.notebook-main,
+.notebook-shell,
+.notebook-page-wrap {
+  display: block;
+}
+
+.notebook-paper,
+.notebook-panel,
+.notebook-content,
+.notebook-mission-panel,
+.notebook-mission-card,
+.notebook-section {
+  background: var(--sn-paper);
+  border: 2px solid var(--sn-border);
+  border-radius: 26px;
+  box-shadow: var(--sn-shadow-soft);
+}
+
+/* Give the content area a more organized look */
+.notebook-content,
+.notebook-panel,
+.notebook-mission-panel {
+  padding: 28px;
+}
+
+/* -------------------------------------
+   HERO BANNER
+   OMBRE LIVES HERE
+------------------------------------- */
+
+.notebook-hero,
+.notebook-banner,
+.notebook-top-banner,
+.notebook-header-panel {
+  background: linear-gradient(135deg, #7f55ff 0%, #42c6ff 100%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  box-shadow: var(--sn-shadow-soft);
+  color: white;
+}
+
+.notebook-hero h1,
+.notebook-banner h1,
+.notebook-top-banner h1,
+.notebook-header-panel h1,
+.notebook-hero h2,
+.notebook-banner h2 {
+  color: white !important;
+}
+
+.notebook-hero p,
+.notebook-banner p,
+.notebook-top-banner p,
+.notebook-header-panel p {
+  color: rgba(255, 255, 255, 0.94) !important;
+}
+
+/* -------------------------------------
+   TABS
+------------------------------------- */
+
+.notebook-tabs,
+.mission-tabs,
+.tab-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.notebook-tab,
+.mission-tab,
+.tab-button {
+  background: #eef4ff;
+  color: var(--sn-ink);
+  border: 2px solid #b8cfff;
+  border-bottom: none;
+  border-radius: 18px 18px 0 0;
+  padding: 14px 22px;
+  font-weight: 800;
+  box-shadow: none;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.notebook-tab:hover,
+.mission-tab:hover,
+.tab-button:hover {
+  transform: translateY(-2px);
+  background: #f6f8ff;
+}
+
+.notebook-tab.active,
+.mission-tab.active,
+.tab-button.active,
+.notebook-tab[aria-selected="true"],
+.mission-tab[aria-selected="true"] {
+  background: #fff4a8;
+  color: var(--sn-ink);
+  border-color: #f0cb43;
+  box-shadow: 0 6px 0 rgba(212, 173, 47, 0.25);
+}
+
+/* -------------------------------------
+   CARDS / CHECKLISTS
+------------------------------------- */
+
+.notebook-card,
+.mission-card,
+.progress-card,
+.checklist-card,
+.badge-card,
+.note-card {
+  background: var(--sn-paper-soft);
+  border: 2px solid #e3ddfb;
+  border-radius: 22px;
+  padding: 20px 22px;
+  box-shadow: 0 8px 16px rgba(36, 52, 92, 0.08);
+}
+
+.notebook-card h3,
+.mission-card h3,
+.progress-card h3,
+.checklist-card h3,
+.badge-card h3 {
+  margin-top: 0;
+  color: var(--sn-ink);
+}
+
+/* tighter spacing so the page feels less scattered */
+.notebook-grid,
+.mission-grid,
+.checklist-grid,
+.progress-grid,
+.badge-grid {
+  display: grid;
+  gap: 18px;
+}
+
+@media (min-width: 900px) {
+  .checklist-grid,
+  .progress-grid,
+  .badge-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* -------------------------------------
+   BUTTON SYSTEM
+   OMBRE IS NOW "SACRED"
+------------------------------------- */
+
+/* default notebook buttons = solid, not gradient */
+button,
+.notebook-button,
+.action-button,
+.cta-button,
+a.button,
+a.notebook-button {
+  border-radius: 18px;
+  border: 2px solid #d3d9ea;
+  padding: 14px 22px;
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  text-decoration: none;
+  box-shadow: var(--sn-shadow);
+}
+
+button:hover,
+.notebook-button:hover,
+.action-button:hover,
+.cta-button:hover,
+a.button:hover,
+a.notebook-button:hover {
+  transform: translateY(-2px);
+}
+
+/* primary action = solid teal */
+.primary-button,
+.continue-button,
+.start-button,
+.view-button,
+a.primary-button,
+button.primary-button {
+  background: var(--sn-teal) !important;
+  color: white !important;
+  border-color: #19a8b7 !important;
+}
+
+/* secondary action = solid gold */
+.secondary-button,
+.replay-button,
+.gold-button,
+button.replay-button,
+a.replay-button {
+  background: #fff3a6 !important;
+  color: #5d4a00 !important;
+  border-color: var(--sn-gold-dark) !important;
+}
+
+/* tertiary action = white */
+.ghost-button,
+.cancel-button,
+button.cancel-button,
+a.cancel-button {
+  background: white !important;
+  color: var(--sn-ink) !important;
+  border-color: #bcc7dc !important;
+}
+
+/* keep ombre only for a few special buttons if desired */
+.special-gradient-button,
+.featured-button,
+.hero-button {
+  background: linear-gradient(135deg, #7f55ff 0%, #42c6ff 100%) !important;
+  color: white !important;
+  border-color: transparent !important;
+}
+
+/* -------------------------------------
+   STATUS PILLS / LABELS
+------------------------------------- */
+
+.status-pill,
+.mission-status,
+.progress-pill,
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 800;
+  border: 2px solid transparent;
+}
+
+.status-pill.not-started,
+.mission-status.not-started {
+  background: #fff4a8;
+  color: #6a5300;
+  border-color: #efd04b;
+}
+
+.status-pill.complete,
+.mission-status.complete {
+  background: #dff8ea;
+  color: #11643f;
+  border-color: #77d6a3;
+}
+
+.status-pill.progress,
+.mission-status.progress {
+  background: #e5f4ff;
+  color: #13618f;
+  border-color: #87cfff;
+}
+
+/* -------------------------------------
+   MODAL OVERLAY
+   CENTER THE "THINGIE"
+------------------------------------- */
+
+.modal-overlay,
+.replay-modal-overlay,
+.notebook-modal-overlay,
+[id*="ReplayModalOverlay"],
+[id*="replayModalOverlay"],
+[id*="MissionReplayOverlay"],
+[id*="modalOverlay"] {
+  position: fixed !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+  background: rgba(30, 39, 72, 0.48) !important;
+  z-index: 9999 !important;
+}
+
+.modal-overlay.hidden,
+.replay-modal-overlay.hidden,
+.notebook-modal-overlay.hidden {
+  display: none !important;
+}
+
+.modal-card,
+.replay-modal,
+.notebook-modal,
+.modal-box,
+[id*="ReplayModal"],
+[id*="replayModal"],
+[id*="MissionReplayModal"],
+[id*="modalCard"] {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  margin: 0 auto !important;
+  width: min(520px, calc(100vw - 32px)) !important;
+  max-width: 520px !important;
+  background: var(--sn-paper) !important;
+  border: 3px solid var(--sn-purple) !important;
+  border-radius: 28px !important;
+  box-shadow: 0 18px 40px rgba(36, 52, 92, 0.22) !important;
+  padding: 28px !important;
+  text-align: center !important;
+}
+
+.modal-card h2,
+.replay-modal h2,
+.notebook-modal h2,
+.modal-box h2 {
+  margin-top: 12px;
+  margin-bottom: 14px;
+  color: var(--sn-ink);
+}
+
+.modal-card p,
+.replay-modal p,
+.notebook-modal p,
+.modal-box p {
+  color: #4d5d84;
+  line-height: 1.6;
+}
+
+.modal-actions,
+.replay-modal-actions,
+.notebook-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+/* -------------------------------------
+   STICKY NOTES / BADGES
+------------------------------------- */
+
+.sticky-note,
+.note-chip,
+.badge-note {
+  background: #fff2a8;
+  color: var(--sn-ink);
+  border: 2px solid #e4c84c;
+  box-shadow: 0 6px 0 rgba(228, 200, 76, 0.22);
+  border-radius: 8px;
+}
+
+/* -------------------------------------
+   LESS "SCATTERED" SPACING
+------------------------------------- */
+
+.notebook-section + .notebook-section,
+.mission-card + .mission-card,
+.notebook-card + .notebook-card {
+  margin-top: 18px;
+}
+
+.notebook-actions,
+.action-row,
+.mission-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 18px;
+}
+
+/* -------------------------------------
+   MOBILE
+------------------------------------- */
+
+@media (max-width: 700px) {
+  .modal-card,
+  .replay-modal,
+  .notebook-modal,
+  .modal-box {
+    padding: 22px !important;
+    border-radius: 22px !important;
+  }
+
+  .modal-actions,
+  .replay-modal-actions,
+  .notebook-modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-actions button,
+  .modal-actions a,
+  .replay-modal-actions button,
+  .replay-modal-actions a,
+  .notebook-modal-actions button,
+  .notebook-modal-actions a {
+    width: 100%;
+  }
+}
