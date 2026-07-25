@@ -1912,3 +1912,46 @@ a:focus-visible {
     transform: none;
   }
 }
+
+/* =========================================================
+   MISSING BADGE PLACEHOLDER
+========================================================= */
+
+.missing-badge-placeholder {
+  width: 145px;
+  min-height: 145px;
+  padding: 16px;
+
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef1f6,
+      #dfe6ef
+    );
+
+  border:
+    3px dashed
+    #9ca8b8;
+
+  border-radius: 50%;
+
+  color: #5b6677;
+
+  text-align: center;
+}
+
+.missing-badge-placeholder span {
+  font-size: 2.6rem;
+}
+
+.missing-badge-placeholder strong {
+  max-width: 105px;
+
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
