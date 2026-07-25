@@ -1603,8 +1603,67 @@ if (
   /* =====================================================
      INITIALIZATION
   ===================================================== */
+function installBadgeImageFallbacks() {
+  document
+    .querySelectorAll(
+      ".notebook-badge"
+    )
+    .forEach(
+      (badge) => {
+        badge.addEventListener(
+          "error",
+          () => {
+            const wrapper =
+              badge.closest(
+                ".badge-tape-wrap"
+              );
 
+            badge.classList.add(
+              "hidden"
+            );
+
+            if (
+              !wrapper ||
+              wrapper.querySelector(
+                ".missing-badge-placeholder"
+              )
+            ) {
+              return;
+            }
+
+            const placeholder =
+              document.createElement(
+                "div"
+              );
+
+            placeholder.className =
+              "missing-badge-placeholder";
+
+            placeholder.innerHTML =
+              `
+                <span aria-hidden="true">
+                  🏅
+                </span>
+
+                <strong>
+                  Badge artwork coming soon
+                </strong>
+              `;
+
+            wrapper.appendChild(
+              placeholder
+            );
+          },
+          {
+            once:
+              true
+          }
+        );
+      }
+    );
+}
   function initializeNotebook() {
+   installBadgeImageFallbacks();
     bindNotebookTabs();
      window.addEventListener(
   "hashchange",
