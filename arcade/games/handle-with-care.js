@@ -747,464 +747,69 @@ const laneCategoryPools = {
     show(tutorialOpeningOverlay);
   }
 
-  function beginTutorial() {
-    hide(tutorialOpeningOverlay);
+ function beginTutorial() {
+  hide(tutorialOpeningOverlay);
 
-    tutorialActive = true;
-    orderActive = false;
-    tutorialStep = 0;
+  tutorialActive = true;
+  orderActive = false;
+  tutorialStep = 0;
 
-    show(tutorialCard);
-    show(tutorialSkipButton);
+  show(tutorialCard);
+  show(tutorialSkipButton);
 
-    clearPieces();
-    resetOrderMachines();
-
-    unlockLanes(3);
-
-    currentOrder = orders[0];
-    renderOrder();
-
-    workerX = 12;
-    workerY = floorLevels.laneTwo;
-
-    updateWorker();
-
-    runTutorialStep();
-  }
-
-   case 0: {
   clearPieces();
+  resetOrderMachines();
+  unlockLanes(3);
 
-  tutorialTargetPiece =
-    ensureTutorialPiece({
-      text: "Wacky",
-      category: "style",
-      lane: "one",
-      fixedX: 52
-    });
+  currentOrder = orders[0];
+  renderOrder();
 
-  pulseTutorialTarget(
-    tutorialTargetPiece?.element
-  );
+  workerX = 12;
+  workerY = floorLevels.laneOne;
 
-  break;
+  updateWorker();
+  runTutorialStep();
 }
 
-   case 2: {
-  const pandaPiece =
-    ensureTutorialPiece({
-      text: "Panda",
-      category: "animal",
-      lane: "two",
-      fixedX: 62
-    });
 
-  pulseTutorialTarget(
-    pandaPiece?.element
-  );
+function skipTutorial() {
+  markTutorialComplete();
 
-  break;
+  tutorialActive = false;
+  clearTutorialTargetPulses();
+
+  hide(tutorialOpeningOverlay);
+  hide(tutorialCard);
+  hide(tutorialSkipButton);
+  hide(tutorialHighlight);
+
+  clearPieces();
+  resetOrderMachines();
+  unlockLanes(3);
+
+  beginNormalOrder(0);
 }
 
-   case 5: {
-  const bouncePiece =
-    ensureTutorialPiece({
-      text: "Bounce",
-      category: "action",
-      lane: "three",
-      fixedX: 52
+
+function clearTutorialTargetPulses() {
+  document
+    .querySelectorAll(".tutorial-target-pulse")
+    .forEach((element) => {
+      element.classList.remove("tutorial-target-pulse");
     });
-
-  pulseTutorialTarget(
-    bouncePiece?.element
-  );
-
-  break;
 }
-case 6: {
-  const privatePiece =
-    ensureTutorialPiece({
-      text: "Home Address",
-      category: "unsafe",
-      lane: "one",
-      fixedX: 52,
-      unsafe: true,
-      reason:
-        "A home address is private location information."
-    });
 
-  pulseTutorialTarget(
-    privatePiece?.element
-  );
 
-  break;
+function pulseTutorialTarget(element) {
+  if (!element) {
+    return;
+  }
+
+  element.classList.add("tutorial-target-pulse");
 }
-   
-  function skipTutorial() {
-    markTutorialComplete();
 
-    tutorialActive = false;
 
-    clearTutorialTargetPulses();
-
-    hide(tutorialOpeningOverlay);
-    hide(tutorialCard);
-    hide(tutorialSkipButton);
-    hide(tutorialHighlight);
-
-    clearPieces();
-    resetOrderMachines();
-
-    unlockLanes(3);
-
-    beginNormalOrder(0);
-  }
-
-  function clearTutorialTargetPulses() {
-    document
-      .querySelectorAll(".tutorial-target-pulse")
-      .forEach((element) => {
-        element.classList.remove("tutorial-target-pulse");
-      });
-  }
-
-  function pulseTutorialTarget(element) {
-    if (!element) {
-      return;
-    }
-
-    element.classList.add("tutorial-target-pulse");
-  }
-
-  function skipTutorial() {
-    markTutorialComplete();
-
-    tutorialActive = false;
-
-    clearTutorialTargetPulses();
-
-    hide(tutorialOpeningOverlay);
-    hide(tutorialCard);
-    hide(tutorialSkipButton);
-    hide(tutorialHighlight);
-
-    clearPieces();
-    resetOrderMachines();
-
-    unlockLanes(3);
-
-    beginNormalOrder(0);
-  }
-
-
-  function clearTutorialTargetPulses() {
-    document
-      .querySelectorAll(".tutorial-target-pulse")
-      .forEach((element) => {
-        element.classList.remove("tutorial-target-pulse");
-      });
-  }
-
-
-  function pulseTutorialTarget(element) {
-    if (!element) {
-      return;
-    }
-
-    element.classList.add("tutorial-target-pulse");
-  }
-
-
-  function ensureTutorialPiece({
-    text,
-    category,
-    lane,
-    fixedX,
-    unsafe = false,
-    reason = ""
-  }) {
-    const onBelt =
-      activePieces.some(
-        (piece) =>
-          !piece.removed &&
-          piece.data.text === text
-      );
-
-    const beingCarried =
-      carriedItems.some(
-        (item) =>
-          item.text === text
-      );
-
-    const inMixer =
-      mixerPieces.some(
-        (item) =>
-          item?.text === text
-      );
-
-    const onShelf =
-      shelfPieces.some(
-        (item) =>
-          item?.text === text
-      );
-
-    if (
-      onBelt ||
-      beingCarried ||
-      inMixer ||
-      onShelf
-    ) {
-      return null;
-    }
-
-    return createPiece(
-      lane,
-      {
-        text,
-        category,
-        unsafe,
-        reason,
-        fixedX,
-        tutorial: true
-      }
-    );
-  }
-
-
-  function runTutorialStep() {
-    const step =
-      tutorialSteps[tutorialStep];
-
-    if (!step) {
-      completeTutorial();
-      return;
-    }
-
-    clearTutorialTargetPulses();
-
-    setText(
-      "tutorialStepLabel",
-      `Tutorial ${tutorialStep + 1} of ${tutorialSteps.length}`
-    );
-
-    setText(
-      "tutorialStepTitle",
-      step.title
-    );
-
-    setText(
-      "tutorialStepMessage",
-      step.message
-    );
-
-    setText(
-      "tutorialControlIcon",
-      step.control
-    );
-
-    switch (tutorialStep) {
-      case 0: {
-        clearPieces();
-
-        tutorialTargetPiece =
-          ensureTutorialPiece({
-            text: "Wacky",
-            category: "style",
-            lane: "one",
-            fixedX: 52
-          });
-
-        pulseTutorialTarget(
-          tutorialTargetPiece?.element
-        );
-
-        break;
-      }
-
-
-      case 1: {
-        const wackyPiece =
-          activePieces.find(
-            (piece) =>
-              !piece.removed &&
-              piece.data.text === "Wacky"
-          );
-
-        tutorialTargetPiece =
-          wackyPiece ||
-          tutorialTargetPiece;
-
-        pulseTutorialTarget(
-          tutorialTargetPiece?.element
-        );
-
-        break;
-      }
-
-
-      case 2: {
-        const pandaPiece =
-          ensureTutorialPiece({
-            text: "Panda",
-            category: "animal",
-            lane: "two",
-            fixedX: 62
-          });
-
-        pulseTutorialTarget(
-          pandaPiece?.element
-        );
-
-        break;
-      }
-
-
-      case 3:
-        pulseTutorialTarget(
-          carriedItemBubble
-        );
-        break;
-
-
-      case 4:
-        pulseTutorialTarget(
-          mixerStation
-        );
-        break;
-
-
-      case 5: {
-        const bouncePiece =
-          ensureTutorialPiece({
-            text: "Bounce",
-            category: "action",
-            lane: "three",
-            fixedX: 52
-          });
-
-        pulseTutorialTarget(
-          bouncePiece?.element
-        );
-
-        break;
-      }
-
-
-      case 6: {
-        const privatePiece =
-          ensureTutorialPiece({
-            text: "Home Address",
-            category: "unsafe",
-            lane: "one",
-            fixedX: 52,
-            unsafe: true,
-            reason:
-              "A home address is private location information."
-          });
-
-        pulseTutorialTarget(
-          privatePiece?.element
-        );
-
-        break;
-      }
-
-
-      case 7:
-        pulseTutorialTarget(
-          mixerStation
-        );
-        break;
-
-
-      case 8: {
-        const target =
-          mixedPackage
-            ? mixerStation
-            : scannerStation;
-
-        pulseTutorialTarget(
-          target
-        );
-
-        break;
-      }
-
-
-      case 9: {
-        timeFreezeCharge = 100;
-        updateHUD();
-
-        const freezeTarget =
-          byId("freezeButton") ||
-          byId("timeFreezeFill")
-            ?.closest(".time-freeze-panel");
-
-        pulseTutorialTarget(
-          freezeTarget
-        );
-
-        break;
-      }
-
-
-      case 10:
-        pulseTutorialTarget(
-          approvedPackage
-            ? scannerStation
-            : shippingStation
-        );
-        break;
-
-
-      default:
-        break;
-    }
-  }
-  function advanceTutorial() {
-    tutorialStep += 1;
-
-    if (tutorialStep >= tutorialSteps.length) {
-      completeTutorial();
-      return;
-    }
-
-    runTutorialStep();
-  }
-
-  function completeTutorial() {
-    markTutorialComplete();
-
-    tutorialActive = false;
-
-    clearTutorialTargetPulses();
-
-    hide(tutorialCard);
-    hide(tutorialSkipButton);
-    hide(tutorialHighlight);
-
-    score += 50;
-
-    showFeedback({
-      correct: true,
-      icon: "🎉",
-      title: "Training complete!",
-      message: "All three factory lines are now open!",
-      points: "+50"
-    });
-
-    managedTimeout(() => {
-      clearPieces();
-      resetOrderMachines();
-
-      unlockLanes(3);
-
-      beginNormalOrder(0);
-    }, 1200);
-  }
-
-   function ensureTutorialPiece({
+function ensureTutorialPiece({
   text,
   category,
   lane,
@@ -1212,41 +817,26 @@ case 6: {
   unsafe = false,
   reason = ""
 }) {
-  const onBelt =
+  const alreadyExists =
     activePieces.some(
       (piece) =>
         !piece.removed &&
-        piece.data.text ===
-          text
-    );
-
-  const beingCarried =
+        piece.data.text === text
+    ) ||
     carriedItems.some(
       (item) =>
-        item.text ===
-          text
-    );
-
-  const inMixer =
+        item.text === text
+    ) ||
     mixerPieces.some(
       (item) =>
-        item?.text ===
-          text
-    );
-
-  const onShelf =
+        item?.text === text
+    ) ||
     shelfPieces.some(
       (item) =>
-        item?.text ===
-          text
+        item?.text === text
     );
 
-  if (
-    onBelt ||
-    beingCarried ||
-    inMixer ||
-    onShelf
-  ) {
+  if (alreadyExists) {
     return null;
   }
 
@@ -1263,7 +853,249 @@ case 6: {
   );
 }
 
-  /* =========================================================
+
+function findTutorialPiece(text) {
+  return (
+    activePieces.find(
+      (piece) =>
+        !piece.removed &&
+        piece.data.text === text
+    ) || null
+  );
+}
+
+
+function runTutorialStep() {
+  const step =
+    tutorialSteps[tutorialStep];
+
+  if (!step) {
+    completeTutorial();
+    return;
+  }
+
+  clearTutorialTargetPulses();
+
+  setText(
+    "tutorialStepLabel",
+    `Tutorial ${tutorialStep + 1} of ${tutorialSteps.length}`
+  );
+
+  setText(
+    "tutorialStepTitle",
+    step.title
+  );
+
+  setText(
+    "tutorialStepMessage",
+    step.message
+  );
+
+  setText(
+    "tutorialControlIcon",
+    step.control
+  );
+
+  switch (tutorialStep) {
+    case 0: {
+      clearPieces();
+
+      tutorialTargetPiece =
+        ensureTutorialPiece({
+          text: "Wacky",
+          category: "style",
+          lane: "one",
+          fixedX: 52
+        }) ||
+        findTutorialPiece("Wacky");
+
+      pulseTutorialTarget(
+        tutorialTargetPiece?.element
+      );
+
+      break;
+    }
+
+
+    case 1: {
+      tutorialTargetPiece =
+        findTutorialPiece("Wacky") ||
+        tutorialTargetPiece;
+
+      pulseTutorialTarget(
+        tutorialTargetPiece?.element
+      );
+
+      break;
+    }
+
+
+    case 2: {
+      const pandaPiece =
+        ensureTutorialPiece({
+          text: "Panda",
+          category: "animal",
+          lane: "two",
+          fixedX: 62
+        }) ||
+        findTutorialPiece("Panda");
+
+      pulseTutorialTarget(
+        pandaPiece?.element
+      );
+
+      break;
+    }
+
+
+    case 3:
+      pulseTutorialTarget(
+        carriedItemBubble
+      );
+      break;
+
+
+    case 4:
+      pulseTutorialTarget(
+        mixerStation
+      );
+      break;
+
+
+    case 5: {
+      const bouncePiece =
+        ensureTutorialPiece({
+          text: "Bounce",
+          category: "action",
+          lane: "three",
+          fixedX: 52
+        }) ||
+        findTutorialPiece("Bounce");
+
+      pulseTutorialTarget(
+        bouncePiece?.element
+      );
+
+      break;
+    }
+
+
+    case 6: {
+      const privatePiece =
+        ensureTutorialPiece({
+          text: "Home Address",
+          category: "unsafe",
+          lane: "one",
+          fixedX: 52,
+          unsafe: true,
+          reason:
+            "A home address is private location information."
+        }) ||
+        findTutorialPiece("Home Address");
+
+      pulseTutorialTarget(
+        privatePiece?.element
+      );
+
+      break;
+    }
+
+
+    case 7:
+      pulseTutorialTarget(
+        mixerStation
+      );
+      break;
+
+
+    case 8:
+      pulseTutorialTarget(
+        mixedPackage
+          ? mixerStation
+          : scannerStation
+      );
+      break;
+
+
+    case 9: {
+      timeFreezeCharge = 100;
+      updateHUD();
+
+      const freezeTarget =
+        byId("freezeButton") ||
+        byId("timeFreezeFill")
+          ?.closest(".time-freeze-panel");
+
+      pulseTutorialTarget(
+        freezeTarget
+      );
+
+      break;
+    }
+
+
+    case 10:
+      pulseTutorialTarget(
+        approvedPackage
+          ? scannerStation
+          : shippingStation
+      );
+      break;
+
+
+    default:
+      break;
+  }
+}
+
+
+function advanceTutorial() {
+  tutorialStep += 1;
+
+  if (
+    tutorialStep >=
+    tutorialSteps.length
+  ) {
+    completeTutorial();
+    return;
+  }
+
+  runTutorialStep();
+}
+
+
+function completeTutorial() {
+  markTutorialComplete();
+
+  tutorialActive = false;
+  clearTutorialTargetPulses();
+
+  hide(tutorialCard);
+  hide(tutorialSkipButton);
+  hide(tutorialHighlight);
+
+  score += 50;
+
+  showFeedback({
+    correct: true,
+    icon: "🎉",
+    title: "Training complete!",
+    message:
+      "All three factory lines are now open!",
+    points: "+50"
+  });
+
+  managedTimeout(
+    () => {
+      clearPieces();
+      resetOrderMachines();
+      unlockLanes(3);
+
+      beginNormalOrder(0);
+    },
+    1200
+  );
+}  /* =========================================================
      ORDER SYSTEM
   ========================================================= */
 
