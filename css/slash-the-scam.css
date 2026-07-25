@@ -3422,3 +3422,92 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========================================
+   SLASH THE SCAM COLOR CODING
+   Scams = red
+   Safe = blue
+   Power-ups = purple
+========================================= */
+
+.slash-item,
+.scam-item,
+.safe-item,
+.powerup-item {
+  border-width: 4px;
+  border-style: solid;
+  border-radius: 18px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+/* SCAM ITEMS */
+.scam-item {
+  border-color: #ef4444;
+  background: linear-gradient(180deg, #fff5f5 0%, #ffe4e6 100%);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.scam-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.18);
+}
+
+/* SAFE ITEMS */
+.safe-item {
+  border-color: #3b82f6;
+  background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.safe-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.18);
+}
+
+/* POWER UPS */
+.powerup-item {
+  border-color: #8b5cf6;
+  background: linear-gradient(180deg, #f5f3ff 0%, #ede9fe 100%);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.14);
+}
+
+.powerup-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 5px rgba(139, 92, 246, 0.2);
+}
+
+/* WHEN AN ITEM IS SLICED */
+.slash-item.sliced,
+.scam-item.sliced,
+.safe-item.sliced,
+.powerup-item.sliced {
+  opacity: 0.72;
+  transform: scale(0.92) rotate(-6deg);
+}
+
+/* OPTIONAL LABEL CHIPS */
+.item-type-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.item-type-chip.scam-chip {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.item-type-chip.safe-chip {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.item-type-chip.powerup-chip {
+  background: #ede9fe;
+  color: #6d28d9;
+}
