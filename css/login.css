@@ -1,0 +1,1473 @@
+/* =========================================================
+   SAFETII NET — HERO LOGIN
+   COMPLETE LOGIN / HERO CREATOR STYLES
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body.page-login {
+  min-height: 100vh;
+  margin: 0;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 112, 189, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(21, 211, 220, 0.17),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #fff7fd 0%,
+      #f3f0ff 45%,
+      #ecfbff 100%
+    );
+
+  color: #23324d;
+}
+
+.page-login img {
+  display: block;
+  max-width: 100%;
+}
+
+.page-login button,
+.page-login a {
+  font: inherit;
+}
+
+.page-login button:focus-visible,
+.page-login a:focus-visible {
+  outline: 4px solid #ffe76b;
+  outline-offset: 4px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-login .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  width: 100%;
+  min-height: 100px;
+  padding:
+    14px
+    32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-bottom: 1px solid #e3e9f3;
+
+  box-shadow:
+    0 5px 20px
+    rgba(44, 54, 82, 0.08);
+}
+
+.page-login .site-header .logo {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+
+  text-decoration: none;
+}
+
+.page-login .site-header .logo img {
+  width: auto;
+  height: 72px;
+
+  object-fit: contain;
+}
+
+.page-login .site-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap:
+    12px
+    24px;
+}
+
+.page-login .site-header nav a {
+  color: #293a5d;
+
+  font-weight: 800;
+  text-decoration: none;
+
+  transition:
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.page-login .site-header nav a:hover {
+  color: #7d4cff;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   SHARED BUTTONS
+========================================================= */
+
+.page-login .button,
+.page-login .small-button {
+  min-height: 50px;
+  padding:
+    13px
+    22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  font-weight: 900;
+  text-align: center;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.page-login .button {
+  background: #7d4cff;
+
+  border: 3px solid #5d35c7;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 7px 0
+    #5130ab;
+}
+
+.page-login .button:hover:not(:disabled) {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 4px 0
+    #5130ab;
+}
+
+.page-login .small-button {
+  background: #ffffff;
+
+  border: 3px solid #29bfd0;
+
+  color: #147d89;
+
+  box-shadow:
+    0 6px 0
+    #b9e8ed;
+}
+
+.page-login .small-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 3px 0
+    #b9e8ed;
+}
+
+.page-login button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  filter: grayscale(0.4);
+
+  transform: none !important;
+}
+
+
+/* =========================================================
+   PAGE WRAPPER
+========================================================= */
+
+.hero-login-page {
+  width:
+    min(
+      1380px,
+      calc(100% - 36px)
+    );
+
+  margin: 0 auto;
+  padding:
+    38px
+    0
+    80px;
+}
+
+
+/* =========================================================
+   INTRODUCTION
+========================================================= */
+
+.hero-login-intro {
+  position: relative;
+  overflow: hidden;
+
+  padding: 38px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.2fr)
+    minmax(320px, 0.8fr);
+
+  gap: 30px;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #552ea6 0%,
+      #7d4cff 55%,
+      #29bfd0 100%
+    );
+
+  border: 5px solid #32166f;
+  border-radius: 34px;
+
+  box-shadow:
+    0 22px 50px
+    rgba(58, 36, 124, 0.24);
+}
+
+.hero-login-intro::before {
+  content: "";
+
+  position: absolute;
+  top: -130px;
+  right: -90px;
+
+  width: 340px;
+  height: 340px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+}
+
+.hero-login-intro > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-login-copy .eyebrow {
+  color: #f0e8ff;
+}
+
+.hero-login-copy h1 {
+  margin:
+    6px
+    0
+    15px;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      2.2rem,
+      5vw,
+      4.2rem
+    );
+
+  line-height: 1.05;
+}
+
+.hero-login-copy > p {
+  max-width: 760px;
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.93);
+
+  font-size: 1.1rem;
+  line-height: 1.65;
+}
+
+.hero-login-features {
+  margin-top: 25px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  gap: 14px;
+}
+
+.hero-login-features article {
+  padding: 16px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.13
+    );
+
+  border:
+    2px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.28
+    );
+
+  border-radius: 18px;
+
+  color: #ffffff;
+}
+
+.hero-login-features article > span {
+  flex: 0 0 auto;
+
+  font-size: 1.7rem;
+}
+
+.hero-login-features strong {
+  display: block;
+
+  margin-bottom: 4px;
+}
+
+.hero-login-features p {
+  margin: 0;
+
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.84
+    );
+
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   MEME INTRO CARD
+========================================================= */
+
+.login-meme-card {
+  padding: 22px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border: 4px solid #ffffff;
+  border-radius: 26px;
+
+  text-align: center;
+
+  box-shadow:
+    0 15px 30px
+    rgba(49, 29, 105, 0.2);
+}
+
+.login-meme-frame {
+  width: 170px;
+  height: 170px;
+
+  margin:
+    0
+    auto
+    16px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f3efff,
+      #ecfbff
+    );
+
+  border: 3px solid #d8caff;
+  border-radius: 24px;
+}
+
+.login-meme-frame img {
+  width: 150px;
+  height: 150px;
+
+  object-fit: contain;
+}
+
+.login-meme-card h2 {
+  margin:
+    4px
+    0
+    9px;
+
+  color: #43248d;
+
+  font-size: 1.45rem;
+}
+
+.login-meme-card p:last-child {
+  margin: 0;
+
+  color: #4b5a76;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.page-login .eyebrow {
+  margin:
+    0
+    0
+    7px;
+
+  color: #7650d0;
+
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SAVED HEROES
+========================================================= */
+
+.saved-heroes-section {
+  margin-top: 28px;
+  padding: 28px;
+
+  background: #ffffff;
+
+  border: 4px solid #dcd2fa;
+  border-radius: 30px;
+
+  box-shadow:
+    0 16px 38px
+    rgba(51, 66, 95, 0.1);
+}
+
+.section-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.section-heading-row h2,
+.hero-creator-heading h2 {
+  margin:
+    0
+    0
+    7px;
+
+  color: #42258b;
+
+  font-size:
+    clamp(
+      1.8rem,
+      3vw,
+      2.5rem
+    );
+}
+
+.section-heading-row p,
+.hero-creator-heading p {
+  margin: 0;
+
+  color: #5a6882;
+
+  line-height: 1.55;
+}
+
+.saved-hero-grid {
+  margin-top: 22px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(230px, 1fr)
+    );
+
+  gap: 17px;
+}
+
+.saved-hero-card {
+  position: relative;
+
+  padding: 19px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #f8f5ff
+    );
+
+  border: 3px solid #d8ccf8;
+  border-radius: 23px;
+
+  box-shadow:
+    0 10px 24px
+    rgba(67, 53, 119, 0.08);
+
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.saved-hero-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #7d4cff;
+
+  box-shadow:
+    0 16px 28px
+    rgba(67, 53, 119, 0.14);
+}
+
+.saved-hero-avatar {
+  width: 100px;
+  height: 100px;
+
+  margin:
+    0
+    auto
+    13px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f2edff,
+      #eafaff
+    );
+
+  border: 3px solid #cdbef5;
+  border-radius: 24px;
+
+  font-size: 3rem;
+}
+
+.saved-hero-card h3 {
+  margin:
+    0
+    0
+    7px;
+
+  color: #35236c;
+
+  text-align: center;
+}
+
+.saved-hero-card p {
+  margin:
+    5px
+    0;
+
+  color: #56647e;
+
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+.saved-hero-actions {
+  margin-top: 16px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+}
+
+.saved-hero-actions button {
+  min-height: 42px;
+  padding:
+    9px
+    14px;
+
+  border-radius: 999px;
+
+  font-weight: 850;
+
+  cursor: pointer;
+}
+
+.select-saved-hero {
+  background: #29bfd0;
+
+  border: 2px solid #149aa8;
+
+  color: #ffffff;
+}
+
+.delete-saved-hero {
+  background: #fff0f3;
+
+  border: 2px solid #ed7086;
+
+  color: #9e3048;
+}
+
+.no-saved-heroes {
+  grid-column:
+    1 /
+    -1;
+
+  padding: 30px;
+
+  background: #f8f5ff;
+
+  border: 3px dashed #c9b9f4;
+  border-radius: 22px;
+
+  text-align: center;
+}
+
+.no-saved-heroes > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 2.8rem;
+}
+
+.no-saved-heroes h3 {
+  margin:
+    0
+    0
+    6px;
+
+  color: #4a2c9a;
+}
+
+.no-saved-heroes p {
+  margin: 0;
+
+  color: #5e6c85;
+}
+
+
+/* =========================================================
+   HERO CREATOR
+========================================================= */
+
+.hero-creator-section {
+  margin-top: 28px;
+  padding: 30px;
+
+  background: #ffffff;
+
+  border: 4px solid #dcd2fa;
+  border-radius: 30px;
+
+  box-shadow:
+    0 16px 38px
+    rgba(51, 66, 95, 0.1);
+}
+
+.hero-creator-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.creator-progress {
+  position: relative;
+
+  min-width: 245px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.creator-progress::before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 9%;
+  right: 9%;
+
+  height: 5px;
+
+  background: #dde3ed;
+
+  transform: translateY(-50%);
+}
+
+.creator-progress-step {
+  position: relative;
+  z-index: 1;
+
+  width: 45px;
+  height: 45px;
+
+  display: grid;
+  place-items: center;
+
+  background: #ffffff;
+
+  border: 3px solid #c9d1df;
+  border-radius: 50%;
+
+  color: #788498;
+
+  font-weight: 900;
+}
+
+.creator-progress-step.active {
+  background: #7d4cff;
+
+  border-color: #5531b8;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 0 0 7px
+    rgba(125, 76, 255, 0.14);
+}
+
+.creator-progress-step.complete {
+  background: #34c584;
+
+  border-color: #1fa66a;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   CREATOR LAYOUT
+========================================================= */
+
+.hero-creator-layout {
+  margin-top: 26px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(330px, 0.75fr);
+
+  gap: 26px;
+  align-items: start;
+}
+
+.hero-builder {
+  display: grid;
+  gap: 21px;
+}
+
+
+/* =========================================================
+   BUILDER STATIONS
+========================================================= */
+
+.builder-station {
+  padding: 23px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fbfaff,
+      #f6f3ff
+    );
+
+  border: 3px solid #d9cff7;
+  border-radius: 24px;
+}
+
+.builder-station-heading {
+  margin-bottom: 19px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.station-number {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  display: grid;
+  place-items: center;
+
+  background: #7d4cff;
+
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 3px
+    #6540ca;
+
+  color: #ffffff;
+
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.builder-station-heading h3 {
+  margin:
+    1px
+    0
+    6px;
+
+  color: #3d257d;
+
+  font-size: 1.4rem;
+}
+
+.builder-station-heading p {
+  margin: 0;
+
+  color: #5b6982;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CHOICE GRIDS
+========================================================= */
+
+.choice-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  gap: 13px;
+}
+
+.choice-button {
+  min-height: 120px;
+  padding: 16px;
+
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+
+  background: #ffffff;
+
+  border: 3px solid #d7ddea;
+  border-radius: 19px;
+
+  color: #2b3b5e;
+
+  font-weight: 800;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.choice-button:hover {
+  transform: translateY(-3px);
+
+  border-color: #8b63df;
+
+  box-shadow:
+    0 11px 20px
+    rgba(72, 53, 135, 0.11);
+}
+
+.choice-button.selected {
+  background: #eafff3;
+
+  border-color: #35c27f;
+
+  box-shadow:
+    0 0 0 5px
+    rgba(53, 194, 127, 0.12);
+}
+
+.choice-button span {
+  display: block;
+
+  font-size: 2.35rem;
+}
+
+.color-choice-grid .choice-button span {
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  font-size: 1.8rem;
+}
+
+
+/* =========================================================
+   HERO ID PREVIEW
+========================================================= */
+
+.hero-id-preview {
+  position: sticky;
+  top: 125px;
+
+  padding: 24px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f5f1ff 100%
+    );
+
+  border: 5px solid #7d4cff;
+  border-radius: 28px;
+
+  box-shadow:
+    0 18px 40px
+    rgba(67, 45, 139, 0.18);
+}
+
+.hero-id-preview::before {
+  content: "";
+
+  position: absolute;
+  top: -90px;
+  right: -70px;
+
+  width: 210px;
+  height: 210px;
+
+  background:
+    rgba(41, 191, 208, 0.12);
+
+  border-radius: 50%;
+}
+
+.hero-id-preview > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-id-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.hero-id-label {
+  margin: 0;
+
+  color: #2b9ead;
+
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-id-top h2 {
+  margin:
+    3px
+    0
+    0;
+
+  color: #3b2577;
+}
+
+.hero-id-top img {
+  width: 58px;
+  height: 58px;
+
+  object-fit: contain;
+}
+
+.hero-preview-avatar {
+  position: relative;
+
+  width: 180px;
+  height: 180px;
+
+  margin:
+    22px
+    auto;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f0ebff,
+      #e9faff
+    );
+
+  border: 5px solid #c7b7f2;
+  border-radius: 34px;
+
+  box-shadow:
+    inset
+    0 0 0 5px
+    rgba(255, 255, 255, 0.72);
+}
+
+#heroPreviewSuitIcon {
+  font-size: 5rem;
+}
+
+.hero-preview-sidekick {
+  position: absolute;
+  right: -12px;
+  bottom: -12px;
+
+  width: 62px;
+  height: 62px;
+
+  display: grid;
+  place-items: center;
+
+  background: #fff6c9;
+
+  border: 4px solid #e4bc36;
+  border-radius: 50%;
+
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.hero-name-display {
+  padding: 17px;
+
+  background: #2a244a;
+
+  border: 3px solid #4cd1d6;
+  border-radius: 18px;
+
+  text-align: center;
+}
+
+.hero-name-display p {
+  margin:
+    0
+    0
+    5px;
+
+  color: #a9fff8;
+
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-name-display h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      1.35rem,
+      3vw,
+      2rem
+    );
+
+  overflow-wrap: anywhere;
+}
+
+.hero-preview-details {
+  margin-top: 18px;
+
+  display: grid;
+  gap: 10px;
+}
+
+.hero-preview-details p {
+  margin: 0;
+  padding-bottom: 9px;
+
+  display: grid;
+  grid-template-columns:
+    120px
+    minmax(0, 1fr);
+
+  gap: 10px;
+
+  border-bottom: 1px solid #e2e6ef;
+
+  line-height: 1.45;
+}
+
+.hero-preview-details strong {
+  color: #33415f;
+}
+
+.hero-preview-details span {
+  color: #596680;
+}
+
+.hero-name-safety {
+  margin-top: 18px;
+  padding: 14px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  background: #ecfbff;
+
+  border: 2px solid #81d7e3;
+  border-radius: 16px;
+}
+
+.hero-name-safety > span {
+  flex: 0 0 auto;
+
+  font-size: 1.45rem;
+}
+
+.hero-name-safety p {
+  margin: 0;
+
+  color: #36536c;
+
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.hero-preview-actions {
+  margin-top: 19px;
+
+  display: grid;
+  gap: 11px;
+}
+
+.hero-preview-actions > * {
+  width: 100%;
+}
+
+.save-hero-button {
+  background: #29bfd0 !important;
+
+  border-color: #1597a5 !important;
+
+  box-shadow:
+    0 7px 0
+    #117f8b !important;
+}
+
+
+/* =========================================================
+   DELETE DIALOG
+========================================================= */
+
+.hero-delete-dialog {
+  width:
+    min(
+      500px,
+      calc(100% - 30px)
+    );
+
+  max-width: 500px;
+  margin: auto;
+  padding: 0;
+
+  background: #ffffff;
+
+  border: 4px solid #e55e78;
+  border-radius: 26px;
+
+  box-shadow:
+    0 24px 70px
+    rgba(36, 39, 69, 0.35);
+}
+
+.hero-delete-dialog::backdrop {
+  background:
+    rgba(24, 29, 54, 0.58);
+
+  backdrop-filter: blur(3px);
+}
+
+.hero-delete-dialog-content {
+  padding:
+    34px
+    30px;
+
+  text-align: center;
+}
+
+.hero-delete-icon {
+  width: 76px;
+  height: 76px;
+
+  margin:
+    0
+    auto
+    16px;
+
+  display: grid;
+  place-items: center;
+
+  background: #fff0f3;
+
+  border: 3px solid #ed7087;
+  border-radius: 22px;
+
+  font-size: 2.4rem;
+}
+
+.hero-delete-dialog h2 {
+  margin:
+    0
+    0
+    12px;
+
+  color: #802f44;
+}
+
+.hero-delete-dialog p {
+  margin: 0;
+
+  color: #4d5a72;
+
+  line-height: 1.6;
+}
+
+.hero-delete-actions {
+  margin-top: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.delete-hero-confirm-button {
+  background: #df536f !important;
+
+  border-color: #b63f58 !important;
+
+  box-shadow:
+    0 7px 0
+    #983448 !important;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.page-login footer {
+  padding:
+    26px
+    20px;
+
+  background: #223553;
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+.page-login footer p {
+  margin: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1150px) {
+  .hero-login-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .login-meme-card {
+    max-width: 680px;
+  }
+
+  .hero-creator-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-id-preview {
+    position: static;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .page-login .site-header {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .page-login .site-header nav {
+    justify-content: center;
+  }
+
+  .hero-login-features {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+
+@media (max-width: 720px) {
+  .hero-login-page {
+    width:
+      min(
+        100% - 18px,
+        720px
+      );
+
+    padding-top: 22px;
+  }
+
+  .hero-login-intro,
+  .saved-heroes-section,
+  .hero-creator-section {
+    padding: 21px;
+  }
+
+  .section-heading-row,
+  .hero-creator-heading {
+    flex-direction: column;
+  }
+
+  .creator-progress {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+
+@media (max-width: 520px) {
+  .page-login .site-header {
+    padding:
+      12px
+      16px;
+  }
+
+  .page-login .site-header .logo img {
+    height: 62px;
+  }
+
+  .page-login .site-header nav {
+    gap:
+      10px
+      15px;
+  }
+
+  .page-login .site-header nav a {
+    font-size: 0.88rem;
+  }
+
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .builder-station-heading {
+    flex-direction: column;
+  }
+
+  .hero-preview-details p {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .hero-delete-actions {
+    flex-direction: column;
+  }
+
+  .hero-delete-actions > * {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
