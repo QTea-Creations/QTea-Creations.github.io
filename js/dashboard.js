@@ -92,6 +92,9 @@
       href:
         "missions/identity.html",
 
+       image:
+  "assets/badges/Identity%20Protector%20Badge.png",
+
       badgeName:
         "Identity Protector",
 
@@ -135,6 +138,9 @@
 
       href:
         "missions/password.html",
+
+       image:
+  "assets/badges/Password%20Safe%20Keeper%20Badge.png",
 
       badgeName:
         "Password Safe Keeper",
@@ -180,6 +186,9 @@
       href:
         "missions/phishing.html",
 
+       image:
+  "assets/badges/Phish%20Finder%20Badge.png",
+
       badgeName:
         "Phish Finder",
 
@@ -224,6 +233,9 @@
       href:
         "missions/footprint.html",
 
+       image:
+  "assets/badges/Digital%20Footprint%20Defender%20Badge.png",
+
       badgeName:
         "Digital Footprint Defender",
 
@@ -267,6 +279,9 @@
 
       href:
         "missions/responder.html",
+
+       image:
+  "assets/badges/Cyber%20Responder%20Badge.png",
 
       badgeName:
         "Cyber Responder",
@@ -943,6 +958,19 @@
         ? "You completed every Safetii Net mission and earned all five cybersecurity badges."
         : currentMission.description
     );
+
+     const currentMissionImage =
+  byId(
+    "currentMissionImage"
+  );
+
+if (currentMissionImage) {
+  currentMissionImage.src =
+    currentMission.image;
+
+  currentMissionImage.alt =
+    `${currentMission.title} badge`;
+}
 
     const currentButton =
       byId(
