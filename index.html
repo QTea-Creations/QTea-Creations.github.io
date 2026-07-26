@@ -5,39 +5,52 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1"
   >
 
-  <script src="js/safetii-debug.js"></script>
+  <meta
+    name="description"
+    content="Safetii Net helps children learn cybersecurity through interactive missions, games, badges, and family resources."
+  >
 
   <title>
-    Safetii Net | Cyber Super Heroes
+    Safetii Net | Cyber Safety Adventures
   </title>
 
   <link
-rel="icon" 
-    type="image/png" 
-    href="../../assets/Safetii%20NetLogo.png">
+    rel="icon"
+    type="image/png"
+    href="assets/Safetii%20NetLogo.png?v=110"
   >
 
   <link
     rel="stylesheet"
-    href="css/style.css"
+    href="css/style.css?v=110"
   >
 
-<script
-  src="js/safetii-debug.js?v=41"
-  defer
-></script>
+  <link
+    rel="stylesheet"
+    href="css/home.css?v=110"
+  >
+
+  <script
+    src="js/safetii-debug.js?v=110"
+    defer
+  ></script>
 </head>
 
 <body class="page-home">
 
+  <!-- =====================================================
+       SITE HEADER
+  ====================================================== -->
+
   <header class="site-header">
 
     <a
-      href="index.html"
       class="logo"
+      href="index.html"
+      aria-label="Safetii Net home"
     >
       <img
         src="assets/SafetiiNet-logo-navbar.png"
@@ -45,12 +58,13 @@ rel="icon"
       >
     </a>
 
-    <nav>
-      <a href="login.html">
-        Hero Login
+    <nav aria-label="Main navigation">
+
+      <a href="dashboard.html">
+        Hero Headquarters
       </a>
 
-<a href="../index.html#missions">
+      <a href="missions.html">
         Missions
       </a>
 
@@ -65,195 +79,619 @@ rel="icon"
       <a href="teachers.html">
         Teachers
       </a>
+
+      <a href="about.html">
+        About
+      </a>
+
     </nav>
+
+    <a
+      class="header-hero-button"
+      id="headerHeroButton"
+      href="login.html"
+    >
+      Create a Hero
+    </a>
 
   </header>
 
 
   <main>
 
-    <!-- HERO -->
+    <!-- ===================================================
+         HERO
+    ==================================================== -->
 
-    <section class="hero">
+    <section class="home-hero">
 
-      <div class="hero-text">
+      <div class="home-hero-copy">
 
         <p class="eyebrow">
-          Become a Cyber Super Hero
+          Cyber Safety Starts Here
         </p>
 
         <h1>
-          Learn online safety through fun missions,
-          games, and badges.
+          Learn. Play. Protect Your Digital World.
         </h1>
 
-        <p class="hero-copy">
-          Safetii Net helps kids protect their identity,
-          spot scams, build strong passwords, respond to
-          online problems, and make smart digital choices.
+        <p class="home-hero-description">
+          Safetii Net turns cybersecurity lessons into missions,
+          games, badges, and challenges designed for young digital
+          citizens.
         </p>
 
-        <a
-          class="button"
-          href="login.html"
-        >
-          Start Your Adventure
-        </a>
+
+        <div class="home-hero-actions">
+
+          <a
+            class="button"
+            id="homePrimaryButton"
+            href="login.html"
+          >
+            Start Your Adventure
+          </a>
+
+          <a
+            class="small-button"
+            href="#missionJourney"
+          >
+            Explore the Missions
+          </a>
+
+        </div>
+
+
+        <div class="home-trust-row">
+
+          <span>
+            🛡️ Five Missions
+          </span>
+
+          <span>
+            🎮 Interactive Games
+          </span>
+
+          <span>
+            🏅 Earnable Badges
+          </span>
+
+          <span>
+            📚 Family Resources
+          </span>
+
+        </div>
 
       </div>
 
 
-      <div class="mascot-card">
+      <aside class="home-meme-card">
 
-        <img
-          class="mascot-img"
-          src="assets/mascot/welcome.png"
-          alt="Meme, the Safetii Net mascot, welcoming Cyber Super Heroes"
-        >
+        <div class="home-meme-image">
 
-        <h2>
-          Hi, Cyber Super Hero!
+          <img
+            src="assets/mascot/welcome.png"
+            alt="Meme, the Safetii Net cyber mentor"
+          >
+
+        </div>
+
+        <div>
+
+          <p class="eyebrow">
+            Meet Meme
+          </p>
+
+          <h2>
+            Your Cyber Mentor
+          </h2>
+
+          <p>
+            Meme will guide you through every mission and help you
+            understand the choices that keep accounts, information,
+            and people safer online.
+          </p>
+
+        </div>
+
+      </aside>
+
+    </section>
+
+
+    <!-- ===================================================
+         CHOOSE A PATH
+    ==================================================== -->
+
+    <section
+      class="home-section path-section"
+      aria-labelledby="choosePathTitle"
+    >
+
+      <header class="home-section-heading">
+
+        <p class="eyebrow">
+          Choose Your Path
+        </p>
+
+        <h2 id="choosePathTitle">
+          Safetii Net is built for the whole learning team.
         </h2>
 
         <p>
-          I’m Meme, your mentor. Your first mission is ready!
+          Students explore missions while families and educators
+          receive resources that support the same cyber-safety skills.
         </p>
+
+      </header>
+
+
+      <div class="path-card-grid">
+
+        <a
+          class="path-card student-path-card"
+          href="login.html"
+        >
+
+          <div class="path-card-icon">
+            🦸
+          </div>
+
+          <p class="eyebrow">
+            Students
+          </p>
+
+          <h3>
+            Become a Cyber Hero
+          </h3>
+
+          <p>
+            Create a Hero identity, complete missions, earn points,
+            and collect all five badges.
+          </p>
+
+          <span>
+            Start Hero Training →
+          </span>
+
+        </a>
+
+
+        <a
+          class="path-card parent-path-card"
+          href="parents.html"
+        >
+
+          <div class="path-card-icon">
+            🏠
+          </div>
+
+          <p class="eyebrow">
+            Parents and Caregivers
+          </p>
+
+          <h3>
+            Support Safety at Home
+          </h3>
+
+          <p>
+            Use conversation starters, family checklists, and clear
+            steps for handling online problems.
+          </p>
+
+          <span>
+            Open Parent Resources →
+          </span>
+
+        </a>
+
+
+        <a
+          class="path-card teacher-path-card"
+          href="teachers.html"
+        >
+
+          <div class="path-card-icon">
+            🍎
+          </div>
+
+          <p class="eyebrow">
+            Teachers
+          </p>
+
+          <h3>
+            Bring Cyber Safety to Class
+          </h3>
+
+          <p>
+            Access classroom activities, lesson support, and
+            resources connected to the Safetii Net missions.
+          </p>
+
+          <span>
+            Open Teacher Resources →
+          </span>
+
+        </a>
 
       </div>
 
     </section>
 
 
-    <!-- MISSIONS -->
+    <!-- ===================================================
+         MISSION JOURNEY
+    ==================================================== -->
 
     <section
-      id="missions"
-      class="section"
+      class="home-section mission-journey-section"
+      id="missionJourney"
+      aria-labelledby="missionJourneyTitle"
     >
 
-      <p class="eyebrow">
-        Your Hero Journey
-      </p>
+      <header class="home-section-heading mission-heading-row">
 
-      <h2>
-        Complete missions and unlock cyber powers.
-      </h2>
+        <div>
 
+          <p class="eyebrow">
+            The Cyber Hero Journey
+          </p>
 
-      <div class="mission-grid">
+          <h2 id="missionJourneyTitle">
+            Five missions. Five badges. One safer digital world.
+          </h2>
+
+          <p>
+            Each mission focuses on a different cybersecurity skill.
+            The student’s current rank becomes the title of the most
+            recently earned badge.
+          </p>
+
+        </div>
 
         <a
-          class="mission-card mission-link image-mission-card"
-          href="missions/identity.html"
+          class="small-button"
+          href="missions.html"
         >
-          <img
-            src="assets/Identity Protector.png"
-            alt="Identity Protector mission"
-          >
+          View All Missions
+        </a>
+
+      </header>
+
+
+      <div class="home-mission-grid">
+
+        <!-- MISSION 1 -->
+
+        <a
+          class="home-mission-card"
+          href="missions/identity.html"
+          data-home-mission="identity"
+        >
+
+          <div class="home-mission-number">
+            Mission 1
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Identity%20Protector%20Badge.png"
+              alt="Identity Protector badge"
+            >
+
+          </div>
 
           <h3>
             Identity Protector
           </h3>
 
           <p>
-            Learn what information is safe to share
-            and what should stay private.
+            Learn how to recognize personal, private, and secret
+            information.
           </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
         </a>
 
 
+        <!-- MISSION 2 -->
+
         <a
-          class="mission-card mission-link image-mission-card"
+          class="home-mission-card"
           href="missions/password.html"
+          data-home-mission="password"
         >
-          <img
-            src="assets/Password Safe Keeper.png"
-            alt="Password Safe Keeper mission"
-          >
+
+          <div class="home-mission-number">
+            Mission 2
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Password%20Safe%20Keeper%20Badge.png"
+              alt="Password Safe Keeper badge"
+            >
+
+          </div>
 
           <h3>
             Password Safe Keeper
           </h3>
 
           <p>
-            Build strong passwords and keep accounts protected.
+            Build stronger passwords and add protection to important
+            accounts.
           </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
         </a>
 
 
+        <!-- MISSION 3 -->
+
         <a
-          class="mission-card mission-link image-mission-card"
-          href="dashboard.html"
+          class="home-mission-card"
+          href="missions/phishing.html"
+          data-home-mission="phishing"
         >
-          <img
-            src="assets/Phish Finder.png"
-            alt="Phish Finder mission"
-          >
+
+          <div class="home-mission-number">
+            Mission 3
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Phish%20Finder%20Badge.png"
+              alt="Phish Finder badge"
+            >
+
+          </div>
 
           <h3>
             Phish Finder
           </h3>
 
           <p>
-            Investigate fake emails, scam texts,
-            and suspicious links.
+            Investigate suspicious messages, links, requests, and
+            online offers.
           </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
         </a>
 
 
+        <!-- MISSION 4 -->
+
         <a
-          class="mission-card mission-link image-mission-card"
-          href="dashboard.html"
+          class="home-mission-card"
+          href="missions/footprint.html"
+          data-home-mission="footprint"
         >
-          <img
-            src="assets/Digital Footprint Defender.png"
-            alt="Digital Footprint Defender mission"
-          >
+
+          <div class="home-mission-number">
+            Mission 4
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Digital%20Footprint%20Defender%20Badge.png"
+              alt="Digital Footprint Defender badge"
+            >
+
+          </div>
 
           <h3>
             Digital Footprint Defender
           </h3>
 
           <p>
-            Think before posting and create a positive
+            Understand how posts and choices can shape a lasting
             online reputation.
           </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
         </a>
 
 
+        <!-- MISSION 5 -->
+
         <a
-          class="mission-card mission-link image-mission-card"
-          href="dashboard.html"
+          class="home-mission-card"
+          href="missions/responder.html"
+          data-home-mission="responder"
         >
-          <img
-            src="assets/Cyber Responder.png"
-            alt="Cyber Responder mission"
-          >
+
+          <div class="home-mission-number">
+            Mission 5
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Cyber%20Responder%20Badge.png"
+              alt="Cyber Responder badge"
+            >
+
+          </div>
 
           <h3>
             Cyber Responder
           </h3>
 
           <p>
-            Practice how to block, report, save evidence,
-            and tell a trusted adult.
+            Practice blocking, reporting, saving evidence, and
+            getting the right help.
           </p>
-        </a>
 
-
-        <article class="mission-card special">
-
-          <span>
-            🏆
+          <span class="mission-card-link">
+            Begin Mission →
           </span>
 
+        </a>
+
+      </div>
+
+
+      <div class="badge-rank-explanation">
+
+        <div class="badge-rank-icon">
+          🏅
+        </div>
+
+        <div>
+
+          <p class="eyebrow">
+            Badge-Based Hero Ranks
+          </p>
+
           <h3>
-            Final Cyber Challenge
+            Your newest badge becomes your current rank.
           </h3>
 
           <p>
-            Earn your official Certified Cyber Super Hero
-            certificate.
+            A student begins as a <strong>Cyber Mentee</strong>.
+            After completing a mission, their rank changes to that
+            badge title. Completing all five missions unlocks
+            <strong>Cyber Super Hero</strong>.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         LEARNING AREAS
+    ==================================================== -->
+
+    <section
+      class="home-section learning-section"
+      aria-labelledby="learningTitle"
+    >
+
+      <header class="home-section-heading">
+
+        <p class="eyebrow">
+          Skills for Digital Life
+        </p>
+
+        <h2 id="learningTitle">
+          Students practice more than memorizing rules.
+        </h2>
+
+        <p>
+          Activities ask students to investigate situations, make
+          decisions, explain choices, and apply cyber-safety skills.
+        </p>
+
+      </header>
+
+
+      <div class="learning-skill-grid">
+
+        <article>
+
+          <span aria-hidden="true">
+            🪪
+          </span>
+
+          <h3>
+            Protect Information
+          </h3>
+
+          <p>
+            Recognize what can be shared and what needs stronger
+            protection.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <span aria-hidden="true">
+            🔐
+          </span>
+
+          <h3>
+            Secure Accounts
+          </h3>
+
+          <p>
+            Build better password habits and use extra security
+            checks.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <span aria-hidden="true">
+            🔎
+          </span>
+
+          <h3>
+            Investigate Messages
+          </h3>
+
+          <p>
+            Notice pressure, unusual requests, misleading links, and
+            other warning signs.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <span aria-hidden="true">
+            👣
+          </span>
+
+          <h3>
+            Think Before Posting
+          </h3>
+
+          <p>
+            Consider audiences, consequences, privacy, and digital
+            footprints.
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <span aria-hidden="true">
+            🚨
+          </span>
+
+          <h3>
+            Respond Safely
+          </h3>
+
+          <p>
+            Stop, save evidence, block, report, and reach the person
+            best positioned to help.
           </p>
 
         </article>
@@ -263,331 +701,314 @@ rel="icon"
     </section>
 
 
-    <!-- CYBER ARCADE -->
-
-  <!-- CYBER ARCADE -->
-
-<section
-  id="arcade"
-  class="section arcade-preview-section"
->
-  <div class="arcade-preview-heading">
-
-    <div>
-      <p class="eyebrow">
-        Cyber Arcade
-      </p>
-
-      <h2>
-        Featured Games of the Week
-      </h2>
-
-      <p class="arcade-preview-copy">
-        Replay your favorite cyber challenges, sharpen your
-        online-safety skills, earn points, and beat your best scores.
-      </p>
-    </div>
-
-    <a
-      class="button arcade-view-all-button"
-      href="arcade/index.html"
-    >
-      View All Games
-    </a>
-
-  </div>
-
-
-  <div class="featured-game-grid">
-
-    <!-- PIECES OF ME -->
-
-    <a
-      class="featured-game-card"
-      href="arcade/games/pieces-of-me.html"
-    >
-      <div class="featured-game-top">
-
-        <span class="featured-game-badge">
-          Identity
-        </span>
-
-        <span class="featured-game-points">
-          ⭐ 10–30 pts
-        </span>
-
-      </div>
-
-      <div class="featured-game-icon pieces-game-icon">
-        🧩
-      </div>
-
-      <h3>
-        Pieces of Me
-      </h3>
-
-      <p>
-        Sort identity clues into safe, personal, private,
-        and secret information.
-      </p>
-
-      <span class="featured-game-link">
-        Play Game →
-      </span>
-    </a>
-
-
-    <!-- CLUE COLLECTOR -->
-
-    <a
-      class="featured-game-card featured-game-card-highlight"
-      href="arcade/games/clue-collector.html"
-    >
-      <div class="featured-game-top">
-
-        <span class="featured-game-badge">
-          Featured
-        </span>
-
-        <span class="featured-game-points">
-          ⭐ 10–30 pts
-        </span>
-
-      </div>
-
-      <div class="featured-game-icon clue-game-icon">
-        🔎
-      </div>
-
-      <h3>
-        Clue Collector
-      </h3>
-
-      <p>
-        Investigate social media posts and uncover the
-        details that reveal too much.
-      </p>
-
-      <span class="featured-game-link">
-        Start Investigating →
-      </span>
-    </a>
-
-
-    <!-- TRUST CIRCLE -->
-
-    <a
-      class="featured-game-card"
-      href="arcade/games/trust-circle.html"
-    >
-      <div class="featured-game-top">
-
-        <span class="featured-game-badge">
-          Trust
-        </span>
-
-        <span class="featured-game-points">
-          ⭐ 10–30 pts
-        </span>
-
-      </div>
-
-      <div class="featured-game-icon trust-game-icon">
-        🤝
-      </div>
-
-      <h3>
-        Trust Circle
-      </h3>
-
-      <p>
-        Decide who should receive different kinds of
-        information—and who should not.
-      </p>
-
-      <span class="featured-game-link">
-        Play Game →
-      </span>
-    </a>
-
-
-    <!-- IMPOSTOR ALERT -->
-
-    <a
-      class="featured-game-card"
-      href="arcade/games/impostor-alert.html"
-    >
-      <div class="featured-game-top">
-
-        <span class="featured-game-badge">
-          Detective
-        </span>
-
-        <span class="featured-game-points">
-          ⭐ 10–30 pts
-        </span>
-
-      </div>
-
-      <div class="featured-game-icon impostor-game-icon">
-        🚨
-      </div>
-
-      <h3>
-        Impostor Alert
-      </h3>
-
-      <p>
-        Spot fake identities, suspicious messages,
-        and people pretending to be someone else.
-      </p>
-
-      <span class="featured-game-link">
-        Play Game →
-      </span>
-    </a>
-
-
-    <!-- USERNAME LAB -->
-
-    <a
-      class="featured-game-card"
-      href="arcade/games/username-lab.html"
-    >
-      <div class="featured-game-top">
-
-        <span class="featured-game-badge">
-          Builder
-        </span>
-
-        <span class="featured-game-points">
-          ⭐ 10–30 pts
-        </span>
-
-      </div>
-
-      <div class="featured-game-icon username-game-icon">
-        🧪
-      </div>
-
-      <h3>
-        Username Lab
-      </h3>
-
-      <p>
-        Build usernames that are creative without exposing
-        names, birthdays, schools, or locations.
-      </p>
-
-      <span class="featured-game-link">
-        Enter the Lab →
-      </span>
-    </a>
-
-  </div>
-
-
-  <div class="arcade-preview-footer">
-
-    <div>
-      <span>
-        🌶️ Mild
-      </span>
-
-      <span>
-        🌶️🌶️ Spicy
-      </span>
-
-      <span>
-        🌶️🌶️🌶️ Hot
-      </span>
-    </div>
-
-    <p>
-      Choose your heat level and earn more points as the
-      challenges get harder.
-    </p>
-
-  </div>
-</section>
-
-
-    <!-- PARENTS -->
+    <!-- ===================================================
+         CYBER ARCADE
+    ==================================================== -->
 
     <section
-      id="parents"
-      class="section split"
+      class="home-section home-arcade-section"
+      id="arcade"
+      aria-labelledby="homeArcadeTitle"
     >
 
-      <div>
+      <div class="home-arcade-copy">
 
         <p class="eyebrow">
-          For Families
+          Cyber Arcade
         </p>
 
-        <h2>
-          Online safety support at home.
+        <h2 id="homeArcadeTitle">
+          Practice cyber skills through games.
         </h2>
 
         <p>
-          Parents will find mentors, conversation starters,
-          printable checklists, and family cyber safety activities.
+          Replay mission skills, explore new challenges, select a
+          difficulty level, and earn points for correct decisions.
         </p>
+
+
+        <div class="arcade-feature-list">
+
+          <span>
+            🧩 Sorting Games
+          </span>
+
+          <span>
+            🔎 Investigation Games
+          </span>
+
+          <span>
+            🧪 Builder Challenges
+          </span>
+
+          <span>
+            🚨 Response Scenarios
+          </span>
+
+        </div>
+
+
+        <a
+          class="button"
+          href="arcade/index.html"
+        >
+          Enter the Cyber Arcade
+        </a>
 
       </div>
 
 
-      <div class="feature-box">
-        🏠 Parent Portal coming soon!
+      <div class="home-arcade-visual">
+
+        <div class="arcade-screen">
+
+          <p>
+            CYBER ARCADE
+          </p>
+
+          <div class="arcade-game-icons">
+
+            <span>
+              🧩
+            </span>
+
+            <span>
+              🔎
+            </span>
+
+            <span>
+              🛡️
+            </span>
+
+            <span>
+              🚨
+            </span>
+
+          </div>
+
+          <strong>
+            Choose a challenge!
+          </strong>
+
+        </div>
+
+        <div class="arcade-controls">
+
+          <span>
+            ✚
+          </span>
+
+          <span>
+            ● ●
+          </span>
+
+        </div>
+
       </div>
 
     </section>
 
 
-    <!-- TEACHERS -->
+    <!-- ===================================================
+         FAMILY AND EDUCATOR SUPPORT
+    ==================================================== -->
 
     <section
-      id="teachers"
-      class="section split"
+      class="home-section support-section"
+      aria-labelledby="supportTitle"
     >
+
+      <header class="home-section-heading">
+
+        <p class="eyebrow">
+          Learning Beyond the Missions
+        </p>
+
+        <h2 id="supportTitle">
+          Continue the conversation at home and in class.
+        </h2>
+
+      </header>
+
+
+      <div class="support-card-grid">
+
+        <article class="support-card">
+
+          <div class="support-card-icon">
+            🏠
+          </div>
+
+          <div>
+
+            <h3>
+              Parent and Caregiver Resources
+            </h3>
+
+            <p>
+              Find family discussion questions, practical safety
+              steps, checklists, and trusted reporting resources.
+            </p>
+
+            <a href="parents.html">
+              Visit the Parent Center →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <article class="support-card">
+
+          <div class="support-card-icon">
+            🍎
+          </div>
+
+          <div>
+
+            <h3>
+              Teacher Resources
+            </h3>
+
+            <p>
+              Use classroom lessons, activities, discussion prompts,
+              and extensions connected to the missions.
+            </p>
+
+            <a href="teachers.html">
+              Visit the Teacher Center →
+            </a>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FINAL CALL TO ACTION
+    ==================================================== -->
+
+    <section class="home-final-cta">
 
       <div>
 
         <p class="eyebrow">
-          For Educators
+          Hero Headquarters Is Ready
         </p>
 
         <h2>
-          Cyber safety resources for classrooms.
+          Begin your Safetii Net adventure.
         </h2>
 
-        <p>
-          Teachers will be able to access lesson plans,
-          worksheets, classroom activities, student progress
-          tools, and certificates.
+        <p id="homeFinalMessage">
+          Create a Cyber Hero, complete your first mission, and begin
+          building your badge collection.
         </p>
 
       </div>
 
 
-      <div class="feature-box">
-        🍎 Teacher Dashboard coming soon!
-      </div>
+      <a
+        class="button"
+        id="homeFinalButton"
+        href="login.html"
+      >
+        Create Your Hero
+      </a>
 
     </section>
 
   </main>
 
 
-  <footer>
-    <p>
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="home-footer">
+
+    <div class="home-footer-brand">
+
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+
+      <p>
+        Helping young people become confident, thoughtful, and
+        responsible digital citizens.
+      </p>
+
+    </div>
+
+
+    <div class="home-footer-links">
+
+      <div>
+
+        <h2>
+          Students
+        </h2>
+
+        <a href="login.html">
+          Hero Login
+        </a>
+
+        <a href="dashboard.html">
+          Hero Headquarters
+        </a>
+
+        <a href="missions.html">
+          Missions
+        </a>
+
+        <a href="arcade/index.html">
+          Cyber Arcade
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          Resources
+        </h2>
+
+        <a href="parents.html">
+          Parents
+        </a>
+
+        <a href="teachers.html">
+          Teachers
+        </a>
+
+        <a href="about.html">
+          About Safetii Net
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <p class="home-footer-copyright">
       © 2026 Safetii Net. Helping kids become Cyber Super Heroes.
     </p>
+
   </footer>
 
 
-<script
-  src="js/script.js?v=41"
-></script>
+  <!-- =====================================================
+       HOMEPAGE CONTROLLER
+  ====================================================== -->
+
+  <script src="js/home.js?v=110"></script>
+
 </body>
 </html>
