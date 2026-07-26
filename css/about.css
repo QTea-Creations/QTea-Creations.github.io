@@ -1564,3 +1564,38 @@ main {
 
   border-radius: 20px;
 }
+
+   /* =========================================================
+   CREATOR PHOTO FRAME OVERRIDE
+========================================================= */
+
+.creator-photo-card {
+  min-height: 0 !important;
+
+  overflow: hidden !important;
+
+  background: transparent !important;
+
+  border: 2px solid #e1def2 !important;
+  border-radius: 26px !important;
+
+  box-shadow:
+    0 12px 26px
+    rgba(41, 49, 80, 0.1) !important;
+}
+
+.creator-photo {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  display: block !important;
+
+  object-fit: cover !important;
+  object-position: center top !important;
+
+  border: 0 !important;
+  border-radius: 23px !important;
+
+  box-shadow: none !important;
+}
