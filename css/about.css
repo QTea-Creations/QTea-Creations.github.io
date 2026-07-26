@@ -864,27 +864,9 @@ main {
 }
 
 .creator-photo-placeholder {
-  min-height: 360px;
-
-  display: grid;
-  place-items: center;
-
-  background: #eee8ff;
-
-  border:
-    4px solid
-    #8f76d8;
-
-  border-radius: 28px;
-
-  box-shadow:
-    0 12px 0
-    rgba(
-      111,
-      83,
-      189,
-      0.15
-    );
+.creator-photo-card,
+.creator-photo {
+  min-height: 320px;
 }
 
 .creator-photo-placeholder span {
@@ -1535,4 +1517,20 @@ main {
   .about-button:hover {
     transform: none;
   }
+}
+
+.creator-photo-card,
+.creator-photo {
+  min-height: 280px;
+}
+
+.creator-photo-caption {
+  right: 12px;
+  bottom: 12px;
+
+  padding:
+    8px
+    13px;
+
+  font-size: 0.88rem;
 }
