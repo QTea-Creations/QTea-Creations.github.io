@@ -1763,33 +1763,31 @@
      ROOM 1 — PASSWORD POWER LAB
   ===================================================== */
 
-  function loadPasswordPowerLab() {
-    setText(
-      "passwordPowerProgress",
-      state.passwordComparisonIndex
-    );
+function loadPasswordPowerLab() {
+  setText(
+    "passwordPowerProgress",
+    Math.min(
+      state.passwordComparisonIndex,
+      PASSWORD_COMPARISONS.length
+    )
+  );
 
-    renderPasswordComparison();
+  renderPasswordComparison();
 
-    renderPasswordUpgrades();
+  renderPasswordUpgrades();
 
-    updatePasswordPowerMeter();
+  updatePasswordPowerMeter();
 
-    if (
-      state.passwordComparisonComplete
-    ) {
-      unlockPasswordBuilder();
-    }
-
-    if (
-      state.passwordPowerComplete
-    ) {
-      byId(
-        "finishPasswordPowerLab"
-      ).disabled =
-        false;
-    }
+  if (
+    state.passwordComparisonComplete
+  ) {
+    unlockPasswordBuilder();
   }
+
+  syncPowerLabButton();
+
+  saveProgress();
+}
 
 
   function renderPasswordComparison() {
@@ -2104,33 +2102,29 @@
 
     renderPasswordUpgrades();
 
-    if (
-      state.passwordPowerScore >=
-      80
-    ) {
-      state.passwordPowerComplete =
-        true;
+ if (
+  state.passwordPowerScore >=
+  80
+) {
+  state.passwordPowerComplete =
+    true;
 
-      showElement(
-        "passwordBuilderResult"
-      );
+  showElement(
+    "passwordBuilderResult"
+  );
 
-      byId(
-        "finishPasswordPowerLab"
-      ).disabled =
-        false;
+  setMemeTip(
+    "You powered up the pretend password. Press Continue to Crack Attack.",
+    "congrats"
+  );
+} else {
+  setMemeTip(
+    "Good upgrade. Keep adding safe improvements until the power meter reaches the strong zone.",
+    "thinking"
+  );
+}
 
-      setMemeTip(
-        "You powered up the pretend password. It is longer and less predictable now.",
-        "congrats"
-      );
-    } else {
-      setMemeTip(
-        "Good upgrade. Keep adding safe improvements until the power meter reaches the strong zone.",
-        "thinking"
-      );
-    }
-
+syncPowerLabButton();
     saveProgress();
   }
 
@@ -2234,31 +2228,76 @@
     updateBuilderPasswordText();
   }
 
-
-  function finishPasswordPowerLab() {
-    if (
-      !state.passwordPowerComplete
-    ) {
-      return;
-    }
-
-    state.currentSection =
-      "crackAttackZone";
-
-    saveProgress();
-
-    loadCrackAttack();
-
-    showSection(
-      "crackAttackZone"
+   function syncPowerLabButton() {
+  const finishButton =
+    byId(
+      "finishPasswordPowerLab"
     );
 
-    setMemeTip(
-      "Now find the clues that could help a simulated attacker guess a password.",
-      "welcome"
-    );
+  if (!finishButton) {
+    return;
   }
 
+  const labComplete =
+    state.passwordPowerScore >=
+      80 ||
+    state.passwordPowerComplete ===
+      true;
+
+  state.passwordPowerComplete =
+    labComplete;
+
+  finishButton.disabled =
+    !labComplete;
+
+  finishButton.classList.toggle(
+    "locked-action",
+    !labComplete
+  );
+
+  finishButton.textContent =
+    labComplete
+      ? "Continue to Crack Attack 🤖"
+      : "Power Up the Password to Continue";
+}
+
+function finishPasswordPowerLab() {
+  const labComplete =
+    state.passwordPowerScore >=
+      80 ||
+    state.passwordPowerComplete ===
+      true;
+
+  if (!labComplete) {
+    syncPowerLabButton();
+
+    setMemeTip(
+      "Power up the pretend password until the meter reaches the strong zone.",
+      "thinking"
+    );
+
+    return;
+  }
+
+  state.passwordPowerComplete =
+    true;
+
+  state.currentSection =
+    "crackAttackZone";
+
+  saveProgress();
+
+  loadCrackAttack();
+
+  showSection(
+    "crackAttackZone"
+  );
+
+  setMemeTip(
+    "Now find the clues that could help a simulated attacker guess a password.",
+    "welcome"
+  );
+}
 
   /* =====================================================
      ROOM 2 — CRACK ATTACK
