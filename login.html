@@ -1,80 +1,735 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="js/safetii-debug.js"></script>
-  <title>Hero Headquarters | Safetii Net</title>
-    <link rel="icon" type="image/png" href="assets/Safetii%20NetLogo.png">
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Create, select, and customize a Safetii Net Cyber Hero."
+  >
+
+  <title>
+    Hero Login | Safetii Net
+  </title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/Safetii%20NetLogo.png?v=100"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/style.css?v=100"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/login.css?v=100"
+  >
+
+  <script
+    src="js/safetii-debug.js?v=100"
+    defer
+  ></script>
 </head>
+
 <body class="page-login">
+
+  <!-- =====================================================
+       SITE HEADER
+  ====================================================== -->
+
   <header class="site-header">
-    <a href="index.html" class="logo">
-    <img src="assets/SafetiiNet-logo-navbar.png" alt="Safetii Net">
-</a>
-    <nav>
-      <a href="dashboard.html">Hero Headquarters</a>
-      <a href="index.html#missions">Missions</a>
-      <a href="index.html#arcade">Cyber Arcade</a>
-      <a href="parents.html">Parents</a>
-      <a href="teachers.html">Teachers</a>
+
+    <a
+      href="index.html"
+      class="logo"
+      aria-label="Safetii Net home"
+    >
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+    </a>
+
+    <nav aria-label="Main navigation">
+
+      <a href="dashboard.html">
+        Hero Headquarters
+      </a>
+
+      <a href="missions.html">
+        Missions
+      </a>
+
+      <a href="arcade/index.html">
+        Cyber Arcade
+      </a>
+
+      <a href="notebook.html">
+        Cyber Notebook
+      </a>
+
+      <a href="parents.html">
+        Parents
+      </a>
+
+      <a href="teachers.html">
+        Teachers
+      </a>
+
     </nav>
+
   </header>
 
-  <main class="login-page">
-    <section class="login-card">
-      <div>
-        <p class="eyebrow">Cyber Super Hero Recruitment</p>
-        <h1>Create Your Hero Identity</h1>
-        <p>
-          Pick your hero suit color, sidekick, and cyber power.
-          Meme will create your Cyber Super Hero name.
+
+  <!-- =====================================================
+       HERO LOGIN PAGE
+  ====================================================== -->
+
+  <main class="hero-login-page">
+
+    <!-- ===================================================
+         INTRODUCTION
+    ==================================================== -->
+
+    <section class="hero-login-intro">
+
+      <div class="hero-login-copy">
+
+        <p class="eyebrow">
+          Hero Headquarters Registration
         </p>
+
+        <h1>
+          Create Your Cyber Hero
+        </h1>
+
+        <p>
+          Choose a suit, sidekick, and cyber power. Meme will
+          help create a safe Hero Name that does not use personal
+          information.
+        </p>
+
+
+        <div class="hero-login-features">
+
+          <article>
+
+            <span aria-hidden="true">
+              🦸
+            </span>
+
+            <div>
+
+              <strong>
+                Create Your Hero
+              </strong>
+
+              <p>
+                Build a new Cyber Hero identity.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article>
+
+            <span aria-hidden="true">
+              📚
+            </span>
+
+            <div>
+
+              <strong>
+                Save Your Progress
+              </strong>
+
+              <p>
+                Each hero keeps their own missions and badges.
+              </p>
+
+            </div>
+
+          </article>
+
+
+          <article>
+
+            <span aria-hidden="true">
+              🔄
+            </span>
+
+            <div>
+
+              <strong>
+                Switch Heroes
+              </strong>
+
+              <p>
+                Return later and choose a saved hero.
+              </p>
+
+            </div>
+
+          </article>
+
+        </div>
+
       </div>
 
-      <div class="mascot-card">
-        <img class="mascot-img" src="assets/mascot/welcome.png" alt="Meme welcoming a Cyber Mentee">
-        <h2>Meme says:</h2>
-        <p>Every hero needs a safe identity. Let’s make yours!</p>
-      </div>
+
+      <aside class="login-meme-card">
+
+        <div class="login-meme-frame">
+
+          <img
+            src="assets/mascot/welcome.png"
+            alt="Meme welcoming a new Cyber Hero"
+          >
+
+        </div>
+
+        <p class="eyebrow">
+          Message from Meme
+        </p>
+
+        <h2>
+          Every hero needs a safe identity!
+        </h2>
+
+        <p>
+          Your Hero Name should be creative without revealing
+          your real name, birthday, school, or location.
+        </p>
+
+      </aside>
+
     </section>
 
-    <section class="identity-builder">
-      <div class="builder-step">
-        <h2>1. Choose your super suit color!</h2>
-        <div class="choice-grid" id="colorChoices"></div>
+
+    <!-- ===================================================
+         SAVED HEROES
+    ==================================================== -->
+
+    <section
+      class="saved-heroes-section"
+      id="savedHeroesSection"
+      aria-labelledby="savedHeroesTitle"
+    >
+
+      <header class="section-heading-row">
+
+        <div>
+
+          <p class="eyebrow">
+            Returning Heroes
+          </p>
+
+          <h2 id="savedHeroesTitle">
+            Choose a Saved Hero
+          </h2>
+
+          <p>
+            Select a hero to continue their missions, points,
+            badges, and notebook.
+          </p>
+
+        </div>
+
+        <button
+          class="small-button"
+          id="showHeroCreator"
+          type="button"
+        >
+          Create Another Hero
+        </button>
+
+      </header>
+
+
+      <div
+        class="saved-hero-grid"
+        id="savedHeroGrid"
+      >
+
+        <article class="no-saved-heroes" id="noSavedHeroes">
+
+          <span aria-hidden="true">
+            🪪
+          </span>
+
+          <h3>
+            No saved heroes yet
+          </h3>
+
+          <p>
+            Create your first Cyber Hero below.
+          </p>
+
+        </article>
+
       </div>
 
-      <div class="builder-step">
-        <h2>2. Choose your sidekick!</h2>
-        <div class="choice-grid" id="animalChoices"></div>
-      </div>
-
-      <div class="builder-step">
-        <h2>3. Choose your super power!</h2>
-        <div class="choice-grid" id="powerChoices"></div>
-      </div>
-
-      <article class="hero-id-card">
-        <p class="eyebrow">Cyber Hero ID</p>
-        <h2 id="heroName">Your Hero Name</h2>
-        <p><strong>Rank:</strong> Cyber Mentee</p>
-        <p><strong>Suit:</strong> <span id="chosenColor">Choose a color</span></p>
-        <p><strong>Sidekick:</strong> <span id="chosenAnimal">Choose a sidekick</span></p>
-        <p><strong>Power:</strong> <span id="chosenPower">Choose a power</span></p>
-
-        <button class="button hero-button" id="generateHero">Generate Hero Name</button>
-        <button class="button hero-button" id="saveHero">Enter Hero Headquarters</button>
-      </article>
     </section>
+
+
+    <!-- ===================================================
+         HERO CREATOR
+    ==================================================== -->
+
+    <section
+      class="hero-creator-section"
+      id="heroCreatorSection"
+      aria-labelledby="heroCreatorTitle"
+    >
+
+      <header class="hero-creator-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            New Hero Registration
+          </p>
+
+          <h2 id="heroCreatorTitle">
+            Build Your Hero Identity
+          </h2>
+
+          <p>
+            Complete each station and preview your Hero ID.
+          </p>
+
+        </div>
+
+        <div
+          class="creator-progress"
+          aria-label="Hero creator progress"
+        >
+
+          <span
+            class="creator-progress-step active"
+            id="creatorProgressColor"
+          >
+            1
+          </span>
+
+          <span
+            class="creator-progress-step"
+            id="creatorProgressSidekick"
+          >
+            2
+          </span>
+
+          <span
+            class="creator-progress-step"
+            id="creatorProgressPower"
+          >
+            3
+          </span>
+
+          <span
+            class="creator-progress-step"
+            id="creatorProgressName"
+          >
+            4
+          </span>
+
+        </div>
+
+      </header>
+
+
+      <div class="hero-creator-layout">
+
+        <!-- ===============================================
+             CREATOR CHOICES
+        ================================================ -->
+
+        <div class="hero-builder">
+
+          <!-- SUIT COLOR -->
+
+          <section
+            class="builder-station"
+            id="colorStation"
+            aria-labelledby="colorStationTitle"
+          >
+
+            <div class="builder-station-heading">
+
+              <span class="station-number">
+                1
+              </span>
+
+              <div>
+
+                <p class="eyebrow">
+                  Suit Station
+                </p>
+
+                <h3 id="colorStationTitle">
+                  Choose Your Suit Color
+                </h3>
+
+                <p>
+                  Pick the color your Cyber Hero will wear.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="choice-grid color-choice-grid"
+              id="colorChoices"
+            ></div>
+
+          </section>
+
+
+          <!-- SIDEKICK -->
+
+          <section
+            class="builder-station"
+            id="sidekickStation"
+            aria-labelledby="sidekickStationTitle"
+          >
+
+            <div class="builder-station-heading">
+
+              <span class="station-number">
+                2
+              </span>
+
+              <div>
+
+                <p class="eyebrow">
+                  Sidekick Station
+                </p>
+
+                <h3 id="sidekickStationTitle">
+                  Choose Your Sidekick
+                </h3>
+
+                <p>
+                  Pick a teammate to join your Cyber Hero journey.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="choice-grid sidekick-choice-grid"
+              id="animalChoices"
+            ></div>
+
+          </section>
+
+
+          <!-- CYBER POWER -->
+
+          <section
+            class="builder-station"
+            id="powerStation"
+            aria-labelledby="powerStationTitle"
+          >
+
+            <div class="builder-station-heading">
+
+              <span class="station-number">
+                3
+              </span>
+
+              <div>
+
+                <p class="eyebrow">
+                  Power Station
+                </p>
+
+                <h3 id="powerStationTitle">
+                  Choose Your Cyber Power
+                </h3>
+
+                <p>
+                  Select the special skill your hero will use.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="choice-grid power-choice-grid"
+              id="powerChoices"
+            ></div>
+
+          </section>
+
+        </div>
+
+
+        <!-- ===============================================
+             LIVE HERO ID
+        ================================================ -->
+
+        <aside
+          class="hero-id-preview"
+          aria-labelledby="heroPreviewTitle"
+        >
+
+          <div class="hero-id-top">
+
+            <div>
+
+              <p class="hero-id-label">
+                Safetii Net
+              </p>
+
+              <h2 id="heroPreviewTitle">
+                Cyber Hero ID
+              </h2>
+
+            </div>
+
+            <img
+              src="assets/Safetii%20NetLogo.png"
+              alt=""
+              aria-hidden="true"
+            >
+
+          </div>
+
+
+          <div
+            class="hero-preview-avatar"
+            id="heroPreviewAvatar"
+          >
+
+            <span
+              id="heroPreviewSuitIcon"
+              aria-hidden="true"
+            >
+              🦸
+            </span>
+
+            <span
+              class="hero-preview-sidekick"
+              id="heroPreviewSidekickIcon"
+              aria-hidden="true"
+            >
+              ?
+            </span>
+
+          </div>
+
+
+          <div class="hero-name-display">
+
+            <p>
+              Hero Name
+            </p>
+
+            <h3 id="heroName">
+              Your Hero Name
+            </h3>
+
+          </div>
+
+
+          <div class="hero-preview-details">
+
+            <p>
+
+              <strong>
+                Starting Rank
+              </strong>
+
+              <span>
+                Cyber Mentee
+              </span>
+
+            </p>
+
+            <p>
+
+              <strong>
+                Suit
+              </strong>
+
+              <span id="chosenColor">
+                Choose a color
+              </span>
+
+            </p>
+
+            <p>
+
+              <strong>
+                Sidekick
+              </strong>
+
+              <span id="chosenAnimal">
+                Choose a sidekick
+              </span>
+
+            </p>
+
+            <p>
+
+              <strong>
+                Power
+              </strong>
+
+              <span id="chosenPower">
+                Choose a power
+              </span>
+
+            </p>
+
+          </div>
+
+
+          <div
+            class="hero-name-safety"
+            id="heroNameSafety"
+          >
+
+            <span aria-hidden="true">
+              🛡️
+            </span>
+
+            <p>
+              Hero Names should not include real names, birthdays,
+              schools, addresses, or locations.
+            </p>
+
+          </div>
+
+
+          <div class="hero-preview-actions">
+
+            <button
+              class="button hero-button"
+              id="generateHero"
+              type="button"
+            >
+              Generate Hero Name
+            </button>
+
+            <button
+              class="button hero-button save-hero-button"
+              id="saveHero"
+              type="button"
+              disabled
+            >
+              Save Hero and Enter Headquarters
+            </button>
+
+            <button
+              class="small-button"
+              id="resetHeroCreator"
+              type="button"
+            >
+              Reset Choices
+            </button>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
   </main>
 
+
+  <!-- =====================================================
+       DELETE HERO CONFIRMATION
+  ====================================================== -->
+
+  <dialog
+    class="hero-delete-dialog"
+    id="heroDeleteDialog"
+    aria-labelledby="heroDeleteTitle"
+  >
+
+    <div class="hero-delete-dialog-content">
+
+      <div
+        class="hero-delete-icon"
+        aria-hidden="true"
+      >
+        🗑️
+      </div>
+
+      <h2 id="heroDeleteTitle">
+        Delete This Hero?
+      </h2>
+
+      <p>
+        This will remove the selected hero and that hero’s saved
+        mission progress from this device.
+      </p>
+
+
+      <div class="hero-delete-actions">
+
+        <button
+          class="small-button"
+          id="cancelHeroDelete"
+          type="button"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="button delete-hero-confirm-button"
+          id="confirmHeroDelete"
+          type="button"
+        >
+          Delete Hero
+        </button>
+
+      </div>
+
+    </div>
+
+  </dialog>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
   <footer>
-    <p>© 2026 Safetii Net. Helping kids become Cyber Super Heroes.</p>
+
+    <p>
+      © 2026 Safetii Net. Helping kids become Cyber Super Heroes.
+    </p>
+
   </footer>
 
-<script src="js/safetii-storage.js?v=2"></script>
-<script src="js/login.js?v=2"></script>
+
+  <!-- =====================================================
+       LOGIN CONTROLLERS
+  ====================================================== -->
+
+  <script src="js/safetii-storage.js?v=100"></script>
+  <script src="js/login.js?v=100"></script>
+
 </body>
 </html>
