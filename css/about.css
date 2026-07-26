@@ -1599,3 +1599,289 @@ main {
 
   box-shadow: none !important;
 }
+
+/* =========================================================
+   ABOUT PAGE BOTTOM SECTION OVERRIDE
+========================================================= */
+
+/* -----------------------------------------
+   FAMILY AND EDUCATOR SECTION
+----------------------------------------- */
+
+.support-section {
+  display: grid !important;
+  grid-template-columns:
+    minmax(0, 1.3fr)
+    minmax(280px, 0.7fr) !important;
+
+  align-items: center !important;
+  gap: 34px !important;
+
+  padding: 42px 40px !important;
+
+  background: #f7fbff !important;
+
+  border:
+    2px solid
+    #ded9f3 !important;
+
+  border-radius: 30px !important;
+
+  box-shadow:
+    0 16px 34px
+    rgba(41, 49, 80, 0.09) !important;
+}
+
+.support-actions {
+  margin-top: 24px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 15px !important;
+}
+
+.support-actions .about-button {
+  min-height: 52px !important;
+  padding:
+    14px
+    24px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border:
+    3px solid
+    transparent !important;
+
+  border-radius: 999px !important;
+
+  font-weight: 900 !important;
+  text-decoration: none !important;
+
+  transition:
+    transform
+    0.16s ease,
+    box-shadow
+    0.16s ease !important;
+}
+
+.support-actions .about-button:hover {
+  transform:
+    translateY(-3px) !important;
+}
+
+/* Solid teal — no ombre */
+.parent-about-button {
+  background: #28bfd0 !important;
+
+  border-color: #1599a8 !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 7px 0
+    #148895 !important;
+}
+
+/* Solid gold — no ombre */
+.teacher-about-button {
+  background: #fff0a3 !important;
+
+  border-color: #d4ae31 !important;
+
+  color: #58450d !important;
+
+  box-shadow:
+    0 7px 0
+    #b88b19 !important;
+}
+
+.support-reminder {
+  min-height: 250px !important;
+  padding:
+    28px
+    24px !important;
+
+  display: grid !important;
+  place-items: center !important;
+  align-content: center !important;
+  gap: 14px !important;
+
+  background: #fff6c7 !important;
+
+  border:
+    3px solid
+    #d5b63b !important;
+
+  border-radius: 24px !important;
+
+  color: #564812 !important;
+
+  text-align: center !important;
+
+  box-shadow:
+    0 9px 0
+    rgba(190, 151, 25, 0.18) !important;
+
+  transform:
+    rotate(1deg) !important;
+}
+
+.support-reminder span {
+  display: block !important;
+
+  font-size: 2.7rem !important;
+}
+
+.support-reminder strong {
+  line-height: 1.6 !important;
+}
+
+
+/* -----------------------------------------
+   FINAL CALL TO ACTION
+----------------------------------------- */
+
+.about-final-cta {
+  width: 100% !important;
+  margin-top: 60px !important;
+  padding:
+    42px
+    44px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 32px !important;
+
+  background: #302b64 !important;
+
+  border:
+    3px solid
+    #494080 !important;
+
+  border-radius: 30px !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 18px 36px
+    rgba(37, 32, 82, 0.22) !important;
+}
+
+.about-final-cta .about-eyebrow {
+  color: #fff0a3 !important;
+}
+
+.about-final-cta h2 {
+  margin:
+    0
+    0
+    12px !important;
+
+  color: #ffffff !important;
+}
+
+.about-final-cta p {
+  max-width: 760px !important;
+  margin: 0 !important;
+
+  color:
+    rgba(255, 255, 255, 0.9) !important;
+
+  line-height: 1.65 !important;
+}
+
+.final-about-button {
+  min-height: 54px !important;
+  padding:
+    15px
+    26px !important;
+
+  flex: 0 0 auto !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: #ffffff !important;
+
+  border:
+    3px solid
+    #ffffff !important;
+
+  border-radius: 999px !important;
+
+  color: #5f3bc7 !important;
+
+  font-weight: 900 !important;
+  text-decoration: none !important;
+  text-align: center !important;
+
+  box-shadow:
+    0 8px 0
+    rgba(0, 0, 0, 0.2) !important;
+
+  transition:
+    transform
+    0.16s ease,
+    box-shadow
+    0.16s ease !important;
+}
+
+.final-about-button:hover {
+  transform:
+    translateY(-3px) !important;
+
+  box-shadow:
+    0 5px 0
+    rgba(0, 0, 0, 0.2) !important;
+}
+
+
+/* -----------------------------------------
+   MOBILE
+----------------------------------------- */
+
+@media (max-width: 850px) {
+  .support-section {
+    grid-template-columns:
+      1fr !important;
+  }
+
+  .support-reminder {
+    min-height: 190px !important;
+  }
+
+  .about-final-cta {
+    align-items: stretch !important;
+    flex-direction: column !important;
+
+    text-align: center !important;
+  }
+
+  .final-about-button {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .support-section,
+  .about-final-cta {
+    padding:
+      30px
+      22px !important;
+  }
+
+  .support-actions {
+    display: grid !important;
+    grid-template-columns:
+      1fr !important;
+  }
+
+  .support-actions .about-button {
+    width: 100% !important;
+  }
+}
