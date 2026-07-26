@@ -1608,6 +1608,50 @@
     );
   }
 
+   function shuffledAnswers(
+  answers,
+  correctIndex
+) {
+  const prepared =
+    answers.map(
+      (
+        answer,
+        originalIndex
+      ) => ({
+        answer,
+        correct:
+          originalIndex ===
+          correctIndex
+      })
+    );
+
+  for (
+    let index =
+      prepared.length - 1;
+    index > 0;
+    index -=
+      1
+  ) {
+    const randomIndex =
+      Math.floor(
+        Math.random() *
+        (
+          index +
+          1
+        )
+      );
+
+    [
+      prepared[index],
+      prepared[randomIndex]
+    ] = [
+      prepared[randomIndex],
+      prepared[index]
+    ];
+  }
+
+  return prepared;
+}
 
   /* =====================================================
      PAGE HEADER
@@ -3318,11 +3362,17 @@ function finishPasswordPowerLab() {
     grid.innerHTML =
       "";
 
-    challenge.answers.forEach(
-      (
-        answer,
-        index
-      ) => {
+const displayedAnswers =
+  shuffledAnswers(
+    challenge.answers,
+    challenge.correctIndex
+  );
+
+displayedAnswers.forEach(
+  (
+    item
+  ) => {
+     
         const button =
           document.createElement(
             "button"
@@ -3334,16 +3384,16 @@ function finishPasswordPowerLab() {
         button.className =
           "vault-answer-button";
 
-        button.textContent =
-          answer;
-
+button.textContent =
+  item.answer;
+     
         button.addEventListener(
           "click",
           () => {
-            answerVaultChallenge(
-              index,
-              button
-            );
+answerVaultChallenge(
+  item.correct,
+  button
+);
           }
         );
 
@@ -3355,10 +3405,10 @@ function finishPasswordPowerLab() {
   }
 
 
-  function answerVaultChallenge(
-    selectedIndex,
-    button
-  ) {
+function answerVaultChallenge(
+  correct,
+  button
+){
     if (
       state.vaultAnswered
     ) {
@@ -3374,11 +3424,7 @@ function finishPasswordPowerLab() {
       return;
     }
 
-    const correct =
-      selectedIndex ===
-      challenge.correctIndex;
-
-    if (!correct) {
+       if (!correct) {
       button.disabled =
         true;
 
