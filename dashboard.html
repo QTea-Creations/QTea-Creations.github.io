@@ -1,103 +1,1075 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hero Headquarters | Safetii Net</title>
-  <link rel="icon" type="image/png" href="assets/Safetii%20NetLogo.png">
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Safetii Net Hero Headquarters where students continue missions, track progress, and collect cybersecurity badges."
+  >
+
+  <title>
+    Hero Headquarters | Safetii Net
+  </title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/Safetii%20NetLogo.png?v=90"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/style.css?v=90"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/dashboard.css?v=90"
+  >
 </head>
+
 <body class="page-hq">
+
+  <!-- =====================================================
+       SITE HEADER
+  ====================================================== -->
+
   <header class="site-header">
-<a href="index.html" class="logo">
-    <img src="assets/SafetiiNet-logo-navbar.png" alt="Safetii Net">
-</a>
-    <nav>
-      <a href="dashboard.html">Hero Headquarters</a>
-      <a href="index.html#missions">Missions</a>
-      <a href="index.html#arcade">Cyber Arcade</a>
-      <a href="parents.html">Parents</a>
-      <a href="teachers.html">Teachers</a>
+
+    <a
+      href="index.html"
+      class="logo"
+      aria-label="Safetii Net home"
+    >
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+    </a>
+
+    <nav aria-label="Main navigation">
+
+      <a
+        class="active-nav-link"
+        href="dashboard.html"
+      >
+        Hero Headquarters
+      </a>
+
+      <a href="missions.html">
+        Missions
+      </a>
+
+      <a href="arcade/index.html">
+        Cyber Arcade
+      </a>
+
+      <a href="notebook.html">
+        Cyber Notebook
+      </a>
+
+      <a href="parents.html">
+        Parents
+      </a>
+
+      <a href="teachers.html">
+        Teachers
+      </a>
+
     </nav>
+
   </header>
 
+
+  <!-- =====================================================
+       HERO HEADQUARTERS
+  ====================================================== -->
+
   <main class="dashboard">
+
+    <!-- ===================================================
+         HERO WELCOME BANNER
+    ==================================================== -->
+
     <section class="hq-hero">
-      <div>
-        <p class="eyebrow">Hero Headquarters</p>
-        <h1>Welcome, <span id="dashboardHeroName">Cyber Mentee</span>!</h1>
-        <p>
-          Meme is ready to help you train, complete missions, earn badges,
-          and become a Cyber Super Hero.
+
+      <div class="hq-hero-content">
+
+        <p class="eyebrow">
+          Hero Headquarters
         </p>
-       <a
-  class="button"
-  id="identityMissionButton"
-  href="missions/identity.html"
->
-  Start Lesson
-</a>
-        <a class="small-button" href="login.html">Create New Hero</a>
-        <a class="small-button" href="notebook.html">Open Cyber Notebook</a>
+
+        <h1>
+          Welcome back,
+          <span id="dashboardHeroName">
+            Cyber Mentee
+          </span>!
+        </h1>
+
+        <p class="hq-hero-message">
+          Continue your training, complete cybersecurity missions,
+          earn badges, and rise through the Hero Ranks.
+        </p>
+
+
+        <div class="hq-hero-actions">
+
+          <a
+            class="button"
+            id="continueMissionButton"
+            href="missions/identity.html"
+          >
+            Continue Mission
+          </a>
+
+          <a
+            class="small-button"
+            href="notebook.html"
+          >
+            Open Cyber Notebook
+          </a>
+
+          <a
+            class="small-button"
+            href="login.html"
+          >
+            Create New Hero
+          </a>
+
+        </div>
+
       </div>
 
-      <div class="mascot-card">
-        <img class="mascot-img" src="assets/mascot/welcome.png" alt="Meme welcoming the student">
-        <h2>Meme says:</h2>
-        <p>Suit up! Your first mission is waiting.</p>
-      </div>
+
+      <aside class="hq-meme-card">
+
+        <div class="meme-image-frame">
+
+          <img
+            id="dashboardMemeImage"
+            src="assets/mascot/welcome.png"
+            alt="Meme welcoming the student to Hero Headquarters"
+          >
+
+        </div>
+
+        <div class="meme-message">
+
+          <p class="eyebrow">
+            Message from Meme
+          </p>
+
+          <h2 id="dashboardMemeHeading">
+            Your next mission is ready!
+          </h2>
+
+          <p id="dashboardMemeMessage">
+            Complete missions to earn all five cybersecurity badges.
+          </p>
+
+        </div>
+
+      </aside>
+
     </section>
+
+
+    <!-- ===================================================
+         QUICK STATUS STRIP
+    ==================================================== -->
+
+    <section
+      class="hero-status-strip"
+      aria-label="Hero status"
+    >
+
+      <article>
+
+        <span
+          class="status-icon"
+          aria-hidden="true"
+        >
+          ⭐
+        </span>
+
+        <div>
+
+          <p>
+            Total Points
+          </p>
+
+          <strong id="dashboardPoints">
+            0
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article>
+
+        <span
+          class="status-icon"
+          aria-hidden="true"
+        >
+          🏅
+        </span>
+
+        <div>
+
+          <p>
+            Badges Earned
+          </p>
+
+          <strong>
+            <span id="dashboardBadgeCount">
+              0
+            </span>
+            of 5
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article>
+
+        <span
+          class="status-icon"
+          aria-hidden="true"
+        >
+          🚀
+        </span>
+
+        <div>
+
+          <p>
+            Hero Rank
+          </p>
+
+          <strong id="dashboardRank">
+            Cyber Mentee
+          </strong>
+
+        </div>
+
+      </article>
+
+
+      <article>
+
+        <span
+          class="status-icon"
+          aria-hidden="true"
+        >
+          🎯
+        </span>
+
+        <div>
+
+          <p>
+            Current Mission
+          </p>
+
+          <strong id="dashboardMissionNumber">
+            Mission 1
+          </strong>
+
+        </div>
+
+      </article>
+
+    </section>
+
+
+    <!-- ===================================================
+         MAIN DASHBOARD GRID
+    ==================================================== -->
 
     <section class="dashboard-grid">
-      <article class="dashboard-card">
-        <h2>Your Hero ID</h2>
-        <div class="big-icon">🦸</div>
-        <p><strong>Rank:</strong> Cyber Mentee</p>
-        <p><strong>Suit:</strong> <span id="dashboardColor">Not chosen yet</span></p>
-        <p><strong>Sidekick:</strong> <span id="dashboardAnimal">Not chosen yet</span></p>
-        <p><strong>Power:</strong> <span id="dashboardPower">Not chosen yet</span></p>
-      </article>
 
-      <article class="dashboard-card">
-        <h2>Current Mission</h2>
-        <div class="big-icon">🛡️</div>
-        <h3>Identity Protector</h3>
-        <p>Learn what information should stay private online.</p>
-      </article>
+      <!-- =================================================
+           HERO ID
+      ================================================== -->
 
-      <article class="dashboard-card">
-        <h2>Your Progress</h2>
-        <div class="progress-bar">
-          <div class="progress-fill"></div>
+      <article class="dashboard-card hero-id-card">
+
+        <header class="dashboard-card-header">
+
+          <div>
+
+            <p class="eyebrow">
+              Hero Profile
+            </p>
+
+            <h2>
+              Your Hero ID
+            </h2>
+
+          </div>
+
+          <span
+            class="card-header-icon"
+            aria-hidden="true"
+          >
+            🦸
+          </span>
+
+        </header>
+
+
+        <div class="hero-id-body">
+
+          <div class="hero-avatar-frame">
+
+            <img
+              id="dashboardHeroAvatar"
+              src="assets/mascot/welcome.png"
+              alt="Cyber Hero avatar"
+            >
+
+          </div>
+
+
+          <div class="hero-id-details">
+
+            <p>
+
+              <strong>
+                Hero Name
+              </strong>
+
+              <span id="dashboardHeroIdName">
+                Cyber Mentee
+              </span>
+
+            </p>
+
+            <p>
+
+              <strong>
+                Rank
+              </strong>
+
+              <span id="dashboardHeroRank">
+                Cyber Mentee
+              </span>
+
+            </p>
+
+            <p>
+
+              <strong>
+                Suit
+              </strong>
+
+              <span id="dashboardColor">
+                Not chosen yet
+              </span>
+
+            </p>
+
+            <p>
+
+              <strong>
+                Sidekick
+              </strong>
+
+              <span id="dashboardAnimal">
+                Not chosen yet
+              </span>
+
+            </p>
+
+            <p>
+
+              <strong>
+                Power
+              </strong>
+
+              <span id="dashboardPower">
+                Not chosen yet
+              </span>
+
+            </p>
+
+          </div>
+
         </div>
-        <p>Mission 1 of 5 started</p>
+
+
+        <a
+          class="card-text-link"
+          href="login.html"
+        >
+          Edit or create a hero
+        </a>
+
       </article>
 
-      <article class="dashboard-card">
-        <h2>Badge Collection</h2>
-        <div class="badge-row">
-          <span id="identityBadge" class="locked">🛡️</span>
-          <span class="locked">🔐</span>
-          <span class="locked">🎣</span>
-          <span class="locked">👣</span>
-          <span class="locked">🚨</span>
+
+      <!-- =================================================
+           CURRENT MISSION
+      ================================================== -->
+
+      <article class="dashboard-card current-mission-card">
+
+        <header class="dashboard-card-header">
+
+          <div>
+
+            <p class="eyebrow">
+              Next Assignment
+            </p>
+
+            <h2>
+              Current Mission
+            </h2>
+
+          </div>
+
+          <span
+            class="card-header-icon"
+            aria-hidden="true"
+          >
+            📡
+          </span>
+
+        </header>
+
+
+        <div class="current-mission-content">
+
+          <div class="current-mission-image">
+
+            <img
+              id="currentMissionImage"
+              src="assets/Safetii%20NetLogo.png"
+              alt="Current cybersecurity mission badge"
+            >
+
+          </div>
+
+
+          <div>
+
+            <span
+              class="mission-number-pill"
+              id="currentMissionLabel"
+            >
+              Mission 1 of 5
+            </span>
+
+            <h3 id="currentMissionTitle">
+              Identity Protector
+            </h3>
+
+            <p id="currentMissionDescription">
+              Learn how to recognize information that should stay
+              private online.
+            </p>
+
+            <a
+              class="button"
+              id="currentMissionButton"
+              href="missions/identity.html"
+            >
+              Start Mission
+            </a>
+
+          </div>
+
         </div>
-        <p>Earn all 5 badges to become a Cyber Super Hero.</p>
+
       </article>
 
-      <article class="dashboard-card">
-        <h2>Cyber Arcade</h2>
-        <div class="big-icon">🎮</div>
-        <p>Practice cyber skills anytime with fun games.</p>
-        <a class="small-button" href="index.html#arcade">Go to Arcade</a>
+
+      <!-- =================================================
+           PROGRESS
+      ================================================== -->
+
+      <article class="dashboard-card progress-card">
+
+        <header class="dashboard-card-header">
+
+          <div>
+
+            <p class="eyebrow">
+              Training Record
+            </p>
+
+            <h2>
+              Mission Progress
+            </h2>
+
+          </div>
+
+          <span
+            class="card-header-icon"
+            aria-hidden="true"
+          >
+            📊
+          </span>
+
+        </header>
+
+
+        <div class="progress-number-row">
+
+          <strong id="dashboardProgressPercent">
+            0%
+          </strong>
+
+          <span id="dashboardProgressText">
+            0 of 5 missions completed
+          </span>
+
+        </div>
+
+
+        <div
+          class="progress-bar"
+          role="progressbar"
+          aria-label="Mission completion progress"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          id="dashboardProgressBar"
+        >
+
+          <div
+            class="progress-fill"
+            id="dashboardProgressFill"
+          ></div>
+
+        </div>
+
+
+        <div class="mission-progress-dots">
+
+          <span
+            class="mission-progress-dot"
+            id="missionProgressDot1"
+            aria-label="Mission 1 progress"
+          >
+            1
+          </span>
+
+          <span
+            class="mission-progress-dot"
+            id="missionProgressDot2"
+            aria-label="Mission 2 progress"
+          >
+            2
+          </span>
+
+          <span
+            class="mission-progress-dot"
+            id="missionProgressDot3"
+            aria-label="Mission 3 progress"
+          >
+            3
+          </span>
+
+          <span
+            class="mission-progress-dot"
+            id="missionProgressDot4"
+            aria-label="Mission 4 progress"
+          >
+            4
+          </span>
+
+          <span
+            class="mission-progress-dot"
+            id="missionProgressDot5"
+            aria-label="Mission 5 progress"
+          >
+            5
+          </span>
+
+        </div>
+
+
+        <p class="progress-encouragement" id="progressEncouragement">
+          Complete your first mission to begin filling the progress bar.
+        </p>
+
       </article>
+
+
+      <!-- =================================================
+           BADGE COLLECTION
+      ================================================== -->
+
+      <article class="dashboard-card badge-collection-card">
+
+        <header class="dashboard-card-header">
+
+          <div>
+
+            <p class="eyebrow">
+              Cyber Achievements
+            </p>
+
+            <h2>
+              Badge Collection
+            </h2>
+
+          </div>
+
+          <span
+            class="card-header-icon"
+            aria-hidden="true"
+          >
+            🏆
+          </span>
+
+        </header>
+
+
+        <div class="badge-collection-grid">
+
+          <!-- Mission 1 -->
+
+          <article
+            class="dashboard-badge locked"
+            id="identityBadge"
+          >
+
+            <div class="badge-image-frame">
+
+              <img
+                id="identityBadgeImage"
+                src="assets/Safetii%20NetLogo.png"
+                alt="Identity Protector badge"
+              >
+
+              <span class="badge-lock">
+                🔒
+              </span>
+
+            </div>
+
+            <h3>
+              Identity Protector
+            </h3>
+
+            <p>
+              Mission 1
+            </p>
+
+          </article>
+
+
+          <!-- Mission 2 -->
+
+          <article
+            class="dashboard-badge locked"
+            id="passwordBadge"
+          >
+
+            <div class="badge-image-frame">
+
+              <img
+                id="passwordBadgeImage"
+                src="assets/Safetii%20NetLogo.png"
+                alt="Password Safe Keeper badge"
+              >
+
+              <span class="badge-lock">
+                🔒
+              </span>
+
+            </div>
+
+            <h3>
+              Password Safe Keeper
+            </h3>
+
+            <p>
+              Mission 2
+            </p>
+
+          </article>
+
+
+          <!-- Mission 3 -->
+
+          <article
+            class="dashboard-badge locked"
+            id="phishingBadge"
+          >
+
+            <div class="badge-image-frame">
+
+              <img
+                id="phishingBadgeImage"
+                src="assets/Safetii%20NetLogo.png"
+                alt="Phish Finder badge"
+              >
+
+              <span class="badge-lock">
+                🔒
+              </span>
+
+            </div>
+
+            <h3>
+              Phish Finder
+            </h3>
+
+            <p>
+              Mission 3
+            </p>
+
+          </article>
+
+
+          <!-- Mission 4 -->
+
+          <article
+            class="dashboard-badge locked"
+            id="footprintBadge"
+          >
+
+            <div class="badge-image-frame">
+
+              <img
+                id="footprintBadgeImage"
+                src="assets/Safetii%20NetLogo.png"
+                alt="Digital Footprint Defender badge"
+              >
+
+              <span class="badge-lock">
+                🔒
+              </span>
+
+            </div>
+
+            <h3>
+              Footprint Defender
+            </h3>
+
+            <p>
+              Mission 4
+            </p>
+
+          </article>
+
+
+          <!-- Mission 5 -->
+
+          <article
+            class="dashboard-badge locked"
+            id="responderBadge"
+          >
+
+            <div class="badge-image-frame">
+
+              <img
+                id="responderBadgeImage"
+                src="assets/Safetii%20NetLogo.png"
+                alt="Cyber Responder badge"
+              >
+
+              <span class="badge-lock">
+                🔒
+              </span>
+
+            </div>
+
+            <h3>
+              Cyber Responder
+            </h3>
+
+            <p>
+              Mission 5
+            </p>
+
+          </article>
+
+        </div>
+
+
+        <p class="badge-collection-message">
+          Earn all five badges to become a Cyber Super Hero.
+        </p>
+
+      </article>
+
+
+      <!-- =================================================
+           MISSION MAP
+      ================================================== -->
+
+      <article class="dashboard-card mission-map-card">
+
+        <header class="dashboard-card-header">
+
+          <div>
+
+            <p class="eyebrow">
+              Training Path
+            </p>
+
+            <h2>
+              Mission Map
+            </h2>
+
+          </div>
+
+          <span
+            class="card-header-icon"
+            aria-hidden="true"
+          >
+            🗺️
+          </span>
+
+        </header>
+
+
+        <div class="mission-map-list">
+
+          <a
+            class="mission-map-item"
+            id="missionMapIdentity"
+            href="missions/identity.html"
+          >
+
+            <span class="mission-map-number">
+              1
+            </span>
+
+            <div>
+
+              <strong>
+                Identity Protector
+              </strong>
+
+              <small>
+                Personal information and online identity
+              </small>
+
+            </div>
+
+            <span
+              class="mission-map-status"
+              id="missionMapIdentityStatus"
+            >
+              Start
+            </span>
+
+          </a>
+
+
+          <a
+            class="mission-map-item"
+            id="missionMapPassword"
+            href="missions/password.html"
+          >
+
+            <span class="mission-map-number">
+              2
+            </span>
+
+            <div>
+
+              <strong>
+                Password Safe Keeper
+              </strong>
+
+              <small>
+                Password safety and account protection
+              </small>
+
+            </div>
+
+            <span
+              class="mission-map-status"
+              id="missionMapPasswordStatus"
+            >
+              Locked
+            </span>
+
+          </a>
+
+
+          <a
+            class="mission-map-item"
+            id="missionMapPhishing"
+            href="missions/phishing.html"
+          >
+
+            <span class="mission-map-number">
+              3
+            </span>
+
+            <div>
+
+              <strong>
+                Phish Finder
+              </strong>
+
+              <small>
+                Suspicious messages and scams
+              </small>
+
+            </div>
+
+            <span
+              class="mission-map-status"
+              id="missionMapPhishingStatus"
+            >
+              Locked
+            </span>
+
+          </a>
+
+
+          <a
+            class="mission-map-item"
+            id="missionMapFootprint"
+            href="missions/footprint.html"
+          >
+
+            <span class="mission-map-number">
+              4
+            </span>
+
+            <div>
+
+              <strong>
+                Footprint Defender
+              </strong>
+
+              <small>
+                Posts, choices, and digital footprints
+              </small>
+
+            </div>
+
+            <span
+              class="mission-map-status"
+              id="missionMapFootprintStatus"
+            >
+              Locked
+            </span>
+
+          </a>
+
+
+          <a
+            class="mission-map-item"
+            id="missionMapResponder"
+            href="missions/responder.html"
+          >
+
+            <span class="mission-map-number">
+              5
+            </span>
+
+            <div>
+
+              <strong>
+                Cyber Responder
+              </strong>
+
+              <small>
+                Reporting and responding to online problems
+              </small>
+
+            </div>
+
+            <span
+              class="mission-map-status"
+              id="missionMapResponderStatus"
+            >
+              Locked
+            </span>
+
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <!-- =================================================
+           CYBER ARCADE
+      ================================================== -->
+
+      <article class="dashboard-card arcade-card">
+
+        <div class="arcade-card-content">
+
+          <div>
+
+            <p class="eyebrow">
+              Practice Zone
+            </p>
+
+            <h2>
+              Cyber Arcade
+            </h2>
+
+            <p>
+              Practice cybersecurity skills through games and
+              challenges.
+            </p>
+
+            <a
+              class="button"
+              href="arcade/index.html"
+            >
+              Enter the Arcade
+            </a>
+
+          </div>
+
+
+          <div class="arcade-controller-frame">
+
+            <span aria-hidden="true">
+              🎮
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
+
     </section>
+
   </main>
 
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
   <footer>
-    <p>© 2026 Safetii Net. Helping kids become Cyber Super Heroes.</p>
+
+    <p>
+      © 2026 Safetii Net. Helping kids become Cyber Super Heroes.
+    </p>
+
   </footer>
 
-  <script src="js/script.js"></script>
+
+  <!-- =====================================================
+       DASHBOARD CONTROLLER
+  ====================================================== -->
+
+  <script src="js/dashboard.js?v=90"></script>
+
 </body>
 </html>
