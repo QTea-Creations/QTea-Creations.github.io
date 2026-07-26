@@ -2560,3 +2560,32 @@ a.cancel-button {
     left: 56px;
   }
 }
+
+/* =========================================================
+   NOTEBOOK HERO TITLE VISIBILITY FIX
+========================================================= */
+
+.notebook-title,
+#notebookTitle {
+  position: relative !important;
+  z-index: 5 !important;
+
+  color: #ffffff !important;
+
+  opacity: 1 !important;
+
+  -webkit-text-fill-color: #ffffff !important;
+
+  text-shadow:
+    0 4px 0 rgba(65, 36, 151, 0.32),
+    0 8px 18px rgba(34, 31, 82, 0.28) !important;
+
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+#notebookHeroName {
+  color: inherit !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: inherit !important;
+}
