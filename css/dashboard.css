@@ -1,0 +1,1416 @@
+/* =========================================================
+   SAFETII NET — HERO HEADQUARTERS
+   COMPLETE DASHBOARD STYLES
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body.page-hq {
+  min-height: 100vh;
+  margin: 0;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(125, 76, 255, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(41, 191, 208, 0.14),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      #f8fbff 0%,
+      #f1f5ff 50%,
+      #edf9ff 100%
+    );
+
+  color: #20335d;
+}
+
+.page-hq img {
+  display: block;
+  max-width: 100%;
+}
+
+.page-hq a {
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-hq .site-header {
+  position: relative;
+  z-index: 20;
+
+  width: 100%;
+  min-height: 100px;
+  padding:
+    14px
+    32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border-bottom: 1px solid #dce5f2;
+
+  box-shadow:
+    0 5px 20px
+    rgba(36, 49, 77, 0.08);
+}
+
+.page-hq .site-header .logo {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+}
+
+.page-hq .site-header .logo img {
+  width: auto;
+  height: 72px;
+
+  object-fit: contain;
+}
+
+.page-hq .site-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap:
+    12px
+    24px;
+}
+
+.page-hq .site-header nav a {
+  color: #293b60;
+
+  font-weight: 800;
+
+  transition:
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.page-hq .site-header nav a:hover,
+.page-hq .site-header nav .active-nav-link {
+  color: #7d4cff;
+}
+
+.page-hq .site-header nav a:hover {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   SHARED BUTTONS
+========================================================= */
+
+.page-hq .button,
+.page-hq .small-button {
+  min-height: 50px;
+  padding:
+    13px
+    22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  font-weight: 900;
+  text-align: center;
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.page-hq .button {
+  background: #7d4cff;
+
+  border: 3px solid #5f35ca;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 7px 0
+    #5430b3;
+}
+
+.page-hq .button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 4px 0
+    #5430b3;
+}
+
+.page-hq .small-button {
+  background: #ffffff;
+
+  border: 3px solid #29bfd0;
+
+  color: #187f8b;
+
+  box-shadow:
+    0 6px 0
+    #b8e9ee;
+}
+
+.page-hq .small-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 3px 0
+    #b8e9ee;
+}
+
+
+/* =========================================================
+   DASHBOARD WRAPPER
+========================================================= */
+
+.dashboard {
+  width:
+    min(
+      1380px,
+      calc(100% - 36px)
+    );
+
+  margin: 0 auto;
+  padding:
+    38px
+    0
+    80px;
+}
+
+
+/* =========================================================
+   HERO BANNER
+========================================================= */
+
+.hq-hero {
+  position: relative;
+  overflow: hidden;
+
+  padding: 38px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(320px, 0.65fr);
+
+  gap: 30px;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4b2ba1 0%,
+      #7750dc 54%,
+      #2baec5 100%
+    );
+
+  border: 5px solid #2d1768;
+  border-radius: 34px;
+
+  box-shadow:
+    0 22px 48px
+    rgba(55, 38, 117, 0.24);
+}
+
+.hq-hero::before {
+  content: "";
+
+  position: absolute;
+  top: -110px;
+  right: -70px;
+
+  width: 300px;
+  height: 300px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+}
+
+.hq-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hq-hero .eyebrow {
+  color: #eee6ff;
+}
+
+.hq-hero h1 {
+  margin:
+    4px
+    0
+    14px;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      2.2rem,
+      5vw,
+      4.25rem
+    );
+
+  line-height: 1.05;
+}
+
+.hq-hero-message {
+  max-width: 760px;
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.92);
+
+  font-size: 1.12rem;
+  line-height: 1.65;
+}
+
+.hq-hero-actions {
+  margin-top: 26px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.hq-hero .small-button {
+  background: rgba(255, 255, 255, 0.96);
+
+  border-color: #ffffff;
+
+  color: #5230aa;
+
+  box-shadow:
+    0 6px 0
+    rgba(48, 31, 99, 0.34);
+}
+
+
+/* =========================================================
+   MEME CARD
+========================================================= */
+
+.hq-meme-card {
+  padding: 22px;
+
+  display: grid;
+  grid-template-columns:
+    145px
+    minmax(0, 1fr);
+
+  align-items: center;
+  gap: 18px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 4px solid #ffffff;
+  border-radius: 26px;
+
+  box-shadow:
+    0 14px 30px
+    rgba(45, 27, 105, 0.21);
+}
+
+.meme-image-frame {
+  width: 145px;
+  height: 145px;
+
+  display: grid;
+  place-items: center;
+
+  background: #f3efff;
+
+  border: 3px solid #d5c6ff;
+  border-radius: 22px;
+}
+
+.meme-image-frame img {
+  width: 132px;
+  height: 132px;
+
+  object-fit: contain;
+}
+
+.hq-meme-card .eyebrow {
+  color: #7650d0;
+}
+
+.hq-meme-card h2 {
+  margin:
+    3px
+    0
+    8px;
+
+  color: #3f277f;
+
+  font-size: 1.35rem;
+}
+
+.hq-meme-card p:last-child {
+  margin: 0;
+
+  color: #425274;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   EYEBROWS
+========================================================= */
+
+.page-hq .eyebrow {
+  margin:
+    0
+    0
+    7px;
+
+  color: #7650d0;
+
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   STATUS STRIP
+========================================================= */
+
+.hero-status-strip {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 16px;
+}
+
+.hero-status-strip article {
+  padding: 19px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  background: #ffffff;
+
+  border: 3px solid #dce5f2;
+  border-radius: 21px;
+
+  box-shadow:
+    0 12px 28px
+    rgba(55, 71, 102, 0.09);
+}
+
+.status-icon {
+  width: 53px;
+  height: 53px;
+
+  flex: 0 0 53px;
+
+  display: grid;
+  place-items: center;
+
+  background: #f1ecff;
+
+  border: 3px solid #d2c2ff;
+  border-radius: 17px;
+
+  font-size: 1.7rem;
+}
+
+.hero-status-strip p {
+  margin:
+    0
+    0
+    4px;
+
+  color: #68758e;
+
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.hero-status-strip strong {
+  color: #25365b;
+
+  font-size: 1.1rem;
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
+.dashboard-grid {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(
+      12,
+      minmax(0, 1fr)
+    );
+
+  gap: 22px;
+}
+
+.dashboard-card {
+  min-width: 0;
+  padding: 25px;
+
+  background: #ffffff;
+
+  border: 3px solid #dce4f2;
+  border-radius: 28px;
+
+  box-shadow:
+    0 16px 38px
+    rgba(50, 67, 98, 0.1);
+}
+
+.hero-id-card {
+  grid-column:
+    span 5;
+}
+
+.current-mission-card {
+  grid-column:
+    span 7;
+}
+
+.progress-card {
+  grid-column:
+    span 5;
+}
+
+.badge-collection-card {
+  grid-column:
+    span 7;
+}
+
+.mission-map-card {
+  grid-column:
+    span 7;
+}
+
+.arcade-card {
+  grid-column:
+    span 5;
+}
+
+
+/* =========================================================
+   CARD HEADERS
+========================================================= */
+
+.dashboard-card-header {
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.dashboard-card-header h2 {
+  margin: 0;
+
+  color: #472790;
+
+  font-size: 1.65rem;
+}
+
+.card-header-icon {
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 52px;
+
+  display: grid;
+  place-items: center;
+
+  background: #f1edff;
+
+  border: 3px solid #d4c6ff;
+  border-radius: 17px;
+
+  font-size: 1.65rem;
+}
+
+
+/* =========================================================
+   HERO ID CARD
+========================================================= */
+
+.hero-id-body {
+  display: grid;
+  grid-template-columns:
+    170px
+    minmax(0, 1fr);
+
+  gap: 20px;
+  align-items: center;
+}
+
+.hero-avatar-frame {
+  width: 170px;
+  height: 210px;
+
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f3efff,
+      #edfaff
+    );
+
+  border: 4px solid #8b5cf6;
+  border-radius: 24px;
+}
+
+.hero-avatar-frame img {
+  width: 155px;
+  max-height: 195px;
+
+  object-fit: contain;
+}
+
+.hero-id-details {
+  display: grid;
+  gap: 10px;
+}
+
+.hero-id-details p {
+  margin: 0;
+  padding-bottom: 9px;
+
+  display: grid;
+  grid-template-columns:
+    105px
+    minmax(0, 1fr);
+
+  gap: 10px;
+
+  border-bottom: 1px solid #e3e8f2;
+
+  line-height: 1.45;
+}
+
+.hero-id-details strong {
+  color: #2e3f62;
+}
+
+.hero-id-details span {
+  color: #52617d;
+}
+
+.card-text-link {
+  display: inline-block;
+
+  margin-top: 17px;
+
+  color: #6841ce;
+
+  font-weight: 900;
+}
+
+.card-text-link:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   CURRENT MISSION
+========================================================= */
+
+.current-mission-content {
+  display: grid;
+  grid-template-columns:
+    210px
+    minmax(0, 1fr);
+
+  gap: 24px;
+  align-items: center;
+}
+
+.current-mission-image {
+  width: 210px;
+  height: 210px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f5f0ff,
+      #eafaff
+    );
+
+  border: 4px solid #7d4cff;
+  border-radius: 28px;
+}
+
+.current-mission-image img {
+  width: 175px;
+  height: 175px;
+
+  object-fit: contain;
+}
+
+.mission-number-pill {
+  display: inline-block;
+
+  margin-bottom: 10px;
+  padding:
+    8px
+    13px;
+
+  background: #e9faff;
+
+  border: 2px solid #88d9e3;
+  border-radius: 999px;
+
+  color: #167988;
+
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.current-mission-content h3 {
+  margin:
+    0
+    0
+    8px;
+
+  color: #342168;
+
+  font-size: 1.8rem;
+}
+
+.current-mission-content p {
+  margin:
+    0
+    0
+    20px;
+
+  color: #53617b;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   PROGRESS CARD
+========================================================= */
+
+.progress-number-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.progress-number-row strong {
+  color: #6e42df;
+
+  font-size: 2rem;
+}
+
+.progress-number-row span {
+  color: #596782;
+
+  font-weight: 800;
+  text-align: right;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 25px;
+
+  margin-top: 17px;
+
+  overflow: hidden;
+
+  background: #e6ecf5;
+
+  border: 3px solid #ced8e6;
+  border-radius: 999px;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      #7d4cff,
+      #29bfd0
+    );
+
+  border-radius: inherit;
+
+  transition:
+    width 0.5s ease;
+}
+
+.mission-progress-dots {
+  position: relative;
+
+  margin-top: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mission-progress-dots::before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  right: 8%;
+
+  height: 4px;
+
+  background: #dbe2ed;
+
+  transform: translateY(-50%);
+}
+
+.mission-progress-dot {
+  position: relative;
+  z-index: 1;
+
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  background: #ffffff;
+
+  border: 3px solid #cbd4e2;
+  border-radius: 50%;
+
+  color: #7b879b;
+
+  font-weight: 900;
+}
+
+.mission-progress-dot.completed {
+  background: #38c986;
+
+  border-color: #1ea96d;
+
+  color: #ffffff;
+}
+
+.mission-progress-dot.current {
+  background: #7d4cff;
+
+  border-color: #5630ba;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 0 0 7px
+    rgba(125, 76, 255, 0.14);
+}
+
+.progress-encouragement {
+  margin:
+    22px
+    0
+    0;
+  padding: 15px;
+
+  background: #f7f4ff;
+
+  border: 2px solid #ded4f7;
+  border-radius: 16px;
+
+  color: #4d3d79;
+
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   BADGE COLLECTION
+========================================================= */
+
+.badge-collection-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0, 1fr)
+    );
+
+  gap: 14px;
+}
+
+.dashboard-badge {
+  padding: 14px;
+
+  text-align: center;
+
+  border: 3px solid #dce3ef;
+  border-radius: 20px;
+
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.dashboard-badge:hover {
+  transform: translateY(-3px);
+}
+
+.badge-image-frame {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+
+  background: #f7f9fc;
+
+  border: 3px solid #d5dce8;
+  border-radius: 18px;
+}
+
+.badge-image-frame img {
+  width: 88%;
+  height: 88%;
+
+  object-fit: contain;
+}
+
+.badge-lock {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  background: #ffffff;
+
+  border: 2px solid #d0d7e3;
+  border-radius: 50%;
+
+  font-size: 0.95rem;
+}
+
+.dashboard-badge h3 {
+  margin:
+    12px
+    0
+    4px;
+
+  color: #374568;
+
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.dashboard-badge p {
+  margin: 0;
+
+  color: #7a869b;
+
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.dashboard-badge.locked {
+  opacity: 0.48;
+
+  filter: grayscale(1);
+}
+
+.dashboard-badge.earned {
+  opacity: 1;
+
+  filter: none;
+
+  background: #f1fff7;
+
+  border-color: #39c784;
+}
+
+.dashboard-badge.earned .badge-image-frame {
+  background: #ffffff;
+
+  border-color: #39c784;
+}
+
+.dashboard-badge.earned .badge-lock {
+  background: #31bd7c;
+
+  border-color: #1c9b62;
+
+  color: #ffffff;
+}
+
+.badge-collection-message {
+  margin:
+    19px
+    0
+    0;
+  padding: 14px;
+
+  background: #fff8d5;
+
+  border: 2px solid #eccb58;
+  border-radius: 15px;
+
+  color: #66501c;
+
+  font-weight: 850;
+  text-align: center;
+}
+
+
+/* =========================================================
+   MISSION MAP
+========================================================= */
+
+.mission-map-list {
+  display: grid;
+  gap: 12px;
+}
+
+.mission-map-item {
+  min-width: 0;
+  padding: 15px;
+
+  display: grid;
+  grid-template-columns:
+    46px
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+  gap: 13px;
+
+  background: #f9fbff;
+
+  border: 3px solid #dfe6f1;
+  border-radius: 18px;
+
+  color: #2e3d61;
+
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease,
+    background 0.16s ease;
+}
+
+.mission-map-item:hover {
+  transform: translateX(3px);
+
+  border-color: #8b66de;
+}
+
+.mission-map-number {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  background: #ece7ff;
+
+  border: 2px solid #cab9ff;
+  border-radius: 14px;
+
+  color: #5c38be;
+
+  font-weight: 900;
+}
+
+.mission-map-item strong,
+.mission-map-item small {
+  display: block;
+}
+
+.mission-map-item strong {
+  margin-bottom: 4px;
+
+  color: #2d3d61;
+}
+
+.mission-map-item small {
+  color: #6a768e;
+
+  line-height: 1.4;
+}
+
+.mission-map-status {
+  padding:
+    7px
+    11px;
+
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.mission-map-item.completed {
+  background: #effff6;
+
+  border-color: #41c987;
+}
+
+.mission-map-item.completed
+.mission-map-number {
+  background: #38c986;
+
+  border-color: #1da66b;
+
+  color: #ffffff;
+}
+
+.mission-map-item.completed
+.mission-map-status {
+  background: #d9f8e8;
+
+  color: #176f49;
+}
+
+.mission-map-item.current {
+  background: #f5f1ff;
+
+  border-color: #7d4cff;
+}
+
+.mission-map-item.current
+.mission-map-status {
+  background: #7d4cff;
+
+  color: #ffffff;
+}
+
+.mission-map-item.locked {
+  opacity: 0.55;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   ARCADE CARD
+========================================================= */
+
+.arcade-card {
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #251a52,
+      #49318b
+    );
+
+  border-color: #1f1749;
+
+  color: #ffffff;
+}
+
+.arcade-card-content {
+  min-height: 100%;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    150px;
+
+  align-items: center;
+  gap: 20px;
+}
+
+.arcade-card .eyebrow {
+  color: #dbcfff;
+}
+
+.arcade-card h2 {
+  margin:
+    0
+    0
+    10px;
+
+  color: #ffffff;
+
+  font-size: 1.8rem;
+}
+
+.arcade-card p {
+  color: #ded8f1;
+
+  line-height: 1.55;
+}
+
+.arcade-card .button {
+  margin-top: 12px;
+
+  background: #29bfd0;
+
+  border-color: #149aa9;
+
+  box-shadow:
+    0 7px 0
+    #107e8a;
+}
+
+.arcade-controller-frame {
+  width: 145px;
+  height: 145px;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-radius: 28px;
+
+  font-size: 4.3rem;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.page-hq footer {
+  padding:
+    25px
+    20px;
+
+  background: #223553;
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+.page-hq footer p {
+  margin: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1180px) {
+  .hq-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hq-meme-card {
+    max-width: 720px;
+  }
+
+  .hero-status-strip {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+  .hero-id-card,
+  .current-mission-card,
+  .progress-card,
+  .badge-collection-card,
+  .mission-map-card,
+  .arcade-card {
+    grid-column:
+      span 12;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .page-hq .site-header {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .page-hq .site-header nav {
+    justify-content: center;
+  }
+
+  .badge-collection-grid {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+
+@media (max-width: 720px) {
+  .dashboard {
+    width:
+      min(
+        100% - 18px,
+        720px
+      );
+
+    padding-top: 22px;
+  }
+
+  .hq-hero,
+  .dashboard-card {
+    padding: 21px;
+  }
+
+  .hq-meme-card,
+  .hero-id-body,
+  .current-mission-content,
+  .arcade-card-content {
+    grid-template-columns: 1fr;
+  }
+
+  .meme-image-frame,
+  .hero-avatar-frame,
+  .current-mission-image,
+  .arcade-controller-frame {
+    margin:
+      0
+      auto;
+  }
+
+  .hero-status-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .badge-collection-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+
+@media (max-width: 500px) {
+  .page-hq .site-header {
+    padding:
+      12px
+      16px;
+  }
+
+  .page-hq .site-header .logo img {
+    height: 62px;
+  }
+
+  .page-hq .site-header nav {
+    gap:
+      10px
+      15px;
+  }
+
+  .page-hq .site-header nav a {
+    font-size: 0.88rem;
+  }
+
+  .hq-hero-actions {
+    flex-direction: column;
+  }
+
+  .hq-hero-actions > * {
+    width: 100%;
+  }
+
+  .badge-collection-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-map-item {
+    grid-template-columns:
+      42px
+      minmax(0, 1fr);
+  }
+
+  .mission-map-status {
+    grid-column:
+      1 /
+      -1;
+
+    justify-self: start;
+  }
+
+  .progress-number-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .progress-number-row span {
+    text-align: left;
+  }
+}
