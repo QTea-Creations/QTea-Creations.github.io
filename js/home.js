@@ -887,7 +887,7 @@
       }
     );
   } else {
-    initializeHomepage();
+    initializeHomepageMeme();;
   }
 })();
 /* =========================================================
