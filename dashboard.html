@@ -10,7 +10,7 @@
 
   <meta
     name="description"
-    content="Safetii Net Hero Headquarters where students continue missions, track progress, and collect cybersecurity badges."
+    content="Safetii Net Hero Headquarters where students continue missions, track progress, practice cyber skills, and collect badges."
   >
 
   <title>
@@ -20,17 +20,22 @@
   <link
     rel="icon"
     type="image/png"
-    href="assets/Safetii%20NetLogo.png?v=90"
+    href="assets/Safetii%20NetLogo.png?v=140"
   >
 
   <link
     rel="stylesheet"
-    href="css/style.css?v=90"
+    href="css/style.css?v=140"
   >
 
   <link
     rel="stylesheet"
-    href="css/dashboard.css?v=90"
+    href="css/dashboard.css?v=140"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/memphis-theme.css?v=2"
   >
 </head>
 
@@ -53,11 +58,13 @@
       >
     </a>
 
+
     <nav aria-label="Main navigation">
 
       <a
         class="active-nav-link"
         href="dashboard.html"
+        aria-current="page"
       >
         Hero Headquarters
       </a>
@@ -67,11 +74,7 @@
       </a>
 
       <a href="arcade/index.html">
-        Cyber Arcade
-      </a>
-
-      <a href="notebook.html">
-        Cyber Notebook
+        Arcade
       </a>
 
       <a href="parents.html">
@@ -80,6 +83,10 @@
 
       <a href="teachers.html">
         Teachers
+      </a>
+
+      <a href="about.html">
+        About
       </a>
 
     </nav>
@@ -94,10 +101,23 @@
   <main class="dashboard">
 
     <!-- ===================================================
-         HERO WELCOME BANNER
+         WELCOME COMMAND CENTER
     ==================================================== -->
 
-    <section class="hq-hero">
+    <section class="hq-hero memphis-reveal">
+
+      <div
+        class="memphis-decoration memphis-circle"
+        data-memphis-parallax="0.08"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="memphis-decoration memphis-dots cyan"
+        data-memphis-parallax="0.12"
+        aria-hidden="true"
+      ></div>
+
 
       <div class="hq-hero-content">
 
@@ -139,7 +159,7 @@
             class="small-button"
             href="login.html"
           >
-            Create New Hero
+            Switch or Create Hero
           </a>
 
         </div>
@@ -147,9 +167,16 @@
       </div>
 
 
-      <aside class="hq-meme-card">
+      <aside
+        class="hq-meme-card memphis-card memphis-neon-hover"
+        data-memphis-spotlight
+      >
 
-        <div class="meme-image-frame">
+        <button
+          class="meme-image-frame memphis-mascot"
+          type="button"
+          aria-label="Make Meme dance"
+        >
 
           <img
             id="dashboardMemeImage"
@@ -157,7 +184,8 @@
             alt="Meme welcoming the student to Hero Headquarters"
           >
 
-        </div>
+        </button>
+
 
         <div class="meme-message">
 
@@ -173,6 +201,10 @@
             Complete missions to earn all five cybersecurity badges.
           </p>
 
+          <small class="meme-interaction-hint">
+            Click Meme to make her move.
+          </small>
+
         </div>
 
       </aside>
@@ -181,15 +213,15 @@
 
 
     <!-- ===================================================
-         QUICK STATUS STRIP
+         COMMAND STATUS
     ==================================================== -->
 
     <section
-      class="hero-status-strip"
+      class="hero-status-strip memphis-reveal"
       aria-label="Hero status"
     >
 
-      <article>
+      <article class="memphis-neon-hover">
 
         <span
           class="status-icon"
@@ -213,7 +245,7 @@
       </article>
 
 
-      <article>
+      <article class="memphis-neon-hover">
 
         <span
           class="status-icon"
@@ -240,7 +272,7 @@
       </article>
 
 
-      <article>
+      <article class="memphis-neon-hover">
 
         <span
           class="status-icon"
@@ -264,7 +296,7 @@
       </article>
 
 
-      <article>
+      <article class="memphis-neon-hover">
 
         <span
           class="status-icon"
@@ -291,7 +323,7 @@
 
 
     <!-- ===================================================
-         MAIN DASHBOARD GRID
+         MAIN COMMAND GRID
     ==================================================== -->
 
     <section class="dashboard-grid">
@@ -300,7 +332,10 @@
            HERO ID
       ================================================== -->
 
-      <article class="dashboard-card hero-id-card">
+      <article
+        class="dashboard-card hero-id-card memphis-reveal"
+        data-memphis-spotlight
+      >
 
         <header class="dashboard-card-header">
 
@@ -311,7 +346,7 @@
             </p>
 
             <h2>
-              Your Hero ID
+              Hero Identification
             </h2>
 
           </div>
@@ -342,7 +377,6 @@
           <div class="hero-id-details">
 
             <p>
-
               <strong>
                 Hero Name
               </strong>
@@ -350,11 +384,10 @@
               <span id="dashboardHeroIdName">
                 Cyber Mentee
               </span>
-
             </p>
 
-            <p>
 
+            <p>
               <strong>
                 Rank
               </strong>
@@ -362,11 +395,10 @@
               <span id="dashboardHeroRank">
                 Cyber Mentee
               </span>
-
             </p>
 
-            <p>
 
+            <p>
               <strong>
                 Suit
               </strong>
@@ -374,11 +406,10 @@
               <span id="dashboardColor">
                 Not chosen yet
               </span>
-
             </p>
 
-            <p>
 
+            <p>
               <strong>
                 Sidekick
               </strong>
@@ -386,11 +417,10 @@
               <span id="dashboardAnimal">
                 Not chosen yet
               </span>
-
             </p>
 
-            <p>
 
+            <p>
               <strong>
                 Power
               </strong>
@@ -398,7 +428,6 @@
               <span id="dashboardPower">
                 Not chosen yet
               </span>
-
             </p>
 
           </div>
@@ -410,17 +439,20 @@
           class="card-text-link"
           href="login.html"
         >
-          Edit or create a hero
+          Switch or create a hero
         </a>
 
       </article>
 
 
       <!-- =================================================
-           CURRENT MISSION
+           CURRENT ASSIGNMENT
       ================================================== -->
 
-      <article class="dashboard-card current-mission-card">
+      <article
+        class="dashboard-card current-mission-card memphis-reveal"
+        data-memphis-spotlight
+      >
 
         <header class="dashboard-card-header">
 
@@ -450,11 +482,11 @@
 
           <div class="current-mission-image">
 
-<img
-  id="currentMissionImage"
-  src="assets/badges/Identity%20Protector%20Badge.png"
-  alt="Current cybersecurity mission badge"
->
+            <img
+              id="currentMissionImage"
+              src="assets/badges/Identity%20Protector%20Badge.png"
+              alt="Current cybersecurity mission badge"
+            >
 
           </div>
 
@@ -493,10 +525,13 @@
 
 
       <!-- =================================================
-           PROGRESS
+           TRAINING RECORD
       ================================================== -->
 
-      <article class="dashboard-card progress-card">
+      <article
+        class="dashboard-card progress-card memphis-reveal"
+        data-memphis-spotlight
+      >
 
         <header class="dashboard-card-header">
 
@@ -537,12 +572,12 @@
 
         <div
           class="progress-bar"
+          id="dashboardProgressBar"
           role="progressbar"
           aria-label="Mission completion progress"
           aria-valuemin="0"
           aria-valuemax="100"
           aria-valuenow="0"
-          id="dashboardProgressBar"
         >
 
           <div
@@ -598,18 +633,25 @@
         </div>
 
 
-        <p class="progress-encouragement" id="progressEncouragement">
-          Complete your first mission to begin filling the progress bar.
+        <p
+          class="progress-encouragement"
+          id="progressEncouragement"
+        >
+          Complete your first mission to begin filling the progress
+          bar.
         </p>
 
       </article>
 
 
       <!-- =================================================
-           BADGE COLLECTION
+           BADGE VAULT
       ================================================== -->
 
-      <article class="dashboard-card badge-collection-card">
+      <article
+        class="dashboard-card badge-collection-card memphis-reveal"
+        data-memphis-spotlight
+      >
 
         <header class="dashboard-card-header">
 
@@ -620,7 +662,7 @@
             </p>
 
             <h2>
-              Badge Collection
+              Badge Vault
             </h2>
 
           </div>
@@ -637,8 +679,6 @@
 
         <div class="badge-collection-grid">
 
-          <!-- Mission 1 -->
-
           <article
             class="dashboard-badge locked"
             id="identityBadge"
@@ -646,11 +686,11 @@
 
             <div class="badge-image-frame">
 
-<img
-  id="identityBadgeImage"
-  src="assets/badges/Identity%20Protector%20Badge.png"
-  alt="Identity Protector badge"
->
+              <img
+                id="identityBadgeImage"
+                src="assets/badges/Identity%20Protector%20Badge.png"
+                alt="Identity Protector badge"
+              >
 
               <span class="badge-lock">
                 🔒
@@ -669,8 +709,6 @@
           </article>
 
 
-          <!-- Mission 2 -->
-
           <article
             class="dashboard-badge locked"
             id="passwordBadge"
@@ -678,11 +716,11 @@
 
             <div class="badge-image-frame">
 
-<img
-  id="passwordBadgeImage"
-  src="assets/badges/Password%20Safe%20Keeper%20Badge.png"
-  alt="Password Safe Keeper badge"
->
+              <img
+                id="passwordBadgeImage"
+                src="assets/badges/Password%20Safe%20Keeper%20Badge.png"
+                alt="Password Safe Keeper badge"
+              >
 
               <span class="badge-lock">
                 🔒
@@ -701,8 +739,6 @@
           </article>
 
 
-          <!-- Mission 3 -->
-
           <article
             class="dashboard-badge locked"
             id="phishingBadge"
@@ -710,11 +746,11 @@
 
             <div class="badge-image-frame">
 
-<img
-  id="phishingBadgeImage"
-  src="assets/badges/Phish%20Finder%20Badge.png"
-  alt="Phish Finder badge"
->
+              <img
+                id="phishingBadgeImage"
+                src="assets/badges/Phish%20Finder%20Badge.png"
+                alt="Phish Finder badge"
+              >
 
               <span class="badge-lock">
                 🔒
@@ -733,8 +769,6 @@
           </article>
 
 
-          <!-- Mission 4 -->
-
           <article
             class="dashboard-badge locked"
             id="footprintBadge"
@@ -742,11 +776,11 @@
 
             <div class="badge-image-frame">
 
-<img
-  id="footprintBadgeImage"
-  src="assets/badges/Digital%20Footprint%20Defender%20Badge.png"
-  alt="Digital Footprint Defender badge"
->
+              <img
+                id="footprintBadgeImage"
+                src="assets/badges/Digital%20Footprint%20Defender%20Badge.png"
+                alt="Digital Footprint Defender badge"
+              >
 
               <span class="badge-lock">
                 🔒
@@ -765,8 +799,6 @@
           </article>
 
 
-          <!-- Mission 5 -->
-
           <article
             class="dashboard-badge locked"
             id="responderBadge"
@@ -774,11 +806,11 @@
 
             <div class="badge-image-frame">
 
-<img
-  id="responderBadgeImage"
-  src="assets/badges/Cyber%20Responder%20Badge.png"
-  alt="Cyber Responder badge"
->
+              <img
+                id="responderBadgeImage"
+                src="assets/badges/Cyber%20Responder%20Badge.png"
+                alt="Cyber Responder badge"
+              >
 
               <span class="badge-lock">
                 🔒
@@ -810,7 +842,10 @@
            MISSION MAP
       ================================================== -->
 
-      <article class="dashboard-card mission-map-card">
+      <article
+        class="dashboard-card mission-map-card memphis-reveal"
+        data-memphis-spotlight
+      >
 
         <header class="dashboard-card-header">
 
@@ -1003,89 +1038,166 @@
 
 
       <!-- =================================================
-           CYBER ARCADE
+           ARCADE PRACTICE TERMINAL
       ================================================== -->
-<section class="hq-arcade-panel" id="dashboardArcadePanel">
-  <div class="hq-arcade-copy">
-    <p class="hq-panel-label">Practice Zone</p>
-    <h2 id="dashboardArcadeHeading">Cyber Arcade</h2>
-    <p id="dashboardArcadeDescription">
-      Practice cybersecurity skills through games and challenges.
-    </p>
 
-    <div class="hq-arcade-status" id="dashboardArcadeStatus">
-      <span class="hq-arcade-status-icon">🎮</span>
-      <div>
-        <strong id="dashboardArcadeRecentLabel">No game played yet</strong>
-        <p id="dashboardArcadeRecentText">
-          Start your first arcade game to see it here.
-        </p>
-      </div>
-    </div>
-
-    <div class="hq-arcade-buttons">
-      <a
-        class="hq-arcade-button primary"
-        id="dashboardArcadeButton"
-        href="arcade/index.html"
+      <section
+        class="hq-arcade-panel memphis-reveal"
+        id="dashboardArcadePanel"
       >
-        Enter the Arcade
-      </a>
 
-      <a
-        class="hq-arcade-button secondary"
-        id="dashboardArcadeBrowseButton"
-        href="arcade/index.html"
-      >
-        Browse Games
-      </a>
-    </div>
-  </div>
+        <div class="hq-arcade-copy">
 
-  <div class="hq-arcade-visual">
-    <div class="arcade-animation-shell">
-      <div class="arcade-glow-orb"></div>
+          <p class="hq-panel-label">
+            Practice Terminal
+          </p>
 
-      <div class="arcade-pixel pixel-one"></div>
-      <div class="arcade-pixel pixel-two"></div>
-      <div class="arcade-pixel pixel-three"></div>
-      <div class="arcade-pixel pixel-four"></div>
+          <h2 id="dashboardArcadeHeading">
+            Arcade
+          </h2>
 
-      <div class="arcade-visual-card">
-        <div class="arcade-visual-screen">
-          <div class="arcade-screen-header">
-            <span class="screen-dot"></span>
-            <span class="screen-dot"></span>
-            <span class="screen-dot"></span>
-          </div>
+          <p id="dashboardArcadeDescription">
+            Practice cybersecurity skills through games and
+            challenges.
+          </p>
 
-          <div class="arcade-screen-content">
-            <div class="arcade-screen-badge" id="dashboardArcadeBadge">
-              Ready to Play
-            </div>
 
-            <div class="arcade-screen-icon" id="dashboardArcadeIcon">
+          <div
+            class="hq-arcade-status"
+            id="dashboardArcadeStatus"
+          >
+
+            <span
+              class="hq-arcade-status-icon"
+              aria-hidden="true"
+            >
               🎮
+            </span>
+
+            <div>
+
+              <strong id="dashboardArcadeRecentLabel">
+                No game played yet
+              </strong>
+
+              <p id="dashboardArcadeRecentText">
+                Start your first arcade game to see it here.
+              </p>
+
             </div>
 
-            <div class="arcade-screen-title" id="dashboardArcadeGameName">
-              Cyber Arcade
-            </div>
-
-            <div class="arcade-screen-subtitle" id="dashboardArcadeGameMode">
-              Pick a game and start practicing.
-            </div>
           </div>
+
+
+          <div class="hq-arcade-buttons">
+
+            <a
+              class="hq-arcade-button primary"
+              id="dashboardArcadeButton"
+              href="arcade/index.html"
+            >
+              Enter the Arcade
+            </a>
+
+            <a
+              class="hq-arcade-button secondary"
+              id="dashboardArcadeBrowseButton"
+              href="arcade/index.html#arcadeGames"
+            >
+              Browse Games
+            </a>
+
+          </div>
+
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+
+
+        <div class="hq-arcade-visual">
+
+          <a
+            class="arcade-animation-shell memphis-neon-hover"
+            href="arcade/index.html"
+            aria-label="Enter the Safetii Net Arcade"
+          >
+
+            <div class="arcade-glow-orb"></div>
+
+            <div class="arcade-pixel pixel-one"></div>
+            <div class="arcade-pixel pixel-two"></div>
+            <div class="arcade-pixel pixel-three"></div>
+            <div class="arcade-pixel pixel-four"></div>
+
+
+            <div class="arcade-visual-card">
+
+              <div class="arcade-visual-screen">
+
+                <div class="arcade-screen-header">
+
+                  <span class="screen-dot"></span>
+                  <span class="screen-dot"></span>
+                  <span class="screen-dot"></span>
+
+                </div>
+
+
+                <div class="arcade-screen-content">
+
+                  <div
+                    class="arcade-screen-badge"
+                    id="dashboardArcadeBadge"
+                  >
+                    Ready to Play
+                  </div>
+
+                  <div
+                    class="arcade-screen-icon"
+                    id="dashboardArcadeIcon"
+                  >
+                    🎮
+                  </div>
+
+                  <div
+                    class="arcade-screen-title"
+                    id="dashboardArcadeGameName"
+                  >
+                    Arcade
+                  </div>
+
+                  <div
+                    class="arcade-screen-subtitle"
+                    id="dashboardArcadeGameMode"
+                  >
+                    Pick a game and start practicing.
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </a>
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+
   <!-- =====================================================
        FOOTER
   ====================================================== -->
 
-  <footer>
+  <footer class="dashboard-footer">
+
+    <img
+      src="assets/SafetiiNet-logo-navbar.png"
+      alt="Safetii Net"
+    >
 
     <p>
       © 2026 Safetii Net. Helping kids become Cyber Super Heroes.
@@ -1095,13 +1207,18 @@
 
 
   <!-- =====================================================
-       DASHBOARD CONTROLLER
+       JAVASCRIPT
   ====================================================== -->
 
-<script
-  src="js/memphis-interactions.js?v=1"
-  defer
-></script>
-      
+  <script
+    src="js/dashboard.js?v=140"
+    defer
+  ></script>
+
+  <script
+    src="js/memphis-interactions.js?v=2"
+    defer
+  ></script>
+
 </body>
 </html>
