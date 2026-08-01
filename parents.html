@@ -1,61 +1,1144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="js/safetii-debug.js"></script>
-  <title>Parents | Safetii Net</title>
-  <link rel="icon" type="image/png" href="assets/Safetii%20NetLogo.png">
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Safetii Net Parent Center with family conversation starters, cyber-safety guidance, activities, and support resources."
+  >
+
+  <title>Parent Center | Safetii Net</title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/Safetii%20NetLogo.png"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/parents.css?v=1"
+  >
+
+  <script
+    src="js/safetii-debug.js"
+    defer
+  ></script>
 </head>
+
 <body class="page-parents">
+
+  <!-- =====================================================
+       SITE HEADER
+  ====================================================== -->
+
   <header class="site-header">
-<a href="index.html" class="logo">
-    <img src="assets/SafetiiNet-logo-navbar.png" alt="Safetii Net">
-</a>
-    <nav>
-      <a href="index.html#missions">Missions</a>
-      <a href="index.html#arcade">Cyber Arcade</a>
-      <a href="parents.html">Parents</a>
-      <a href="teachers.html">Teachers</a>
+
+    <a
+      class="logo"
+      href="index.html"
+      aria-label="Safetii Net home"
+    >
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+    </a>
+
+    <nav aria-label="Main navigation">
+
+      <a href="dashboard.html">
+        Hero Headquarters
+      </a>
+
+      <a href="missions.html">
+        Missions
+      </a>
+
+      <a href="arcade/index.html">
+        Arcade
+      </a>
+
+      <a
+        class="active"
+        href="parents.html"
+        aria-current="page"
+      >
+        Parents
+      </a>
+
+      <a href="teachers.html">
+        Teachers
+      </a>
+
+      <a href="about.html">
+        About
+      </a>
+
     </nav>
+
+    <a
+      class="parent-switch-link"
+      href="index.html"
+    >
+      Switch Path
+    </a>
+
   </header>
 
-  <main class="section">
-    <p class="eyebrow">For Families</p>
-    <h1>Helping Cyber Super Heroes stay safe at home.</h1>
-    <p>
-      Parents and guardians can use Safetii Net to start conversations about
-      online safety, passwords, scams, cyberbullying, and smart digital choices.
-    </p>
 
-    <div class="mission-grid">
-      <article class="mission-card">
-        <span>💬</span>
-        <h3>Conversation Starters</h3>
-        <p>Simple questions families can use to talk about online safety.</p>
-      </article>
+  <main>
 
-      <article class="mission-card">
-        <span>✅</span>
-        <h3>Family Safety Checklist</h3>
-        <p>Review privacy settings, passwords, trusted adults, and device rules.</p>
-      </article>
+    <!-- ===================================================
+         PARENT HERO
+    ==================================================== -->
 
-      <article class="mission-card">
-        <span>🏠</span>
-        <h3>At-Home Activities</h3>
-        <p>Practice cyber safety together through quick family challenges.</p>
-      </article>
-    </div>
+    <section class="parent-hero">
+
+      <div
+        class="parent-hero-shapes"
+        aria-hidden="true"
+      >
+        <span class="parent-shape parent-shape-circle"></span>
+        <span class="parent-shape parent-shape-dots"></span>
+        <span class="parent-shape parent-shape-squiggle"></span>
+        <span class="parent-shape parent-shape-star"></span>
+      </div>
+
+
+      <div class="parent-hero-content">
+
+        <div class="parent-hero-copy">
+
+          <p class="parent-eyebrow">
+            The Safetii Net Parent Center
+          </p>
+
+          <h1>
+            Help your child build safer digital habits.
+          </h1>
+
+          <p class="parent-hero-description">
+            Safetii Net gives children a place to practice online-safety
+            skills through missions and games. This Parent Center helps
+            families continue those conversations at home.
+          </p>
+
+
+          <div class="parent-hero-actions">
+
+            <a
+              class="parent-primary-button"
+              href="#familyGuide"
+            >
+              Explore the Family Guide
+            </a>
+
+            <a
+              class="parent-secondary-button"
+              href="#responsePlan"
+            >
+              View the Response Plan
+            </a>
+
+          </div>
+
+
+          <div class="parent-hero-pills">
+
+            <span>
+              💬 Conversation Support
+            </span>
+
+            <span>
+              🛡️ Safety Guidance
+            </span>
+
+            <span>
+              ✅ Family Checklists
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <aside class="parent-welcome-card">
+
+          <div class="parent-icon-frame">
+            <span aria-hidden="true">
+              🏠
+            </span>
+          </div>
+
+          <div>
+
+            <p class="parent-card-label">
+              Families are part of the team
+            </p>
+
+            <h2>
+              Curiosity works better than panic.
+            </h2>
+
+            <p>
+              Children are more likely to ask for help when they know
+              they can speak honestly without immediately being blamed
+              or punished.
+            </p>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         QUICK START
+    ==================================================== -->
+
+    <section class="parent-section parent-quick-start">
+
+      <header class="parent-section-heading">
+
+        <p class="parent-eyebrow">
+          Start Here
+        </p>
+
+        <h2>
+          Three ways to support your child today.
+        </h2>
+
+        <p>
+          You do not need to be a cybersecurity expert. Consistent
+          conversations and clear family expectations make a meaningful
+          difference.
+        </p>
+
+      </header>
+
+
+      <div class="parent-feature-grid">
+
+        <article class="parent-feature-card parent-card-cyan">
+
+          <div class="parent-feature-icon">
+            💬
+          </div>
+
+          <h3>
+            Ask open questions
+          </h3>
+
+          <p>
+            Ask what your child enjoys online, what feels confusing,
+            and what they would do if something made them uncomfortable.
+          </p>
+
+        </article>
+
+
+        <article class="parent-feature-card parent-card-pink">
+
+          <div class="parent-feature-icon">
+            👀
+          </div>
+
+          <h3>
+            Notice without spying
+          </h3>
+
+          <p>
+            Stay involved in your child’s digital life while respecting
+            age-appropriate independence and encouraging honesty.
+          </p>
+
+        </article>
+
+
+        <article class="parent-feature-card parent-card-gold">
+
+          <div class="parent-feature-icon">
+            🤝
+          </div>
+
+          <h3>
+            Practice the response
+          </h3>
+
+          <p>
+            Make sure your child knows who to contact, what evidence to
+            save, and when to block or report an account.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         MISSION FAMILY GUIDE
+    ==================================================== -->
+
+    <section
+      class="parent-section family-guide-section"
+      id="familyGuide"
+    >
+
+      <header class="parent-section-heading">
+
+        <p class="parent-eyebrow">
+          What Your Child Is Learning
+        </p>
+
+        <h2>
+          A family guide to the five Safetii Net missions.
+        </h2>
+
+        <p>
+          Each mission focuses on one essential digital-safety skill.
+          Use the questions below to continue the learning at home.
+        </p>
+
+      </header>
+
+
+      <div class="parent-mission-list">
+
+        <!-- MISSION 1 -->
+
+        <details class="parent-mission-panel" open>
+
+          <summary>
+
+            <span class="parent-mission-number">
+              1
+            </span>
+
+            <span class="parent-mission-summary-copy">
+
+              <strong>
+                Identity Protector
+              </strong>
+
+              <span>
+                Personal, private, and secret information
+              </span>
+
+            </span>
+
+            <span class="parent-summary-toggle" aria-hidden="true">
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="parent-mission-content">
+
+            <div>
+
+              <h3>
+                What children practice
+              </h3>
+
+              <p>
+                Recognizing which information can be shared safely and
+                which information needs stronger protection.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Try asking
+              </h3>
+
+              <ul>
+                <li>
+                  What information should never be posted publicly?
+                </li>
+
+                <li>
+                  Who are the trusted adults you can ask before sharing?
+                </li>
+
+                <li>
+                  What could someone learn from a username or profile?
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+
+        </details>
+
+
+        <!-- MISSION 2 -->
+
+        <details class="parent-mission-panel">
+
+          <summary>
+
+            <span class="parent-mission-number">
+              2
+            </span>
+
+            <span class="parent-mission-summary-copy">
+
+              <strong>
+                Password Safe Keeper
+              </strong>
+
+              <span>
+                Password strength and account protection
+              </span>
+
+            </span>
+
+            <span class="parent-summary-toggle" aria-hidden="true">
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="parent-mission-content">
+
+            <div>
+
+              <h3>
+                What children practice
+              </h3>
+
+              <p>
+                Building stronger password habits, avoiding password
+                reuse, and understanding extra account protections.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Try asking
+              </h3>
+
+              <ul>
+                <li>
+                  Why is reusing one password risky?
+                </li>
+
+                <li>
+                  What makes a passphrase easier to remember but harder
+                  to guess?
+                </li>
+
+                <li>
+                  What should you do if someone asks for your password?
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+
+        </details>
+
+
+        <!-- MISSION 3 -->
+
+        <details class="parent-mission-panel">
+
+          <summary>
+
+            <span class="parent-mission-number">
+              3
+            </span>
+
+            <span class="parent-mission-summary-copy">
+
+              <strong>
+                Phish Finder
+              </strong>
+
+              <span>
+                Suspicious messages, links, and online offers
+              </span>
+
+            </span>
+
+            <span class="parent-summary-toggle" aria-hidden="true">
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="parent-mission-content">
+
+            <div>
+
+              <h3>
+                What children practice
+              </h3>
+
+              <p>
+                Slowing down, noticing pressure, checking unusual
+                requests, and avoiding misleading links.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Try asking
+              </h3>
+
+              <ul>
+                <li>
+                  What makes an online offer feel suspicious?
+                </li>
+
+                <li>
+                  Why do scammers try to make people hurry?
+                </li>
+
+                <li>
+                  How can we check whether a message is trustworthy?
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+
+        </details>
+
+
+        <!-- MISSION 4 -->
+
+        <details class="parent-mission-panel">
+
+          <summary>
+
+            <span class="parent-mission-number">
+              4
+            </span>
+
+            <span class="parent-mission-summary-copy">
+
+              <strong>
+                Digital Footprint Defender
+              </strong>
+
+              <span>
+                Posts, choices, privacy, and online reputation
+              </span>
+
+            </span>
+
+            <span class="parent-summary-toggle" aria-hidden="true">
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="parent-mission-content">
+
+            <div>
+
+              <h3>
+                What children practice
+              </h3>
+
+              <p>
+                Thinking about audiences, screenshots, privacy,
+                permanence, and the effects of online choices.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Try asking
+              </h3>
+
+              <ul>
+                <li>
+                  Who might see something after it is posted?
+                </li>
+
+                <li>
+                  How could a screenshot change the situation?
+                </li>
+
+                <li>
+                  What should you think about before posting someone
+                  else’s picture?
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+
+        </details>
+
+
+        <!-- MISSION 5 -->
+
+        <details class="parent-mission-panel">
+
+          <summary>
+
+            <span class="parent-mission-number">
+              5
+            </span>
+
+            <span class="parent-mission-summary-copy">
+
+              <strong>
+                Cyber Responder
+              </strong>
+
+              <span>
+                Blocking, reporting, saving evidence, and asking for help
+              </span>
+
+            </span>
+
+            <span class="parent-summary-toggle" aria-hidden="true">
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="parent-mission-content">
+
+            <div>
+
+              <h3>
+                What children practice
+              </h3>
+
+              <p>
+                Recognizing when to stop responding, save evidence,
+                block or report an account, and contact a trusted adult.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Try asking
+              </h3>
+
+              <ul>
+                <li>
+                  What should you save before blocking an account?
+                </li>
+
+                <li>
+                  Which trusted adults could help in different situations?
+                </li>
+
+                <li>
+                  Why is it important not to handle every online problem alone?
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+
+        </details>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FAMILY RESPONSE PLAN
+    ==================================================== -->
+
+    <section
+      class="parent-section response-plan-section"
+      id="responsePlan"
+    >
+
+      <header class="parent-section-heading parent-heading-light">
+
+        <p class="parent-eyebrow">
+          When Something Goes Wrong
+        </p>
+
+        <h2>
+          Use the Safetii Net family response plan.
+        </h2>
+
+        <p>
+          Children need simple steps they can remember when an online
+          situation feels unsafe, threatening, or confusing.
+        </p>
+
+      </header>
+
+
+      <div class="response-step-grid">
+
+        <article class="response-step">
+
+          <span class="response-step-number">
+            1
+          </span>
+
+          <h3>
+            Pause
+          </h3>
+
+          <p>
+            Stop clicking, replying, sending, or sharing.
+          </p>
+
+        </article>
+
+
+        <article class="response-step">
+
+          <span class="response-step-number">
+            2
+          </span>
+
+          <h3>
+            Save
+          </h3>
+
+          <p>
+            Keep screenshots, usernames, messages, and other evidence.
+          </p>
+
+        </article>
+
+
+        <article class="response-step">
+
+          <span class="response-step-number">
+            3
+          </span>
+
+          <h3>
+            Block or report
+          </h3>
+
+          <p>
+            Use the platform tools when it is safe and appropriate.
+          </p>
+
+        </article>
+
+
+        <article class="response-step">
+
+          <span class="response-step-number">
+            4
+          </span>
+
+          <h3>
+            Tell an adult
+          </h3>
+
+          <p>
+            Bring the situation to someone prepared to help.
+          </p>
+
+        </article>
+
+      </div>
+
+
+      <div class="parent-response-reminder">
+
+        <span aria-hidden="true">
+          💡
+        </span>
+
+        <p>
+          <strong>
+            Start by listening.
+          </strong>
+
+          A calm response makes it easier for a child to explain what
+          happened and ask for help again in the future.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FAMILY CHECKLIST
+    ==================================================== -->
+
+    <section class="parent-section checklist-section">
+
+      <div class="checklist-copy">
+
+        <p class="parent-eyebrow">
+          Family Cyber-Safety Checkup
+        </p>
+
+        <h2>
+          Review these habits together.
+        </h2>
+
+        <p>
+          This is not a test. Use it as a conversation guide and choose
+          one or two areas to strengthen at a time.
+        </p>
+
+      </div>
+
+
+      <div class="family-checklist">
+
+        <label>
+          <input type="checkbox">
+          <span>
+            We know which information should stay private.
+          </span>
+        </label>
+
+        <label>
+          <input type="checkbox">
+          <span>
+            Important accounts use different passwords or passphrases.
+          </span>
+        </label>
+
+        <label>
+          <input type="checkbox">
+          <span>
+            We pause before clicking unexpected links or offers.
+          </span>
+        </label>
+
+        <label>
+          <input type="checkbox">
+          <span>
+            Privacy and sharing settings are reviewed together.
+          </span>
+        </label>
+
+        <label>
+          <input type="checkbox">
+          <span>
+            Our child knows which adults to contact for help.
+          </span>
+        </label>
+
+        <label>
+          <input type="checkbox">
+          <span>
+            We have discussed screenshots and digital footprints.
+          </span>
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FAMILY ACTIVITIES
+    ==================================================== -->
+
+    <section class="parent-section activity-section">
+
+      <header class="parent-section-heading">
+
+        <p class="parent-eyebrow">
+          Practice Together
+        </p>
+
+        <h2>
+          Quick family cyber-safety activities.
+        </h2>
+
+      </header>
+
+
+      <div class="parent-activity-grid">
+
+        <article class="parent-activity-card">
+
+          <span class="activity-time">
+            5 minutes
+          </span>
+
+          <div class="activity-icon">
+            🔎
+          </div>
+
+          <h3>
+            Spot the clues
+          </h3>
+
+          <p>
+            Examine an example message together and identify anything
+            that feels unusual, urgent, or misleading.
+          </p>
+
+        </article>
+
+
+        <article class="parent-activity-card">
+
+          <span class="activity-time">
+            10 minutes
+          </span>
+
+          <div class="activity-icon">
+            🧠
+          </div>
+
+          <h3>
+            Build a response plan
+          </h3>
+
+          <p>
+            Choose three trusted adults and discuss which person could
+            help in different situations.
+          </p>
+
+        </article>
+
+
+        <article class="parent-activity-card">
+
+          <span class="activity-time">
+            10 minutes
+          </span>
+
+          <div class="activity-icon">
+            ⚙️
+          </div>
+
+          <h3>
+            Privacy checkup
+          </h3>
+
+          <p>
+            Review one account’s privacy, sharing, and security settings
+            together.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         NEXT PATHS
+    ==================================================== -->
+
+    <section class="parent-next-section">
+
+      <div>
+
+        <p class="parent-eyebrow">
+          Keep Exploring
+        </p>
+
+        <h2>
+          Visit another part of Safetii Net.
+        </h2>
+
+      </div>
+
+
+      <div class="parent-next-grid">
+
+        <a
+          class="parent-next-card"
+          href="missions.html"
+        >
+
+          <span aria-hidden="true">
+            🗺️
+          </span>
+
+          <strong>
+            Explore the Missions
+          </strong>
+
+          <p>
+            See the skills children practice throughout the program.
+          </p>
+
+        </a>
+
+
+        <a
+          class="parent-next-card"
+          href="teachers.html"
+        >
+
+          <span aria-hidden="true">
+            🍎
+          </span>
+
+          <strong>
+            Visit the Teacher Center
+          </strong>
+
+          <p>
+            Review classroom-ready learning support and activities.
+          </p>
+
+        </a>
+
+
+        <a
+          class="parent-next-card"
+          href="about.html"
+        >
+
+          <span aria-hidden="true">
+            ✨
+          </span>
+
+          <strong>
+            About Safetii Net
+          </strong>
+
+          <p>
+            Learn about the creator and the story behind the project.
+          </p>
+
+        </a>
+
+      </div>
+
+    </section>
+
   </main>
 
-  <footer>
-    <p>© 2026 Safetii Net. Helping kids become Cyber Super Heroes.</p>
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="parent-footer">
+
+    <div class="parent-footer-brand">
+
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+
+      <p>
+        Helping young people become confident, thoughtful, and
+        responsible digital citizens.
+      </p>
+
+    </div>
+
+
+    <div class="parent-footer-links">
+
+      <div>
+
+        <h2>
+          Student Experience
+        </h2>
+
+        <a href="login.html">
+          Create a Hero
+        </a>
+
+        <a href="dashboard.html">
+          Hero Headquarters
+        </a>
+
+        <a href="missions.html">
+          Missions
+        </a>
+
+        <a href="arcade/index.html">
+          Arcade
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          Resources
+        </h2>
+
+        <a href="parents.html">
+          Parents
+        </a>
+
+        <a href="teachers.html">
+          Teachers
+        </a>
+
+        <a href="about.html">
+          About
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <p class="parent-footer-copyright">
+      © 2026 Safetii Net. Helping kids become Cyber Super Heroes.
+    </p>
+
   </footer>
+
+
   <script
-  src="js/memphis-interactions.js?v=1"
-  defer
-></script>
+    src="js/memphis-interactions.js?v=1"
+    defer
+  ></script>
+
 </body>
 </html>
