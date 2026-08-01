@@ -1231,3 +1231,152 @@ document.addEventListener(
     }
   }
 );
+
+/* =========================================
+   DASHBOARD ARCADE RECENT GAME
+========================================= */
+
+(function () {
+  const STORAGE_KEY = "safetiiLastArcadeGame";
+
+  const gameInfo = {
+    "Handle With Care": {
+      icon: "📦",
+      label: "Last played",
+      subtitle: "Sorting clues in the Username Factory.",
+      buttonText: "Jump Back In",
+      href: "arcade/games/handle-with-care.html"
+    },
+    "Slash the Scam": {
+      icon: "⚔️",
+      label: "Last played",
+      subtitle: "Cutting through scam messages and spotting safe choices.",
+      buttonText: "Jump Back In",
+      href: "arcade/games/slash-the-scam.html"
+    },
+    "Pieces of Me": {
+      icon: "🧩",
+      label: "Last played",
+      subtitle: "Sorting identity clues into the right groups.",
+      buttonText: "Jump Back In",
+      href: "arcade/games/pieces-of-me.html"
+    }
+  };
+
+  function safeReadRecentGame() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function safeWriteRecentGame(payload) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch (error) {
+      console.warn("Could not save recent arcade game.", error);
+    }
+  }
+
+  function updateDashboardArcadePanel() {
+    const panel = document.getElementById("dashboardArcadePanel");
+    if (!panel) {
+      return;
+    }
+
+    const heading = document.getElementById("dashboardArcadeHeading");
+    const description = document.getElementById("dashboardArcadeDescription");
+    const recentLabel = document.getElementById("dashboardArcadeRecentLabel");
+    const recentText = document.getElementById("dashboardArcadeRecentText");
+    const button = document.getElementById("dashboardArcadeButton");
+    const badge = document.getElementById("dashboardArcadeBadge");
+    const icon = document.getElementById("dashboardArcadeIcon");
+    const gameName = document.getElementById("dashboardArcadeGameName");
+    const gameMode = document.getElementById("dashboardArcadeGameMode");
+
+    const recent = safeReadRecentGame();
+
+    if (!recent || !recent.title) {
+      if (heading) heading.textContent = "Cyber Arcade";
+      if (description) {
+        description.textContent =
+          "Practice cybersecurity skills through games and challenges.";
+      }
+      if (recentLabel) recentLabel.textContent = "No game played yet";
+      if (recentText) {
+        recentText.textContent =
+          "Start your first arcade game to see it here.";
+      }
+      if (button) {
+        button.textContent = "Enter the Arcade";
+        button.href = "arcade/index.html";
+      }
+      if (badge) badge.textContent = "Ready to Play";
+      if (icon) icon.textContent = "🎮";
+      if (gameName) gameName.textContent = "Cyber Arcade";
+      if (gameMode) gameMode.textContent = "Pick a game and start practicing.";
+      return;
+    }
+
+    const details = gameInfo[recent.title] || {
+      icon: recent.icon || "🎮",
+      label: "Last played",
+      subtitle: recent.subtitle || "Continue your most recent arcade game.",
+      buttonText: "Jump Back In",
+      href: recent.href || "arcade/index.html"
+    };
+
+    if (heading) heading.textContent = "Cyber Arcade";
+    if (description) {
+      description.textContent =
+        "Your most recent arcade game is ready whenever you want to keep practicing.";
+    }
+    if (recentLabel) recentLabel.textContent = `${details.label}: ${recent.title}`;
+    if (recentText) recentText.textContent = details.subtitle;
+
+    if (button) {
+      button.textContent = details.buttonText;
+      button.href = details.href;
+    }
+
+    if (badge) badge.textContent = "Recent Game";
+    if (icon) icon.textContent = details.icon;
+    if (gameName) gameName.textContent = recent.title;
+    if (gameMode) gameMode.textContent = "Continue where you left off.";
+  }
+
+  function trackArcadeGameFromBody() {
+    const body = document.body;
+    if (!body) {
+      return;
+    }
+
+    const title = body.dataset.arcadeTitle;
+    if (!title) {
+      return;
+    }
+
+    const payload = {
+      title: title,
+      icon: body.dataset.arcadeIcon || "🎮",
+      href: body.dataset.arcadeHref || location.pathname.replace(/^\//, "")
+    };
+
+    safeWriteRecentGame(payload);
+  }
+
+  window.SafetiiSetRecentArcadeGame = function (title, href, icon) {
+    safeWriteRecentGame({
+      title: title,
+      href: href,
+      icon: icon || "🎮"
+    });
+  };
+
+  document.addEventListener("DOMContentLoaded", function () {
+    trackArcadeGameFromBody();
+    updateDashboardArcadePanel();
+  });
+})();
