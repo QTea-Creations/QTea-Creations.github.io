@@ -1,62 +1,1463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="js/safetii-debug.js"></script>  
-  <title>Teachers | Safetii Net</title>
-  <link rel="icon" type="image/png" href="assets/Safetii%20NetLogo.png">
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body class="page-teachers">
-  <header class="site-header">
-    <a href="index.html" class="logo">
-    <img src="assets/SafetiiNet-logo-navbar.png" alt="Safetii Net">
-</a>
-    <nav>
-      <a href="index.html#missions">Missions</a>
-      <a href="index.html#arcade">Cyber Arcade</a>
-      <a href="parents.html">Parents</a>
-      <a href="teachers.html">Teachers</a>
-    </nav>
-  </header>
+  <meta charset="UTF-8">
 
-  <main class="section">
-    <p class="eyebrow">For Educators</p>
-    <h1>Cyber safety resources for classrooms.</h1>
-    <p>
-      Teachers will be able to use Safetii Net for lessons, activities,
-      classroom discussions, student progress tracking, and certificates.
-    </p>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
 
-    <div class="mission-grid">
-      <article class="mission-card">
-        <span>🍎</span>
-        <h3>Lesson Plans</h3>
-        <p>Ready-to-use cybersecurity lessons for elementary and middle school students.</p>
-      </article>
+  <meta
+    name="description"
+    content="Safetii Net Teacher Center with classroom lesson guidance, cybersecurity learning objectives, discussion prompts, activities, and educator resources."
+  >
 
-      <article class="mission-card">
-        <span>📄</span>
-        <h3>Worksheets</h3>
-        <p>Printable classroom activities and discussion guides.</p>
-      </article>
+  <title>Teacher Center | Safetii Net</title>
 
-      <article class="mission-card">
-        <span>📊</span>
-        <h3>Progress Tools</h3>
-        <p>Future tools for tracking mission completion, badges, and certificates.</p>
-      </article>
-    </div>
-  </main>
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/Safetii%20NetLogo.png"
+  >
 
-  <footer>
-    <p>© 2026 Safetii Net. Helping kids become Cyber Super Heroes.</p>
-  </footer>
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/teachers.css?v=1"
+  >
 
   <script
-  src="js/memphis-interactions.js?v=1"
-  defer
-></script>
+    src="js/safetii-debug.js"
+    defer
+  ></script>
+</head>
+
+<body class="page-teachers">
+
+  <!-- =====================================================
+       SITE HEADER
+  ====================================================== -->
+
+  <header class="site-header">
+
+    <a
+      class="logo"
+      href="index.html"
+      aria-label="Safetii Net home"
+    >
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+    </a>
+
+    <nav aria-label="Main navigation">
+
+      <a href="dashboard.html">
+        Hero Headquarters
+      </a>
+
+      <a href="missions.html">
+        Missions
+      </a>
+
+      <a href="arcade/index.html">
+        Arcade
+      </a>
+
+      <a href="parents.html">
+        Parents
+      </a>
+
+      <a
+        class="active"
+        href="teachers.html"
+        aria-current="page"
+      >
+        Teachers
+      </a>
+
+      <a href="about.html">
+        About
+      </a>
+
+    </nav>
+
+    <a
+      class="teacher-switch-link"
+      href="index.html"
+    >
+      Switch Path
+    </a>
+
+  </header>
+
+
+  <main>
+
+    <!-- ===================================================
+         TEACHER HERO
+    ==================================================== -->
+
+    <section class="teacher-hero">
+
+      <div
+        class="teacher-hero-shapes"
+        aria-hidden="true"
+      >
+        <span class="teacher-shape teacher-shape-circle"></span>
+        <span class="teacher-shape teacher-shape-dots"></span>
+        <span class="teacher-shape teacher-shape-pencil"></span>
+        <span class="teacher-shape teacher-shape-star"></span>
+      </div>
+
+
+      <div class="teacher-hero-content">
+
+        <div class="teacher-hero-copy">
+
+          <p class="teacher-eyebrow">
+            The Safetii Net Teacher Center
+          </p>
+
+          <h1>
+            Bring practical cyber safety into your classroom.
+          </h1>
+
+          <p class="teacher-hero-description">
+            Safetii Net gives students an interactive place to practice
+            digital-safety skills through missions, challenges, and
+            games. This Teacher Center helps educators connect those
+            experiences to classroom instruction.
+          </p>
+
+
+          <div class="teacher-hero-actions">
+
+            <a
+              class="teacher-primary-button"
+              href="#curriculumOverview"
+            >
+              Explore the Curriculum
+            </a>
+
+            <a
+              class="teacher-secondary-button"
+              href="#lessonFlow"
+            >
+              View the Lesson Flow
+            </a>
+
+          </div>
+
+
+          <div class="teacher-hero-pills">
+
+            <span>
+              📘 Learning Objectives
+            </span>
+
+            <span>
+              💬 Discussion Prompts
+            </span>
+
+            <span>
+              🧩 Classroom Activities
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <aside class="teacher-welcome-card">
+
+          <div class="teacher-icon-frame">
+            <span aria-hidden="true">
+              🍎
+            </span>
+          </div>
+
+          <div>
+
+            <p class="teacher-card-label">
+              Designed for flexible teaching
+            </p>
+
+            <h2>
+              Use Safetii Net your way.
+            </h2>
+
+            <p>
+              Introduce one concept during a short lesson, guide a small
+              group through a mission, or use the complete experience as
+              part of a larger digital-citizenship unit.
+            </p>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         QUICK OVERVIEW
+    ==================================================== -->
+
+    <section class="teacher-section teacher-quick-overview">
+
+      <header class="teacher-section-heading">
+
+        <p class="teacher-eyebrow">
+          Classroom Ready
+        </p>
+
+        <h2>
+          Built for instruction, discussion, and practice.
+        </h2>
+
+        <p>
+          Students learn best when they can hear a concept, discuss it,
+          apply it, and reflect on what they would do in a real
+          situation.
+        </p>
+
+      </header>
+
+
+      <div class="teacher-feature-grid">
+
+        <article class="teacher-feature-card teacher-card-purple">
+
+          <div class="teacher-feature-icon">
+            📚
+          </div>
+
+          <h3>
+            Teach the concept
+          </h3>
+
+          <p>
+            Introduce key terms and explain why each cybersecurity skill
+            matters in students’ everyday digital lives.
+          </p>
+
+        </article>
+
+
+        <article class="teacher-feature-card teacher-card-cyan">
+
+          <div class="teacher-feature-icon">
+            🎮
+          </div>
+
+          <h3>
+            Let students practice
+          </h3>
+
+          <p>
+            Use the missions and Cyber Arcade activities to help students
+            apply what they have learned.
+          </p>
+
+        </article>
+
+
+        <article class="teacher-feature-card teacher-card-gold">
+
+          <div class="teacher-feature-icon">
+            💭
+          </div>
+
+          <h3>
+            Reflect together
+          </h3>
+
+          <p>
+            Use classroom discussion prompts to help students explain
+            their choices and learn from one another.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         CURRICULUM OVERVIEW
+    ==================================================== -->
+
+    <section
+      class="teacher-section teacher-curriculum-section"
+      id="curriculumOverview"
+    >
+
+      <header class="teacher-section-heading">
+
+        <p class="teacher-eyebrow">
+          Curriculum Overview
+        </p>
+
+        <h2>
+          Five missions. Five essential digital-safety skills.
+        </h2>
+
+        <p>
+          Each mission includes a clear learning focus, interactive
+          practice, and opportunities for classroom discussion.
+        </p>
+
+      </header>
+
+
+      <div class="teacher-mission-list">
+
+        <!-- MISSION 1 -->
+
+        <details class="teacher-mission-panel" open>
+
+          <summary>
+
+            <span class="teacher-mission-number">
+              1
+            </span>
+
+            <span class="teacher-mission-summary-copy">
+
+              <strong>
+                Identity Protector
+              </strong>
+
+              <span>
+                Personal, private, and secret information
+              </span>
+
+            </span>
+
+            <span
+              class="teacher-summary-toggle"
+              aria-hidden="true"
+            >
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="teacher-mission-content">
+
+            <div>
+
+              <h3>
+                Learning objective
+              </h3>
+
+              <p>
+                Students will distinguish between information that may
+                be shared safely and information that should remain
+                private or secret.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Key vocabulary
+              </h3>
+
+              <ul>
+                <li>Personal information</li>
+                <li>Private information</li>
+                <li>Secret information</li>
+                <li>Trusted adult</li>
+                <li>Digital identity</li>
+              </ul>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Discussion prompt
+              </h3>
+
+              <p>
+                What clues could someone gather from a username,
+                photograph, profile, or online post?
+              </p>
+
+            </div>
+
+          </div>
+
+        </details>
+
+
+        <!-- MISSION 2 -->
+
+        <details class="teacher-mission-panel">
+
+          <summary>
+
+            <span class="teacher-mission-number">
+              2
+            </span>
+
+            <span class="teacher-mission-summary-copy">
+
+              <strong>
+                Password Safe Keeper
+              </strong>
+
+              <span>
+                Password strength and account protection
+              </span>
+
+            </span>
+
+            <span
+              class="teacher-summary-toggle"
+              aria-hidden="true"
+            >
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="teacher-mission-content">
+
+            <div>
+
+              <h3>
+                Learning objective
+              </h3>
+
+              <p>
+                Students will identify stronger password habits and
+                explain how additional security steps help protect an
+                account.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Key vocabulary
+              </h3>
+
+              <ul>
+                <li>Password</li>
+                <li>Passphrase</li>
+                <li>Password reuse</li>
+                <li>Two-factor authentication</li>
+                <li>Account security</li>
+              </ul>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Discussion prompt
+              </h3>
+
+              <p>
+                Why can a long passphrase be easier to remember and
+                harder for someone else to guess?
+              </p>
+
+            </div>
+
+          </div>
+
+        </details>
+
+
+        <!-- MISSION 3 -->
+
+        <details class="teacher-mission-panel">
+
+          <summary>
+
+            <span class="teacher-mission-number">
+              3
+            </span>
+
+            <span class="teacher-mission-summary-copy">
+
+              <strong>
+                Phish Finder
+              </strong>
+
+              <span>
+                Suspicious messages, links, and online offers
+              </span>
+
+            </span>
+
+            <span
+              class="teacher-summary-toggle"
+              aria-hidden="true"
+            >
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="teacher-mission-content">
+
+            <div>
+
+              <h3>
+                Learning objective
+              </h3>
+
+              <p>
+                Students will identify common warning signs in
+                suspicious messages and explain why slowing down helps
+                prevent mistakes.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Key vocabulary
+              </h3>
+
+              <ul>
+                <li>Phishing</li>
+                <li>Scam</li>
+                <li>Suspicious link</li>
+                <li>Urgency</li>
+                <li>Verification</li>
+              </ul>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Discussion prompt
+              </h3>
+
+              <p>
+                Why might a scammer create fear, excitement, or urgency
+                before asking someone to click?
+              </p>
+
+            </div>
+
+          </div>
+
+        </details>
+
+
+        <!-- MISSION 4 -->
+
+        <details class="teacher-mission-panel">
+
+          <summary>
+
+            <span class="teacher-mission-number">
+              4
+            </span>
+
+            <span class="teacher-mission-summary-copy">
+
+              <strong>
+                Digital Footprint Defender
+              </strong>
+
+              <span>
+                Posts, privacy, audiences, and online reputation
+              </span>
+
+            </span>
+
+            <span
+              class="teacher-summary-toggle"
+              aria-hidden="true"
+            >
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="teacher-mission-content">
+
+            <div>
+
+              <h3>
+                Learning objective
+              </h3>
+
+              <p>
+                Students will explain how online actions create a
+                digital footprint and how posts may reach audiences
+                beyond the original viewer.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Key vocabulary
+              </h3>
+
+              <ul>
+                <li>Digital footprint</li>
+                <li>Online reputation</li>
+                <li>Audience</li>
+                <li>Screenshot</li>
+                <li>Permanence</li>
+              </ul>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Discussion prompt
+              </h3>
+
+              <p>
+                How can a screenshot change who sees a post and how long
+                it remains available?
+              </p>
+
+            </div>
+
+          </div>
+
+        </details>
+
+
+        <!-- MISSION 5 -->
+
+        <details class="teacher-mission-panel">
+
+          <summary>
+
+            <span class="teacher-mission-number">
+              5
+            </span>
+
+            <span class="teacher-mission-summary-copy">
+
+              <strong>
+                Cyber Responder
+              </strong>
+
+              <span>
+                Saving evidence, blocking, reporting, and seeking help
+              </span>
+
+            </span>
+
+            <span
+              class="teacher-summary-toggle"
+              aria-hidden="true"
+            >
+              +
+            </span>
+
+          </summary>
+
+
+          <div class="teacher-mission-content">
+
+            <div>
+
+              <h3>
+                Learning objective
+              </h3>
+
+              <p>
+                Students will select appropriate response steps when an
+                online situation becomes unsafe, harmful, or confusing.
+              </p>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Key vocabulary
+              </h3>
+
+              <ul>
+                <li>Evidence</li>
+                <li>Screenshot</li>
+                <li>Block</li>
+                <li>Report</li>
+                <li>Trusted adult</li>
+              </ul>
+
+            </div>
+
+
+            <div>
+
+              <h3>
+                Discussion prompt
+              </h3>
+
+              <p>
+                Why may it be important to save evidence before blocking
+                or reporting an account?
+              </p>
+
+            </div>
+
+          </div>
+
+        </details>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         LESSON FLOW
+    ==================================================== -->
+
+    <section
+      class="teacher-section teacher-lesson-flow-section"
+      id="lessonFlow"
+    >
+
+      <header class="teacher-section-heading teacher-heading-light">
+
+        <p class="teacher-eyebrow">
+          Suggested Lesson Flow
+        </p>
+
+        <h2>
+          A simple structure for using each mission.
+        </h2>
+
+        <p>
+          Adjust the timing based on your students, class period, and
+          instructional goals.
+        </p>
+
+      </header>
+
+
+      <div class="teacher-flow-grid">
+
+        <article class="teacher-flow-step">
+
+          <span class="teacher-flow-number">
+            1
+          </span>
+
+          <p class="teacher-flow-time">
+            5–10 minutes
+          </p>
+
+          <h3>
+            Introduce
+          </h3>
+
+          <p>
+            Define the key concept and connect it to situations students
+            may recognize.
+          </p>
+
+        </article>
+
+
+        <article class="teacher-flow-step">
+
+          <span class="teacher-flow-number">
+            2
+          </span>
+
+          <p class="teacher-flow-time">
+            10–20 minutes
+          </p>
+
+          <h3>
+            Explore
+          </h3>
+
+          <p>
+            Let students work through the related Safetii Net mission or
+            activity.
+          </p>
+
+        </article>
+
+
+        <article class="teacher-flow-step">
+
+          <span class="teacher-flow-number">
+            3
+          </span>
+
+          <p class="teacher-flow-time">
+            5–10 minutes
+          </p>
+
+          <h3>
+            Discuss
+          </h3>
+
+          <p>
+            Ask students to explain what they noticed and why they made
+            particular choices.
+          </p>
+
+        </article>
+
+
+        <article class="teacher-flow-step">
+
+          <span class="teacher-flow-number">
+            4
+          </span>
+
+          <p class="teacher-flow-time">
+            5 minutes
+          </p>
+
+          <h3>
+            Reflect
+          </h3>
+
+          <p>
+            End with an exit question, written response, or class safety
+            commitment.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         TEACHING FORMATS
+    ==================================================== -->
+
+    <section class="teacher-section teacher-formats-section">
+
+      <header class="teacher-section-heading">
+
+        <p class="teacher-eyebrow">
+          Flexible Teaching Formats
+        </p>
+
+        <h2>
+          Adapt Safetii Net to your classroom.
+        </h2>
+
+      </header>
+
+
+      <div class="teacher-format-grid">
+
+        <article class="teacher-format-card">
+
+          <div class="teacher-format-icon">
+            🧑‍💻
+          </div>
+
+          <h3>
+            Individual learning
+          </h3>
+
+          <p>
+            Students independently complete a mission and record one
+            important lesson or question.
+          </p>
+
+          <ul>
+            <li>Independent practice</li>
+            <li>Early-finisher activity</li>
+            <li>Technology station</li>
+          </ul>
+
+        </article>
+
+
+        <article class="teacher-format-card">
+
+          <div class="teacher-format-icon">
+            👥
+          </div>
+
+          <h3>
+            Small-group learning
+          </h3>
+
+          <p>
+            Students discuss scenarios together and explain which
+            digital-safety response they would choose.
+          </p>
+
+          <ul>
+            <li>Partner discussion</li>
+            <li>Learning stations</li>
+            <li>Intervention groups</li>
+          </ul>
+
+        </article>
+
+
+        <article class="teacher-format-card">
+
+          <div class="teacher-format-icon">
+            🏫
+          </div>
+
+          <h3>
+            Whole-class learning
+          </h3>
+
+          <p>
+            Project a scenario, collect student responses, and lead a
+            guided conversation about the safest choice.
+          </p>
+
+          <ul>
+            <li>Direct instruction</li>
+            <li>Advisory period</li>
+            <li>Digital-citizenship unit</li>
+          </ul>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         DISCUSSION STRATEGIES
+    ==================================================== -->
+
+    <section class="teacher-section teacher-discussion-section">
+
+      <div class="teacher-discussion-copy">
+
+        <p class="teacher-eyebrow">
+          Classroom Discussion
+        </p>
+
+        <h2>
+          Ask students to explain their thinking.
+        </h2>
+
+        <p>
+          Cyber-safety discussions become more meaningful when students
+          move beyond naming the correct answer and explain why a choice
+          is safer.
+        </p>
+
+      </div>
+
+
+      <div class="teacher-prompt-list">
+
+        <article>
+
+          <span>
+            01
+          </span>
+
+          <p>
+            What clues helped you decide?
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <span>
+            02
+          </span>
+
+          <p>
+            What could happen if someone chose differently?
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <span>
+            03
+          </span>
+
+          <p>
+            Which trusted adult could help in this situation?
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <span>
+            04
+          </span>
+
+          <p>
+            What would make this situation safer?
+          </p>
+
+        </article>
+
+
+        <article>
+
+          <span>
+            05
+          </span>
+
+          <p>
+            How might this choice affect another person?
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         CLASSROOM ACTIVITIES
+    ==================================================== -->
+
+    <section class="teacher-section teacher-activities-section">
+
+      <header class="teacher-section-heading">
+
+        <p class="teacher-eyebrow">
+          Extension Activities
+        </p>
+
+        <h2>
+          Continue the learning beyond the screen.
+        </h2>
+
+      </header>
+
+
+      <div class="teacher-activity-grid">
+
+        <article class="teacher-activity-card">
+
+          <span class="teacher-activity-time">
+            10 minutes
+          </span>
+
+          <div class="teacher-activity-icon">
+            🕵️
+          </div>
+
+          <h3>
+            Cyber clue challenge
+          </h3>
+
+          <p>
+            Give students a sample message or profile and ask them to
+            mark every clue that may create a safety concern.
+          </p>
+
+        </article>
+
+
+        <article class="teacher-activity-card">
+
+          <span class="teacher-activity-time">
+            15 minutes
+          </span>
+
+          <div class="teacher-activity-icon">
+            🎭
+          </div>
+
+          <h3>
+            Response role-play
+          </h3>
+
+          <p>
+            Students practice pausing, saving evidence, reporting, and
+            asking a trusted adult for help.
+          </p>
+
+        </article>
+
+
+        <article class="teacher-activity-card">
+
+          <span class="teacher-activity-time">
+            15 minutes
+          </span>
+
+          <div class="teacher-activity-icon">
+            📝
+          </div>
+
+          <h3>
+            Digital safety pledge
+          </h3>
+
+          <p>
+            Students write one digital habit they will practice and one
+            way they will help others stay safe.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         RESOURCE AREA
+    ==================================================== -->
+
+    <section class="teacher-section teacher-resources-section">
+
+      <header class="teacher-section-heading">
+
+        <p class="teacher-eyebrow">
+          Educator Resources
+        </p>
+
+        <h2>
+          Classroom tools are being prepared.
+        </h2>
+
+        <p>
+          This area can later connect to printable lesson plans,
+          worksheets, vocabulary sheets, discussion guides, and student
+          certificates.
+        </p>
+
+      </header>
+
+
+      <div class="teacher-resource-grid">
+
+        <article class="teacher-resource-card">
+
+          <span>
+            📘
+          </span>
+
+          <div>
+
+            <h3>
+              Lesson plans
+            </h3>
+
+            <p>
+              Structured guides for teaching each mission.
+            </p>
+
+          </div>
+
+          <span class="teacher-coming-soon">
+            Coming Soon
+          </span>
+
+        </article>
+
+
+        <article class="teacher-resource-card">
+
+          <span>
+            📄
+          </span>
+
+          <div>
+
+            <h3>
+              Student worksheets
+            </h3>
+
+            <p>
+              Printable activities, reflection pages, and scenario
+              practice.
+            </p>
+
+          </div>
+
+          <span class="teacher-coming-soon">
+            Coming Soon
+          </span>
+
+        </article>
+
+
+        <article class="teacher-resource-card">
+
+          <span>
+            🏅
+          </span>
+
+          <div>
+
+            <h3>
+              Certificates
+            </h3>
+
+            <p>
+              Recognition for completing missions and learning goals.
+            </p>
+
+          </div>
+
+          <span class="teacher-coming-soon">
+            Coming Soon
+          </span>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         EDUCATOR REMINDER
+    ==================================================== -->
+
+    <section class="teacher-reminder-section">
+
+      <div class="teacher-reminder-icon">
+        💡
+      </div>
+
+      <div>
+
+        <p class="teacher-eyebrow">
+          Teaching Reminder
+        </p>
+
+        <h2>
+          Avoid asking students to reveal real private information.
+        </h2>
+
+        <p>
+          Use fictional examples when discussing passwords, addresses,
+          usernames, accounts, or personal situations. Students should
+          never be required to share actual passwords or sensitive
+          information during a lesson.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         NEXT PATHS
+    ==================================================== -->
+
+    <section class="teacher-next-section">
+
+      <div>
+
+        <p class="teacher-eyebrow">
+          Keep Exploring
+        </p>
+
+        <h2>
+          Visit another part of Safetii Net.
+        </h2>
+
+      </div>
+
+
+      <div class="teacher-next-grid">
+
+        <a
+          class="teacher-next-card"
+          href="missions.html"
+        >
+
+          <span aria-hidden="true">
+            🗺️
+          </span>
+
+          <strong>
+            Explore the Missions
+          </strong>
+
+          <p>
+            Preview the interactive student learning experience.
+          </p>
+
+        </a>
+
+
+        <a
+          class="teacher-next-card"
+          href="parents.html"
+        >
+
+          <span aria-hidden="true">
+            🏠
+          </span>
+
+          <strong>
+            Visit the Parent Center
+          </strong>
+
+          <p>
+            Review family conversation guides and safety checklists.
+          </p>
+
+        </a>
+
+
+        <a
+          class="teacher-next-card"
+          href="about.html"
+        >
+
+          <span aria-hidden="true">
+            ✨
+          </span>
+
+          <strong>
+            About Safetii Net
+          </strong>
+
+          <p>
+            Learn about the creator and the purpose behind the project.
+          </p>
+
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="teacher-footer">
+
+    <div class="teacher-footer-brand">
+
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+
+      <p>
+        Helping students build practical cybersecurity awareness through
+        interactive learning.
+      </p>
+
+    </div>
+
+
+    <div class="teacher-footer-links">
+
+      <div>
+
+        <h2>
+          Student Experience
+        </h2>
+
+        <a href="login.html">
+          Create a Hero
+        </a>
+
+        <a href="dashboard.html">
+          Hero Headquarters
+        </a>
+
+        <a href="missions.html">
+          Missions
+        </a>
+
+        <a href="arcade/index.html">
+          Arcade
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          Resources
+        </h2>
+
+        <a href="parents.html">
+          Parents
+        </a>
+
+        <a href="teachers.html">
+          Teachers
+        </a>
+
+        <a href="about.html">
+          About
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <p class="teacher-footer-copyright">
+      © 2026 Safetii Net. Helping kids become Cyber Super Heroes.
+    </p>
+
+  </footer>
+
+
+  <script
+    src="js/memphis-interactions.js?v=1"
+    defer
+  ></script>
+
 </body>
 </html>
