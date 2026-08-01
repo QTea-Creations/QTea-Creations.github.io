@@ -1618,3 +1618,1216 @@ body.page-home {
 
   line-height: 1.45;
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Safetii Net helps children learn cybersecurity through interactive missions, games, badges, and family resources."
+  >
+
+  <title>
+    Safetii Net | Cyber Safety Adventures
+  </title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/Safetii%20NetLogo.png?v=150"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/style.css?v=150"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/home.css?v=150"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/memphis-theme.css?v=3"
+  >
+
+  <script
+    src="js/safetii-debug.js?v=150"
+    defer
+  ></script>
+</head>
+
+<body class="home-page memphis-theme memphis-scroll-progress">
+
+  <!-- =====================================================
+       SITE HEADER
+  ====================================================== -->
+
+  <header class="site-header">
+
+    <a
+      class="logo"
+      href="index.html"
+      aria-label="Safetii Net home"
+    >
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+    </a>
+
+
+    <nav aria-label="Main navigation">
+
+      <a href="dashboard.html">
+        Hero Headquarters
+      </a>
+
+      <a href="missions.html">
+        Missions
+      </a>
+
+      <a href="arcade/index.html">
+        Arcade
+      </a>
+
+      <a href="parents.html">
+        Parents
+      </a>
+
+      <a href="teachers.html">
+        Teachers
+      </a>
+
+      <a href="about.html">
+        About
+      </a>
+
+    </nav>
+
+
+    <a
+      class="header-hero-button"
+      id="headerHeroButton"
+      href="login.html"
+    >
+      Create a Hero
+    </a>
+
+  </header>
+
+
+  <main>
+
+    <!-- ===================================================
+         CYBER HERO LAUNCH ZONE
+    ==================================================== -->
+
+    <section class="launch-zone" id="top">
+
+      <div
+        class="launch-zone__shapes"
+        aria-hidden="true"
+      >
+
+        <span class="launch-shape shape-circle"></span>
+        <span class="launch-shape shape-triangle"></span>
+        <span class="launch-shape shape-squiggle"></span>
+        <span class="launch-shape shape-dots"></span>
+        <span class="launch-shape shape-zigzag"></span>
+        <span class="launch-shape shape-ring"></span>
+        <span class="launch-shape shape-star"></span>
+
+      </div>
+
+
+      <div class="launch-zone__content">
+
+        <div class="launch-zone__left">
+
+          <p class="launch-eyebrow">
+            Cyber Safety Starts Here
+          </p>
+
+
+          <h1
+            class="launch-title"
+            id="launchTitle"
+          >
+
+            <span class="launch-word launch-word--learn">
+              Learn.
+            </span>
+
+            <span class="launch-word launch-word--play">
+              Play.
+            </span>
+
+            <span class="launch-word launch-word--protect">
+              Protect
+            </span>
+
+            <span class="launch-word launch-word--digital">
+              Your Digital World.
+            </span>
+
+          </h1>
+
+
+          <p class="launch-copy">
+            Safetii Net turns cybersecurity lessons into missions,
+            games, badges, and adventures designed for young digital
+            citizens.
+          </p>
+
+
+          <div
+            class="launch-welcome"
+            id="launchWelcomeCard"
+          >
+
+            <div class="launch-welcome__icon">
+              🦸
+            </div>
+
+            <div class="launch-welcome__text">
+
+              <strong id="launchWelcomeName">
+                Welcome, Cyber Hero!
+              </strong>
+
+              <span id="launchWelcomeRank">
+                Your adventure is ready to begin.
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="launch-buttons">
+
+            <a
+              class="launch-button launch-button--primary"
+              id="launchStartButton"
+              href="login.html"
+            >
+              Start Your Adventure
+            </a>
+
+            <a
+              class="launch-button launch-button--secondary"
+              href="#missionJourney"
+            >
+              Explore the Missions
+            </a>
+
+          </div>
+
+
+          <div class="launch-mini-links">
+
+            <a
+              class="launch-pill"
+              href="#missionJourney"
+            >
+              🛡️ Five Missions
+            </a>
+
+            <a
+              class="launch-pill"
+              href="#arcade"
+            >
+              🎮 Interactive Games
+            </a>
+
+            <a
+              class="launch-pill"
+              href="#missionJourney"
+            >
+              🏅 Earnable Badges
+            </a>
+
+            <a
+              class="launch-pill"
+              href="#learningSupport"
+            >
+              🏠 Family Resources
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div class="launch-zone__right">
+
+          <div
+            class="meme-comm-card"
+            id="memeCommCard"
+          >
+
+            <div class="meme-comm-card__sticker">
+              Meet Meme
+            </div>
+
+
+            <div class="meme-comm-card__inner">
+
+              <button
+                class="meme-portrait-button"
+                id="memePortraitButton"
+                type="button"
+                aria-label="Click Meme to make her dance"
+              >
+
+                <span class="meme-glow meme-glow--1"></span>
+                <span class="meme-glow meme-glow--2"></span>
+
+                <img
+                  class="meme-portrait"
+                  id="memePortrait"
+                  src="assets/mascot/welcome.png"
+                  alt="Meme, the Safetii Net cyber mentor"
+                >
+
+              </button>
+
+
+              <div class="meme-comm-copy">
+
+                <p class="meme-comm-eyebrow">
+                  Message from Meme
+                </p>
+
+                <h2 id="memeMessageTitle">
+                  Your Cyber Mentor
+                </h2>
+
+                <p id="memeMessageBody">
+                  I will guide you through every mission and help you
+                  understand the choices that keep accounts,
+                  information, and people safer online.
+                </p>
+
+                <p class="meme-comm-tip">
+                  Click Meme to make her dance!
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="meme-burst"
+              id="memeBurst"
+              aria-hidden="true"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         MOVING MESSAGE
+    ==================================================== -->
+
+    <section
+      class="memphis-marquee"
+      aria-label="Safetii Net learning message"
+    >
+
+      <div class="memphis-marquee-shell">
+
+        <div class="memphis-marquee-track">
+
+          <span class="memphis-marquee-copy">
+            🛡️ Protect Your Identity • 🎮 Learn Through Play •
+            🔎 Think Before You Click • ⭐ Earn Badges •
+            🤝 Ask for Help •
+          </span>
+
+          <span
+            class="memphis-marquee-copy"
+            aria-hidden="true"
+          >
+            🛡️ Protect Your Identity • 🎮 Learn Through Play •
+            🔎 Think Before You Click • ⭐ Earn Badges •
+            🤝 Ask for Help •
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         MISSION JOURNEY
+    ==================================================== -->
+
+    <section
+      class="home-section mission-journey-section memphis-reveal"
+      id="missionJourney"
+      aria-labelledby="missionJourneyTitle"
+    >
+
+      <header class="home-section-heading mission-heading-row">
+
+        <div>
+
+          <p class="eyebrow">
+            The Cyber Hero Journey
+          </p>
+
+          <h2 id="missionJourneyTitle">
+            Five missions. Five badges. One safer digital world.
+          </h2>
+
+          <p>
+            Each mission teaches a different cybersecurity skill.
+            Complete them in order, collect every badge, and rise
+            through the Hero Ranks.
+          </p>
+
+        </div>
+
+
+        <a
+          class="small-button"
+          href="missions.html"
+        >
+          View All Missions
+        </a>
+
+      </header>
+
+
+      <div class="home-mission-grid">
+
+        <!-- MISSION 1 -->
+
+        <a
+          class="home-mission-card"
+          href="missions/identity.html"
+          data-home-mission="identity"
+          data-memphis-tilt
+        >
+
+          <div class="home-mission-number">
+            Mission 1
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Identity%20Protector%20Badge.png"
+              alt="Identity Protector badge"
+            >
+
+          </div>
+
+          <h3>
+            Identity Protector
+          </h3>
+
+          <p>
+            Learn how to recognize personal, private, and secret
+            information.
+          </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
+        </a>
+
+
+        <!-- MISSION 2 -->
+
+        <a
+          class="home-mission-card"
+          href="missions/password.html"
+          data-home-mission="password"
+          data-memphis-tilt
+        >
+
+          <div class="home-mission-number">
+            Mission 2
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Password%20Safe%20Keeper%20Badge.png"
+              alt="Password Safe Keeper badge"
+            >
+
+          </div>
+
+          <h3>
+            Password Safe Keeper
+          </h3>
+
+          <p>
+            Build stronger passwords and add protection to important
+            accounts.
+          </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
+        </a>
+
+
+        <!-- MISSION 3 -->
+
+        <a
+          class="home-mission-card"
+          href="missions/phishing.html"
+          data-home-mission="phishing"
+          data-memphis-tilt
+        >
+
+          <div class="home-mission-number">
+            Mission 3
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Phish%20Finder%20Badge.png"
+              alt="Phish Finder badge"
+            >
+
+          </div>
+
+          <h3>
+            Phish Finder
+          </h3>
+
+          <p>
+            Investigate suspicious messages, links, requests, and
+            online offers.
+          </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
+        </a>
+
+
+        <!-- MISSION 4 -->
+
+        <a
+          class="home-mission-card"
+          href="missions/footprint.html"
+          data-home-mission="footprint"
+          data-memphis-tilt
+        >
+
+          <div class="home-mission-number">
+            Mission 4
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Digital%20Footprint%20Defender%20Badge.png"
+              alt="Digital Footprint Defender badge"
+            >
+
+          </div>
+
+          <h3>
+            Digital Footprint Defender
+          </h3>
+
+          <p>
+            Understand how posts and choices can shape a lasting
+            online reputation.
+          </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
+        </a>
+
+
+        <!-- MISSION 5 -->
+
+        <a
+          class="home-mission-card"
+          href="missions/responder.html"
+          data-home-mission="responder"
+          data-memphis-tilt
+        >
+
+          <div class="home-mission-number">
+            Mission 5
+          </div>
+
+          <div class="home-badge-frame">
+
+            <img
+              src="assets/badges/Cyber%20Responder%20Badge.png"
+              alt="Cyber Responder badge"
+            >
+
+          </div>
+
+          <h3>
+            Cyber Responder
+          </h3>
+
+          <p>
+            Practice blocking, reporting, saving evidence, and
+            getting the right help.
+          </p>
+
+          <span class="mission-card-link">
+            Begin Mission →
+          </span>
+
+        </a>
+
+      </div>
+
+
+      <div class="badge-rank-explanation memphis-card gold-card">
+
+        <div class="badge-rank-icon">
+          🏅
+        </div>
+
+        <div>
+
+          <p class="eyebrow">
+            Badge-Based Hero Ranks
+          </p>
+
+          <h3>
+            Your newest badge becomes your current rank.
+          </h3>
+
+          <p>
+            Every student begins as a
+            <strong>Cyber Mentee</strong>. Complete all five missions
+            to become a <strong>Cyber Super Hero</strong>.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         ARCADE
+    ==================================================== -->
+
+    <section
+      class="home-section home-arcade-section memphis-reveal"
+      id="arcade"
+      aria-labelledby="homeArcadeTitle"
+    >
+
+      <div class="home-arcade-copy">
+
+        <p class="eyebrow">
+          Arcade
+        </p>
+
+        <h2 id="homeArcadeTitle">
+          Practice cyber skills through games.
+        </h2>
+
+        <p>
+          Replay mission skills, explore new challenges, choose a
+          heat level, and earn points for correct decisions.
+        </p>
+
+
+        <div class="arcade-feature-list">
+
+          <span>
+            🧩 Sorting Games
+          </span>
+
+          <span>
+            🔎 Investigation Games
+          </span>
+
+          <span>
+            🧪 Builder Challenges
+          </span>
+
+          <span>
+            🚨 Response Scenarios
+          </span>
+
+        </div>
+
+
+        <a
+          class="button"
+          href="arcade/index.html"
+        >
+          Enter the Arcade
+        </a>
+
+      </div>
+
+
+      <a
+        class="home-arcade-visual memphis-neon-hover"
+        href="arcade/index.html"
+        aria-label="Enter the Safetii Net Arcade"
+      >
+
+        <div class="arcade-screen">
+
+          <p>
+            Arcade
+          </p>
+
+          <div class="arcade-game-icons">
+
+            <span>
+              🧩
+            </span>
+
+            <span>
+              🔎
+            </span>
+
+            <span>
+              🛡️
+            </span>
+
+            <span>
+              🚨
+            </span>
+
+          </div>
+
+          <strong>
+            Choose a challenge!
+          </strong>
+
+        </div>
+
+
+        <div class="arcade-controls">
+
+          <span aria-hidden="true">
+            ✚
+          </span>
+
+          <span aria-hidden="true">
+            ● ●
+          </span>
+
+        </div>
+
+      </a>
+
+    </section>
+
+
+    <!-- ===================================================
+         LEARNING SKILLS
+    ==================================================== -->
+
+    <section
+      class="home-section learning-section memphis-reveal"
+      aria-labelledby="learningTitle"
+    >
+
+      <header class="home-section-heading">
+
+        <p class="eyebrow">
+          Skills for Digital Life
+        </p>
+
+        <h2 id="learningTitle">
+          Practice more than memorizing rules.
+        </h2>
+
+        <p>
+          Safetii Net asks students to investigate situations, make
+          decisions, explain choices, and apply what they learn.
+        </p>
+
+      </header>
+
+
+      <div class="learning-skill-grid">
+
+        <article
+          class="memphis-card"
+          data-memphis-tilt
+        >
+
+          <span aria-hidden="true">
+            🪪
+          </span>
+
+          <h3>
+            Protect Information
+          </h3>
+
+          <p>
+            Recognize what can be shared and what needs stronger
+            protection.
+          </p>
+
+        </article>
+
+
+        <article
+          class="memphis-card cyan-card"
+          data-memphis-tilt
+        >
+
+          <span aria-hidden="true">
+            🔐
+          </span>
+
+          <h3>
+            Secure Accounts
+          </h3>
+
+          <p>
+            Build better password habits and use extra security
+            checks.
+          </p>
+
+        </article>
+
+
+        <article
+          class="memphis-card pink-card"
+          data-memphis-tilt
+        >
+
+          <span aria-hidden="true">
+            🔎
+          </span>
+
+          <h3>
+            Investigate Messages
+          </h3>
+
+          <p>
+            Notice pressure, unusual requests, misleading links, and
+            other warning signs.
+          </p>
+
+        </article>
+
+
+        <article
+          class="memphis-card gold-card"
+          data-memphis-tilt
+        >
+
+          <span aria-hidden="true">
+            👣
+          </span>
+
+          <h3>
+            Think Before Posting
+          </h3>
+
+          <p>
+            Consider audiences, consequences, privacy, and digital
+            footprints.
+          </p>
+
+        </article>
+
+
+        <article
+          class="memphis-card"
+          data-memphis-tilt
+        >
+
+          <span aria-hidden="true">
+            🚨
+          </span>
+
+          <h3>
+            Respond Safely
+          </h3>
+
+          <p>
+            Stop, save evidence, block, report, and reach the person
+            best positioned to help.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         CHOOSE A PATH
+    ==================================================== -->
+
+    <section
+      class="home-section path-section memphis-reveal"
+      aria-labelledby="choosePathTitle"
+    >
+
+      <header class="home-section-heading">
+
+        <p class="eyebrow">
+          Choose Your Path
+        </p>
+
+        <h2 id="choosePathTitle">
+          Safetii Net supports the whole learning team.
+        </h2>
+
+        <p>
+          Students complete missions while families and educators
+          receive resources that reinforce the same cyber-safety
+          skills.
+        </p>
+
+      </header>
+
+
+      <div class="path-card-grid">
+
+        <a
+          class="path-card student-path-card memphis-card"
+          href="login.html"
+          data-memphis-tilt
+          data-memphis-spotlight
+        >
+
+          <div class="path-card-icon">
+            🦸
+          </div>
+
+          <p class="eyebrow">
+            Students
+          </p>
+
+          <h3>
+            Become a Cyber Hero
+          </h3>
+
+          <p>
+            Create a Hero identity, complete missions, earn points,
+            and collect all five badges.
+          </p>
+
+          <span>
+            Start Hero Training →
+          </span>
+
+        </a>
+
+
+        <a
+          class="path-card parent-path-card memphis-card cyan-card"
+          href="parents.html"
+          data-memphis-tilt
+          data-memphis-spotlight
+        >
+
+          <div class="path-card-icon">
+            🏠
+          </div>
+
+          <p class="eyebrow">
+            Parents and Caregivers
+          </p>
+
+          <h3>
+            Support Safety at Home
+          </h3>
+
+          <p>
+            Use conversation starters, family checklists, and clear
+            steps for handling online problems.
+          </p>
+
+          <span>
+            Open Parent Resources →
+          </span>
+
+        </a>
+
+
+        <a
+          class="path-card teacher-path-card memphis-card gold-card"
+          href="teachers.html"
+          data-memphis-tilt
+          data-memphis-spotlight
+        >
+
+          <div class="path-card-icon">
+            🍎
+          </div>
+
+          <p class="eyebrow">
+            Teachers
+          </p>
+
+          <h3>
+            Bring Cyber Safety to Class
+          </h3>
+
+          <p>
+            Access classroom activities, lesson support, and
+            resources connected to the Safetii Net missions.
+          </p>
+
+          <span>
+            Open Teacher Resources →
+          </span>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FAMILY AND EDUCATOR SUPPORT
+    ==================================================== -->
+
+    <section
+      class="home-section support-section memphis-reveal"
+      id="learningSupport"
+      aria-labelledby="supportTitle"
+    >
+
+      <header class="home-section-heading">
+
+        <p class="eyebrow">
+          Learning Beyond the Missions
+        </p>
+
+        <h2 id="supportTitle">
+          Continue the conversation at home and in class.
+        </h2>
+
+      </header>
+
+
+      <div class="support-card-grid">
+
+        <article class="support-card memphis-card cyan-card">
+
+          <div class="support-card-icon">
+            🏠
+          </div>
+
+          <div>
+
+            <h3>
+              Parent and Caregiver Resources
+            </h3>
+
+            <p>
+              Find family discussion questions, practical safety
+              steps, checklists, and trusted reporting resources.
+            </p>
+
+            <a href="parents.html">
+              Visit the Parent Center →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <article class="support-card memphis-card gold-card">
+
+          <div class="support-card-icon">
+            🍎
+          </div>
+
+          <div>
+
+            <h3>
+              Teacher Resources
+            </h3>
+
+            <p>
+              Use classroom lessons, activities, discussion prompts,
+              and extensions connected to the missions.
+            </p>
+
+            <a href="teachers.html">
+              Visit the Teacher Center →
+            </a>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FINAL CALL TO ACTION
+    ==================================================== -->
+
+    <section class="home-final-cta memphis-reveal">
+
+      <div>
+
+        <p class="eyebrow">
+          Hero Headquarters Is Ready
+        </p>
+
+        <h2>
+          Begin your Safetii Net adventure.
+        </h2>
+
+        <p id="homeFinalMessage">
+          Create a Cyber Hero, complete your first mission, and begin
+          building your badge collection.
+        </p>
+
+      </div>
+
+
+      <a
+        class="button"
+        id="homeFinalButton"
+        href="login.html"
+      >
+        Create Your Hero
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="home-footer">
+
+    <div class="home-footer-brand">
+
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
+      >
+
+      <p>
+        Helping young people become confident, thoughtful, and
+        responsible digital citizens.
+      </p>
+
+    </div>
+
+
+    <div class="home-footer-links">
+
+      <div>
+
+        <h2>
+          Students
+        </h2>
+
+        <a href="login.html">
+          Hero Login
+        </a>
+
+        <a href="dashboard.html">
+          Hero Headquarters
+        </a>
+
+        <a href="missions.html">
+          Missions
+        </a>
+
+        <a href="arcade/index.html">
+          Arcade
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          Resources
+        </h2>
+
+        <a href="parents.html">
+          Parents
+        </a>
+
+        <a href="teachers.html">
+          Teachers
+        </a>
+
+        <a href="about.html">
+          About Safetii Net
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <p class="home-footer-copyright">
+      © 2026 Safetii Net. Helping kids become Cyber Super Heroes.
+    </p>
+
+  </footer>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script
+    src="js/home.js?v=150"
+    defer
+  ></script>
+
+  <script
+    src="js/memphis-interactions.js?v=3"
+    defer
+  ></script>
+
+</body>
+</html>
