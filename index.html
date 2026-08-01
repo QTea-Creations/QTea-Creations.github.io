@@ -20,21 +20,26 @@
   <link
     rel="icon"
     type="image/png"
-    href="assets/Safetii%20NetLogo.png?v=110"
+    href="assets/Safetii%20NetLogo.png?v=130"
   >
 
   <link
     rel="stylesheet"
-    href="css/style.css?v=110"
+    href="css/style.css?v=130"
   >
 
   <link
     rel="stylesheet"
-    href="css/home.css?v=110"
+    href="css/home.css?v=130"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/memphis-theme.css?v=2"
   >
 
   <script
-    src="js/safetii-debug.js?v=110"
+    src="js/safetii-debug.js?v=130"
     defer
   ></script>
 </head>
@@ -58,35 +63,35 @@
       >
     </a>
 
-<nav aria-label="Main navigation">
-  <a href="dashboard.html">
-    Hero Headquarters
-  </a>
 
-  <a href="missions.html">
-    Missions
-  </a>
+    <nav aria-label="Main navigation">
 
-  <a href="arcade/index.html">
-    Cyber Arcade
-  </a>
+      <a href="dashboard.html">
+        Hero Headquarters
+      </a>
 
-  <a href="notebook.html">
-    Cyber Notebook
-  </a>
+      <a href="missions.html">
+        Missions
+      </a>
 
-  <a href="parents.html">
-    Parents
-  </a>
+      <a href="arcade/index.html">
+        Arcade
+      </a>
 
-  <a href="teachers.html">
-    Teachers
-  </a>
+      <a href="parents.html">
+        Parents
+      </a>
 
-  <a href="about.html">
-    About
-  </a>
-</nav>
+      <a href="teachers.html">
+        Teachers
+      </a>
+
+      <a href="about.html">
+        About
+      </a>
+
+    </nav>
+
 
     <a
       class="header-hero-button"
@@ -105,7 +110,26 @@
          HERO
     ==================================================== -->
 
-    <section class="home-hero">
+    <section class="home-hero memphis-reveal">
+
+      <div
+        class="memphis-decoration memphis-circle"
+        data-memphis-parallax="0.08"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="memphis-decoration memphis-triangle gold"
+        data-memphis-parallax="0.14"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="memphis-decoration memphis-dots cyan"
+        data-memphis-parallax="0.1"
+        aria-hidden="true"
+      ></div>
+
 
       <div class="home-hero-copy">
 
@@ -167,16 +191,24 @@
       </div>
 
 
-      <aside class="home-meme-card">
+      <aside
+        class="home-meme-card memphis-card memphis-neon-hover"
+        data-memphis-spotlight
+      >
 
-        <div class="home-meme-image">
+        <button
+          class="home-meme-image memphis-mascot"
+          type="button"
+          aria-label="Make Meme dance"
+        >
 
           <img
             src="assets/mascot/welcome.png"
             alt="Meme, the Safetii Net cyber mentor"
           >
 
-        </div>
+        </button>
+
 
         <div>
 
@@ -194,9 +226,46 @@
             and people safer online.
           </p>
 
+          <p class="home-meme-hint">
+            Click Meme to make her dance.
+          </p>
+
         </div>
 
       </aside>
+
+    </section>
+
+
+    <!-- ===================================================
+         MOVING MESSAGE
+    ==================================================== -->
+
+    <section
+      class="memphis-marquee"
+      aria-label="Safetii Net learning message"
+    >
+
+      <div class="memphis-marquee-shell">
+
+        <div class="memphis-marquee-track">
+
+          <span class="memphis-marquee-copy">
+            LEARN • PLAY • PROTECT • THINK BEFORE YOU CLICK •
+            ASK FOR HELP •
+          </span>
+
+          <span
+            class="memphis-marquee-copy"
+            aria-hidden="true"
+          >
+            LEARN • PLAY • PROTECT • THINK BEFORE YOU CLICK •
+            ASK FOR HELP •
+          </span>
+
+        </div>
+
+      </div>
 
     </section>
 
@@ -206,7 +275,7 @@
     ==================================================== -->
 
     <section
-      class="home-section path-section"
+      class="home-section path-section memphis-reveal"
       aria-labelledby="choosePathTitle"
     >
 
@@ -231,8 +300,10 @@
       <div class="path-card-grid">
 
         <a
-          class="path-card student-path-card"
+          class="path-card student-path-card memphis-card"
           href="login.html"
+          data-memphis-tilt
+          data-memphis-spotlight
         >
 
           <div class="path-card-icon">
@@ -260,8 +331,10 @@
 
 
         <a
-          class="path-card parent-path-card"
+          class="path-card parent-path-card memphis-card cyan-card"
           href="parents.html"
+          data-memphis-tilt
+          data-memphis-spotlight
         >
 
           <div class="path-card-icon">
@@ -289,8 +362,10 @@
 
 
         <a
-          class="path-card teacher-path-card"
+          class="path-card teacher-path-card memphis-card gold-card"
           href="teachers.html"
+          data-memphis-tilt
+          data-memphis-spotlight
         >
 
           <div class="path-card-icon">
@@ -326,7 +401,7 @@
     ==================================================== -->
 
     <section
-      class="home-section mission-journey-section"
+      class="home-section mission-journey-section memphis-reveal"
       id="missionJourney"
       aria-labelledby="missionJourneyTitle"
     >
@@ -351,6 +426,7 @@
 
         </div>
 
+
         <a
           class="small-button"
           href="missions.html"
@@ -369,6 +445,7 @@
           class="home-mission-card"
           href="missions/identity.html"
           data-home-mission="identity"
+          data-memphis-tilt
         >
 
           <div class="home-mission-number">
@@ -406,6 +483,7 @@
           class="home-mission-card"
           href="missions/password.html"
           data-home-mission="password"
+          data-memphis-tilt
         >
 
           <div class="home-mission-number">
@@ -443,6 +521,7 @@
           class="home-mission-card"
           href="missions/phishing.html"
           data-home-mission="phishing"
+          data-memphis-tilt
         >
 
           <div class="home-mission-number">
@@ -480,6 +559,7 @@
           class="home-mission-card"
           href="missions/footprint.html"
           data-home-mission="footprint"
+          data-memphis-tilt
         >
 
           <div class="home-mission-number">
@@ -517,6 +597,7 @@
           class="home-mission-card"
           href="missions/responder.html"
           data-home-mission="responder"
+          data-memphis-tilt
         >
 
           <div class="home-mission-number">
@@ -550,7 +631,7 @@
       </div>
 
 
-      <div class="badge-rank-explanation">
+      <div class="badge-rank-explanation memphis-card gold-card">
 
         <div class="badge-rank-icon">
           🏅
@@ -585,7 +666,7 @@
     ==================================================== -->
 
     <section
-      class="home-section learning-section"
+      class="home-section learning-section memphis-reveal"
       aria-labelledby="learningTitle"
     >
 
@@ -609,7 +690,7 @@
 
       <div class="learning-skill-grid">
 
-        <article>
+        <article class="memphis-card" data-memphis-tilt>
 
           <span aria-hidden="true">
             🪪
@@ -627,7 +708,7 @@
         </article>
 
 
-        <article>
+        <article class="memphis-card cyan-card" data-memphis-tilt>
 
           <span aria-hidden="true">
             🔐
@@ -645,7 +726,7 @@
         </article>
 
 
-        <article>
+        <article class="memphis-card pink-card" data-memphis-tilt>
 
           <span aria-hidden="true">
             🔎
@@ -663,7 +744,7 @@
         </article>
 
 
-        <article>
+        <article class="memphis-card gold-card" data-memphis-tilt>
 
           <span aria-hidden="true">
             👣
@@ -681,7 +762,7 @@
         </article>
 
 
-        <article>
+        <article class="memphis-card" data-memphis-tilt>
 
           <span aria-hidden="true">
             🚨
@@ -704,11 +785,11 @@
 
 
     <!-- ===================================================
-         CYBER ARCADE
+         ARCADE
     ==================================================== -->
 
     <section
-      class="home-section home-arcade-section"
+      class="home-section home-arcade-section memphis-reveal"
       id="arcade"
       aria-labelledby="homeArcadeTitle"
     >
@@ -716,7 +797,7 @@
       <div class="home-arcade-copy">
 
         <p class="eyebrow">
-          Cyber Arcade
+          Arcade
         </p>
 
         <h2 id="homeArcadeTitle">
@@ -754,18 +835,22 @@
           class="button"
           href="arcade/index.html"
         >
-          Enter the Cyber Arcade
+          Enter the Arcade
         </a>
 
       </div>
 
 
-      <div class="home-arcade-visual">
+      <a
+        class="home-arcade-visual memphis-neon-hover"
+        href="arcade/index.html"
+        aria-label="Enter the Safetii Net Arcade"
+      >
 
         <div class="arcade-screen">
 
           <p>
-            CYBER ARCADE
+            ARCADE
           </p>
 
           <div class="arcade-game-icons">
@@ -794,19 +879,20 @@
 
         </div>
 
+
         <div class="arcade-controls">
 
-          <span>
+          <span aria-hidden="true">
             ✚
           </span>
 
-          <span>
+          <span aria-hidden="true">
             ● ●
           </span>
 
         </div>
 
-      </div>
+      </a>
 
     </section>
 
@@ -816,7 +902,7 @@
     ==================================================== -->
 
     <section
-      class="home-section support-section"
+      class="home-section support-section memphis-reveal"
       aria-labelledby="supportTitle"
     >
 
@@ -835,7 +921,7 @@
 
       <div class="support-card-grid">
 
-        <article class="support-card">
+        <article class="support-card memphis-card cyan-card">
 
           <div class="support-card-icon">
             🏠
@@ -861,7 +947,7 @@
         </article>
 
 
-        <article class="support-card">
+        <article class="support-card memphis-card gold-card">
 
           <div class="support-card-icon">
             🍎
@@ -895,7 +981,7 @@
          FINAL CALL TO ACTION
     ==================================================== -->
 
-    <section class="home-final-cta">
+    <section class="home-final-cta memphis-reveal">
 
       <div>
 
@@ -970,7 +1056,7 @@
         </a>
 
         <a href="arcade/index.html">
-          Cyber Arcade
+          Arcade
         </a>
 
       </div>
@@ -1007,13 +1093,18 @@
 
 
   <!-- =====================================================
-       HOMEPAGE CONTROLLER
+       JAVASCRIPT
   ====================================================== -->
 
- <script
-  src="js/memphis-interactions.js?v=1"
-  defer
-></script>
+  <script
+    src="js/home.js?v=130"
+    defer
+  ></script>
+
+  <script
+    src="js/memphis-interactions.js?v=2"
+    defer
+  ></script>
 
 </body>
 </html>
