@@ -1380,3 +1380,157 @@ document.addEventListener(
     updateDashboardArcadePanel();
   });
 })();
+
+/* =========================================
+   HOMEPAGE HERO — CYBER HERO LAUNCH ZONE
+========================================= */
+
+(function () {
+  const memePortraitButton = document.getElementById("memePortraitButton");
+  const memePortrait = document.getElementById("memePortrait");
+  const memeMessageTitle = document.getElementById("memeMessageTitle");
+  const memeMessageBody = document.getElementById("memeMessageBody");
+  const memeBurst = document.getElementById("memeBurst");
+  const launchWelcomeName = document.getElementById("launchWelcomeName");
+  const launchWelcomeRank = document.getElementById("launchWelcomeRank");
+  const launchStartButton = document.getElementById("launchStartButton");
+
+  if (!memePortraitButton || !memePortrait) {
+    return;
+  }
+
+  const memeMessages = [
+    {
+      title: "Your Cyber Mentor",
+      body: "I will guide you through every mission and help you understand the choices that keep accounts, information, and people safer online."
+    },
+    {
+      title: "Mission Time!",
+      body: "Every hero starts with one smart choice. Begin your first mission and build your cyber powers step by step."
+    },
+    {
+      title: "Badges Ahead!",
+      body: "Complete missions, earn badges, and watch your cyber skills grow stronger every time you play."
+    },
+    {
+      title: "Arcade Practice",
+      body: "After missions, visit the arcade to practice what you learned through games and fun challenges."
+    }
+  ];
+
+  let memeMessageIndex = 0;
+
+  function getHeroData() {
+    try {
+      const raw = localStorage.getItem("safetiiHero");
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function getCompletedBadges() {
+    try {
+      const progressRaw = localStorage.getItem("safetiiMissionProgress");
+      if (!progressRaw) {
+        return [];
+      }
+
+      const progress = JSON.parse(progressRaw);
+      const badgeTitles = [];
+
+      if (progress.identity && progress.identity.completed) {
+        badgeTitles.push("Identity Protector");
+      }
+      if (progress.password && progress.password.completed) {
+        badgeTitles.push("Password Safe Keeper");
+      }
+      if (progress.phishing && progress.phishing.completed) {
+        badgeTitles.push("Phish Finder");
+      }
+      if (progress.footprint && progress.footprint.completed) {
+        badgeTitles.push("Digital Footprint Defender");
+      }
+      if (progress.responder && progress.responder.completed) {
+        badgeTitles.push("Cyber Responder");
+      }
+
+      return badgeTitles;
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function updateLaunchWelcome() {
+    const hero = getHeroData();
+    const badges = getCompletedBadges();
+
+    if (!launchWelcomeName || !launchWelcomeRank || !launchStartButton) {
+      return;
+    }
+
+    if (hero && hero.name) {
+      const currentRank =
+        badges.length > 0 ? badges[badges.length - 1] : "Cyber Mentee";
+
+      launchWelcomeName.textContent = `Welcome back, ${hero.name}!`;
+      launchWelcomeRank.textContent = `Current rank: ${currentRank} • ${badges.length} of 5 badges earned`;
+      launchStartButton.textContent = "Continue Your Adventure";
+      launchStartButton.setAttribute("href", "dashboard.html");
+    } else {
+      launchWelcomeName.textContent = "Welcome, Cyber Hero!";
+      launchWelcomeRank.textContent = "Create your hero and begin your first cyber adventure.";
+      launchStartButton.textContent = "Start Your Adventure";
+      launchStartButton.setAttribute("href", "login.html");
+    }
+  }
+
+  function createBurst() {
+    if (!memeBurst) {
+      return;
+    }
+
+    memeBurst.innerHTML = "";
+
+    const burstItems = ["⭐", "✨", "🛡️", "💫", "⚡"];
+    const positions = [
+      { x: "-42px", y: "-52px" },
+      { x: "52px", y: "-42px" },
+      { x: "-58px", y: "16px" },
+      { x: "56px", y: "22px" },
+      { x: "0px", y: "-64px" }
+    ];
+
+    positions.forEach((position, index) => {
+      const star = document.createElement("span");
+      star.className = "meme-burst-star";
+      star.textContent = burstItems[index % burstItems.length];
+      star.style.left = "110px";
+      star.style.top = "90px";
+      star.style.setProperty("--burst-x", position.x);
+      star.style.setProperty("--burst-y", position.y);
+      star.style.animationDelay = `${index * 0.04}s`;
+      memeBurst.appendChild(star);
+    });
+
+    setTimeout(() => {
+      memeBurst.innerHTML = "";
+    }, 850);
+  }
+
+  function playMemeDance() {
+    memePortrait.classList.remove("meme-dance");
+    void memePortrait.offsetWidth;
+    memePortrait.classList.add("meme-dance");
+
+    createBurst();
+
+    memeMessageIndex = (memeMessageIndex + 1) % memeMessages.length;
+    memeMessageTitle.textContent = memeMessages[memeMessageIndex].title;
+    memeMessageBody.textContent = memeMessages[memeMessageIndex].body;
+  }
+
+  memePortraitButton.addEventListener("click", playMemeDance);
+
+  updateLaunchWelcome();
+})();
