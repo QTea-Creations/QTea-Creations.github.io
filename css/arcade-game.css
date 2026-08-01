@@ -3339,3 +3339,27 @@ a {
     display: block;
     object-fit: contain;
 }
+
+.page-hq {
+  background:
+    linear-gradient(
+      rgba(65, 95, 160, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(65, 95, 160, 0.05) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at top,
+      #f0f4ff,
+      #eafaff 58%,
+      #f8fbff
+    );
+
+  background-size:
+    38px 38px,
+    38px 38px,
+    auto;
+}
