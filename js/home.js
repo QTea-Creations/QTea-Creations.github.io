@@ -890,3 +890,237 @@
     initializeHomepage();
   }
 })();
+/* =========================================================
+   INTERACTIVE MEME
+========================================================= */
+
+function initializeHomepageMeme() {
+  const memeButton =
+    document.getElementById(
+      "memePortraitButton"
+    );
+
+  const memeImage =
+    document.getElementById(
+      "memePortrait"
+    );
+
+  const memeTitle =
+    document.getElementById(
+      "memeMessageTitle"
+    );
+
+  const memeMessage =
+    document.getElementById(
+      "memeMessageBody"
+    );
+
+  const memeBurst =
+    document.getElementById(
+      "memeBurst"
+    );
+
+  if (
+    !memeButton ||
+    !memeImage
+  ) {
+    return;
+  }
+
+
+  const messages = [
+    {
+      title:
+        "Mission Time!",
+
+      message:
+        "Every hero starts with one smart choice. Begin your first mission and build your cyber powers."
+    },
+
+    {
+      title:
+        "Badges Ahead!",
+
+      message:
+        "Complete missions, earn badges, and watch your cyber skills grow stronger."
+    },
+
+    {
+      title:
+        "Arcade Practice!",
+
+      message:
+        "Visit the Arcade after training to practice your skills through games."
+    },
+
+    {
+      title:
+        "Cyber Hero Tip!",
+
+      message:
+        "When something feels strange online, pause and ask a trusted adult for help."
+    }
+  ];
+
+
+  let messageIndex =
+    0;
+
+  let danceTimer =
+    null;
+
+
+  function createMemeBurst() {
+    if (!memeBurst) {
+      return;
+    }
+
+    memeBurst.innerHTML =
+      "";
+
+    const symbols = [
+      "⭐",
+      "✨",
+      "🛡️",
+      "⚡",
+      "💫"
+    ];
+
+    const positions = [
+      {
+        x: "-72px",
+        y: "-70px"
+      },
+
+      {
+        x: "74px",
+        y: "-62px"
+      },
+
+      {
+        x: "-82px",
+        y: "10px"
+      },
+
+      {
+        x: "84px",
+        y: "16px"
+      },
+
+      {
+        x: "0px",
+        y: "-92px"
+      }
+    ];
+
+
+    symbols.forEach(
+      (
+        symbol,
+        index
+      ) => {
+        const particle =
+          document.createElement(
+            "span"
+          );
+
+        particle.className =
+          "meme-burst-star";
+
+        particle.textContent =
+          symbol;
+
+        particle.style.left =
+          "50%";
+
+        particle.style.top =
+          "50%";
+
+        particle.style.setProperty(
+          "--burst-x",
+          positions[index].x
+        );
+
+        particle.style.setProperty(
+          "--burst-y",
+          positions[index].y
+        );
+
+        particle.style.animationDelay =
+          `${index * 0.05}s`;
+
+        memeBurst.appendChild(
+          particle
+        );
+      }
+    );
+
+
+    window.setTimeout(
+      () => {
+        memeBurst.innerHTML =
+          "";
+      },
+      900
+    );
+  }
+
+
+  function makeMemeDance() {
+    window.clearTimeout(
+      danceTimer
+    );
+
+    memeImage.classList.remove(
+      "meme-dance"
+    );
+
+    void memeImage.offsetWidth;
+
+    memeImage.classList.add(
+      "meme-dance"
+    );
+
+    createMemeBurst();
+
+
+    const nextMessage =
+      messages[
+        messageIndex
+      ];
+
+    if (memeTitle) {
+      memeTitle.textContent =
+        nextMessage.title;
+    }
+
+    if (memeMessage) {
+      memeMessage.textContent =
+        nextMessage.message;
+    }
+
+    messageIndex =
+      (
+        messageIndex +
+        1
+      ) %
+      messages.length;
+
+
+    danceTimer =
+      window.setTimeout(
+        () => {
+          memeImage.classList.remove(
+            "meme-dance"
+          );
+        },
+        950
+      );
+  }
+
+
+  memeButton.addEventListener(
+    "click",
+    makeMemeDance
+  );
+}
