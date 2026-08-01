@@ -1124,3 +1124,121 @@ function initializeHomepageMeme() {
     makeMemeDance
   );
 }
+
+/* =========================================================
+   INTERACTIVE HOMEPAGE ARCADE
+========================================================= */
+
+function initializeHomepageArcade() {
+  const terminal =
+    document.getElementById(
+      "homeArcadeTerminal"
+    );
+
+  const screenMessage =
+    document.getElementById(
+      "homeArcadeScreenMessage"
+    );
+
+  const arcadeLink =
+    document.getElementById(
+      "homeArcadeTerminalLink"
+    );
+
+  if (!terminal) {
+    return;
+  }
+
+
+  function activateTerminal() {
+    terminal.classList.add(
+      "arcade-active"
+    );
+
+    if (screenMessage) {
+      screenMessage.textContent =
+        "Arcade terminal activated!";
+    }
+  }
+
+
+  function deactivateTerminal() {
+    terminal.classList.remove(
+      "arcade-active"
+    );
+
+    if (screenMessage) {
+      screenMessage.textContent =
+        "Hover to activate!";
+    }
+  }
+
+
+  terminal.addEventListener(
+    "mouseenter",
+    activateTerminal
+  );
+
+  terminal.addEventListener(
+    "mouseleave",
+    deactivateTerminal
+  );
+
+
+  terminal.addEventListener(
+    "click",
+    (event) => {
+      if (
+        event.target.closest(
+          "a"
+        )
+      ) {
+        return;
+      }
+
+      const alreadyActive =
+        terminal.classList.contains(
+          "arcade-active"
+        );
+
+      if (alreadyActive) {
+        window.location.href =
+          "arcade/index.html";
+
+        return;
+      }
+
+      activateTerminal();
+    }
+  );
+
+
+  terminal.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key !==
+          "Enter" &&
+        event.key !==
+          " "
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (
+        terminal.classList.contains(
+          "arcade-active"
+        )
+      ) {
+        window.location.href =
+          "arcade/index.html";
+      } else {
+        activateTerminal();
+
+        arcadeLink?.focus();
+      }
+    }
+  );
+}
