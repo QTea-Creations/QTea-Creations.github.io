@@ -1414,3 +1414,59 @@ body.page-hq {
     text-align: left;
   }
 }
+
+.arcade-machine-interactive {
+  position: relative;
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.arcade-machine-interactive::before {
+  content: "";
+
+  position: absolute;
+  inset: 5%;
+
+  border-radius: 35px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(74, 255, 246, 0.55),
+      rgba(125, 76, 255, 0.2) 45%,
+      transparent 72%
+    );
+
+  opacity: 0;
+  filter: blur(25px);
+
+  transition:
+    opacity 0.25s ease;
+
+  pointer-events: none;
+}
+
+.arcade-machine-interactive:hover,
+.arcade-machine-interactive:focus-visible {
+  transform:
+    translateY(-8px)
+    rotate(-1deg);
+
+  filter:
+    drop-shadow(
+      0 0 18px
+      rgba(63, 246, 255, 0.75)
+    )
+    drop-shadow(
+      0 0 36px
+      rgba(125, 76, 255, 0.55)
+    );
+}
+
+.arcade-machine-interactive:hover::before,
+.arcade-machine-interactive:focus-visible::before {
+  opacity: 1;
+}
