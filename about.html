@@ -10,112 +10,87 @@
 
   <meta
     name="description"
-    content="Learn about Safetii Net, Victoria Tinch's Girl Scout Gold Award cybersecurity education project for children, families, and educators."
+    content="Learn the story behind Safetii Net, an interactive cybersecurity education experience for children, families, and educators."
   >
 
   <title>
     About Safetii Net
   </title>
 
-<link
-  rel="icon"
-  type="image/png"
-  sizes="any"
-  href="assets/Safetii%20NetLogo.png?v=72"
->
-
   <link
-  rel="shortcut icon"
-  href="assets/Safetii%20NetLogo.png?v=72"
->
-
-  <link
-    rel="stylesheet"
-    href="css/style.css?v=73"
+    rel="icon"
+    type="image/png"
+    href="assets/Safetii%20NetLogo.png?v=120"
   >
 
   <link
     rel="stylesheet"
-    href="css/about.css?v=73"
+    href="css/style.css?v=120"
   >
 
-  <script src="js/safetii-debug.js?v=73"></script>
+  <link
+    rel="stylesheet"
+    href="css/about.css?v=120"
+  >
+
+  <script
+    src="js/safetii-debug.js?v=120"
+    defer
+  ></script>
 </head>
 
-<body class="about-page">
+<body class="about-memphis-page">
 
-  <!-- =================================================
+  <!-- =====================================================
        NAVIGATION
-  ================================================== -->
+  ====================================================== -->
 
-  <header class="site-header">
+  <header class="site-header about-site-header">
 
-    <nav
-      class="navbar"
-      aria-label="Main navigation"
+    <a
+      class="logo"
+      href="index.html"
+      aria-label="Safetii Net home"
     >
-
-      <a
-        class="navbar-logo-link"
-        href="index.html"
-        aria-label="Safetii Net home"
+      <img
+        src="assets/SafetiiNet-logo-navbar.png"
+        alt="Safetii Net"
       >
-        <img
-          class="navbar-logo"
-          src="assets/SafetiiNet-logo-navbar.png"
-          alt="Safetii Net"
-        >
+    </a>
+
+    <nav aria-label="Main navigation">
+
+      <a href="dashboard.html">
+        Hero Headquarters
       </a>
 
+      <a href="missions.html">
+        Missions
+      </a>
 
-      <ul class="nav-links">
+      <a href="arcade/index.html">
+        Cyber Arcade
+      </a>
 
-        <li>
-          <a href="index.html">
-            Hero Headquarters
-          </a>
-        </li>
+      <a href="notebook.html">
+        Cyber Notebook
+      </a>
 
-        <li>
-          <a href="notebook.html">
-            Cyber Notebook
-          </a>
-        </li>
+      <a href="parents.html">
+        Parents
+      </a>
 
-        <li>
-          <a href="missions.html">
-            Missions
-          </a>
-        </li>
+      <a href="teachers.html">
+        Teachers
+      </a>
 
-        <li>
-          <a href="arcade.html">
-            Cyber Arcade
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="about.html"
-            aria-current="page"
-          >
-            About
-          </a>
-        </li>
-
-        <li>
-          <a href="parents.html">
-            Parents
-          </a>
-        </li>
-
-        <li>
-          <a href="teachers.html">
-            Teachers
-          </a>
-        </li>
-
-      </ul>
+      <a
+        href="about.html"
+        class="active-nav-link"
+        aria-current="page"
+      >
+        About
+      </a>
 
     </nav>
 
@@ -124,259 +99,291 @@
 
   <main>
 
-    <!-- =================================================
-         ABOUT HERO
-    ================================================== -->
+    <!-- ===================================================
+         HERO STORY SCENE
+    ==================================================== -->
 
     <section
-      class="about-hero"
+      class="memphis-scene about-story-hero"
+      id="aboutTop"
       aria-labelledby="aboutTitle"
     >
 
-      <div class="about-hero-content">
+      <!-- PARALLAX BACKGROUND SHAPES -->
 
-        <p class="about-eyebrow">
+      <div
+        class="memphis-shape shape-circle shape-purple"
+        data-parallax-speed="0.12"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="memphis-shape shape-triangle shape-cyan"
+        data-parallax-speed="0.22"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="memphis-shape shape-squiggle shape-gold"
+        data-parallax-speed="0.35"
+        aria-hidden="true"
+      >
+        〰
+      </div>
+
+      <div
+        class="memphis-shape shape-dots"
+        data-parallax-speed="0.18"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="memphis-shape shape-star shape-pink"
+        data-parallax-speed="0.3"
+        aria-hidden="true"
+      >
+        ★
+      </div>
+
+
+      <div class="about-story-hero-content">
+
+        <p class="about-kicker">
           The Story Behind Safetii Net
         </p>
 
         <h1 id="aboutTitle">
-          Helping Young People Become Safer Digital Citizens
+          <span class="moving-word moving-word-one">
+            Learn.
+          </span>
+
+          <span class="moving-word moving-word-two">
+            Play.
+          </span>
+
+          <span class="moving-word moving-word-three">
+            Protect.
+          </span>
         </h1>
 
-        <p class="about-hero-text">
+        <p class="about-story-intro">
           Safetii Net is an interactive cybersecurity learning
-          experience created to help elementary and middle school
-          students recognize online risks, protect their personal
-          information, and make safer choices in the digital world.
+          experience that helps young people recognize online risks,
+          protect personal information, and make safer choices.
         </p>
 
 
-        <div class="about-hero-actions">
+        <div class="about-story-actions">
 
           <a
-            class="about-button primary-about-button"
+            class="about-action-button primary-action"
+            href="#projectStory"
+          >
+            Begin the Story
+          </a>
+
+          <a
+            class="about-action-button secondary-action"
             href="missions.html"
           >
             Explore the Missions
           </a>
 
-          <a
-            class="about-button secondary-about-button"
-            href="#projectStory"
-          >
-            Read the Project Story
-          </a>
+        </div>
+
+
+        <div class="moving-type-strip" aria-hidden="true">
+
+          <div class="moving-type-track">
+            CYBER SAFETY • DIGITAL CITIZENSHIP • LEARN • PLAY • PROTECT •
+            CYBER SAFETY • DIGITAL CITIZENSHIP • LEARN • PLAY • PROTECT •
+          </div>
 
         </div>
 
       </div>
 
 
-      <div class="about-hero-art">
+      <!-- INTERACTIVE MEME -->
 
-        <div class="hero-art-circle">
+      <aside
+        class="interactive-meme-card"
+        id="interactiveMemeCard"
+      >
+
+        <button
+          class="interactive-meme-button"
+          id="interactiveMemeButton"
+          type="button"
+          aria-label="Hear a message from Meme"
+        >
+
+          <div class="meme-orbit-ring" aria-hidden="true"></div>
 
           <img
+            id="interactiveMemeImage"
             src="assets/mascot/thinking.png"
             alt="Meme, the Safetii Net cybersecurity guide"
           >
 
+        </button>
+
+
+        <div class="meme-speech-panel">
+
+          <p class="about-kicker">
+            Meet Meme
+          </p>
+
+          <h2>
+            Your Cyber Guide
+          </h2>
+
+          <p id="memeStoryMessage">
+            Click me and I’ll guide you through the story.
+          </p>
+
         </div>
 
-        <div class="hero-art-note">
-          Built to make cybersecurity education engaging,
-          understandable, and useful.
-        </div>
+      </aside>
 
-      </div>
+
+      <a
+        class="story-scroll-cue"
+        href="#projectStory"
+        aria-label="Scroll to the project story"
+      >
+        <span>
+          Scroll
+        </span>
+
+        <span aria-hidden="true">
+          ↓
+        </span>
+      </a>
 
     </section>
 
 
-    <!-- =================================================
-         QUICK PROJECT FACTS
-    ================================================== -->
+    <!-- ===================================================
+         STORY CHAPTER 1
+    ==================================================== -->
 
     <section
-      class="about-facts"
-      aria-label="Safetii Net project facts"
-    >
-
-      <article class="about-fact">
-
-        <span
-          class="about-fact-icon"
-          aria-hidden="true"
-        >
-          🏅
-        </span>
-
-        <strong>
-          Girl Scout Gold Award
-        </strong>
-
-        <p>
-          Developed as Victoria Tinch’s highest-level
-          Girl Scout service project.
-        </p>
-
-      </article>
-
-
-      <article class="about-fact">
-
-        <span
-          class="about-fact-icon"
-          aria-hidden="true"
-        >
-          ⏱️
-        </span>
-
-        <strong>
-          118 Project Hours
-        </strong>
-
-        <p>
-          Research, lesson development, design, implementation,
-          evaluation, and sustainability planning.
-        </p>
-
-      </article>
-
-
-      <article class="about-fact">
-
-        <span
-          class="about-fact-icon"
-          aria-hidden="true"
-        >
-          🎓
-        </span>
-
-        <strong>
-          Young Learners
-        </strong>
-
-        <p>
-          Created especially for elementary and middle school
-          students.
-        </p>
-
-      </article>
-
-
-      <article class="about-fact">
-
-        <span
-          class="about-fact-icon"
-          aria-hidden="true"
-        >
-          🌎
-        </span>
-
-        <strong>
-          Long-Term Impact
-        </strong>
-
-        <p>
-          Designed for continued use by students, parents,
-          teachers, and community educators.
-        </p>
-
-      </article>
-
-    </section>
-
-
-    <!-- =================================================
-         PROJECT STORY
-    ================================================== -->
-
-    <section
-      class="about-section project-story-section"
+      class="memphis-scene story-chapter story-chapter-one"
       id="projectStory"
       aria-labelledby="projectStoryTitle"
     >
 
-      <div class="about-section-heading">
+      <div
+        class="memphis-shape chapter-circle"
+        data-parallax-speed="0.16"
+        aria-hidden="true"
+      ></div>
 
-        <p class="about-eyebrow">
-          Why It Was Created
+      <div
+        class="memphis-shape chapter-zigzag"
+        data-parallax-speed="0.28"
+        aria-hidden="true"
+      >
+        〽
+      </div>
+
+
+      <div class="chapter-heading reveal-on-scroll">
+
+        <p class="about-kicker">
+          Chapter One
         </p>
 
         <h2 id="projectStoryTitle">
-          The Project Story
+          Why Safetii Net Was Created
         </h2>
+
+        <p>
+          Children begin using technology early, but online-safety
+          lessons can sometimes feel confusing, frightening, or
+          disconnected from their lives.
+        </p>
 
       </div>
 
 
-      <div class="project-story-layout">
+      <div class="story-card-path">
 
-        <article class="project-story-card">
+        <article
+          class="memphis-story-card reveal-on-scroll"
+          data-tilt-card
+        >
 
-          <span
-            class="story-number"
-            aria-hidden="true"
-          >
+          <span class="story-card-number">
             01
           </span>
+
+          <div class="story-card-icon">
+            🔎
+          </div>
 
           <h3>
             Recognizing the Need
           </h3>
 
           <p>
-            Children begin using technology at an early age, but
-            many do not receive enough instruction about scams,
-            unsafe sharing, identity risks, phishing, privacy, or
-            the long-term effects of online activity.
+            Young people need clear help understanding privacy,
+            scams, phishing, unsafe sharing, identity risks, and
+            digital footprints.
           </p>
 
         </article>
 
 
-        <article class="project-story-card">
+        <article
+          class="memphis-story-card reveal-on-scroll"
+          data-tilt-card
+        >
 
-          <span
-            class="story-number"
-            aria-hidden="true"
-          >
+          <span class="story-card-number">
             02
           </span>
+
+          <div class="story-card-icon">
+            🎮
+          </div>
 
           <h3>
             Making Learning Engaging
           </h3>
 
           <p>
-            Victoria created lessons, presentations, games,
-            discussions, quizzes, hands-on activities, and family
-            resources so cybersecurity education would feel
-            approachable rather than overwhelming.
+            Lessons became missions, games, discussions, quizzes,
+            hands-on activities, and family resources that make
+            cybersecurity easier to understand.
           </p>
 
         </article>
 
 
-        <article class="project-story-card">
+        <article
+          class="memphis-story-card reveal-on-scroll"
+          data-tilt-card
+        >
 
-          <span
-            class="story-number"
-            aria-hidden="true"
-          >
+          <span class="story-card-number">
             03
           </span>
+
+          <div class="story-card-icon">
+            🌎
+          </div>
 
           <h3>
             Expanding the Impact
           </h3>
 
           <p>
-            Safetii Net turns the original curriculum into an
-            interactive online experience that can continue helping
-            students, families, and educators beyond the original
-            workshops.
+            Safetii Net transforms the original curriculum into an
+            online experience that can continue helping students,
+            families, and educators.
           </p>
 
         </article>
@@ -386,182 +393,80 @@
     </section>
 
 
-    <!-- =================================================
-         WHAT STUDENTS LEARN
-    ================================================== -->
+    <!-- ===================================================
+         STORY CHAPTER 2 — CREATOR
+    ==================================================== -->
 
     <section
-      class="about-section learning-section"
-      aria-labelledby="learningTitle"
-    >
-
-      <div class="about-section-heading centered-heading">
-
-        <p class="about-eyebrow">
-          Cybersecurity Skills
-        </p>
-
-        <h2 id="learningTitle">
-          What Students Learn
-        </h2>
-
-        <p>
-          Each Safetii Net mission turns an important digital
-          safety topic into a guided challenge.
-        </p>
-
-      </div>
-
-
-      <div class="learning-card-grid">
-
-        <article class="learning-card">
-
-          <span aria-hidden="true">
-            🪪
-          </span>
-
-          <h3>
-            Protecting Identity
-          </h3>
-
-          <p>
-            Recognizing personal, private, and secret information
-            and understanding when information should not be shared.
-          </p>
-
-        </article>
-
-
-        <article class="learning-card">
-
-          <span aria-hidden="true">
-            🔐
-          </span>
-
-          <h3>
-            Password Safety
-          </h3>
-
-          <p>
-            Creating stronger passwords, understanding password
-            attacks, using unique passwords, and adding two-factor
-            protection.
-          </p>
-
-        </article>
-
-
-        <article class="learning-card">
-
-          <span aria-hidden="true">
-            🎣
-          </span>
-
-          <h3>
-            Spotting Phishing
-          </h3>
-
-          <p>
-            Identifying suspicious links, fake messages, urgent
-            requests, unbelievable offers, and other scam warning
-            signs.
-          </p>
-
-        </article>
-
-
-        <article class="learning-card">
-
-          <span aria-hidden="true">
-            👣
-          </span>
-
-          <h3>
-            Digital Footprints
-          </h3>
-
-          <p>
-            Understanding that online activity leaves a lasting
-            record and learning to think carefully before posting.
-          </p>
-
-        </article>
-
-
-        <article class="learning-card">
-
-          <span aria-hidden="true">
-            🛡️
-          </span>
-
-          <h3>
-            Responding Safely
-          </h3>
-
-          <p>
-            Knowing when to stop, save evidence, block or report an
-            account, and ask a trusted adult for support.
-          </p>
-
-        </article>
-
-
-        <article class="learning-card">
-
-          <span aria-hidden="true">
-            💬
-          </span>
-
-          <h3>
-            Responsible Online Behavior
-          </h3>
-
-          <p>
-            Treating others respectfully, protecting privacy, and
-            making choices that support a positive digital future.
-          </p>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         ABOUT THE CREATOR
-    ================================================== -->
-
-    <section
-      class="about-section creator-section"
+      class="memphis-scene creator-story-scene"
       aria-labelledby="creatorTitle"
     >
 
-      <div class="creator-card">
+      <div
+        class="memphis-shape creator-pink-circle"
+        data-parallax-speed="0.2"
+        aria-hidden="true"
+      ></div>
 
-<div class="creator-photo-card">
+      <div
+        class="memphis-shape creator-cyan-block"
+        data-parallax-speed="0.32"
+        aria-hidden="true"
+      ></div>
 
-  <img
-    class="creator-photo"
-    src="assets/images/VictoriaTinch.jpg?v=72"
-    alt="Victoria Tinch, creator of Safetii Net"
-  >
+      <div
+        class="memphis-shape creator-gold-star"
+        data-parallax-speed="0.25"
+        aria-hidden="true"
+      >
+        ★
+      </div>
 
-</div>
+
+      <div class="creator-story-layout">
+
+        <div class="creator-photo-zone reveal-on-scroll">
+
+          <div class="creator-photo-frame">
+
+            <img
+              src="assets/images/VictoriaTinch.jpg?v=120"
+              alt="Victoria Tinch, creator of Safetii Net"
+            >
+
+          </div>
 
 
-        <div class="creator-content">
+          <div class="creator-floating-label creator-label-one">
+            Girl Scout Gold Award
+          </div>
 
-          <p class="about-eyebrow">
-            About the Creator
+          <div class="creator-floating-label creator-label-two">
+            118 Project Hours
+          </div>
+
+          <div class="creator-floating-label creator-label-three">
+            Cybersecurity Education
+          </div>
+
+        </div>
+
+
+        <div class="creator-story-content reveal-on-scroll">
+
+          <p class="about-kicker">
+            Chapter Two
           </p>
 
           <h2 id="creatorTitle">
-            Victoria Tinch
+            Meet the Creator
           </h2>
 
-          <p class="creator-role">
+          <h3>
+            Victoria Tinch
+          </h3>
+
+          <p class="creator-story-role">
             Girl Scout Gold Award Recipient • Student Leader •
             Engineering and Technology Advocate
           </p>
@@ -576,16 +481,14 @@
           </p>
 
           <p>
-            Her work combined cybersecurity research, classroom
-            lessons, interactive activities, student discussions,
-            take-home resources, and support materials for parents
-            and educators.
+            Her work combined research, classroom lessons,
+            interactive activities, student discussions, take-home
+            resources, and support materials for parents and
+            educators.
           </p>
 
           <p>
-            Safetii Net continues that mission by transforming the
-            curriculum into an online learning world where students
-            can practice cybersecurity skills through stories,
+            Safetii Net continues that mission through stories,
             missions, games, badges, and challenges.
           </p>
 
@@ -596,33 +499,259 @@
     </section>
 
 
-    <!-- =================================================
-         PROJECT PRINCIPLES
-    ================================================== -->
+    <!-- ===================================================
+         MOVING TYPE BREAK
+    ==================================================== -->
 
     <section
-      class="about-section principles-section"
-      aria-labelledby="principlesTitle"
+      class="moving-message-break"
+      aria-label="Safetii Net learning message"
     >
 
-      <div class="about-section-heading centered-heading">
+      <div class="moving-message-row moving-message-forward">
+        PROTECT YOUR IDENTITY • SECURE YOUR ACCOUNTS • THINK BEFORE YOU CLICK •
+      </div>
 
-        <p class="about-eyebrow">
-          Our Learning Approach
+      <div class="moving-message-row moving-message-reverse">
+        ASK FOR HELP • REPORT PROBLEMS • BUILD A SAFER DIGITAL WORLD •
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         STORY CHAPTER 3 — MISSION JOURNEY
+    ==================================================== -->
+
+    <section
+      class="memphis-scene mission-story-scene"
+      aria-labelledby="missionStoryTitle"
+    >
+
+      <div class="mission-story-heading reveal-on-scroll">
+
+        <p class="about-kicker">
+          Chapter Three
         </p>
 
-        <h2 id="principlesTitle">
+        <h2 id="missionStoryTitle">
+          Five Missions Build One Cyber Hero
+        </h2>
+
+        <p>
+          Scroll through the mission path and discover the skills
+          students practice along the way.
+        </p>
+
+      </div>
+
+
+      <div class="mission-story-path">
+
+        <div class="mission-path-line" aria-hidden="true"></div>
+
+
+        <article
+          class="mission-story-stop reveal-on-scroll"
+          data-mission-stop
+        >
+
+          <div class="mission-stop-badge">
+
+            <img
+              src="assets/badges/Identity%20Protector%20Badge.png"
+              alt="Identity Protector badge"
+            >
+
+          </div>
+
+          <div class="mission-stop-content">
+
+            <span>
+              Mission 1
+            </span>
+
+            <h3>
+              Identity Protector
+            </h3>
+
+            <p>
+              Learn what information is personal, private, secret,
+              or safe to share.
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <article
+          class="mission-story-stop reveal-on-scroll"
+          data-mission-stop
+        >
+
+          <div class="mission-stop-badge">
+
+            <img
+              src="assets/badges/Password%20Safe%20Keeper%20Badge.png"
+              alt="Password Safe Keeper badge"
+            >
+
+          </div>
+
+          <div class="mission-stop-content">
+
+            <span>
+              Mission 2
+            </span>
+
+            <h3>
+              Password Safe Keeper
+            </h3>
+
+            <p>
+              Build stronger passwords and add protection to
+              important accounts.
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <article
+          class="mission-story-stop reveal-on-scroll"
+          data-mission-stop
+        >
+
+          <div class="mission-stop-badge">
+
+            <img
+              src="assets/badges/Phish%20Finder%20Badge.png"
+              alt="Phish Finder badge"
+            >
+
+          </div>
+
+          <div class="mission-stop-content">
+
+            <span>
+              Mission 3
+            </span>
+
+            <h3>
+              Phish Finder
+            </h3>
+
+            <p>
+              Investigate suspicious links, requests, messages, and
+              online offers.
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <article
+          class="mission-story-stop reveal-on-scroll"
+          data-mission-stop
+        >
+
+          <div class="mission-stop-badge">
+
+            <img
+              src="assets/badges/Digital%20Footprint%20Defender%20Badge.png"
+              alt="Digital Footprint Defender badge"
+            >
+
+          </div>
+
+          <div class="mission-stop-content">
+
+            <span>
+              Mission 4
+            </span>
+
+            <h3>
+              Digital Footprint Defender
+            </h3>
+
+            <p>
+              Understand how online choices can shape a lasting
+              digital reputation.
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <article
+          class="mission-story-stop reveal-on-scroll"
+          data-mission-stop
+        >
+
+          <div class="mission-stop-badge">
+
+            <img
+              src="assets/badges/Cyber%20Responder%20Badge.png"
+              alt="Cyber Responder badge"
+            >
+
+          </div>
+
+          <div class="mission-stop-content">
+
+            <span>
+              Mission 5
+            </span>
+
+            <h3>
+              Cyber Responder
+            </h3>
+
+            <p>
+              Practice blocking, reporting, saving evidence, and
+              asking for help.
+            </p>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         STORY CHAPTER 4 — LEARNING APPROACH
+    ==================================================== -->
+
+    <section
+      class="memphis-scene promise-story-scene"
+      aria-labelledby="promiseTitle"
+    >
+
+      <div class="promise-heading reveal-on-scroll">
+
+        <p class="about-kicker">
+          Chapter Four
+        </p>
+
+        <h2 id="promiseTitle">
           The Safetii Net Promise
         </h2>
 
       </div>
 
 
-      <div class="principles-grid">
+      <div class="promise-card-grid">
 
-        <article class="principle-card">
+        <article class="promise-card reveal-on-scroll" data-tilt-card>
 
-          <span aria-hidden="true">
+          <span>
             🎮
           </span>
 
@@ -638,9 +767,9 @@
         </article>
 
 
-        <article class="principle-card">
+        <article class="promise-card reveal-on-scroll" data-tilt-card>
 
-          <span aria-hidden="true">
+          <span>
             🧠
           </span>
 
@@ -649,16 +778,16 @@
           </h3>
 
           <p>
-            Cybersecurity ideas are explained using clear language,
-            relatable examples, and age-appropriate situations.
+            Cybersecurity ideas use clear language, relatable
+            examples, and age-appropriate situations.
           </p>
 
         </article>
 
 
-        <article class="principle-card">
+        <article class="promise-card reveal-on-scroll" data-tilt-card>
 
-          <span aria-hidden="true">
+          <span>
             🤝
           </span>
 
@@ -668,15 +797,15 @@
 
           <p>
             Students are encouraged to communicate openly and seek
-            help when an online situation feels unsafe.
+            help when something feels unsafe.
           </p>
 
         </article>
 
 
-        <article class="principle-card">
+        <article class="promise-card reveal-on-scroll" data-tilt-card>
 
-          <span aria-hidden="true">
+          <span>
             🌱
           </span>
 
@@ -685,9 +814,8 @@
           </h3>
 
           <p>
-            Safetii Net teaches habits students can use as
-            technology, platforms, and online risks continue to
-            change.
+            Safetii Net teaches habits students can continue using
+            as technology changes.
           </p>
 
         </article>
@@ -697,114 +825,180 @@
     </section>
 
 
-    <!-- =================================================
-         FAMILY AND EDUCATOR SECTION
-    ================================================== -->
+    <!-- ===================================================
+         CONNECTED COMMUNITY
+    ==================================================== -->
 
     <section
-      class="about-section support-section"
-      aria-labelledby="supportTitle"
+      class="memphis-scene community-story-scene"
+      aria-labelledby="communityTitle"
     >
 
-      <div class="support-content">
+      <div class="community-heading reveal-on-scroll">
 
-        <p class="about-eyebrow">
-          Learning Continues Beyond the Screen
+        <p class="about-kicker">
+          The Bigger Picture
         </p>
 
-        <h2 id="supportTitle">
-          Support for Families and Educators
+        <h2 id="communityTitle">
+          Safer Digital Communities Grow Together
         </h2>
 
         <p>
-          Safetii Net is not only for students. Parents and teachers
-          play an important role in helping children practice safe
-          online habits and feel comfortable asking for help.
+          Students, families, and educators each play an important
+          part in online safety.
+        </p>
+
+      </div>
+
+
+      <div class="community-connection">
+
+        <article class="community-node reveal-on-scroll">
+
+          <span>
+            🦸
+          </span>
+
+          <h3>
+            Students
+          </h3>
+
+          <p>
+            Practice safer choices.
+          </p>
+
+          <a href="login.html">
+            Start Hero Training
+          </a>
+
+        </article>
+
+
+        <div class="community-connector" aria-hidden="true">
+          ➜
+        </div>
+
+
+        <article class="community-node reveal-on-scroll">
+
+          <span>
+            🏠
+          </span>
+
+          <h3>
+            Families
+          </h3>
+
+          <p>
+            Continue the conversation.
+          </p>
+
+          <a href="parents.html">
+            Visit Parent Resources
+          </a>
+
+        </article>
+
+
+        <div class="community-connector" aria-hidden="true">
+          ➜
+        </div>
+
+
+        <article class="community-node reveal-on-scroll">
+
+          <span>
+            🍎
+          </span>
+
+          <h3>
+            Educators
+          </h3>
+
+          <p>
+            Reinforce digital citizenship.
+          </p>
+
+          <a href="teachers.html">
+            Visit Teacher Resources
+          </a>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         FINAL CALL TO ACTION
+    ==================================================== -->
+
+    <section
+      class="about-story-finale"
+      aria-labelledby="finaleTitle"
+    >
+
+      <div
+        class="finale-shape finale-circle"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        class="finale-shape finale-star"
+        aria-hidden="true"
+      >
+        ★
+      </div>
+
+
+      <div class="finale-content reveal-on-scroll">
+
+        <p class="about-kicker">
+          Ready to Begin?
+        </p>
+
+        <h2 id="finaleTitle">
+          Build Your Cyber Safety Skills
+        </h2>
+
+        <p>
+          Create a hero, complete the missions, earn badges, and
+          become a more confident digital citizen.
         </p>
 
 
-        <div class="support-actions">
+        <div class="finale-actions">
 
           <a
-            class="about-button parent-about-button"
-            href="parents.html"
+            class="about-action-button primary-action"
+            href="login.html"
           >
-            Visit the Parent Center
+            Create Your Hero
           </a>
 
           <a
-            class="about-button teacher-about-button"
-            href="teachers.html"
+            class="about-action-button secondary-action"
+            href="missions.html"
           >
-            Visit the Teacher Center
+            Explore the Missions
           </a>
 
         </div>
 
       </div>
 
-
-      <div class="support-reminder">
-
-        <span aria-hidden="true">
-          💡
-        </span>
-
-        <strong>
-          Children are more likely to ask for help when they know
-          they can speak honestly without immediately being blamed
-          or punished.
-        </strong>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         FINAL CALL TO ACTION
-    ================================================== -->
-
-    <section
-      class="about-final-cta"
-      aria-labelledby="finalCtaTitle"
-    >
-
-      <div>
-
-        <p class="about-eyebrow">
-          Ready to Begin?
-        </p>
-
-        <h2 id="finalCtaTitle">
-          Start Building Your Cyber Safety Skills
-        </h2>
-
-        <p>
-          Enter Safetii Net, complete the missions, earn badges,
-          and become a more confident digital citizen.
-        </p>
-
-      </div>
-
-
-      <a
-        class="about-button final-about-button"
-        href="missions.html"
-      >
-        Begin the Missions
-      </a>
-
     </section>
 
   </main>
 
 
-  <!-- =================================================
+  <!-- =====================================================
        FOOTER
-  ================================================== -->
+  ====================================================== -->
 
-  <footer class="about-footer">
+  <footer class="about-story-footer">
 
     <img
       src="assets/SafetiiNet-logo-navbar.png"
@@ -812,33 +1006,18 @@
     >
 
     <p>
-      Safetii Net was developed from Victoria Tinch’s
-      Girl Scout Gold Award cybersecurity education project.
+      Safetii Net was developed from Victoria Tinch’s Girl Scout
+      Gold Award cybersecurity education project.
     </p>
 
     <p>
-      © <span id="aboutCopyrightYear">2026</span>
-      Safetii Net
+      © <span id="aboutCopyrightYear">2026</span> Safetii Net
     </p>
 
   </footer>
 
 
-  <script>
-    "use strict";
-
-    const copyrightYear =
-      document.getElementById(
-        "aboutCopyrightYear"
-      );
-
-    if (copyrightYear) {
-      copyrightYear.textContent =
-        String(
-          new Date().getFullYear()
-        );
-    }
-  </script>
+  <script src="js/about.js?v=120"></script>
 
 </body>
 </html>
