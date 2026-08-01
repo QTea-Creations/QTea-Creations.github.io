@@ -1,1 +1,1693 @@
+/* =========================================================
+   SAFETII NET — SHARED MEMPHIS THEME
 
+   Purpose:
+   - Shared Memphis colors and shapes
+   - Interactive hover effects
+   - Moving type
+   - Scroll reveal support
+   - Parallax-ready decorative elements
+   - Consistent buttons and cards
+   - Reduced-motion accessibility
+
+   This file adds reusable design classes.
+   It does not replace each page's main stylesheet.
+========================================================= */
+
+
+/* =========================================================
+   THEME VARIABLES
+========================================================= */
+
+:root {
+  --safetii-purple:
+    #7d4cff;
+
+  --safetii-purple-dark:
+    #33206f;
+
+  --safetii-purple-deep:
+    #24164f;
+
+  --safetii-cyan:
+    #25bfd0;
+
+  --safetii-cyan-light:
+    #8ff4f1;
+
+  --safetii-pink:
+    #f193c7;
+
+  --safetii-pink-light:
+    #ffd5ea;
+
+  --safetii-gold:
+    #ffe76b;
+
+  --safetii-gold-dark:
+    #c99c1b;
+
+  --safetii-green:
+    #57d697;
+
+  --safetii-navy:
+    #23324f;
+
+  --safetii-white:
+    #ffffff;
+
+  --safetii-off-white:
+    #f9f8ff;
+
+  --safetii-soft-purple:
+    #eee8ff;
+
+  --safetii-soft-cyan:
+    #e7fbff;
+
+  --safetii-soft-pink:
+    #fff0f7;
+
+  --safetii-soft-gold:
+    #fff8d5;
+
+  --safetii-border:
+    #ddd7f2;
+
+  --safetii-text:
+    #283653;
+
+  --safetii-muted:
+    #58657c;
+
+  --safetii-shadow:
+    rgba(
+      45,
+      31,
+      92,
+      0.16
+    );
+
+  --safetii-radius-small:
+    14px;
+
+  --safetii-radius-medium:
+    22px;
+
+  --safetii-radius-large:
+    34px;
+
+  --safetii-transition:
+    180ms ease;
+}
+
+
+/* =========================================================
+   GLOBAL HELPERS
+========================================================= */
+
+.memphis-theme *,
+.memphis-theme *::before,
+.memphis-theme *::after {
+  box-sizing: border-box;
+}
+
+.memphis-theme {
+  overflow-x: hidden;
+}
+
+.memphis-theme img,
+.memphis-theme svg {
+  max-width: 100%;
+}
+
+.memphis-theme a,
+.memphis-theme button {
+  font: inherit;
+}
+
+.memphis-theme a:focus-visible,
+.memphis-theme button:focus-visible,
+.memphis-theme [tabindex]:focus-visible {
+  outline:
+    4px solid
+    var(--safetii-gold);
+
+  outline-offset:
+    4px;
+}
+
+
+/* =========================================================
+   MEMPHIS PAGE BACKGROUND
+========================================================= */
+
+.memphis-page-background {
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 10% 12%,
+      rgba(
+        125,
+        76,
+        255,
+        0.12
+      ),
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at 88% 18%,
+      rgba(
+        37,
+        191,
+        208,
+        0.12
+      ),
+      transparent 20%
+    ),
+    linear-gradient(
+      180deg,
+      #faf9ff 0%,
+      #eefbff 52%,
+      #fff9e8 100%
+    );
+
+  color:
+    var(--safetii-text);
+}
+
+
+/* =========================================================
+   DECORATIVE MEMPHIS LAYER
+========================================================= */
+
+.memphis-decoration-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.memphis-decoration {
+  position: absolute;
+
+  pointer-events: none;
+
+  will-change:
+    transform;
+}
+
+
+/* CIRCLES */
+
+.memphis-circle {
+  width: 90px;
+  height: 90px;
+
+  border-radius:
+    50%;
+
+  background:
+    var(--safetii-pink);
+}
+
+.memphis-circle.outline {
+  background:
+    transparent;
+
+  border:
+    10px solid
+    var(--safetii-purple);
+}
+
+.memphis-circle.cyan {
+  background:
+    var(--safetii-cyan);
+}
+
+.memphis-circle.gold {
+  background:
+    var(--safetii-gold);
+}
+
+
+/* TRIANGLES */
+
+.memphis-triangle {
+  width: 0;
+  height: 0;
+
+  border-left:
+    45px solid
+    transparent;
+
+  border-right:
+    45px solid
+    transparent;
+
+  border-bottom:
+    78px solid
+    var(--safetii-cyan);
+}
+
+.memphis-triangle.purple {
+  border-bottom-color:
+    var(--safetii-purple);
+}
+
+.memphis-triangle.gold {
+  border-bottom-color:
+    var(--safetii-gold);
+}
+
+
+/* SQUARES */
+
+.memphis-square {
+  width: 82px;
+  height: 82px;
+
+  background:
+    var(--safetii-purple);
+
+  border-radius:
+    18px
+    5px
+    18px
+    5px;
+}
+
+.memphis-square.cyan {
+  background:
+    var(--safetii-cyan);
+}
+
+.memphis-square.pink {
+  background:
+    var(--safetii-pink);
+}
+
+.memphis-square.gold {
+  background:
+    var(--safetii-gold);
+}
+
+
+/* DOT PATTERN */
+
+.memphis-dots {
+  width: 130px;
+  height: 100px;
+
+  background:
+    radial-gradient(
+      circle,
+      currentColor 3px,
+      transparent 4px
+    );
+
+  background-size:
+    20px
+    20px;
+
+  color:
+    var(--safetii-purple);
+
+  opacity:
+    0.3;
+}
+
+.memphis-dots.cyan {
+  color:
+    var(--safetii-cyan);
+}
+
+.memphis-dots.gold {
+  color:
+    var(--safetii-gold-dark);
+}
+
+
+/* SQUIGGLE */
+
+.memphis-squiggle {
+  color:
+    var(--safetii-purple);
+
+  font-size:
+    clamp(
+      4rem,
+      8vw,
+      8rem
+    );
+
+  font-weight:
+    900;
+
+  line-height:
+    1;
+}
+
+.memphis-squiggle.cyan {
+  color:
+    var(--safetii-cyan);
+}
+
+.memphis-squiggle.gold {
+  color:
+    var(--safetii-gold);
+}
+
+.memphis-squiggle.pink {
+  color:
+    var(--safetii-pink);
+}
+
+
+/* STAR */
+
+.memphis-star {
+  color:
+    var(--safetii-gold);
+
+  font-size:
+    clamp(
+      3rem,
+      7vw,
+      6rem
+    );
+
+  line-height:
+    1;
+}
+
+.memphis-star.pink {
+  color:
+    var(--safetii-pink);
+}
+
+.memphis-star.cyan {
+  color:
+    var(--safetii-cyan);
+}
+
+
+/* LIGHTNING */
+
+.memphis-lightning {
+  color:
+    var(--safetii-gold);
+
+  font-size:
+    clamp(
+      3rem,
+      7vw,
+      6rem
+    );
+
+  line-height:
+    1;
+}
+
+
+/* =========================================================
+   SHARED MEMPHIS SECTION
+========================================================= */
+
+.memphis-section {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+
+  width:
+    min(
+      1440px,
+      calc(
+        100% - 30px
+      )
+    );
+
+  margin:
+    30px auto 0;
+
+  padding:
+    56px;
+
+  background:
+    var(--safetii-white);
+
+  border:
+    4px solid
+    var(--safetii-border);
+
+  border-radius:
+    var(--safetii-radius-large);
+
+  box-shadow:
+    0 20px 42px
+    var(--safetii-shadow);
+}
+
+.memphis-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* COLOR SECTION VARIANTS */
+
+.memphis-section.purple-section {
+  background:
+    linear-gradient(
+      135deg,
+      var(--safetii-purple-dark),
+      var(--safetii-purple),
+      var(--safetii-cyan)
+    );
+
+  border-color:
+    var(--safetii-purple-deep);
+
+  color:
+    var(--safetii-white);
+}
+
+.memphis-section.cyan-section {
+  background:
+    var(--safetii-soft-cyan);
+
+  border-color:
+    var(--safetii-cyan);
+}
+
+.memphis-section.pink-section {
+  background:
+    var(--safetii-soft-pink);
+
+  border-color:
+    var(--safetii-pink);
+}
+
+.memphis-section.gold-section {
+  background:
+    var(--safetii-soft-gold);
+
+  border-color:
+    var(--safetii-gold-dark);
+}
+
+
+/* =========================================================
+   EYEBROW AND TITLES
+========================================================= */
+
+.memphis-eyebrow {
+  margin:
+    0 0 10px;
+
+  color:
+    var(--safetii-purple);
+
+  font-size:
+    0.83rem;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.14em;
+
+  text-transform:
+    uppercase;
+}
+
+.purple-section
+.memphis-eyebrow {
+  color:
+    var(--safetii-gold);
+}
+
+.memphis-title {
+  margin:
+    0;
+
+  color:
+    var(--safetii-purple-dark);
+
+  font-size:
+    clamp(
+      2.3rem,
+      5vw,
+      4.7rem
+    );
+
+  line-height:
+    1.03;
+}
+
+.purple-section
+.memphis-title {
+  color:
+    var(--safetii-white);
+}
+
+.memphis-subtitle {
+  max-width:
+    760px;
+
+  margin:
+    16px 0 0;
+
+  color:
+    var(--safetii-muted);
+
+  font-size:
+    1.06rem;
+
+  line-height:
+    1.7;
+}
+
+.purple-section
+.memphis-subtitle {
+  color:
+    rgba(
+      255,
+      255,
+      255,
+      0.9
+    );
+}
+
+
+/* =========================================================
+   MEMPHIS BUTTONS
+========================================================= */
+
+.memphis-button {
+  min-height:
+    52px;
+
+  padding:
+    13px 24px;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    9px;
+
+  border:
+    3px solid
+    transparent;
+
+  border-radius:
+    999px;
+
+  font-weight:
+    900;
+
+  text-align:
+    center;
+
+  text-decoration:
+    none;
+
+  cursor:
+    pointer;
+
+  transition:
+    transform
+    var(--safetii-transition),
+    box-shadow
+    var(--safetii-transition),
+    filter
+    var(--safetii-transition);
+}
+
+.memphis-button:hover {
+  transform:
+    translateY(-4px);
+}
+
+.memphis-button:active {
+  transform:
+    translateY(1px);
+}
+
+
+/* PRIMARY */
+
+.memphis-button.primary {
+  background:
+    var(--safetii-gold);
+
+  border-color:
+    var(--safetii-gold-dark);
+
+  color:
+    #4e3d08;
+
+  box-shadow:
+    0 7px 0
+    var(--safetii-gold-dark);
+}
+
+.memphis-button.primary:hover {
+  box-shadow:
+    0 4px 0
+    var(--safetii-gold-dark);
+}
+
+
+/* PURPLE */
+
+.memphis-button.purple {
+  background:
+    var(--safetii-purple);
+
+  border-color:
+    var(--safetii-purple-dark);
+
+  color:
+    var(--safetii-white);
+
+  box-shadow:
+    0 7px 0
+    var(--safetii-purple-dark);
+}
+
+.memphis-button.purple:hover {
+  box-shadow:
+    0 4px 0
+    var(--safetii-purple-dark);
+}
+
+
+/* CYAN */
+
+.memphis-button.cyan {
+  background:
+    var(--safetii-cyan);
+
+  border-color:
+    #148e9b;
+
+  color:
+    var(--safetii-white);
+
+  box-shadow:
+    0 7px 0
+    #148e9b;
+}
+
+.memphis-button.cyan:hover {
+  box-shadow:
+    0 4px 0
+    #148e9b;
+}
+
+
+/* WHITE */
+
+.memphis-button.white {
+  background:
+    var(--safetii-white);
+
+  border-color:
+    var(--safetii-white);
+
+  color:
+    var(--safetii-purple-dark);
+
+  box-shadow:
+    0 7px 0
+    rgba(
+      31,
+      22,
+      70,
+      0.25
+    );
+}
+
+.memphis-button.white:hover {
+  box-shadow:
+    0 4px 0
+    rgba(
+      31,
+      22,
+      70,
+      0.25
+    );
+}
+
+
+/* =========================================================
+   MEMPHIS CARDS
+========================================================= */
+
+.memphis-card {
+  position: relative;
+
+  padding:
+    26px;
+
+  background:
+    var(--safetii-white);
+
+  border:
+    4px solid
+    var(--safetii-purple);
+
+  border-radius:
+    27px
+    10px
+    27px
+    10px;
+
+  box-shadow:
+    9px 9px 0
+    #c9b9f7;
+
+  transition:
+    transform
+    var(--safetii-transition),
+    box-shadow
+    var(--safetii-transition);
+}
+
+.memphis-card:hover {
+  transform:
+    translateY(-8px)
+    rotate(-0.7deg);
+
+  box-shadow:
+    13px 13px 0
+    #c9b9f7;
+}
+
+.memphis-card.cyan-card {
+  border-color:
+    var(--safetii-cyan);
+
+  box-shadow:
+    9px 9px 0
+    #8be2e7;
+}
+
+.memphis-card.cyan-card:hover {
+  box-shadow:
+    13px 13px 0
+    #8be2e7;
+}
+
+.memphis-card.pink-card {
+  border-color:
+    var(--safetii-pink);
+
+  box-shadow:
+    9px 9px 0
+    #f7bedc;
+}
+
+.memphis-card.pink-card:hover {
+  box-shadow:
+    13px 13px 0
+    #f7bedc;
+}
+
+.memphis-card.gold-card {
+  border-color:
+    var(--safetii-gold-dark);
+
+  box-shadow:
+    9px 9px 0
+    #f2dc80;
+}
+
+.memphis-card.gold-card:hover {
+  box-shadow:
+    13px 13px 0
+    #f2dc80;
+}
+
+.memphis-card h2,
+.memphis-card h3 {
+  color:
+    var(--safetii-purple-dark);
+}
+
+.memphis-card p {
+  color:
+    var(--safetii-muted);
+
+  line-height:
+    1.65;
+}
+
+
+/* =========================================================
+   ICON TILES
+========================================================= */
+
+.memphis-icon-tile {
+  width:
+    62px;
+
+  height:
+    62px;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  background:
+    var(--safetii-soft-purple);
+
+  border:
+    3px solid
+    #cbbbf5;
+
+  border-radius:
+    18px
+    7px
+    18px
+    7px;
+
+  font-size:
+    2rem;
+
+  transition:
+    transform
+    var(--safetii-transition),
+    box-shadow
+    var(--safetii-transition);
+}
+
+.memphis-card:hover
+.memphis-icon-tile {
+  transform:
+    rotate(6deg)
+    scale(1.08);
+
+  box-shadow:
+    0 0 22px
+    rgba(
+      125,
+      76,
+      255,
+      0.26
+    );
+}
+
+
+/* =========================================================
+   MOVING TYPE MARQUEE
+========================================================= */
+
+.memphis-marquee {
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  overflow:
+    hidden;
+
+  width:
+    100%;
+
+  background:
+    var(--safetii-purple-deep);
+
+  border-top:
+    4px solid
+    var(--safetii-gold);
+
+  border-bottom:
+    4px solid
+    var(--safetii-cyan);
+}
+
+.memphis-marquee-shell {
+  overflow:
+    hidden;
+
+  width:
+    100%;
+
+  padding:
+    14px 0;
+}
+
+.memphis-marquee-track {
+  display:
+    flex;
+
+  width:
+    max-content;
+
+  align-items:
+    center;
+
+  white-space:
+    nowrap;
+
+  will-change:
+    transform;
+
+  animation:
+    safetiiMarquee
+    24s linear infinite;
+}
+
+.memphis-marquee-copy {
+  flex:
+    0 0 auto;
+
+  padding-right:
+    3rem;
+
+  color:
+    var(--safetii-white);
+
+  font-size:
+    clamp(
+      1rem,
+      1.7vw,
+      1.45rem
+    );
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.11em;
+
+  text-transform:
+    uppercase;
+}
+
+.memphis-marquee-copy:nth-child(even) {
+  color:
+    var(--safetii-gold);
+}
+
+.memphis-marquee:hover
+.memphis-marquee-track {
+  animation-play-state:
+    paused;
+}
+
+@keyframes safetiiMarquee {
+  from {
+    transform:
+      translateX(-25%);
+  }
+
+  to {
+    transform:
+      translateX(-75%);
+  }
+}
+
+
+/* =========================================================
+   FLOATING ANIMATIONS
+========================================================= */
+
+.memphis-float {
+  animation:
+    memphisFloat
+    4.2s ease-in-out infinite;
+}
+
+.memphis-float-slow {
+  animation:
+    memphisFloat
+    6.5s ease-in-out infinite;
+}
+
+.memphis-spin-slow {
+  animation:
+    memphisSpin
+    18s linear infinite;
+}
+
+.memphis-pulse {
+  animation:
+    memphisPulse
+    2.6s ease-in-out infinite;
+}
+
+.memphis-wiggle:hover {
+  animation:
+    memphisWiggle
+    0.75s ease;
+}
+
+@keyframes memphisFloat {
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-10px);
+  }
+}
+
+@keyframes memphisSpin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+@keyframes memphisPulse {
+  0%,
+  100% {
+    transform:
+      scale(1);
+
+    opacity:
+      0.82;
+  }
+
+  50% {
+    transform:
+      scale(1.08);
+
+    opacity:
+      1;
+  }
+}
+
+@keyframes memphisWiggle {
+  0%,
+  100% {
+    transform:
+      rotate(0);
+  }
+
+  20% {
+    transform:
+      rotate(-7deg);
+  }
+
+  40% {
+    transform:
+      rotate(7deg);
+  }
+
+  60% {
+    transform:
+      rotate(-4deg);
+  }
+
+  80% {
+    transform:
+      rotate(4deg);
+  }
+}
+
+
+/* =========================================================
+   NEON HOVER
+========================================================= */
+
+.memphis-neon-hover {
+  transition:
+    transform
+    220ms ease,
+    filter
+    220ms ease,
+    box-shadow
+    220ms ease;
+}
+
+.memphis-neon-hover:hover,
+.memphis-neon-hover:focus-visible {
+  transform:
+    translateY(-7px);
+
+  filter:
+    drop-shadow(
+      0 0 16px
+      rgba(
+        70,
+        238,
+        244,
+        0.7
+      )
+    )
+    drop-shadow(
+      0 0 28px
+      rgba(
+        125,
+        76,
+        255,
+        0.48
+      )
+    );
+}
+
+
+/* =========================================================
+   MASCOT INTERACTIONS
+========================================================= */
+
+.memphis-mascot {
+  position:
+    relative;
+
+  display:
+    inline-grid;
+
+  place-items:
+    center;
+
+  cursor:
+    pointer;
+}
+
+.memphis-mascot img {
+  transition:
+    transform
+    300ms ease,
+    filter
+    300ms ease;
+}
+
+.memphis-mascot:hover img,
+.memphis-mascot:focus-visible img {
+  transform:
+    scale(1.08)
+    rotate(4deg);
+
+  filter:
+    drop-shadow(
+      0 14px 14px
+      rgba(
+        45,
+        31,
+        92,
+        0.2
+      )
+    );
+}
+
+.memphis-mascot.mascot-dance img {
+  animation:
+    mascotDance
+    0.9s ease;
+}
+
+@keyframes mascotDance {
+  0% {
+    transform:
+      rotate(0)
+      scale(1);
+  }
+
+  20% {
+    transform:
+      rotate(-12deg)
+      scale(1.06);
+  }
+
+  40% {
+    transform:
+      rotate(12deg)
+      scale(1.1);
+  }
+
+  60% {
+    transform:
+      rotate(-8deg)
+      scale(1.06);
+  }
+
+  80% {
+    transform:
+      rotate(8deg)
+      scale(1.03);
+  }
+
+  100% {
+    transform:
+      rotate(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+.memphis-reveal {
+  opacity:
+    0;
+
+  transform:
+    translateY(42px)
+    scale(0.98);
+
+  transition:
+    opacity
+    650ms ease,
+    transform
+    650ms ease;
+}
+
+.memphis-reveal.is-visible {
+  opacity:
+    1;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.memphis-reveal-left {
+  opacity:
+    0;
+
+  transform:
+    translateX(-50px);
+
+  transition:
+    opacity
+    650ms ease,
+    transform
+    650ms ease;
+}
+
+.memphis-reveal-left.is-visible {
+  opacity:
+    1;
+
+  transform:
+    translateX(0);
+}
+
+.memphis-reveal-right {
+  opacity:
+    0;
+
+  transform:
+    translateX(50px);
+
+  transition:
+    opacity
+    650ms ease,
+    transform
+    650ms ease;
+}
+
+.memphis-reveal-right.is-visible {
+  opacity:
+    1;
+
+  transform:
+    translateX(0);
+}
+
+
+/* =========================================================
+   PARALLAX ELEMENTS
+========================================================= */
+
+[data-memphis-parallax] {
+  will-change:
+    transform;
+}
+
+
+/* =========================================================
+   GRID AND LAYOUT HELPERS
+========================================================= */
+
+.memphis-grid {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(
+        0,
+        1fr
+      )
+    );
+
+  gap:
+    24px;
+}
+
+.memphis-grid.two-column {
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(
+        0,
+        1fr
+      )
+    );
+}
+
+.memphis-grid.four-column {
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(
+        0,
+        1fr
+      )
+    );
+}
+
+.memphis-actions {
+  margin-top:
+    26px;
+
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    14px;
+}
+
+
+/* =========================================================
+   BADGE DISPLAY
+========================================================= */
+
+.memphis-badge-frame {
+  position:
+    relative;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  width:
+    160px;
+
+  height:
+    160px;
+
+  background:
+    var(--safetii-white);
+
+  border:
+    4px solid
+    var(--safetii-purple);
+
+  border-radius:
+    28px
+    10px
+    28px
+    10px;
+
+  box-shadow:
+    9px 9px 0
+    #c8b6f2;
+
+  transition:
+    transform
+    var(--safetii-transition),
+    filter
+    var(--safetii-transition);
+}
+
+.memphis-badge-frame img {
+  width:
+    145px;
+
+  height:
+    145px;
+
+  object-fit:
+    contain;
+}
+
+.memphis-badge-frame:hover {
+  transform:
+    translateY(-8px)
+    rotate(3deg);
+
+  filter:
+    drop-shadow(
+      0 0 20px
+      rgba(
+        37,
+        191,
+        208,
+        0.45
+      )
+    );
+}
+
+
+/* =========================================================
+   STATUS PILL
+========================================================= */
+
+.memphis-status-pill {
+  min-height:
+    34px;
+
+  padding:
+    7px 13px;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    7px;
+
+  background:
+    var(--safetii-soft-purple);
+
+  border:
+    2px solid
+    #c8b7f3;
+
+  border-radius:
+    999px;
+
+  color:
+    var(--safetii-purple-dark);
+
+  font-size:
+    0.84rem;
+
+  font-weight:
+    900;
+}
+
+.memphis-status-pill.cyan {
+  background:
+    var(--safetii-soft-cyan);
+
+  border-color:
+    #8ddce4;
+
+  color:
+    #176977;
+}
+
+.memphis-status-pill.gold {
+  background:
+    var(--safetii-soft-gold);
+
+  border-color:
+    #e1c759;
+
+  color:
+    #6a5311;
+}
+
+.memphis-status-pill.pink {
+  background:
+    var(--safetii-soft-pink);
+
+  border-color:
+    #efb1d1;
+
+  color:
+    #8d3f6c;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1050px) {
+  .memphis-grid,
+  .memphis-grid.four-column {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(
+          0,
+          1fr
+        )
+      );
+  }
+
+  .memphis-section {
+    padding:
+      46px 34px;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .memphis-section {
+    width:
+      min(
+        100% - 16px,
+        700px
+      );
+
+    margin-top:
+      18px;
+
+    padding:
+      38px 22px;
+
+    border-radius:
+      27px;
+  }
+
+  .memphis-grid,
+  .memphis-grid.two-column,
+  .memphis-grid.four-column {
+    grid-template-columns:
+      1fr;
+  }
+
+  .memphis-actions {
+    display:
+      grid;
+
+    grid-template-columns:
+      1fr;
+  }
+
+  .memphis-actions
+  .memphis-button {
+    width:
+      100%;
+  }
+
+  .memphis-marquee-copy {
+    font-size:
+      0.95rem;
+
+    letter-spacing:
+      0.08em;
+
+    padding-right:
+      2rem;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  html {
+    scroll-behavior:
+      auto;
+  }
+
+  .memphis-theme *,
+  .memphis-theme *::before,
+  .memphis-theme *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+
+  .memphis-reveal,
+  .memphis-reveal-left,
+  .memphis-reveal-right {
+    opacity:
+      1;
+
+    transform:
+      none;
+  }
+
+  .memphis-marquee-track {
+    width:
+      100%;
+
+    padding:
+      0 18px;
+
+    flex-wrap:
+      wrap;
+
+    justify-content:
+      center;
+
+    white-space:
+      normal;
+
+    animation:
+      none;
+
+    transform:
+      none;
+  }
+
+  .memphis-marquee-copy {
+    padding-right:
+      0;
+
+    text-align:
+      center;
+  }
+}
