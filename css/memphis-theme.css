@@ -1691,3 +1691,112 @@
       center;
   }
 }
+
+/* =========================================================
+   JAVASCRIPT-ENHANCED INTERACTIONS
+========================================================= */
+
+.memphis-page-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5000;
+
+  width: 100%;
+  height: 6px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.55
+    );
+
+  pointer-events: none;
+}
+
+.memphis-page-progress-fill {
+  width: 100%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--safetii-purple),
+      var(--safetii-cyan),
+      var(--safetii-gold),
+      var(--safetii-pink)
+    );
+
+  transform:
+    scaleX(0);
+
+  transform-origin:
+    left center;
+
+  will-change:
+    transform;
+}
+
+.memphis-button.is-pressed {
+  transform:
+    translateY(2px)
+    scale(0.98);
+}
+
+[data-memphis-spotlight] {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-memphis-spotlight]::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    radial-gradient(
+      circle
+      180px
+      at
+      var(--spotlight-x, 50%)
+      var(--spotlight-y, 50%),
+      rgba(
+        255,
+        255,
+        255,
+        0.38
+      ),
+      transparent
+      70%
+    );
+
+  opacity: 0;
+
+  transition:
+    opacity
+    180ms ease;
+
+  pointer-events: none;
+}
+
+[data-memphis-spotlight]:hover::after {
+  opacity: 1;
+}
+
+[data-memphis-spotlight] > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .memphis-page-progress {
+    display: none;
+  }
+}
