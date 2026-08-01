@@ -1005,53 +1005,82 @@
       <!-- =================================================
            CYBER ARCADE
       ================================================== -->
+<section class="hq-arcade-panel" id="dashboardArcadePanel">
+  <div class="hq-arcade-copy">
+    <p class="hq-panel-label">Practice Zone</p>
+    <h2 id="dashboardArcadeHeading">Cyber Arcade</h2>
+    <p id="dashboardArcadeDescription">
+      Practice cybersecurity skills through games and challenges.
+    </p>
 
-      <article class="dashboard-card arcade-card">
+    <div class="hq-arcade-status" id="dashboardArcadeStatus">
+      <span class="hq-arcade-status-icon">🎮</span>
+      <div>
+        <strong id="dashboardArcadeRecentLabel">No game played yet</strong>
+        <p id="dashboardArcadeRecentText">
+          Start your first arcade game to see it here.
+        </p>
+      </div>
+    </div>
 
-        <div class="arcade-card-content">
+    <div class="hq-arcade-buttons">
+      <a
+        class="hq-arcade-button primary"
+        id="dashboardArcadeButton"
+        href="arcade/index.html"
+      >
+        Enter the Arcade
+      </a>
 
-          <div>
+      <a
+        class="hq-arcade-button secondary"
+        id="dashboardArcadeBrowseButton"
+        href="arcade/index.html"
+      >
+        Browse Games
+      </a>
+    </div>
+  </div>
 
-            <p class="eyebrow">
-              Practice Zone
-            </p>
+  <div class="hq-arcade-visual">
+    <div class="arcade-animation-shell">
+      <div class="arcade-glow-orb"></div>
 
-            <h2>
-              Cyber Arcade
-            </h2>
+      <div class="arcade-pixel pixel-one"></div>
+      <div class="arcade-pixel pixel-two"></div>
+      <div class="arcade-pixel pixel-three"></div>
+      <div class="arcade-pixel pixel-four"></div>
 
-            <p>
-              Practice cybersecurity skills through games and
-              challenges.
-            </p>
-
-            <a
-              class="button"
-              href="arcade/index.html"
-            >
-              Enter the Arcade
-            </a>
-
+      <div class="arcade-visual-card">
+        <div class="arcade-visual-screen">
+          <div class="arcade-screen-header">
+            <span class="screen-dot"></span>
+            <span class="screen-dot"></span>
+            <span class="screen-dot"></span>
           </div>
 
+          <div class="arcade-screen-content">
+            <div class="arcade-screen-badge" id="dashboardArcadeBadge">
+              Ready to Play
+            </div>
 
-          <div class="arcade-controller-frame">
-
-            <span aria-hidden="true">
+            <div class="arcade-screen-icon" id="dashboardArcadeIcon">
               🎮
-            </span>
+            </div>
 
+            <div class="arcade-screen-title" id="dashboardArcadeGameName">
+              Cyber Arcade
+            </div>
+
+            <div class="arcade-screen-subtitle" id="dashboardArcadeGameMode">
+              Pick a game and start practicing.
+            </div>
           </div>
-
         </div>
-
-      </article>
-
-    </section>
-
-  </main>
-
-
+      </div>
+    </div>
+  </div>
+</section>
   <!-- =====================================================
        FOOTER
   ====================================================== -->
