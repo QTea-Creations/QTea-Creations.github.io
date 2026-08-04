@@ -1095,6 +1095,39 @@ button {
   pointer-events: none;
 }
 
+.slash-flying-object[data-action] .scenario-action-tag {
+  display: none !important;
+}
+
+.slash-flying-object[data-action="slash"]::before {
+  content: "SLASH";
+}
+
+.slash-flying-object[data-action="save"]::before {
+  content: "SAVE";
+  background: #3b82f6;
+}
+
+.slash-flying-object[data-action="check"]::before {
+  content: "CHECK";
+  background: #06b6d4;
+}
+
+.slash-flying-object[data-action="tell"]::before {
+  content: "TELL";
+  background: #8b5cf6;
+}
+
+.slash-flying-object .slash-object-copy {
+  padding-right: 52px;
+}
+
+.slash-flying-object .slash-object-copy small {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 .slash-flying-object {
   position: absolute;
   top: 0;
